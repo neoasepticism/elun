@@ -1,0 +1,462 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Elun — The Cards of Destiny</title>
+<style>
+  :root{
+    --ink:#f3ece0; --ink2:#c9bda9; --sub:#9c8f79; --faint:#6e6353;
+    --bg:#0d0b08; --bg2:#141009; --card:#1c1712; --line:#332a22; --line2:#40342a;
+    --gold:#c9a227; --gold2:#e0c05a; --red:#c86a58;
+    --wood:#4fae63; --fire:#e0604a; --earth:#d3a52e; --metal:#b4bcc6; --water:#4f9fe0;
+    --serif:'Noto Serif',ui-serif,Georgia,serif;
+    --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;
+    background-image:radial-gradient(ellipse at 50% -5%,#2a1f10 0,transparent 55%),radial-gradient(circle at 85% 95%,#12202a 0,transparent 40%);}
+  a{color:var(--gold2);text-decoration:none}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 22px}
+  nav{border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;height:60px;gap:10px}
+  .logo{font-family:var(--serif);font-size:21px;font-weight:700;display:flex;align-items:center;gap:9px}
+  .logo .m{color:var(--gold2)}
+  .logo .seal{width:26px;height:26px;border:1px solid var(--gold);color:var(--gold2);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:14px;font-family:var(--serif)}
+  header{text-align:center;padding:58px 0 30px}
+  header .kick{font-family:var(--serif);letter-spacing:6px;color:var(--gold);font-size:11px;text-transform:uppercase;margin-bottom:14px}
+  header h1{font-family:var(--serif);font-size:clamp(30px,5.5vw,46px);margin:0 0 12px;font-weight:700}
+  header .lede{color:var(--ink2);max-width:560px;margin:0 auto;font-size:16px}
+  .sec-title{text-align:center;margin:56px 0 8px}
+  .sec-title .cn{font-family:var(--serif);color:var(--gold);letter-spacing:4px;font-size:12px;text-transform:uppercase}
+  .sec-title h2{font-family:var(--serif);font-size:26px;margin:6px 0 4px}
+  .sec-title p{color:var(--sub);font-size:14px;margin:0 auto 8px;max-width:520px}
+
+  /* ===== card grid ===== */
+  .grid{display:grid;gap:16px;justify-items:center}
+  .grid.five{grid-template-columns:repeat(5,1fr)}
+  .grid.gods{grid-template-columns:repeat(5,1fr)}
+  @media(max-width:900px){.grid.five,.grid.gods{grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:600px){.grid.five,.grid.gods{grid-template-columns:repeat(2,1fr)}}
+
+  /* ===== the card ===== */
+  .card{width:100%;max-width:196px;aspect-ratio:5/7;border-radius:14px;position:relative;
+    padding:12px;display:flex;flex-direction:column;cursor:default;overflow:hidden;
+    border:1.5px solid var(--edge,#5a4a2e);
+    background:linear-gradient(160deg,var(--c1,#1c1712),var(--c2,#0f0c08));
+    box-shadow:0 10px 26px -12px #000, inset 0 1px 0 #ffffff12;
+    transition:transform .18s, box-shadow .18s;}
+  .card:hover{transform:translateY(-6px) rotate(-.6deg);box-shadow:0 20px 40px -14px #000, 0 0 0 1px var(--edge)}
+  .card .frame{position:absolute;inset:5px;border:1px solid #ffffff14;border-radius:10px;pointer-events:none}
+  .card .top{display:flex;justify-content:space-between;align-items:flex-start;position:relative;z-index:2}
+  .card .han{font-family:var(--serif);font-size:26px;font-weight:700;line-height:1;color:var(--accent,#fff);text-shadow:0 1px 6px #0008}
+  .card .cost{font-family:var(--serif);font-size:11px;color:var(--ink2);border:1px solid #ffffff26;border-radius:10px;padding:1px 7px;white-space:nowrap}
+  .card .art{flex:1;display:flex;align-items:center;justify-content:center;position:relative;z-index:2}
+  .card .art .glyph{font-size:52px;filter:drop-shadow(0 4px 12px #0009)}
+  .card .name{font-family:var(--serif);font-size:15px;font-weight:700;text-align:center;color:var(--accent,#fff);position:relative;z-index:2;letter-spacing:.3px}
+  .card .type{text-align:center;font-size:9.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--sub);margin-top:1px;position:relative;z-index:2}
+  .card .desc{font-size:10.5px;line-height:1.42;color:var(--ink2);text-align:center;margin-top:7px;position:relative;z-index:2;
+    border-top:1px solid #ffffff14;padding-top:7px;min-height:44px}
+  .card .rel{font-size:9px;color:var(--faint);text-align:center;margin-top:5px;position:relative;z-index:2;line-height:1.5}
+  .card .rel b{color:var(--accent)}
+  /* holo sheen */
+  .card::after{content:"";position:absolute;inset:0;border-radius:14px;pointer-events:none;
+    background:linear-gradient(115deg,transparent 40%,#ffffff10 48%,transparent 56%);opacity:0;transition:opacity .3s}
+  .card:hover::after{opacity:1}
+
+  /* element accents */
+  .card.wood{--accent:var(--wood);--edge:#2e5a38;--c1:#15201a;--c2:#0c120e}
+  .card.fire{--accent:var(--fire);--edge:#5e2e26;--c1:#20140f;--c2:#120b09}
+  .card.earth{--accent:var(--earth);--edge:#5a4a1e;--c1:#1f1a0e;--c2:#120f09}
+  .card.metal{--accent:var(--metal);--edge:#465059;--c1:#161a1e;--c2:#0d0f12}
+  .card.water{--accent:var(--water);--edge:#264a5e;--c1:#101c24;--c2:#0a1016}
+  /* god cards colored by their element polarity group */
+  .card.self{--accent:var(--wood);--edge:#2e5a38;--c1:#15201a;--c2:#0c120e}
+  .card.output{--accent:var(--fire);--edge:#5e2e26;--c1:#20140f;--c2:#120b09}
+  .card.wealth{--accent:var(--earth);--edge:#5a4a1e;--c1:#1f1a0e;--c2:#120f09}
+  .card.officer{--accent:var(--metal);--edge:#465059;--c1:#161a1e;--c2:#0d0f12}
+  .card.resource{--accent:var(--water);--edge:#264a5e;--c1:#101c24;--c2:#0a1016}
+
+  .foot{text-align:center;color:var(--faint);font-size:12px;margin:60px 0 40px}
+  .foot a{color:var(--sub)}
+  .legend{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin:14px 0 0;font-size:11.5px;color:var(--sub)}
+  .legend .k{display:inline-flex;align-items:center;gap:5px}
+  .legend .dot{width:10px;height:10px;border-radius:50%}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a href="index.html" class="logo"><span class="seal">乙</span><span class="m">Elun</span></a>
+  <span style="margin-left:auto;font-size:13px;color:var(--sub)"><a href="index.html">Home</a> · <a href="start.html">Create your chart</a></span>
+</div></nav>
+
+<header class="wrap">
+  <div class="kick">五行 · 十神 · The Deck of Destiny</div>
+  <h1>Your chart is a deck of cards.</h1>
+  <p class="lede">In BaZi, five elements form your stats and ten gods your archetypes — each generating and controlling the next, like a living game system. Here is the full deck.</p>
+</header>
+
+<!-- ===== FIVE ELEMENTS ===== -->
+<div class="sec-title">
+  <div class="cn">五行 · The Five Elements</div>
+  <h2>The Elements — your stats</h2>
+  <p>Each element generates the next in a cycle (生), and controls another across it (剋). Balance is everything.</p>
+</div>
+
+<div class="wrap"><div class="grid five">
+
+  <div class="card wood">
+    <div class="frame"></div>
+    <div class="top"><span class="han">木</span><span class="cost">生 → Fire</span></div>
+    <div class="art"><span class="glyph">🌲</span></div>
+    <div class="name">Wood</div>
+    <div class="type">Growth · The Self</div>
+    <div class="desc">Vitality, ambition, kindness, upward drive. The living element that seeks the light.</div>
+    <div class="rel">feeds <b>Fire</b> · is controlled by <b>Metal</b></div>
+  </div>
+
+  <div class="card fire">
+    <div class="frame"></div>
+    <div class="top"><span class="han">火</span><span class="cost">生 → Earth</span></div>
+    <div class="art"><span class="glyph">🔥</span></div>
+    <div class="name">Fire</div>
+    <div class="type">Expression · Passion</div>
+    <div class="desc">Warmth, visibility, charisma, expression. Brilliant but consuming if unchecked.</div>
+    <div class="rel">feeds <b>Earth</b> · is controlled by <b>Water</b></div>
+  </div>
+
+  <div class="card earth">
+    <div class="frame"></div>
+    <div class="top"><span class="han">土</span><span class="cost">生 → Metal</span></div>
+    <div class="art"><span class="glyph">⛰️</span></div>
+    <div class="name">Earth</div>
+    <div class="type">Stability · Wealth</div>
+    <div class="desc">Trust, patience, nourishment, the ground that holds. Reliable, sometimes immovable.</div>
+    <div class="rel">feeds <b>Metal</b> · is controlled by <b>Wood</b></div>
+  </div>
+
+  <div class="card metal">
+    <div class="frame"></div>
+    <div class="top"><span class="han">金</span><span class="cost">生 → Water</span></div>
+    <div class="art"><span class="glyph">⚔️</span></div>
+    <div class="name">Metal</div>
+    <div class="type">Structure · Order</div>
+    <div class="desc">Discipline, precision, resolve, the blade that cuts clean. Righteous but rigid.</div>
+    <div class="rel">feeds <b>Water</b> · is controlled by <b>Fire</b></div>
+  </div>
+
+  <div class="card water">
+    <div class="frame"></div>
+    <div class="top"><span class="han">水</span><span class="cost">生 → Wood</span></div>
+    <div class="art"><span class="glyph">🌊</span></div>
+    <div class="name">Water</div>
+    <div class="type">Wisdom · Flow</div>
+    <div class="desc">Intelligence, adaptability, depth, the current that finds every path. Wise but elusive.</div>
+    <div class="rel">feeds <b>Wood</b> · is controlled by <b>Earth</b></div>
+  </div>
+
+</div>
+<div class="legend">
+  <span class="k"><span class="dot" style="background:var(--wood)"></span>Wood</span>
+  <span class="k"><span class="dot" style="background:var(--fire)"></span>Fire</span>
+  <span class="k"><span class="dot" style="background:var(--earth)"></span>Earth</span>
+  <span class="k"><span class="dot" style="background:var(--metal)"></span>Metal</span>
+  <span class="k"><span class="dot" style="background:var(--water)"></span>Water</span>
+  <span class="k">生 generates → · 剋 controls ✕</span>
+</div>
+</div>
+
+<!-- ===== TEN GODS ===== -->
+<div class="sec-title">
+  <div class="cn">十神 · The Ten Gods</div>
+  <h2>The Archetypes — your classes</h2>
+  <p>Ten forces describe how every element relates to your Day Master — your character classes, in five polar pairs.</p>
+</div>
+
+<div class="wrap"><div class="grid gods">
+
+  <div class="card self"><div class="frame"></div>
+    <div class="top"><span class="han">比肩</span><span class="cost">同 · Self</span></div>
+    <div class="art"><span class="glyph">🤝</span></div>
+    <div class="name">The Ally</div><div class="type">Peer · same element</div>
+    <div class="desc">Independence, self-reliance, equal companions who stand beside you.</div>
+    <div class="rel">pairs with <b>The Rival</b></div>
+  </div>
+
+  <div class="card self"><div class="frame"></div>
+    <div class="top"><span class="han">劫財</span><span class="cost">同 · Self</span></div>
+    <div class="art"><span class="glyph">⚡</span></div>
+    <div class="name">The Rival</div><div class="type">Rob Wealth · drive</div>
+    <div class="desc">Competitive fire, boldness, ambition — a partner that is both spur and threat.</div>
+    <div class="rel">pairs with <b>The Ally</b></div>
+  </div>
+
+  <div class="card output"><div class="frame"></div>
+    <div class="top"><span class="han">食神</span><span class="cost">洩 · Output</span></div>
+    <div class="art"><span class="glyph">🎨</span></div>
+    <div class="name">The Creator</div><div class="type">Eating God · flow</div>
+    <div class="desc">Gentle expression, craft, enjoyment — talent that pours out with ease.</div>
+    <div class="rel">pairs with <b>The Maverick</b></div>
+  </div>
+
+  <div class="card output"><div class="frame"></div>
+    <div class="top"><span class="han">傷官</span><span class="cost">洩 · Output</span></div>
+    <div class="art"><span class="glyph">🎭</span></div>
+    <div class="name">The Maverick</div><div class="type">Hurting Officer · genius</div>
+    <div class="desc">Bold, rule-breaking brilliance — the rebel talent that reshapes the frame.</div>
+    <div class="rel">pairs with <b>The Creator</b></div>
+  </div>
+
+  <div class="card wealth"><div class="frame"></div>
+    <div class="top"><span class="han">正財</span><span class="cost">財 · Wealth</span></div>
+    <div class="art"><span class="glyph">💎</span></div>
+    <div class="name">The Steward</div><div class="type">Direct Wealth · steady</div>
+    <div class="desc">Diligent, methodical prosperity — wealth built slowly and held with care.</div>
+    <div class="rel">pairs with <b>The Entrepreneur</b></div>
+  </div>
+
+  <div class="card wealth"><div class="frame"></div>
+    <div class="top"><span class="han">偏財</span><span class="cost">財 · Wealth</span></div>
+    <div class="art"><span class="glyph">🎲</span></div>
+    <div class="name">The Entrepreneur</div><div class="type">Indirect Wealth · bold</div>
+    <div class="desc">Opportunity, big moves, dynamic fortune — the gambler's eye for the deal.</div>
+    <div class="rel">pairs with <b>The Steward</b></div>
+  </div>
+
+  <div class="card officer"><div class="frame"></div>
+    <div class="top"><span class="han">正官</span><span class="cost">官 · Officer</span></div>
+    <div class="art"><span class="glyph">👑</span></div>
+    <div class="name">The Governor</div><div class="type">Direct Officer · order</div>
+    <div class="desc">Duty, honor, legitimate power — the one who upholds the rules and is trusted for it.</div>
+    <div class="rel">pairs with <b>The Challenger</b></div>
+  </div>
+
+  <div class="card officer"><div class="frame"></div>
+    <div class="top"><span class="han">偏官</span><span class="cost">殺 · Officer</span></div>
+    <div class="art"><span class="glyph">🗡️</span></div>
+    <div class="name">The Challenger</div><div class="type">Seven Killings · force</div>
+    <div class="desc">Intense drive under pressure — decisiveness, courage, the will to break through.</div>
+    <div class="rel">pairs with <b>The Governor</b></div>
+  </div>
+
+  <div class="card resource"><div class="frame"></div>
+    <div class="top"><span class="han">正印</span><span class="cost">印 · Resource</span></div>
+    <div class="art"><span class="glyph">📖</span></div>
+    <div class="name">The Scholar</div><div class="type">Direct Resource · nurture</div>
+    <div class="desc">Learning, protection, support — the mentor's gift that grows and shelters you.</div>
+    <div class="rel">pairs with <b>The Mystic</b></div>
+  </div>
+
+  <div class="card resource"><div class="frame"></div>
+    <div class="top"><span class="han">偏印</span><span class="cost">印 · Resource</span></div>
+    <div class="art"><span class="glyph">🔮</span></div>
+    <div class="name">The Mystic</div><div class="type">Indirect Resource · insight</div>
+    <div class="desc">Intuition, unconventional wisdom, solitary depth — the seer who knows without being told.</div>
+    <div class="rel">pairs with <b>The Scholar</b></div>
+  </div>
+
+</div></div>
+
+
+<!-- ===== HEAVENLY STEMS ===== -->
+<div class="sec-title">
+  <div class="cn">天干 · The Ten Heavenly Stems</div>
+  <h2>The Stems — the ten faces of heaven</h2>
+  <p>Two forms of each element — Yang and Yin — expressed as forces of nature. One of these is your Day Master.</p>
+</div>
+<div class="wrap"><div class="grid five">
+  <div class="card wood"><div class="frame"></div>
+    <div class="top"><span class="han">甲</span><span class="cost">Yang · Wood</span></div>
+    <div class="art"><span class="glyph">🌳</span></div>
+    <div class="name">Jia</div>
+    <div class="type">The towering tree</div>
+    <div class="desc">Pioneer, upright and unbending — the great tree that leads and shelters.</div>
+    <div class="rel">Heavenly Stem · Wood Yang</div>
+  </div>
+  <div class="card wood"><div class="frame"></div>
+    <div class="top"><span class="han">乙</span><span class="cost">Yin · Wood</span></div>
+    <div class="art"><span class="glyph">🌿</span></div>
+    <div class="name">Yi</div>
+    <div class="type">The vine &amp; flower</div>
+    <div class="desc">Supple survivor — bends without breaking, thrives in any crack of light.</div>
+    <div class="rel">Heavenly Stem · Wood Yin</div>
+  </div>
+  <div class="card fire"><div class="frame"></div>
+    <div class="top"><span class="han">丙</span><span class="cost">Yang · Fire</span></div>
+    <div class="art"><span class="glyph">☀️</span></div>
+    <div class="name">Bing</div>
+    <div class="type">The blazing sun</div>
+    <div class="desc">Radiant and generous — warmth for all, impossible to hide.</div>
+    <div class="rel">Heavenly Stem · Fire Yang</div>
+  </div>
+  <div class="card fire"><div class="frame"></div>
+    <div class="top"><span class="han">丁</span><span class="cost">Yin · Fire</span></div>
+    <div class="art"><span class="glyph">🕯️</span></div>
+    <div class="name">Ding</div>
+    <div class="type">The candle flame</div>
+    <div class="desc">Intimate, focused light — quiet warmth that guides in the dark.</div>
+    <div class="rel">Heavenly Stem · Fire Yin</div>
+  </div>
+  <div class="card earth"><div class="frame"></div>
+    <div class="top"><span class="han">戊</span><span class="cost">Yang · Earth</span></div>
+    <div class="art"><span class="glyph">⛰️</span></div>
+    <div class="name">Wu</div>
+    <div class="type">The mountain</div>
+    <div class="desc">Immovable and steadfast — the wall that shelters and endures.</div>
+    <div class="rel">Heavenly Stem · Earth Yang</div>
+  </div>
+  <div class="card earth"><div class="frame"></div>
+    <div class="top"><span class="han">己</span><span class="cost">Yin · Earth</span></div>
+    <div class="art"><span class="glyph">🌾</span></div>
+    <div class="name">Ji</div>
+    <div class="type">The fertile field</div>
+    <div class="desc">Nurturing soil — humble, cultivating, quietly making things grow.</div>
+    <div class="rel">Heavenly Stem · Earth Yin</div>
+  </div>
+  <div class="card metal"><div class="frame"></div>
+    <div class="top"><span class="han">庚</span><span class="cost">Yang · Metal</span></div>
+    <div class="art"><span class="glyph">⚔️</span></div>
+    <div class="name">Geng</div>
+    <div class="type">The forged blade</div>
+    <div class="desc">Righteous force — decisive, sharp, cutting through to what matters.</div>
+    <div class="rel">Heavenly Stem · Metal Yang</div>
+  </div>
+  <div class="card metal"><div class="frame"></div>
+    <div class="top"><span class="han">辛</span><span class="cost">Yin · Metal</span></div>
+    <div class="art"><span class="glyph">💍</span></div>
+    <div class="name">Xin</div>
+    <div class="type">The fine jewel</div>
+    <div class="desc">Refined and precise — beauty under pressure, elegance with an edge.</div>
+    <div class="rel">Heavenly Stem · Metal Yin</div>
+  </div>
+  <div class="card water"><div class="frame"></div>
+    <div class="top"><span class="han">壬</span><span class="cost">Yang · Water</span></div>
+    <div class="art"><span class="glyph">🌊</span></div>
+    <div class="name">Ren</div>
+    <div class="type">The vast ocean</div>
+    <div class="desc">Boundless depth — powerful currents, ambition that moves nations.</div>
+    <div class="rel">Heavenly Stem · Water Yang</div>
+  </div>
+  <div class="card water"><div class="frame"></div>
+    <div class="top"><span class="han">癸</span><span class="cost">Yin · Water</span></div>
+    <div class="art"><span class="glyph">🌧️</span></div>
+    <div class="name">Gui</div>
+    <div class="type">The gentle rain</div>
+    <div class="desc">Quiet wisdom — mist and dew that nourish without being seen.</div>
+    <div class="rel">Heavenly Stem · Water Yin</div>
+  </div>
+</div></div>
+
+<!-- ===== EARTHLY BRANCHES ===== -->
+<div class="sec-title">
+  <div class="cn">地支 · The Twelve Earthly Branches</div>
+  <h2>The Branches — the twelve animals of earth</h2>
+  <p>The twelve zodiac animals, each a two-hour gate of the day and a season of the year — the ground your chart stands on.</p>
+</div>
+<div class="wrap"><div class="grid gods">
+  <div class="card water"><div class="frame"></div>
+    <div class="top"><span class="han">子</span><span class="cost">23–01</span></div>
+    <div class="art"><span class="glyph">🐀</span></div>
+    <div class="name">Rat <span style="font-size:11px;color:var(--sub)">Zi</span></div>
+    <div class="type">Water Yang 🌙</div>
+    <div class="desc">Midnight water — clever, resourceful, the seed of a new cycle.</div>
+    <div class="rel">Earthly Branch · hour 23–01</div>
+  </div>
+  <div class="card earth"><div class="frame"></div>
+    <div class="top"><span class="han">丑</span><span class="cost">01–03</span></div>
+    <div class="art"><span class="glyph">🐂</span></div>
+    <div class="name">Ox <span style="font-size:11px;color:var(--sub)">Chou</span></div>
+    <div class="type">Earth Yin ❄️</div>
+    <div class="desc">Frozen field — patient, steadfast, storing strength for spring.</div>
+    <div class="rel">Earthly Branch · hour 01–03</div>
+  </div>
+  <div class="card wood"><div class="frame"></div>
+    <div class="top"><span class="han">寅</span><span class="cost">03–05</span></div>
+    <div class="art"><span class="glyph">🐅</span></div>
+    <div class="name">Tiger <span style="font-size:11px;color:var(--sub)">Yin</span></div>
+    <div class="type">Wood Yang 🌅</div>
+    <div class="desc">Dawn wood — bold new growth, courage that breaks the horizon.</div>
+    <div class="rel">Earthly Branch · hour 03–05</div>
+  </div>
+  <div class="card wood"><div class="frame"></div>
+    <div class="top"><span class="han">卯</span><span class="cost">05–07</span></div>
+    <div class="art"><span class="glyph">🐇</span></div>
+    <div class="name">Rabbit <span style="font-size:11px;color:var(--sub)">Mao</span></div>
+    <div class="type">Wood Yin 🌸</div>
+    <div class="desc">Morning bloom — gentle vitality, grace in quiet motion.</div>
+    <div class="rel">Earthly Branch · hour 05–07</div>
+  </div>
+  <div class="card earth"><div class="frame"></div>
+    <div class="top"><span class="han">辰</span><span class="cost">07–09</span></div>
+    <div class="art"><span class="glyph">🐉</span></div>
+    <div class="name">Dragon <span style="font-size:11px;color:var(--sub)">Chen</span></div>
+    <div class="type">Earth Yang 🌫️</div>
+    <div class="desc">Storehouse of water — mysterious power, the meeting of forces.</div>
+    <div class="rel">Earthly Branch · hour 07–09</div>
+  </div>
+  <div class="card fire"><div class="frame"></div>
+    <div class="top"><span class="han">巳</span><span class="cost">09–11</span></div>
+    <div class="art"><span class="glyph">🐍</span></div>
+    <div class="name">Snake <span style="font-size:11px;color:var(--sub)">Si</span></div>
+    <div class="type">Fire Yin 🌤️</div>
+    <div class="desc">Kindling fire — subtle intelligence, transformation coiled and ready.</div>
+    <div class="rel">Earthly Branch · hour 09–11</div>
+  </div>
+  <div class="card fire"><div class="frame"></div>
+    <div class="top"><span class="han">午</span><span class="cost">11–13</span></div>
+    <div class="art"><span class="glyph">🐎</span></div>
+    <div class="name">Horse <span style="font-size:11px;color:var(--sub)">Wu</span></div>
+    <div class="type">Fire Yang ☀️</div>
+    <div class="desc">High noon fire — peak vitality, passion at its brightest.</div>
+    <div class="rel">Earthly Branch · hour 11–13</div>
+  </div>
+  <div class="card earth"><div class="frame"></div>
+    <div class="top"><span class="han">未</span><span class="cost">13–15</span></div>
+    <div class="art"><span class="glyph">🐐</span></div>
+    <div class="name">Goat <span style="font-size:11px;color:var(--sub)">Wei</span></div>
+    <div class="type">Earth Yin 🌾</div>
+    <div class="desc">Warm dry earth — gentle, artistic, the storehouse of wood.</div>
+    <div class="rel">Earthly Branch · hour 13–15</div>
+  </div>
+  <div class="card metal"><div class="frame"></div>
+    <div class="top"><span class="han">申</span><span class="cost">15–17</span></div>
+    <div class="art"><span class="glyph">🐒</span></div>
+    <div class="name">Monkey <span style="font-size:11px;color:var(--sub)">Shen</span></div>
+    <div class="type">Metal Yang 🍂</div>
+    <div class="desc">Autumn metal — clever, restless, the turn toward harvest.</div>
+    <div class="rel">Earthly Branch · hour 15–17</div>
+  </div>
+  <div class="card metal"><div class="frame"></div>
+    <div class="top"><span class="han">酉</span><span class="cost">17–19</span></div>
+    <div class="art"><span class="glyph">🐓</span></div>
+    <div class="name">Rooster <span style="font-size:11px;color:var(--sub)">You</span></div>
+    <div class="type">Metal Yin 🌇</div>
+    <div class="desc">Refined metal — precise, proud, the polished edge of dusk.</div>
+    <div class="rel">Earthly Branch · hour 17–19</div>
+  </div>
+  <div class="card earth"><div class="frame"></div>
+    <div class="top"><span class="han">戌</span><span class="cost">19–21</span></div>
+    <div class="art"><span class="glyph">🐕</span></div>
+    <div class="name">Dog <span style="font-size:11px;color:var(--sub)">Xu</span></div>
+    <div class="type">Earth Yang 🌆</div>
+    <div class="desc">Guardian earth — loyal, watchful, the storehouse of fire.</div>
+    <div class="rel">Earthly Branch · hour 19–21</div>
+  </div>
+  <div class="card water"><div class="frame"></div>
+    <div class="top"><span class="han">亥</span><span class="cost">21–23</span></div>
+    <div class="art"><span class="glyph">🐖</span></div>
+    <div class="name">Pig <span style="font-size:11px;color:var(--sub)">Hai</span></div>
+    <div class="type">Water Yin 🌌</div>
+    <div class="desc">Deep night water — honest, generous, the ocean that ends the cycle.</div>
+    <div class="rel">Earthly Branch · hour 21–23</div>
+  </div>
+</div></div>
+
+<div class="foot wrap">
+  Every chart deals these cards in a unique hand — that hand is you.<br>
+  <a href="start.html">Reveal your deck →</a> &nbsp;·&nbsp; <a href="index.html">Elun</a>
+</div>
+
+</body>
+</html>
