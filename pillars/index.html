@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>The Sixty Day Pillars — Index | Elun</title>
+<meta name="description" content="All sixty BaZi day pillars — personality, love, career and appearance for each 干支 combination."/>
+<style>
+  :root{--ink:#f3ece0;--ink2:#c9bda9;--sub:#9c8f79;--faint:#6e6353;--bg:#100d0a;--card:#1c1712;
+    --line:#332a22;--line2:#40342a;--gold:#c9a227;--gold2:#e0c05a;
+    --wood:#5aa06a;--fire:#d0604e;--earth:#c9a227;--metal:#a8b0b8;--water:#5a9fd0;
+    --serif:'Noto Serif',ui-serif,Georgia,serif;--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
+  *{box-sizing:border-box} html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.7;font-size:16px;
+    background-image:radial-gradient(ellipse at 50% -10%,#221a10 0,transparent 55%)}
+  a{color:var(--gold2);text-decoration:none}
+  .wrap{max-width:780px;margin:0 auto;padding:0 22px}
+  nav{position:sticky;top:0;z-index:20;background:#100d0acc;backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  nav .inner{max-width:1040px;margin:0 auto;padding:0 22px;display:flex;align-items:center;justify-content:space-between;height:60px}
+  .logo{font-family:var(--serif);font-size:22px;font-weight:700;display:flex;align-items:center;gap:9px;color:var(--ink)}
+  .logo .m{color:var(--gold2)}
+  .logo .seal{width:26px;height:26px;border:1px solid var(--gold);color:var(--gold2);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:14px;font-family:var(--serif)}
+  .navlinks{font-size:13px;color:var(--sub)}
+  .hero{text-align:center;padding:56px 0 30px}
+  .hero .gj{font-family:var(--serif);font-size:76px;line-height:1;color:var(--ac);text-shadow:0 0 40px color-mix(in srgb,var(--ac) 45%,transparent)}
+  .hero h1{font-family:var(--serif);font-size:clamp(28px,5vw,40px);margin:14px 0 6px;font-weight:700}
+  .hero .meta{font-size:13px;color:var(--sub);letter-spacing:2px;text-transform:uppercase}
+  .hero .meta b{color:var(--ac);font-weight:600}
+  .hero .poetic{font-family:var(--serif);font-style:italic;font-size:17px;color:var(--ink2);max-width:540px;margin:20px auto 0}
+  .ebarbox{max-width:380px;margin:26px auto 0}
+  .ebar{display:flex;height:10px;border-radius:5px;overflow:hidden;background:#0d0b08}
+  .ebar i{height:100%}
+  .ebar .w{background:var(--wood)}.ebar .f{background:var(--fire)}.ebar .e{background:var(--earth)}.ebar .m{background:var(--metal)}.ebar .a{background:var(--water)}
+  .ecap{font-size:11px;color:var(--faint);text-align:center;margin-top:6px}
+  section{padding:26px 0 4px}
+  .box{border:1px solid var(--line);border-radius:16px;background:var(--card);padding:26px 28px;margin-bottom:18px}
+  .box:first-child{border-top:3px solid var(--ac)}
+  h2{font-family:var(--serif);font-size:14px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin:0 0 12px;font-weight:600}
+  .box p{font-size:14.8px;color:var(--ink2);margin:0 0 10px}
+  .box p b{color:var(--ink)}
+  .sitgod{display:flex;align-items:baseline;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+  .sitgod .h{font-family:var(--serif);font-size:22px;color:var(--gold2)}
+  .sitgod .n{font-family:var(--serif);font-weight:700;font-size:16px}
+  .sitgod .k{font-size:12px;color:var(--sub);letter-spacing:1px;text-transform:uppercase}
+  .hidden-tbl{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:4px}
+  .hidden-tbl td{padding:7px 4px;border-bottom:1px dashed var(--line);color:var(--ink2)}
+  .hidden-tbl td:first-child{font-family:var(--serif);font-size:16px;width:44px;color:var(--ink)}
+  .fam{display:flex;gap:8px;flex-wrap:wrap}
+  .fam span{border:1px solid var(--gold);border-radius:16px;padding:4px 13px;font-size:12.5px;color:var(--gold2);background:#c9a2270d}
+  .pn{display:flex;justify-content:space-between;gap:10px;padding:30px 0 8px;font-size:13.5px}
+  .pn a{border:1px solid var(--line2);border-radius:20px;padding:7px 16px;color:var(--ink2)}
+  .pn a:hover{border-color:var(--gold);color:var(--gold2)}
+  .cta{text-align:center;padding:36px 0 60px}
+  .cta .btn{background:linear-gradient(180deg,var(--gold2),var(--gold));color:#1a1206;font-weight:700;padding:11px 24px;border-radius:24px;font-size:14px;display:inline-block}
+  .cta p{color:var(--sub);font-size:14px;max-width:480px;margin:0 auto 18px}
+  footer{border-top:1px solid var(--line);padding:30px 0;text-align:center;color:var(--faint);font-size:12px}
+
+.gridx{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;padding:30px 0 60px}
+.it{display:flex;gap:10px;align-items:center;border:1px solid var(--line);border-radius:12px;background:var(--card);padding:12px 14px;color:var(--ink2);font-size:13px}
+.it:hover{border-color:var(--gold)}
+.it .g{font-family:var(--serif);font-size:22px;color:var(--ac)}
+.it small{color:var(--faint)}</style></head><body>
+<nav><div class="inner">
+  <a href="../index.html" class="logo"><span class="seal">乙</span><span class="m">Elun</span></a>
+  <span class="navlinks"><a href="../daymasters.html">Day Masters</a> · <a href="../start.html">Create your chart</a></span>
+</div></nav>
+<div class="hero wrap"><h1 style="font-family:var(--serif)">The Sixty Day Pillars</h1>
+<p style="color:var(--ink2)">Every stem-branch combination, each its own personality signature.</p></div>
+<div class="wrap"><div class="gridx"><a class="it" style="--ac:var(--wood)" href="jia-zi.html"><span class="g">甲子</span><span>Jia Zi<br><small>Rat</small></span></a><a class="it" style="--ac:var(--wood)" href="jia-yin.html"><span class="g">甲寅</span><span>Jia Yin<br><small>Tiger</small></span></a><a class="it" style="--ac:var(--wood)" href="jia-chen.html"><span class="g">甲辰</span><span>Jia Chen<br><small>Dragon</small></span></a><a class="it" style="--ac:var(--wood)" href="jia-wu.html"><span class="g">甲午</span><span>Jia Wu<br><small>Horse</small></span></a><a class="it" style="--ac:var(--wood)" href="jia-shen.html"><span class="g">甲申</span><span>Jia Shen<br><small>Monkey</small></span></a><a class="it" style="--ac:var(--wood)" href="jia-xu.html"><span class="g">甲戌</span><span>Jia Xu<br><small>Dog</small></span></a><a class="it" style="--ac:var(--wood)" href="yi-chou.html"><span class="g">乙丑</span><span>Yi Chou<br><small>Ox</small></span></a><a class="it" style="--ac:var(--wood)" href="yi-mao.html"><span class="g">乙卯</span><span>Yi Mao<br><small>Rabbit</small></span></a><a class="it" style="--ac:var(--wood)" href="yi-si.html"><span class="g">乙巳</span><span>Yi Si<br><small>Snake</small></span></a><a class="it" style="--ac:var(--wood)" href="yi-wei.html"><span class="g">乙未</span><span>Yi Wei<br><small>Goat</small></span></a><a class="it" style="--ac:var(--wood)" href="yi-you.html"><span class="g">乙酉</span><span>Yi You<br><small>Rooster</small></span></a><a class="it" style="--ac:var(--wood)" href="yi-hai.html"><span class="g">乙亥</span><span>Yi Hai<br><small>Pig</small></span></a><a class="it" style="--ac:var(--fire)" href="bing-zi.html"><span class="g">丙子</span><span>Bing Zi<br><small>Rat</small></span></a><a class="it" style="--ac:var(--fire)" href="bing-yin.html"><span class="g">丙寅</span><span>Bing Yin<br><small>Tiger</small></span></a><a class="it" style="--ac:var(--fire)" href="bing-chen.html"><span class="g">丙辰</span><span>Bing Chen<br><small>Dragon</small></span></a><a class="it" style="--ac:var(--fire)" href="bing-wu.html"><span class="g">丙午</span><span>Bing Wu<br><small>Horse</small></span></a><a class="it" style="--ac:var(--fire)" href="bing-shen.html"><span class="g">丙申</span><span>Bing Shen<br><small>Monkey</small></span></a><a class="it" style="--ac:var(--fire)" href="bing-xu.html"><span class="g">丙戌</span><span>Bing Xu<br><small>Dog</small></span></a><a class="it" style="--ac:var(--fire)" href="ding-chou.html"><span class="g">丁丑</span><span>Ding Chou<br><small>Ox</small></span></a><a class="it" style="--ac:var(--fire)" href="ding-mao.html"><span class="g">丁卯</span><span>Ding Mao<br><small>Rabbit</small></span></a><a class="it" style="--ac:var(--fire)" href="ding-si.html"><span class="g">丁巳</span><span>Ding Si<br><small>Snake</small></span></a><a class="it" style="--ac:var(--fire)" href="ding-wei.html"><span class="g">丁未</span><span>Ding Wei<br><small>Goat</small></span></a><a class="it" style="--ac:var(--fire)" href="ding-you.html"><span class="g">丁酉</span><span>Ding You<br><small>Rooster</small></span></a><a class="it" style="--ac:var(--fire)" href="ding-hai.html"><span class="g">丁亥</span><span>Ding Hai<br><small>Pig</small></span></a><a class="it" style="--ac:var(--earth)" href="wu-zi.html"><span class="g">戊子</span><span>Wu Zi<br><small>Rat</small></span></a><a class="it" style="--ac:var(--earth)" href="wu-yin.html"><span class="g">戊寅</span><span>Wu Yin<br><small>Tiger</small></span></a><a class="it" style="--ac:var(--earth)" href="wu-chen.html"><span class="g">戊辰</span><span>Wu Chen<br><small>Dragon</small></span></a><a class="it" style="--ac:var(--earth)" href="wu-wu.html"><span class="g">戊午</span><span>Wu Wu<br><small>Horse</small></span></a><a class="it" style="--ac:var(--earth)" href="wu-shen.html"><span class="g">戊申</span><span>Wu Shen<br><small>Monkey</small></span></a><a class="it" style="--ac:var(--earth)" href="wu-xu.html"><span class="g">戊戌</span><span>Wu Xu<br><small>Dog</small></span></a><a class="it" style="--ac:var(--earth)" href="ji-chou.html"><span class="g">己丑</span><span>Ji Chou<br><small>Ox</small></span></a><a class="it" style="--ac:var(--earth)" href="ji-mao.html"><span class="g">己卯</span><span>Ji Mao<br><small>Rabbit</small></span></a><a class="it" style="--ac:var(--earth)" href="ji-si.html"><span class="g">己巳</span><span>Ji Si<br><small>Snake</small></span></a><a class="it" style="--ac:var(--earth)" href="ji-wei.html"><span class="g">己未</span><span>Ji Wei<br><small>Goat</small></span></a><a class="it" style="--ac:var(--earth)" href="ji-you.html"><span class="g">己酉</span><span>Ji You<br><small>Rooster</small></span></a><a class="it" style="--ac:var(--earth)" href="ji-hai.html"><span class="g">己亥</span><span>Ji Hai<br><small>Pig</small></span></a><a class="it" style="--ac:var(--metal)" href="geng-zi.html"><span class="g">庚子</span><span>Geng Zi<br><small>Rat</small></span></a><a class="it" style="--ac:var(--metal)" href="geng-yin.html"><span class="g">庚寅</span><span>Geng Yin<br><small>Tiger</small></span></a><a class="it" style="--ac:var(--metal)" href="geng-chen.html"><span class="g">庚辰</span><span>Geng Chen<br><small>Dragon</small></span></a><a class="it" style="--ac:var(--metal)" href="geng-wu.html"><span class="g">庚午</span><span>Geng Wu<br><small>Horse</small></span></a><a class="it" style="--ac:var(--metal)" href="geng-shen.html"><span class="g">庚申</span><span>Geng Shen<br><small>Monkey</small></span></a><a class="it" style="--ac:var(--metal)" href="geng-xu.html"><span class="g">庚戌</span><span>Geng Xu<br><small>Dog</small></span></a><a class="it" style="--ac:var(--metal)" href="xin-chou.html"><span class="g">辛丑</span><span>Xin Chou<br><small>Ox</small></span></a><a class="it" style="--ac:var(--metal)" href="xin-mao.html"><span class="g">辛卯</span><span>Xin Mao<br><small>Rabbit</small></span></a><a class="it" style="--ac:var(--metal)" href="xin-si.html"><span class="g">辛巳</span><span>Xin Si<br><small>Snake</small></span></a><a class="it" style="--ac:var(--metal)" href="xin-wei.html"><span class="g">辛未</span><span>Xin Wei<br><small>Goat</small></span></a><a class="it" style="--ac:var(--metal)" href="xin-you.html"><span class="g">辛酉</span><span>Xin You<br><small>Rooster</small></span></a><a class="it" style="--ac:var(--metal)" href="xin-hai.html"><span class="g">辛亥</span><span>Xin Hai<br><small>Pig</small></span></a><a class="it" style="--ac:var(--water)" href="ren-zi.html"><span class="g">壬子</span><span>Ren Zi<br><small>Rat</small></span></a><a class="it" style="--ac:var(--water)" href="ren-yin.html"><span class="g">壬寅</span><span>Ren Yin<br><small>Tiger</small></span></a><a class="it" style="--ac:var(--water)" href="ren-chen.html"><span class="g">壬辰</span><span>Ren Chen<br><small>Dragon</small></span></a><a class="it" style="--ac:var(--water)" href="ren-wu.html"><span class="g">壬午</span><span>Ren Wu<br><small>Horse</small></span></a><a class="it" style="--ac:var(--water)" href="ren-shen.html"><span class="g">壬申</span><span>Ren Shen<br><small>Monkey</small></span></a><a class="it" style="--ac:var(--water)" href="ren-xu.html"><span class="g">壬戌</span><span>Ren Xu<br><small>Dog</small></span></a><a class="it" style="--ac:var(--water)" href="gui-chou.html"><span class="g">癸丑</span><span>Gui Chou<br><small>Ox</small></span></a><a class="it" style="--ac:var(--water)" href="gui-mao.html"><span class="g">癸卯</span><span>Gui Mao<br><small>Rabbit</small></span></a><a class="it" style="--ac:var(--water)" href="gui-si.html"><span class="g">癸巳</span><span>Gui Si<br><small>Snake</small></span></a><a class="it" style="--ac:var(--water)" href="gui-wei.html"><span class="g">癸未</span><span>Gui Wei<br><small>Goat</small></span></a><a class="it" style="--ac:var(--water)" href="gui-you.html"><span class="g">癸酉</span><span>Gui You<br><small>Rooster</small></span></a><a class="it" style="--ac:var(--water)" href="gui-hai.html"><span class="g">癸亥</span><span>Gui Hai<br><small>Pig</small></span></a></div></div>
+<footer>© 2026 Elun · <a href="../daymasters.html">The Ten Day Masters</a></footer>
+</body></html>

@@ -102,7 +102,9 @@
   .pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
   @media(max-width:820px){.pgrid{grid-template-columns:repeat(2,1fr)}}
   @media(max-width:520px){.pgrid{grid-template-columns:1fr}}
-  .p60{border:1px solid var(--line);border-radius:14px;background:var(--card);padding:16px 16px 13px;transition:.15s;position:relative}
+  .p60{display:block;color:inherit;border:1px solid var(--line);border-radius:14px;background:var(--card);padding:16px 16px 13px;transition:.15s;position:relative}
+  .p60 .more{font-size:10.5px;color:var(--faint);margin-top:9px;text-align:right;letter-spacing:1px}
+  .p60:hover .more{color:var(--gold2)}
   .p60:hover{border-color:var(--gold);transform:translateY(-2px)}
   .p60 .top{display:flex;align-items:baseline;gap:9px;margin-bottom:6px}
   .p60 .gj{font-family:var(--serif);font-size:24px;color:var(--gac)}
@@ -116,6 +118,21 @@
   .ebar i{height:100%}
   .ebar .w{background:var(--wood)} .ebar .f{background:var(--fire)} .ebar .e{background:var(--earth)}
   .ebar .m{background:var(--metal)} .ebar .a{background:var(--water)}
+
+
+  /* stem mini card (from the Elun deck) */
+  .stemcard{float:right;width:152px;margin:4px 0 14px 22px;border:1px solid var(--line2);border-radius:12px;
+    background:linear-gradient(160deg,#1d2117,#16120d);padding:12px 12px 10px;text-align:center;
+    box-shadow:0 12px 28px -14px #000;border-color:color-mix(in srgb,var(--ac) 35%,var(--line2))}
+  .stemcard .schan{font-family:var(--serif);font-size:19px;color:var(--ac);text-align:left;line-height:1}
+  .stemcard .scart{font-size:44px;line-height:1.25;padding:7px 0 4px;filter:drop-shadow(0 4px 10px #0009)}
+  .stemcard .scart svg{width:112px;height:112px;display:block;margin:0 auto}
+  .stemcard .scname{font-family:var(--serif);font-weight:700;font-size:14px;color:var(--ac)}
+  .stemcard .sctype{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--sub);margin-top:2px}
+  .stemcard .sclink{display:block;font-size:10.5px;color:var(--faint);margin-top:8px;border-top:1px solid var(--line);padding-top:6px}
+  .stemcard .sclink:hover{color:var(--gold2)}
+  .dm .card::after{content:"";display:block;clear:both}
+  @media(max-width:600px){.stemcard{float:none;margin:6px auto 18px}}
 
   .endcta{text-align:center;padding:70px 0 80px}
   .endcta h2{font-family:var(--serif);font-size:clamp(26px,4.5vw,38px);margin:0 0 12px;font-weight:700}
@@ -173,7 +190,26 @@
       <div class="tt"><h2>Jia — Yang Wood</h2><div class="meta"><b>The Tall Tree</b> · upward, principled, unbending</div></div>
       <div class="arch">“The Pioneer”</div>
     </div>
-    <p class="ess">Jia is the towering tree: it grows in one direction — up. People with this Day Master tend to have a strong internal compass and visible integrity; they'd rather break than bend, and others sense it. They are natural first-movers who feel most alive when building something long-term: a career, an institution, a family, a body of work. Growth for its own sake isn't enough — it has to be growth with a trunk, a direction, a point.</p>
+    <div class="stemcard"><div class="schan">甲</div><div class="scart"><svg viewBox="0 0 100 100" aria-label="A colossal tree filling the sky, a tiny human at its roots">
+      <defs><linearGradient id="dmJiaCan" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#5cb271"/><stop offset="60%" stop-color="#356b43"/><stop offset="100%" stop-color="#20452c"/></linearGradient>
+      <filter id="dmJiaSoft"><feGaussianBlur stdDeviation="1.1"/></filter></defs>
+      <ellipse cx="50" cy="6" rx="74" ry="36" fill="url(#dmJiaCan)"/><ellipse cx="10" cy="26" rx="32" ry="17" fill="url(#dmJiaCan)"/>
+      <ellipse cx="90" cy="24" rx="32" ry="18" fill="url(#dmJiaCan)"/><ellipse cx="33" cy="31" rx="27" ry="15" fill="#2c5c39"/>
+      <ellipse cx="69" cy="33" rx="25" ry="14" fill="#2c5c39"/><ellipse cx="50" cy="25" rx="31" ry="16" fill="#3f7f4f"/>
+      <ellipse cx="19" cy="44" rx="14" ry="7.5" fill="#20452c"/><ellipse cx="49" cy="49" rx="13" ry="7" fill="#20452c"/>
+      <ellipse cx="80" cy="45" rx="13" ry="7" fill="#20452c"/><ellipse cx="34" cy="47" rx="10" ry="5.5" fill="#295237"/>
+      <ellipse cx="65" cy="48" rx="10" ry="5.5" fill="#295237"/><ellipse cx="38" cy="12" rx="18" ry="7" fill="#83cc92" opacity=".5"/>
+      <ellipse cx="72" cy="18" rx="12" ry="5" fill="#83cc92" opacity=".35"/>
+      <path d="M0 92 Q26 89.5 50 90.5 Q75 91.5 100 90 L100 100 L0 100 Z" fill="#12180d"/>
+      <path d="M38 92 C40 82 41.5 72 42.3 62 C42.8 55 43.3 48 43.8 42 C39 38 31 35 25 30 L27.5 26.5 C33.5 31 40 34 44.2 37 C44.5 31 44.8 27 45.1 22 L54.9 22 C55.2 27 55.5 31 55.8 37 C60 34 66.5 31 72.5 26.5 L75 30 C69 35 61 38 56.2 42 C56.7 48 57.2 55 57.7 62 C58.5 72 60 82 62 92 C66 91 71 89 76 90.5 L76 93.2 L24 93.2 L24 90.5 C29 89 34 91 38 92 Z" fill="#463019"/>
+      <path d="M46 89 C46.8 76 47.4 60 47.8 26 L50.6 26 C51 60 51.4 76 52 89 Z" fill="#6b4a2e" opacity=".85"/>
+      <path d="M16 54 q1.5 -1.5 3 0 M21 57.5 q1.2 -1.2 2.4 0 M82 56 q1.3 -1.3 2.6 0" stroke="#d8cdb8" stroke-width=".65" fill="none" stroke-linecap="round" opacity=".75"/>
+      <circle cx="21" cy="87" r="1.05" fill="#e0c05a"/>
+      <path d="M21 88.1 L21 91.2 M21 88.9 L19.9 90.3 M21 88.9 L22.1 90.3 M21 91.2 L20 92.5 M21 91.2 L22 92.5" stroke="#e0c05a" stroke-width=".8" stroke-linecap="round" fill="none"/>
+      <circle cx="12" cy="62" r=".8" fill="#e0c05a" opacity=".85" filter="url(#dmJiaSoft)"/><circle cx="88" cy="66" r=".6" fill="#e0c05a" opacity=".6" filter="url(#dmJiaSoft)"/>
+    </svg></div><div class="scname">Jia</div><div class="sctype">The colossal tree</div><a class="sclink" href="cards.html">from the Elun deck →</a></div>
+        <p class="ess">Jia is the towering tree: it grows in one direction — up. People with this Day Master tend to have a strong internal compass and visible integrity; they'd rather break than bend, and others sense it. They are natural first-movers who feel most alive when building something long-term: a career, an institution, a family, a body of work. Growth for its own sake isn't enough — it has to be growth with a trunk, a direction, a point.</p>
     <h3>Strengths</h3>
     <div class="str"><span>Principled leadership</span><span>Long-term vision</span><span>Reliability</span><span>Moral courage</span></div>
     <h3>The Shadow Side</h3>
@@ -202,7 +238,8 @@
       <div class="tt"><h2>Yi — Yin Wood</h2><div class="meta"><b>The Vine</b> · adaptive, persuasive, quietly unstoppable</div></div>
       <div class="arch">“The Diplomat”</div>
     </div>
-    <p class="ess">Yi is the vine, the orchid, the grass that survives the storm that snaps the tree. Where Jia grows by force of will, Yi grows by finding the way around: reading the room, borrowing support, turning obstacles into trellises. People with this Day Master are socially intelligent, aesthetically tuned, and far tougher than they look — their flexibility <i>is</i> their strength, and it is easy to underestimate until you notice they've reached the top of the wall.</p>
+    <div class="stemcard"><div class="schan">乙</div><div class="scart">🌿</div><div class="scname">Yi</div><div class="sctype">The vine & flower</div><a class="sclink" href="cards.html">from the Elun deck →</a></div>
+        <p class="ess">Yi is the vine, the orchid, the grass that survives the storm that snaps the tree. Where Jia grows by force of will, Yi grows by finding the way around: reading the room, borrowing support, turning obstacles into trellises. People with this Day Master are socially intelligent, aesthetically tuned, and far tougher than they look — their flexibility <i>is</i> their strength, and it is easy to underestimate until you notice they've reached the top of the wall.</p>
     <h3>Strengths</h3>
     <div class="str"><span>Adaptability</span><span>Social intelligence</span><span>Persuasion</span><span>Quiet resilience</span></div>
     <h3>The Shadow Side</h3>
@@ -231,7 +268,8 @@
       <div class="tt"><h2>Bing — Yang Fire</h2><div class="meta"><b>The Sun</b> · radiant, generous, impossible to ignore</div></div>
       <div class="arch">“The Radiant”</div>
     </div>
-    <p class="ess">Bing is the sun: it shines on everyone, without calculation, because shining is simply what it does. People with this Day Master carry natural warmth and visibility — they energize rooms, speak in headlines, and give praise and help freely. There's an innate optimism and a big-picture instinct; details bore them, but direction excites them. Like the sun, they don't chase attention so much as attract it by existing.</p>
+    <div class="stemcard"><div class="schan">丙</div><div class="scart">☀️</div><div class="scname">Bing</div><div class="sctype">The blazing sun</div><a class="sclink" href="cards.html">from the Elun deck →</a></div>
+        <p class="ess">Bing is the sun: it shines on everyone, without calculation, because shining is simply what it does. People with this Day Master carry natural warmth and visibility — they energize rooms, speak in headlines, and give praise and help freely. There's an innate optimism and a big-picture instinct; details bore them, but direction excites them. Like the sun, they don't chase attention so much as attract it by existing.</p>
     <h3>Strengths</h3>
     <div class="str"><span>Charisma</span><span>Generosity</span><span>Optimism</span><span>Big-picture instinct</span></div>
     <h3>The Shadow Side</h3>
@@ -260,7 +298,8 @@
       <div class="tt"><h2>Ding — Yin Fire</h2><div class="meta"><b>The Lantern</b> · focused, perceptive, warm at close range</div></div>
       <div class="arch">“The Illuminator”</div>
     </div>
-    <p class="ess">Ding is the candle, the lantern, the hearth — fire that is aimed rather than broadcast. Where Bing lights the world, Ding lights the page in front of it, and what it illuminates, it illuminates completely. People with this Day Master are perceptive to an almost uncomfortable degree: they notice moods, subtext, and the one detail everyone else missed. Their warmth is quieter but more personal — a Ding person makes you feel like the only one in the room.</p>
+    <div class="stemcard"><div class="schan">丁</div><div class="scart">🕯️</div><div class="scname">Ding</div><div class="sctype">The candle flame</div><a class="sclink" href="cards.html">from the Elun deck →</a></div>
+        <p class="ess">Ding is the candle, the lantern, the hearth — fire that is aimed rather than broadcast. Where Bing lights the world, Ding lights the page in front of it, and what it illuminates, it illuminates completely. People with this Day Master are perceptive to an almost uncomfortable degree: they notice moods, subtext, and the one detail everyone else missed. Their warmth is quieter but more personal — a Ding person makes you feel like the only one in the room.</p>
     <h3>Strengths</h3>
     <div class="str"><span>Insight</span><span>Depth of focus</span><span>Emotional attunement</span><span>Devotion</span></div>
     <h3>The Shadow Side</h3>
@@ -289,7 +328,8 @@
       <div class="tt"><h2>Wu — Yang Earth</h2><div class="meta"><b>The Mountain</b> · steadfast, protective, slow to move</div></div>
       <div class="arch">“The Anchor”</div>
     </div>
-    <p class="ess">Wu is the mountain: massive, dependable, unmoved by weather. People with this Day Master radiate stability — they are the ones others instinctively stand behind in a crisis. Trust, once given, is nearly geological; commitments are kept not out of duty but because keeping things is simply their nature. Wu absorbs pressure that would crack other people and often becomes the unofficial load-bearing wall of a family or team.</p>
+    <div class="stemcard"><div class="schan">戊</div><div class="scart">⛰️</div><div class="scname">Wu</div><div class="sctype">The mountain</div><a class="sclink" href="cards.html">from the Elun deck →</a></div>
+        <p class="ess">Wu is the mountain: massive, dependable, unmoved by weather. People with this Day Master radiate stability — they are the ones others instinctively stand behind in a crisis. Trust, once given, is nearly geological; commitments are kept not out of duty but because keeping things is simply their nature. Wu absorbs pressure that would crack other people and often becomes the unofficial load-bearing wall of a family or team.</p>
     <h3>Strengths</h3>
     <div class="str"><span>Steadfastness</span><span>Trustworthiness</span><span>Crisis calm</span><span>Protective instinct</span></div>
     <h3>The Shadow Side</h3>
@@ -318,7 +358,8 @@
       <div class="tt"><h2>Ji — Yin Earth</h2><div class="meta"><b>The Garden</b> · nurturing, receptive, quietly productive</div></div>
       <div class="arch">“The Cultivator”</div>
     </div>
-    <p class="ess">Ji is the garden soil — the earth that feeds, not the earth that towers. People with this Day Master are natural cultivators: of talent, of teams, of children, of any living thing entrusted to them. They are tolerant, practical, and unglamorously essential; things simply grow better near them. Ji has a rare capacity to accept people as they are while patiently improving the conditions around them, and it accumulates resources the way soil accumulates richness — slowly, invisibly, permanently.</p>
+    <div class="stemcard"><div class="schan">己</div><div class="scart">🌾</div><div class="scname">Ji</div><div class="sctype">The fertile field</div><a class="sclink" href="cards.html">from the Elun deck →</a></div>
+        <p class="ess">Ji is the garden soil — the earth that feeds, not the earth that towers. People with this Day Master are natural cultivators: of talent, of teams, of children, of any living thing entrusted to them. They are tolerant, practical, and unglamorously essential; things simply grow better near them. Ji has a rare capacity to accept people as they are while patiently improving the conditions around them, and it accumulates resources the way soil accumulates richness — slowly, invisibly, permanently.</p>
     <h3>Strengths</h3>
     <div class="str"><span>Nurturance</span><span>Tolerance</span><span>Practical wisdom</span><span>Steady accumulation</span></div>
     <h3>The Shadow Side</h3>
@@ -347,7 +388,8 @@
       <div class="tt"><h2>Geng — Yang Metal</h2><div class="meta"><b>The Blade</b> · decisive, just, forged by hardship</div></div>
       <div class="arch">“The Vanguard”</div>
     </div>
-    <p class="ess">Geng is raw metal — the ore, the axe, the sword before polishing. People with this Day Master are direct to the point of bluntness, allergic to injustice, and strangely energized by adversity: Geng is the one Day Master traditionally said to <i>improve</i> under fire, the way steel improves in the forge. They cut through ambiguity, say the thing everyone is thinking, and act while others deliberate. Loyalty runs deep and is expressed in deeds, not speeches.</p>
+    <div class="stemcard"><div class="schan">庚</div><div class="scart">⚔️</div><div class="scname">Geng</div><div class="sctype">The forged blade</div><a class="sclink" href="cards.html">from the Elun deck →</a></div>
+        <p class="ess">Geng is raw metal — the ore, the axe, the sword before polishing. People with this Day Master are direct to the point of bluntness, allergic to injustice, and strangely energized by adversity: Geng is the one Day Master traditionally said to <i>improve</i> under fire, the way steel improves in the forge. They cut through ambiguity, say the thing everyone is thinking, and act while others deliberate. Loyalty runs deep and is expressed in deeds, not speeches.</p>
     <h3>Strengths</h3>
     <div class="str"><span>Decisiveness</span><span>Sense of justice</span><span>Resilience under fire</span><span>Executional force</span></div>
     <h3>The Shadow Side</h3>
@@ -376,7 +418,8 @@
       <div class="tt"><h2>Xin — Yin Metal</h2><div class="meta"><b>The Jewel</b> · refined, exacting, quietly proud</div></div>
       <div class="arch">“The Refiner”</div>
     </div>
-    <p class="ess">Xin is finished metal — the jewel, the needle, the scalpel. Where Geng is force, Xin is precision. People with this Day Master have exquisite standards: for their work, their appearance, their words, their circle. They notice flaws the way others notice colors, and their craft — whatever the field — tends toward polish that looks effortless and isn't. Beneath the composed surface sits real pride: Xin knows its worth and quietly expects the world to notice.</p>
+    <div class="stemcard"><div class="schan">辛</div><div class="scart">💍</div><div class="scname">Xin</div><div class="sctype">The fine jewel</div><a class="sclink" href="cards.html">from the Elun deck →</a></div>
+        <p class="ess">Xin is finished metal — the jewel, the needle, the scalpel. Where Geng is force, Xin is precision. People with this Day Master have exquisite standards: for their work, their appearance, their words, their circle. They notice flaws the way others notice colors, and their craft — whatever the field — tends toward polish that looks effortless and isn't. Beneath the composed surface sits real pride: Xin knows its worth and quietly expects the world to notice.</p>
     <h3>Strengths</h3>
     <div class="str"><span>Precision</span><span>Taste & refinement</span><span>Persuasive charm</span><span>High standards</span></div>
     <h3>The Shadow Side</h3>
@@ -405,7 +448,8 @@
       <div class="tt"><h2>Ren — Yang Water</h2><div class="meta"><b>The Ocean</b> · expansive, strategic, always moving</div></div>
       <div class="arch">“The Navigator”</div>
     </div>
-    <p class="ess">Ren is the ocean and the great river: vast, restless, connecting distant shores. People with this Day Master think in systems and horizons — they absorb information omnivorously, adapt to any container, and carry an entrepreneurial current that keeps them moving toward the next opening. Ren is socially fluid in a different way from Yi: not by climbing, but by flowing — comfortable with strangers, at ease in foreign contexts, natural at connecting people and ideas across boundaries.</p>
+    <div class="stemcard"><div class="schan">壬</div><div class="scart">🌊</div><div class="scname">Ren</div><div class="sctype">The vast ocean</div><a class="sclink" href="cards.html">from the Elun deck →</a></div>
+        <p class="ess">Ren is the ocean and the great river: vast, restless, connecting distant shores. People with this Day Master think in systems and horizons — they absorb information omnivorously, adapt to any container, and carry an entrepreneurial current that keeps them moving toward the next opening. Ren is socially fluid in a different way from Yi: not by climbing, but by flowing — comfortable with strangers, at ease in foreign contexts, natural at connecting people and ideas across boundaries.</p>
     <h3>Strengths</h3>
     <div class="str"><span>Strategic breadth</span><span>Adaptability at scale</span><span>Connector instinct</span><span>Bold momentum</span></div>
     <h3>The Shadow Side</h3>
@@ -434,7 +478,8 @@
       <div class="tt"><h2>Gui — Yin Water</h2><div class="meta"><b>The Rain</b> · subtle, intuitive, deeper than it appears</div></div>
       <div class="arch">“The Seer”</div>
     </div>
-    <p class="ess">Gui is rain, mist, the underground spring — water in its most subtle form. People with this Day Master perceive what others miss: patterns, motives, the weather of a room before anyone speaks. They are the most inward of the ten, often rich in imagination and memory, with a quiet persistence that — like water finding cracks — eventually gets everywhere it intends to go. Gui influences without announcing itself; by the time you notice, the landscape has already changed.</p>
+    <div class="stemcard"><div class="schan">癸</div><div class="scart">🌧️</div><div class="scname">Gui</div><div class="sctype">The gentle rain</div><a class="sclink" href="cards.html">from the Elun deck →</a></div>
+        <p class="ess">Gui is rain, mist, the underground spring — water in its most subtle form. People with this Day Master perceive what others miss: patterns, motives, the weather of a room before anyone speaks. They are the most inward of the ten, often rich in imagination and memory, with a quiet persistence that — like water finding cracks — eventually gets everywhere it intends to go. Gui influences without announcing itself; by the time you notice, the landscape has already changed.</p>
     <h3>Strengths</h3>
     <div class="str"><span>Intuition</span><span>Imagination</span><span>Subtle persistence</span><span>Emotional depth</span></div>
     <h3>The Shadow Side</h3>
@@ -570,12 +615,13 @@ for(const [stem,name,anchor,color] of DM){
   html+=`<div class="pgroup" style="--gac:${color}">
     <div class="gh"><span class="h">${stem}</span><span class="n">${name}</span><a href="#${anchor}">read the ${name.split(" ")[0]} profile ↑</a></div>
     <div class="pgrid">`+
-    group.map(p=>`<div class="p60" style="--gac:${color}">
+    group.map(p=>`<a class="p60" href="pillars/${p.py.toLowerCase().replace(" ","-")}.html" style="--gac:${color}">
       <div class="top"><span class="gj">${p.gj}</span><span class="py">${p.py}</span><span class="an">${p.an}</span></div>
       <p class="pd">${p.d.replace(/^(The [^—]+)—/,"<b>$1</b>—")}</p>
       ${p.c.length?`<div class="cb">${p.c.join(" · ")}</div>`:""}
       ${bar(scores(p.gj))}
-    </div>`).join("")+`</div></div>`;
+      <div class="more">full profile →</div>
+    </a>`).join("")+`</div></div>`;
 }
 root.innerHTML=html;
 </script>

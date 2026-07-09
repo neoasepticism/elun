@@ -269,32 +269,46 @@
 <div class="wrap"><div class="grid five">
   <div class="card wood"><div class="frame"></div>
     <div class="top"><span class="han">甲</span><span class="cost">Yang · Wood</span></div>
-    <div class="art"><svg class="glyph-svg" viewBox="0 0 100 100" aria-label="A colossal ancient tree towering over a tiny human figure">
+    <div class="art"><svg class="glyph-svg" viewBox="0 0 100 100" aria-label="A colossal tree filling the sky, a tiny human at its roots">
       <defs>
-        <radialGradient id="jiaGlow" cx="50%" cy="30%" r="65%">
-          <stop offset="0%" stop-color="#4fae63" stop-opacity=".28"/>
-          <stop offset="100%" stop-color="#4fae63" stop-opacity="0"/>
-        </radialGradient>
+        <linearGradient id="jiaCan" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#5cb271"/>
+          <stop offset="60%" stop-color="#356b43"/>
+          <stop offset="100%" stop-color="#20452c"/>
+        </linearGradient>
+        <filter id="jiaSoft"><feGaussianBlur stdDeviation="1.1"/></filter>
       </defs>
-      <rect x="0" y="0" width="100" height="100" fill="url(#jiaGlow)"/>
-      <!-- ground -->
-      <path d="M2 93 Q30 90 50 91 Q75 92 98 90 L98 100 L2 100 Z" fill="#1e2a1a"/>
-      <!-- roots & colossal trunk -->
-      <path d="M42 92 C43 76 44 62 45.5 50 L54.5 50 C56 62 57 76 58 92
-               C60 92 63 90 66 91 L66 93 L34 93 L34 91 C37 90 40 92 42 92 Z" fill="#6b4a2e"/>
-      <path d="M46 88 C46.5 72 47 60 48 50 L50 50 C50 62 50.2 74 50.5 88 Z" fill="#835c3a" opacity=".7"/>
-      <!-- vast layered canopy, edge to edge -->
-      <ellipse cx="50" cy="30" rx="46" ry="22" fill="#2e5c3a"/>
-      <ellipse cx="28" cy="38" rx="26" ry="14" fill="#387046"/>
-      <ellipse cx="72" cy="37" rx="26" ry="14" fill="#387046"/>
-      <ellipse cx="50" cy="22" rx="32" ry="15" fill="#4fae63"/>
-      <ellipse cx="38" cy="14" rx="16" ry="8" fill="#66c07a"/>
-      <ellipse cx="62" cy="28" rx="18" ry="9" fill="#4fae63" opacity=".85"/>
-      <!-- tiny human for scale -->
-      <circle cx="24" cy="88.4" r="1.1" fill="#0d0b08"/>
-      <path d="M24 89.5 L24 92.4 M24 90.3 L22.9 91.6 M24 90.3 L25.1 91.6" stroke="#0d0b08" stroke-width=".8" stroke-linecap="round"/>
-      <!-- birds dwarfed by the crown -->
-      <path d="M14 52 q1.4 -1.4 2.8 0 M17.6 55 q1.2 -1.2 2.4 0" stroke="#c9bda9" stroke-width=".7" fill="none" stroke-linecap="round"/>
+      <ellipse cx="50" cy="6" rx="74" ry="36" fill="url(#jiaCan)"/>
+      <ellipse cx="10" cy="26" rx="32" ry="17" fill="url(#jiaCan)"/>
+      <ellipse cx="90" cy="24" rx="32" ry="18" fill="url(#jiaCan)"/>
+      <ellipse cx="33" cy="31" rx="27" ry="15" fill="#2c5c39"/>
+      <ellipse cx="69" cy="33" rx="25" ry="14" fill="#2c5c39"/>
+      <ellipse cx="50" cy="25" rx="31" ry="16" fill="#3f7f4f"/>
+      <ellipse cx="19" cy="44" rx="14" ry="7.5" fill="#20452c"/>
+      <ellipse cx="49" cy="49" rx="13" ry="7" fill="#20452c"/>
+      <ellipse cx="80" cy="45" rx="13" ry="7" fill="#20452c"/>
+      <ellipse cx="34" cy="47" rx="10" ry="5.5" fill="#295237"/>
+      <ellipse cx="65" cy="48" rx="10" ry="5.5" fill="#295237"/>
+      <ellipse cx="38" cy="12" rx="18" ry="7" fill="#83cc92" opacity=".5"/>
+      <ellipse cx="72" cy="18" rx="12" ry="5" fill="#83cc92" opacity=".35"/>
+      <path d="M0 92 Q26 89.5 50 90.5 Q75 91.5 100 90 L100 100 L0 100 Z" fill="#12180d"/>
+      <path d="M38 92
+        C40 82 41.5 72 42.3 62 C42.8 55 43.3 48 43.8 42
+        C39 38 31 35 25 30 L27.5 26.5 C33.5 31 40 34 44.2 37
+        C44.5 31 44.8 27 45.1 22 L54.9 22 C55.2 27 55.5 31 55.8 37
+        C60 34 66.5 31 72.5 26.5 L75 30 C69 35 61 38 56.2 42
+        C56.7 48 57.2 55 57.7 62 C58.5 72 60 82 62 92
+        C66 91 71 89 76 90.5 L76 93.2 L24 93.2 L24 90.5 C29 89 34 91 38 92 Z" fill="#463019"/>
+      <path d="M46 89 C46.8 76 47.4 60 47.8 26 L50.6 26 C51 60 51.4 76 52 89 Z" fill="#6b4a2e" opacity=".85"/>
+      <path d="M43.9 42 C44.1 36 44.4 30 44.7 22 L46.2 22 C46 31 45.8 37 45.7 43 Z" fill="#2c1e0f" opacity=".6"/>
+      <path d="M16 54 q1.5 -1.5 3 0 M21 57.5 q1.2 -1.2 2.4 0 M82 56 q1.3 -1.3 2.6 0"
+        stroke="#d8cdb8" stroke-width=".65" fill="none" stroke-linecap="round" opacity=".75"/>
+      <circle cx="21" cy="87" r="1.05" fill="#e0c05a"/>
+      <path d="M21 88.1 L21 91.2 M21 88.9 L19.9 90.3 M21 88.9 L22.1 90.3 M21 91.2 L20 92.5 M21 91.2 L22 92.5"
+        stroke="#e0c05a" stroke-width=".8" stroke-linecap="round" fill="none"/>
+      <circle cx="12" cy="62" r=".8" fill="#e0c05a" opacity=".85" filter="url(#jiaSoft)"/>
+      <circle cx="88" cy="66" r=".6" fill="#e0c05a" opacity=".6" filter="url(#jiaSoft)"/>
+      <circle cx="61" cy="59" r=".5" fill="#e0c05a" opacity=".5" filter="url(#jiaSoft)"/>
     </svg></div>
     <div class="name">Jia</div>
     <div class="type">The colossal tree</div>

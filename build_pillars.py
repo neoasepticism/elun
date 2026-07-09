@@ -1,0 +1,394 @@
+#!/usr/bin/env python3
+"""
+Elun 60 day-pillar page generator.
+Reads ~/elun-engine/pillar60.json (single source) + content blocks below,
+writes pillars/{slug}.html × 60 + pillars/index.html.
+Run:  python3 build_pillars.py
+"""
+import json, os, re
+
+ENGINE = os.path.expanduser('~/elun-engine/pillar60.json')
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'pillars')
+
+# ── element machinery ────────────────────────────────────────────────
+SEL = {'甲':'wood','乙':'wood','丙':'fire','丁':'fire','戊':'earth',
+       '己':'earth','庚':'metal','辛':'metal','壬':'water','癸':'water'}
+YANG = set('甲丙戊庚壬')
+GEN = {'wood':'fire','fire':'earth','earth':'metal','metal':'water','water':'wood'}
+CTRL = {'wood':'earth','earth':'water','water':'fire','fire':'metal','metal':'wood'}
+HID = {'子':[('癸',1)],'丑':[('己',.6),('癸',.3),('辛',.1)],'寅':[('甲',.6),('丙',.3),('戊',.1)],
+       '卯':[('乙',1)],'辰':[('戊',.6),('乙',.3),('癸',.1)],'巳':[('丙',.6),('庚',.3),('戊',.1)],
+       '午':[('丁',.7),('己',.3)],'未':[('己',.6),('丁',.3),('乙',.1)],'申':[('庚',.6),('壬',.3),('戊',.1)],
+       '酉':[('辛',1)],'戌':[('戊',.6),('辛',.3),('丁',.1)],'亥':[('壬',.7),('甲',.3)]}
+ECLS = {'wood':'w','fire':'f','earth':'e','metal':'m','water':'a'}
+ENAME = {'wood':'Wood','fire':'Fire','earth':'Earth','metal':'Metal','water':'Water'}
+
+def god(day, other):
+    de, oe = SEL[day], SEL[other]
+    same_pol = (day in YANG) == (other in YANG)
+    if de == oe:            return 'ally' if same_pol else 'rival'
+    if GEN[de] == oe:       return 'creator' if same_pol else 'maverick'
+    if CTRL[de] == oe:      return 'entrepreneur' if same_pol else 'steward'
+    if CTRL[oe] == de:      return 'challenger' if same_pol else 'governor'
+    if GEN[oe] == de:       return 'mystic' if same_pol else 'scholar'
+    raise ValueError
+
+def scores(gj):
+    s = {'wood':0.0,'fire':0.0,'earth':0.0,'metal':0.0,'water':0.0}
+    s[SEL[gj[0]]] += 50
+    for h, w in HID[gj[1]]:
+        s[SEL[h]] += 50*w
+    return s
+
+# ── ten-god archetype blocks (sitting god = branch main hidden stem) ─
+GODS = {
+ 'ally': dict(nm='The Ally', han='比肩', key='Peer · independence',
+   sit="You sit on your own element — a Day Master resting on its twin. This doubles self-reliance: your instincts trust themselves first, you recover alone, and you rarely feel incomplete without company. The risk is a certain imperviousness; advice bounces off you.",
+   love="In love you need an equal, not an admirer or a caretaker. Side-by-side partnership — two whole people walking the same road — suits you far better than fusion.",
+   work="You work best with ownership: your own desk, your own targets, your own name on the result. Independence is not a perk for you; it is a requirement."),
+ 'rival': dict(nm='The Rival', han='劫財', key='Competition · drive',
+   sit="You sit on your element in its opposite polarity — a built-in sparring partner. There is a competitive engine idling under everything you do: you measure, you compare, you push. It makes you fast and brave, and occasionally your own fiercest opponent.",
+   love="Relationships carry electricity — you are drawn to people who challenge you, and boredom is a bigger threat than conflict. Guard shared finances and pride; both are classic flashpoints.",
+   work="You perform best where results are visible and scored — sales, sport, litigation, markets. A worthy competitor improves you more than a comfortable environment ever will."),
+ 'creator': dict(nm='The Creator', han='食神', key='Expression · flow',
+   sit="You sit on your natural output — talent flows out of you with unusual ease. This is the classic signature of appetite for life: making, cooking, performing, explaining, enjoying. Expression isn't effort for you; it's exhale.",
+   love="You love warmly and tangibly — feeding people, making things for them, filling the room with ease. You need a partner who receives well, not one who rations joy.",
+   work="Craft and content are your lanes: creative work, teaching, food and hospitality, anything where the pleasure you take in making is visible in the result."),
+ 'maverick': dict(nm='The Maverick', han='傷官', key='Defiance · genius',
+   sit="You sit on your output in its rebellious form — brilliance that chafes at every frame. You see the flaw in the rule, the better way nobody authorized, and you say so. It is your genius and your paperwork problem in one.",
+   love="You are exciting to love and demanding to keep up with — articulate, critical, allergic to dullness. The right partner enjoys your edge instead of bracing against it.",
+   work="Innovation, performance, commentary, design — anywhere the point is to break the frame beautifully. Under rigid bureaucracy you corrode; with creative license you dazzle."),
+ 'steward': dict(nm='The Steward', han='正財', key='Earned wealth · steadiness',
+   sit="You sit on wealth in its earned, orderly form. Practicality is bone-deep: you count what you have, keep what you promise, and build in increments that survive. People trust you with things that matter.",
+   love="You show love through reliability — remembered dates, managed logistics, a stable home. Devotion, once given, is thorough; flightiness in a partner genuinely bewilders you.",
+   work="Management, finance, operations, property — anywhere careful hands compound small gains into real estates. You are the person the ledger loves."),
+ 'entrepreneur': dict(nm='The Entrepreneur', han='偏財', key='Windfall · opportunity',
+   sit="You sit on wealth in its moving form — opportunity, circulation, the deal in the air. Money and resources come and go in waves around you, and your instinct for the opening is real. So is your boredom with maintenance.",
+   love="You are generous and fun — the grand gesture comes naturally — but attention can wander wherever the next interesting thing glitters. Choose a partner who is a fellow adventurer.",
+   work="Business development, trading, brokerage, anything with moving parts and upside. You monetize what others merely notice; just let someone else hold the keys to the vault."),
+ 'governor': dict(nm='The Governor', han='正官', key='Authority · order',
+   sit="You sit on legitimate authority — discipline is installed at the root. You respect structure, keep form, and are in turn trusted with position. Duty is not a burden you carry; it is a shape you naturally take.",
+   love="You are a responsible, presentable, marriage-minded partner — the one parents approve of. Allow some disorder into intimacy; love is not an audit.",
+   work="Institutions reward you: public service, law, corporate leadership, medicine. Reputation compounds for you like interest — protect it and it will carry you."),
+ 'challenger': dict(nm='The Challenger', han='偏官', key='Conquest · pressure',
+   sit="You sit on raw power — the classic Seven Killings seat. Pressure lives with you like a housemate: life keeps testing you, and testing has made you formidable. Others crack where you concentrate.",
+   love="Your intensity is magnetic and unnerving in equal measure. You protect fiercely and demand much; the right partner is steady enough not to flinch and honest enough to push back.",
+   work="Crisis is your element: surgery, command, enforcement, turnarounds, competition. Give you a hard problem and authority to act, and stand back."),
+ 'scholar': dict(nm='The Scholar', han='正印', key='Mentorship · support',
+   sit="You sit on the element that feeds you — a lifelong current of support, learning, and shelter runs beneath your feet. Knowledge sticks to you; elders and mentors appear when needed. Your task is to act on what you absorb, not merely collect it.",
+   love="You need care that feels like understanding — being read accurately is your love language. You offer depth and patience; demand the same.",
+   work="Study, research, teaching, advisory, credentialed professions. Your authority is earned through knowing — degrees, licenses, and books are your natural currency."),
+ 'mystic': dict(nm='The Mystic', han='偏印', key='Intuition · insight',
+   sit="You sit on unconventional nourishment — your mind feeds from side doors: intuition, odd disciplines, patterns others dismiss. You know things before you can explain them, and solitude is where you digest.",
+   love="You need more privacy than most partners expect, and you attach deeply to the few who don't take that personally. Being alone together is your ideal intimacy.",
+   work="Niche mastery is your path: specialized medicine, esoteric tech, analytics, occult and healing arts, archives. The stranger the field, the more at home you are."),
+}
+
+# ── branch overlays (season imagery, appearance, temperament) ────────
+BR = {
+ '子': dict(an='Rat', img='midnight water · midwinter', app="quicker movements and sharper, watchful eyes; a face that gives little away",
+      tem="a nocturnal mind — your best thinking happens after dark, and your depths stay private"),
+ '丑': dict(an='Ox', img='frozen field · late winter', app="a sturdy, grounded frame and patient, unhurried expression",
+      tem="slow-burn endurance — you outlast rather than outpace, and winter does not frighten you"),
+ '寅': dict(an='Tiger', img='first wood · early spring', app="an upright bearing with restless, forward-leaning energy",
+      tem="initiative — you move first, ask later, and stagnation feels like suffocation"),
+ '卯': dict(an='Rabbit', img='full bloom · mid-spring', app="softer, youthful features that age slowly and disarm quickly",
+      tem="refined sociability — you win rooms by grace, not force"),
+ '辰': dict(an='Dragon', img='reservoir earth · late spring', app="a broader, more commanding build than your stem alone would suggest",
+      tem="stored ambition — the Dragon vault under you holds talent that surfaces in dramatic bursts"),
+ '巳': dict(an='Snake', img='rising fire · early summer', app="a sleek presence and intense, penetrating gaze",
+      tem="strategic heat — passion that plans, charm that calculates, patience that strikes"),
+ '午': dict(an='Horse', img='peak flame · midsummer', app="a bright, expressive face that hides nothing and lights easily",
+      tem="visible passion — your feelings broadcast, your energy peaks fast and needs a track to run on"),
+ '未': dict(an='Goat', img='warm dry earth · late summer', app="gentle, rounded features over an unexpectedly stubborn jaw",
+      tem="stubborn sweetness — soft manner, immovable core, long memory for kindness and slight alike"),
+ '申': dict(an='Monkey', img='first metal · early autumn', app="angular features and agile, economical movement",
+      tem="clever versatility — many tools, quick switches, an engineer's delight in how things work"),
+ '酉': dict(an='Rooster', img='pure metal · mid-autumn', app="fine, precise features — the most polished version of your stem's look",
+      tem="exacting polish — details register loudly, and 'good enough' never quite is"),
+ '戌': dict(an='Dog', img='guarding earth · late autumn', app="a solid, dependable look that people instinctively trust",
+      tem="guardian loyalty — you keep the gate, keep the faith, and keep receipts"),
+ '亥': dict(an='Pig', img='deep water · early winter', app="softer, fuller features and a warm, unguarded smile",
+      tem="generous depth — you give from a deep well and think in oceans, not puddles"),
+}
+
+# ── day-master cores (condensed from daymasters.html) ────────────────
+DM = {
+ '甲': dict(id='jia', nm='Jia', en='Yang Wood', arch='The Pioneer', img='the colossal tree',
+   core="Jia grows in one direction — up. A strong internal compass, visible integrity, and a builder's patience define this Day Master; it would rather break than bend.",
+   app="tall or long-limbed, upright posture, a longer face and steady level gaze"),
+ '乙': dict(id='yi', nm='Yi', en='Yin Wood', arch='The Diplomat', img='the vine and flower',
+   core="Yi grows by finding the way around — reading rooms, borrowing trellises, surviving storms that snap trees. Its flexibility is its strength and it is always underestimated.",
+   app="slender and graceful, soft expressive features, looks younger than its years"),
+ '丙': dict(id='bing', nm='Bing', en='Yang Fire', arch='The Radiant', img='the blazing sun',
+   core="Bing shines on everyone without calculation. Warmth, visibility and big-picture optimism are its nature; details bore it, direction ignites it.",
+   app="broad open forehead, bright complexion, a big natural smile and energetic stride"),
+ '丁': dict(id='ding', nm='Ding', en='Yin Fire', arch='The Illuminator', img='the candle flame',
+   core="Ding is aimed fire — the lantern, not the sun. It illuminates completely whatever it focuses on, perceives subtext to an uncanny degree, and warms one person at a time.",
+   app="finer features with striking bright eyes — the flame shows in the gaze"),
+ '戊': dict(id='wu', nm='Wu', en='Yang Earth', arch='The Anchor', img='the mountain',
+   core="Wu is the mountain: massive, dependable, unmoved by weather. It absorbs pressure that cracks others and becomes the load-bearing wall of any group it joins.",
+   app="solid broad frame, strong nose, calm weighty presence and unhurried movement"),
+ '己': dict(id='ji', nm='Ji', en='Yin Earth', arch='The Cultivator', img='the fertile field',
+   core="Ji is garden soil — the earth that feeds. Things and people simply grow better near it; its power works underground and compounds like richness in loam.",
+   app="softer rounded features, an approachable face, a warm settled voice"),
+ '庚': dict(id='geng', nm='Geng', en='Yang Metal', arch='The Vanguard', img='the forged blade',
+   core="Geng is raw metal that improves in the forge. Direct, just, energized by adversity — it cuts through ambiguity and says the thing everyone is thinking.",
+   app="strong bone structure, square jaw, direct eye contact and a voice that carries"),
+ '辛': dict(id='xin', nm='Xin', en='Yin Metal', arch='The Refiner', img='the fine jewel',
+   core="Xin is finished metal — jewel, needle, scalpel. Exquisite standards, effortless-looking polish, and a quiet pride that knows exactly what it is worth.",
+   app="fine polished features, clear skin, impeccable grooming, a composed glint"),
+ '壬': dict(id='ren', nm='Ren', en='Yang Water', arch='The Navigator', img='the vast ocean',
+   core="Ren is ocean and great river — vast, restless, connecting shores. It thinks in systems and horizons and carries a current that always points somewhere new.",
+   app="a fuller or fluid build, lively roving eyes, expansive gestures, magnetic in motion"),
+ '癸': dict(id='gui', nm='Gui', en='Yin Water', arch='The Seer', img='the gentle rain',
+   core="Gui is rain, mist, the underground spring — water at its most subtle. It perceives what others miss and, like water finding cracks, eventually arrives everywhere it intends.",
+   app="delicate features, soft luminous eyes, a quiet voice, easy to overlook and hard to forget"),
+}
+
+# ── 60 unique syntheses ──────────────────────────────────────────────
+SYN = {
+ '甲子':"Roots in deep midnight water: this tree is fed by the Scholar's spring, so the mind never stops absorbing. Brilliance comes easily; commitment is the discipline. When 甲子 finally plants itself in one field, the growth is spectacular.",
+ '甲寅':"The tree standing in its own forest — Jia at maximum purity. Self-belief is total, leadership unforced, and compromise nearly a foreign language. Life's work: learning that other trees also need light.",
+ '甲辰':"A tree rooted in the Dragon's rich vault: resources, talent, and quiet ambition stored underground. 甲辰 builds slowly and owns what it builds. Beware only the pride of never asking for help.",
+ '甲午':"Wood feeding a bright flame: this tree burns its own timber to light the room. Expressive, generous, persuasive — output exceeds intake, so rest is not optional; it is fuel policy.",
+ '甲申':"A tree growing on iron ground — tested at the root from early on. The Challenger's seat makes 甲申 resilient far beyond appearances; pressure that would fell others becomes structural strength.",
+ '甲戌':"The lone tree on a dry highland ridge, guarding what grows in its shade. Principled to a fault, loyal past reason, happiest with a clear duty and a wide view.",
+ '乙丑':"An orchid wintering in frozen soil: growth happens invisibly, underground, for years — then blooms late and permanently. 乙丑 endures what showier charts cannot, and its patience is a weapon.",
+ '乙卯':"Spring grass in a spring field — Yi at maximum charm. Everyone likes 乙卯 and 乙卯 knows it; the danger is never being forced to grow a trunk. Its flexibility is total, its resilience quietly absurd.",
+ '乙巳':"A vine flowering beside flame: artistry and nervous brilliance in one stem. 乙巳 performs, decorates, persuades — and vibrates. It needs beauty in its life the way others need calories.",
+ '乙未':"A flower in dry summer earth that should not have survived — and did. Gentle surface, wiry roots, and the longest memory of the twelve gardens. 乙未 forgives slowly and blooms anyway.",
+ '乙酉':"The flower on the blade: living on the Challenger's edge gives 乙酉 poise under pressure that reads as glamour. Polish outside, steel inside, and a permanent awareness of the drop below.",
+ '乙亥':"A water-lily on a deep current — carried, nourished, never anchored. 乙亥 blooms wherever it lands and lands wherever it's carried; grace travels with it like luggage.",
+ '丙子':"The sun over midnight water: maximum public radiance above maximum private depth. 丙子 fascinates because the warmth is real and so is the mystery beneath it.",
+ '丙寅':"The rising sun over a spring forest — fire fed by conviction itself. 丙寅 carries the torch first and asks directions later; causes and mornings belong to it.",
+ '丙辰':"Sunlight over spring fields: warmth that makes other things grow. 丙辰 is the visionary gardener of the fire signs — generous with light, patient with seasons, rich in harvests it planted for others.",
+ '丙午':"The sun at high noon, twice fire: nothing in the sixty burns brighter. Magnetic, absolute, incapable of half-measures — 丙午's only real enemy is its own throttle.",
+ '丙申':"The sun over a city of metal: radiance wired to a restless, inventive mind. 丙申 shines and tinkers at once — charisma with an engineering department.",
+ '丙戌':"The sunset over guarded hills: dignified fire that shines for a chosen few. 丙戌 trades noon's crowd for evening's loyalty and keeps its warmth for the inner circle.",
+ '丁丑':"A lantern in the winter barn: small flame, long night, absolute reliability. 丁丑 warms without spectacle and endures without applause — devotion in its most durable form.",
+ '丁卯':"A candle among spring flowers: the gentlest fire in the sixty. 丁卯 is refined, artistic, tender-hearted — a flame that would rather illuminate beauty than consume anything.",
+ '丁巳':"The torch that feeds itself — quiet intensity with its own fuel line. 丁巳's imagination builds entire worlds in private and then, occasionally, builds them in public.",
+ '丁未':"The hearth at the center of the house: everyone gathers, everyone is warmed, and the fire feels everything that happens in the room. 丁未 creates belonging — and must guard its own fuel.",
+ '丁酉':"Flame on polished gold: precision fire. 丁酉 has the perfectionist's glow — taste, timing, and an eye that catches the one wrong note in a symphony.",
+ '丁亥':"A lamp over night water: intuition lit from below. 丁亥 sees in the dark — moods, motives, futures — and loves with a romantic's faith in what it sees.",
+ '戊子':"The mountain over a hidden spring: stern silhouette, secret generosity. 戊子 provides quietly and hates being thanked loudly; its wealth flows underground.",
+ '戊寅':"A mountain with a tiger living inside: stillness wrapped around boldness. 戊寅 moves rarely — but when it moves, it was already decided long ago.",
+ '戊辰':"The mountain range itself: vast, layered, built for carrying. Teams, companies, families — 戊辰 shoulders them all and calls it Tuesday. Its vault of talent opens slowly.",
+ '戊午':"The volcano: earth with a fire heart. 戊午 is calm the way a crater is calm — genuinely, most of the time. Respect the mountain; remember what's under it.",
+ '戊申':"A mountain of ore: practical genius embedded in stone. 戊申 builds systems the way others make conversation — quietly, constantly, and better than asked.",
+ '戊戌':"The fortress, twice earth: the most immovable seat in the sixty. 戊戌 guards — people, principles, gates — and its loyalty survives everything except betrayal from inside the walls.",
+ '己丑':"The field under snow, twice earth: endurance as identity. 己丑 accumulates slowly — skill, trust, savings — and what it accumulates does not leave. Spring always comes to those who kept the field.",
+ '己卯':"A garden in full bloom: soil doing what soil dreams of. 己卯 grows people effortlessly — students, teams, children — and charms while it cultivates.",
+ '己巳':"A sunlit field: warm intelligence in fertile ground. 己巳 cultivates minds and moods with equal skill; its power is that everything near it ripens.",
+ '己未':"The dry summer field, twice earth: willful soil that decides what grows in it. 己未 is stubborn, spirited, oddly magnetic — the field that argues with the farmer and wins.",
+ '己酉':"The field after harvest: refined giving. 己酉 serves with elegance — everything offered is cleaned, sorted, and presented; generosity with excellent manners.",
+ '己亥':"The riverbank field: fertile, adaptive, endlessly replenished. Wealth and people flow through 己亥's life in currents — and the soil keeps a share of every flood.",
+ '庚子':"The sword in the winter stream: sharp mind, cool delivery. 庚子's wit cuts cleanly and its judgment runs cold and clear; it wins arguments it never raises its voice for.",
+ '庚寅':"The axe in the spring forest: action before deliberation. 庚寅 clears paths — fearlessly, occasionally recklessly, always forward. Regret is rare; apologies, rarer.",
+ '庚辰':"Ore inside the Dragon's mountain: raw power awaiting its forge. 庚辰 often blooms late — the years of pressure are not delay, they are smelting.",
+ '庚午':"The blade in the fire, tempered daily: passion disciplined into edge. 庚午 runs hot and cuts precisely — a warrior's metal that chose its war.",
+ '庚申':"Pure steel on pure steel: the most decisive seat in the sixty. 庚申 does not bend, hedge, or wait; born for the arena, it must merely choose worthy arenas.",
+ '庚戌':"The sword laid on the altar: metal in service of principle. 庚戌 fights for things — justice, family, code — and its edge is only ever pointed at what deserves it.",
+ '辛丑':"A gem still in the mine: undervalued early, priceless later. 辛丑 polishes itself in the dark for years; the world's lateness in noticing is the world's problem.",
+ '辛卯':"A needle hidden among flowers: soft setting, sharp point. 辛卯 charms first and corrects after — the most disarming perfectionist of the twelve.",
+ '辛巳':"The jewel in the flame: brilliance forged under heat. 辛巳 sparkles publicly and tempers privately; glamour is the visible half of its discipline.",
+ '辛未':"Gold resting in warm dust: modest brilliance. 辛未 doesn't need the display case — its shine is discovered, not announced, and lasts accordingly.",
+ '辛酉':"The finished jewel, twice metal: flawless standards applied first to itself. 辛酉 is the sixty's purest perfectionist — exacting, composed, and quietly proud of every facet.",
+ '辛亥':"A gem washed in deep clear water: clarity as character. 辛亥 combines polish with honesty — the rare jewel that would rather be transparent than flattering.",
+ '壬子':"The open ocean, twice water: appetite for the whole world. 壬子's currents never sleep — ideas, ventures, people, places. Its harbor is wherever it hasn't been yet.",
+ '壬寅':"The great river through a spring forest: bold water that feeds everything it passes. 壬寅 explores generously — its wake is greener than its origin.",
+ '壬辰':"The reservoir: contained immensity. 壬辰 holds more than it shows — the dragon in still water plots the weather, and one day the weather arrives.",
+ '壬午':"Water on fire — the steam engine of the sixty. 壬午 converts contradiction into spectacular energy; its reach dazzles and its boiler needs watching.",
+ '壬申':"The spring at the very source: self-renewing water. 壬申's cleverness never runs dry because it is fed by the rock itself — a mind with its own aquifer.",
+ '壬戌':"The sea against the cliff: ambition given walls to test. 壬戌 keeps coming — patient, tidal, unoffended by resistance. Cliffs erode; the sea does not.",
+ '癸丑':"Frost on the winter field: the subtlest endurance. 癸丑 waits, remembers, outlasts — and what it forgives, it forgives on purpose, with the receipts filed.",
+ '癸卯':"Dew on spring flowers: nourishment so gentle it's mistaken for decoration. 癸卯's kindness is an instrument — precise, morning-fresh, and quietly strategic.",
+ '癸巳':"Rain falling into flame: feeling meets fire. 癸巳 lives at a dramatic boil — volatile, gifted, capable of extinguishing or being vaporized, never of indifference.",
+ '癸未':"Rain on dry summer earth: needed everywhere it goes. 癸未's empathy soaks in deep — it waters other people's fields by instinct and must remember its own.",
+ '癸酉':"The spring filtered through rock: immaculate intuition. 癸酉's instincts arrive pre-cleaned — precise, clear, and correct often enough to be unsettling.",
+ '癸亥':"The night ocean, twice water: the deepest inner world in the sixty. 癸亥 contains multitudes it rarely exhibits; those granted a dive never forget it.",
+}
+
+# ── template ─────────────────────────────────────────────────────────
+def slug(py): return py.lower().replace(' ', '-')
+
+def ebar(gj):
+    s = scores(gj)
+    segs = ''.join(
+        f'<i class="{ECLS[k]}" style="width:{v:.0f}%" title="{ENAME[k]} {v:.0f}%"></i>'
+        for k, v in s.items() if v > 0.5)
+    return f'<div class="ebar">{segs}</div>'
+
+CSS = '''
+  :root{--ink:#f3ece0;--ink2:#c9bda9;--sub:#9c8f79;--faint:#6e6353;--bg:#100d0a;--card:#1c1712;
+    --line:#332a22;--line2:#40342a;--gold:#c9a227;--gold2:#e0c05a;
+    --wood:#5aa06a;--fire:#d0604e;--earth:#c9a227;--metal:#a8b0b8;--water:#5a9fd0;
+    --serif:'Noto Serif',ui-serif,Georgia,serif;--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
+  *{box-sizing:border-box} html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.7;font-size:16px;
+    background-image:radial-gradient(ellipse at 50% -10%,#221a10 0,transparent 55%)}
+  a{color:var(--gold2);text-decoration:none}
+  .wrap{max-width:780px;margin:0 auto;padding:0 22px}
+  nav{position:sticky;top:0;z-index:20;background:#100d0acc;backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  nav .inner{max-width:1040px;margin:0 auto;padding:0 22px;display:flex;align-items:center;justify-content:space-between;height:60px}
+  .logo{font-family:var(--serif);font-size:22px;font-weight:700;display:flex;align-items:center;gap:9px;color:var(--ink)}
+  .logo .m{color:var(--gold2)}
+  .logo .seal{width:26px;height:26px;border:1px solid var(--gold);color:var(--gold2);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:14px;font-family:var(--serif)}
+  .navlinks{font-size:13px;color:var(--sub)}
+  .hero{text-align:center;padding:56px 0 30px}
+  .hero .gj{font-family:var(--serif);font-size:76px;line-height:1;color:var(--ac);text-shadow:0 0 40px color-mix(in srgb,var(--ac) 45%,transparent)}
+  .hero h1{font-family:var(--serif);font-size:clamp(28px,5vw,40px);margin:14px 0 6px;font-weight:700}
+  .hero .meta{font-size:13px;color:var(--sub);letter-spacing:2px;text-transform:uppercase}
+  .hero .meta b{color:var(--ac);font-weight:600}
+  .hero .poetic{font-family:var(--serif);font-style:italic;font-size:17px;color:var(--ink2);max-width:540px;margin:20px auto 0}
+  .ebarbox{max-width:380px;margin:26px auto 0}
+  .ebar{display:flex;height:10px;border-radius:5px;overflow:hidden;background:#0d0b08}
+  .ebar i{height:100%}
+  .ebar .w{background:var(--wood)}.ebar .f{background:var(--fire)}.ebar .e{background:var(--earth)}.ebar .m{background:var(--metal)}.ebar .a{background:var(--water)}
+  .ecap{font-size:11px;color:var(--faint);text-align:center;margin-top:6px}
+  section{padding:26px 0 4px}
+  .box{border:1px solid var(--line);border-radius:16px;background:var(--card);padding:26px 28px;margin-bottom:18px}
+  .box:first-child{border-top:3px solid var(--ac)}
+  h2{font-family:var(--serif);font-size:14px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin:0 0 12px;font-weight:600}
+  .box p{font-size:14.8px;color:var(--ink2);margin:0 0 10px}
+  .box p b{color:var(--ink)}
+  .sitgod{display:flex;align-items:baseline;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+  .sitgod .h{font-family:var(--serif);font-size:22px;color:var(--gold2)}
+  .sitgod .n{font-family:var(--serif);font-weight:700;font-size:16px}
+  .sitgod .k{font-size:12px;color:var(--sub);letter-spacing:1px;text-transform:uppercase}
+  .hidden-tbl{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:4px}
+  .hidden-tbl td{padding:7px 4px;border-bottom:1px dashed var(--line);color:var(--ink2)}
+  .hidden-tbl td:first-child{font-family:var(--serif);font-size:16px;width:44px;color:var(--ink)}
+  .fam{display:flex;gap:8px;flex-wrap:wrap}
+  .fam span{border:1px solid var(--gold);border-radius:16px;padding:4px 13px;font-size:12.5px;color:var(--gold2);background:#c9a2270d}
+  .pn{display:flex;justify-content:space-between;gap:10px;padding:30px 0 8px;font-size:13.5px}
+  .pn a{border:1px solid var(--line2);border-radius:20px;padding:7px 16px;color:var(--ink2)}
+  .pn a:hover{border-color:var(--gold);color:var(--gold2)}
+  .cta{text-align:center;padding:36px 0 60px}
+  .cta .btn{background:linear-gradient(180deg,var(--gold2),var(--gold));color:#1a1206;font-weight:700;padding:11px 24px;border-radius:24px;font-size:14px;display:inline-block}
+  .cta p{color:var(--sub);font-size:14px;max-width:480px;margin:0 auto 18px}
+  footer{border-top:1px solid var(--line);padding:30px 0;text-align:center;color:var(--faint);font-size:12px}
+'''
+
+def page(p, prev_p, next_p):
+    gj, py, br = p['gj'], p['py'], p['gj'][1]
+    dm, b = DM[gj[0]], BR[br]
+    main_god = GODS[god(gj[0], HID[br][0][0])]
+    ac = f"var(--{SEL[gj[0]]})"
+    hid_rows = ''.join(
+        f'<tr><td>{h}</td><td>{ENAME[SEL[h]]} · {GODS[god(gj[0],h)]["nm"]} {GODS[god(gj[0],h)]["han"]}'
+        f'</td><td style="text-align:right;color:var(--faint)">{w*100:.0f}%</td></tr>'
+        for h, w in HID[br])
+    celebs = (f'<div class="box"><h2>Famous {gj} Charts</h2><div class="fam">'
+              + ''.join(f'<span>{c}</span>' for c in p['celebs'])
+              + '</div><p style="font-size:12px;color:var(--faint);margin-top:10px">Day pillars computed with Elun\'s engine from public birth records.</p></div>') if p['celebs'] else ''
+    return f'''<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>{py} {gj} Day Pillar — Personality, Love & Career | Elun</title>
+<meta name="description" content="{py} ({gj}) day pillar explained: {p['d']} Personality, appearance, love and career of the {py} day in BaZi."/>
+<style>{CSS}</style>
+</head>
+<body style="--ac:{ac}">
+<nav><div class="inner">
+  <a href="../index.html" class="logo"><span class="seal">乙</span><span class="m">Elun</span></a>
+  <span class="navlinks"><a href="../daymasters.html">Day Masters</a> · <a href="../daymasters.html#sixty">All 60</a> · <a href="../start.html">Create your chart</a></span>
+</div></nav>
+
+<div class="hero wrap">
+  <div class="gj">{gj}</div>
+  <h1>The {py} Day</h1>
+  <div class="meta"><b>{dm['nm']} · {dm['en']}</b> sitting on the <b>{b['an']}</b> · {b['img']}</div>
+  <p class="poetic">“{p['d']}”</p>
+  <div class="ebarbox">{ebar(gj)}
+    <div class="ecap">Five-element composition — day stem 50% · hidden stems 50%</div></div>
+</div>
+
+<div class="wrap">
+<section>
+  <div class="box">
+    <h2>The Essence of {gj}</h2>
+    <p>{SYN[gj]}</p>
+    <p><b>The stem:</b> {dm['core']}</p>
+  </div>
+
+  <div class="box">
+    <h2>What You Sit On</h2>
+    <div class="sitgod"><span class="h">{main_god['han']}</span><span class="n">{main_god['nm']}</span><span class="k">{main_god['key']}</span></div>
+    <p>{main_god['sit']}</p>
+    <table class="hidden-tbl">{hid_rows}</table>
+    <p style="font-size:12px;color:var(--faint);margin-top:8px">Hidden stems of {br} and their relationship to your {gj[0]} Day Master.</p>
+  </div>
+
+  <div class="box">
+    <h2>Appearance &amp; Presence</h2>
+    <p>The {dm['nm']} base — {dm['app']} — is shaded by the {b['an']}: {b['app']}. Traditional physiognomy; enjoy as folklore, not science.</p>
+    <p><b>Temperament note:</b> {b['tem']}.</p>
+  </div>
+
+  <div class="box">
+    <h2>In Love</h2>
+    <p>{main_god['love']}</p>
+  </div>
+
+  <div class="box">
+    <h2>Work &amp; Direction</h2>
+    <p>{main_god['work']}</p>
+  </div>
+
+  {celebs}
+</section>
+
+<div class="pn">
+  <a href="{slug(prev_p['py'])}.html">← {prev_p['gj']} {prev_p['py']}</a>
+  <a href="../daymasters.html#{dm['id']}">{dm['nm']} profile</a>
+  <a href="{slug(next_p['py'])}.html">{next_p['gj']} {next_p['py']} →</a>
+</div>
+
+<div class="cta">
+  <p>Is {gj} really your day pillar? Near midnight or a solar-term boundary, only precision decides.</p>
+  <a class="btn" href="../start.html">Calculate my chart — free</a>
+</div>
+</div>
+
+<footer>© 2026 Elun · <a href="../index.html">Home</a> · <a href="../daymasters.html">The Ten Day Masters</a> · interpretive reading for reflection &amp; entertainment</footer>
+</body></html>'''
+
+def main():
+    data = json.load(open(ENGINE, encoding='utf-8'))['pillars']
+    assert len(data) == 60
+    os.makedirs(OUT, exist_ok=True)
+    for i, p in enumerate(data):
+        prev_p, next_p = data[(i-1) % 60], data[(i+1) % 60]
+        html = page(p, prev_p, next_p)
+        open(os.path.join(OUT, slug(p['py'])+'.html'), 'w', encoding='utf-8').write(html)
+    # index
+    items = ''.join(
+        f'<a class="it" style="--ac:var(--{SEL[p["gj"][0]]})" href="{slug(p["py"])}.html">'
+        f'<span class="g">{p["gj"]}</span><span>{p["py"]}<br><small>{BR[p["gj"][1]]["an"]}</small></span></a>'
+        for p in data)
+    open(os.path.join(OUT, 'index.html'), 'w', encoding='utf-8').write(f'''<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>The Sixty Day Pillars — Index | Elun</title>
+<meta name="description" content="All sixty BaZi day pillars — personality, love, career and appearance for each 干支 combination."/>
+<style>{CSS}
+.gridx{{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;padding:30px 0 60px}}
+.it{{display:flex;gap:10px;align-items:center;border:1px solid var(--line);border-radius:12px;background:var(--card);padding:12px 14px;color:var(--ink2);font-size:13px}}
+.it:hover{{border-color:var(--gold)}}
+.it .g{{font-family:var(--serif);font-size:22px;color:var(--ac)}}
+.it small{{color:var(--faint)}}</style></head><body>
+<nav><div class="inner">
+  <a href="../index.html" class="logo"><span class="seal">乙</span><span class="m">Elun</span></a>
+  <span class="navlinks"><a href="../daymasters.html">Day Masters</a> · <a href="../start.html">Create your chart</a></span>
+</div></nav>
+<div class="hero wrap"><h1 style="font-family:var(--serif)">The Sixty Day Pillars</h1>
+<p style="color:var(--ink2)">Every stem-branch combination, each its own personality signature.</p></div>
+<div class="wrap"><div class="gridx">{items}</div></div>
+<footer>© 2026 Elun · <a href="../daymasters.html">The Ten Day Masters</a></footer>
+</body></html>''')
+    print(f'wrote 60 pages + index → {OUT}')
+
+if __name__ == '__main__':
+    main()
