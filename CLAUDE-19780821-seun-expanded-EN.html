@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Annual Expansion · Next 10 Years · Yi-Wood Day Master</title>
+<style>
+  :root{
+    --ink:#1a1613; --sub:#6b5d4f; --faint:#9c8b78; --line:#e3d9cb; --line2:#efe7d8;
+    --bg:#faf6ef; --card:#fffdf9; --cream:#fbf5e9; --cream2:#faf4e8;
+    --gold:#a8842c; --gold2:#c9a227; --red:#8f3a2e; --blue:#2f4858; --green:#3d5a3d;
+    --wood:#3d7a4e; --fire:#c0392b; --earth:#a8842c; --metal:#8a8f96; --water:#2f6f9f;
+    --serif:'Noto Serif',ui-serif,Georgia,serif;
+    --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.72;font-size:15px;
+    background-image:radial-gradient(circle at 12% 6%,#f3ead9 0,transparent 40%),radial-gradient(circle at 88% 94%,#f0e6d3 0,transparent 36%);}
+  .wrap{max-width:860px;margin:0 auto;padding:0 20px 90px}
+  .doc{background:var(--card);margin-top:28px;border:1px solid var(--line);border-radius:6px;
+    box-shadow:0 1px 0 #fff inset,0 14px 44px -20px rgba(80,60,30,.28);overflow:hidden}
+  .backlink{display:block;padding:12px 44px;background:var(--cream2);border-bottom:1px solid var(--line);font-size:12.5px}
+  .backlink a{color:var(--gold);text-decoration:none;font-family:var(--serif)}
+  header{padding:44px 44px 30px;text-align:center;border-bottom:2px solid var(--gold);position:relative;
+    background:linear-gradient(180deg,#fffdf8,#fbf6ec);}
+  header .seal{position:absolute;top:26px;right:36px;width:54px;height:54px;border:1.5px solid var(--red);
+    color:var(--red);border-radius:6px;display:flex;align-items:center;justify-content:center;
+    font-family:var(--serif);font-size:22px;font-weight:700;transform:rotate(4deg);opacity:.85}
+  header .kicker{font-family:var(--serif);letter-spacing:5px;color:var(--gold);font-size:11px;margin-bottom:12px;text-transform:uppercase}
+  header h1{font-family:var(--serif);font-size:27px;margin:0 0 8px;font-weight:700}
+  header .sub{font-size:12.5px;color:var(--sub)}
+  header .oneline{font-size:12.5px;color:var(--gold);font-family:var(--serif);margin-top:8px}
+  .era-banner{margin:22px 44px 0;background:#eef3f5;border:1px solid #cfdde3;border-radius:8px;padding:16px 20px;font-size:13px}
+  .era-banner .eh{font-family:var(--serif);color:var(--blue);font-size:15px;margin-bottom:6px}
+  .era-banner b{color:var(--blue)}
+  main{padding:16px 44px 44px}
+  .yblock{border:1px solid var(--line);border-radius:10px;margin:20px 0;overflow:hidden;background:var(--card)}
+  .yblock .yhead{padding:16px 22px;display:flex;align-items:center;gap:16px;border-bottom:1px solid var(--line)}
+  .yblock.wood .yhead{background:linear-gradient(90deg,#eef5ef,#fbfdfb)}
+  .yblock.fire .yhead{background:linear-gradient(90deg,#f9ece9,#fefbfa)}
+  .yblock.earth .yhead{background:linear-gradient(90deg,#f6efe0,#fefcf7)}
+  .yblock.metal .yhead{background:linear-gradient(90deg,#eef0f2,#fdfdfe)}
+  .yblock.water .yhead{background:linear-gradient(90deg,#e9f0f5,#fafcfe)}
+  .yhead .yr{font-family:var(--serif);font-size:26px;font-weight:700;line-height:1}
+  .yhead .yr .age{display:block;font-size:11px;color:var(--sub);font-weight:400;margin-top:3px}
+  .yhead .gz{font-family:var(--serif);font-size:30px;font-weight:700;color:var(--red);line-height:1}
+  .yhead .gz .oh{display:block;font-size:10px;color:var(--sub);font-weight:400;text-align:center;margin-top:3px}
+  .yhead .god{font-size:11px;color:var(--gold);font-family:var(--serif);line-height:1.5}
+  .yhead .badge{margin-left:auto;font-family:var(--serif);font-weight:700;font-size:13px;padding:5px 12px;border-radius:20px;white-space:nowrap}
+  .badge.good{background:#e8efe6;color:var(--green);border:1px solid #cfdec9}
+  .badge.warn{background:#f7e8e4;color:var(--red);border:1px solid #e8cfc8}
+  .badge.mid{background:#f3ead7;color:var(--gold);border:1px solid var(--line)}
+  .ybody{padding:18px 22px}
+  .ybody .row{display:flex;gap:12px;padding:9px 0;border-bottom:1px dashed var(--line2);font-size:13px;line-height:1.62}
+  .ybody .row:last-of-type{border-bottom:none}
+  .ybody .row .k{flex:none;width:96px;font-family:var(--serif);color:var(--gold);font-size:12px;padding-top:1px}
+  .ybody .row .v{flex:1}
+  .ybody .row .v b{color:var(--ink)}
+  .summ{font-size:13.5px;line-height:1.68;margin:0 0 14px;padding:12px 16px;background:var(--cream);border-radius:8px;border-left:3px solid var(--gold)}
+  .summ b{color:var(--gold);font-family:var(--serif)}
+  .flow{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+  @media(max-width:620px){.flow{grid-template-columns:1fr}}
+  .fbox{background:var(--cream2);border:1px solid var(--line);border-radius:7px;padding:10px 13px;font-size:12px;line-height:1.55}
+  .fbox .fh{font-family:var(--serif);color:var(--blue);font-size:12px;margin-bottom:3px}
+  footer{padding:26px 44px 34px;text-align:center;font-size:11px;color:var(--sub);background:#f8f2e7;border-top:1px solid var(--line)}
+  footer .disc{max-width:600px;margin:0 auto 10px;line-height:1.62}
+  .brand{font-family:var(--serif);color:var(--gold);letter-spacing:3px;font-size:13px;margin-bottom:6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="doc">
+
+  <div class="backlink"><a href="CLAUDE-19780821-bazi-EN.html">← Back to the main report</a></div>
+
+  <header>
+    <div class="seal">乙</div>
+    <div class="kicker">Annual Precision Analysis · Expansion</div>
+    <h1>Annual Expansion — The Next 10 Years</h1>
+    <div class="sub">戊午 · 庚申 · 乙卯 · 戊寅 · Male · 2026–2035</div>
+    <div class="oneline">Yi Wood · self thrives with support (身弱) · Useful God: Water / Wood · Unfavorable: Metal, Earth</div>
+  </header>
+
+  <div class="era-banner">
+    <div class="eh">🗺 The map of the decade</div>
+    <b>2026–2033</b> is the <b>Yi-Chou luck pillar</b> (46–55, Ally/Wealth) — the end of the first golden age and a <b>valley of transition</b>. <b>2034–2035</b> enters the <b>Bing-Yin pillar</b> (56–65, Maverick/Rival) — upheaval and a new chapter. The arc reads: <b>"unfold (26–27) → endure (28–30) → shine again (31–33) → stand anew (34–35)."</b> The two hinges are <b>2029 (the hardest year)</b> and <b>the Water (Resource) inflow from 2031</b> — the water this chart always lacked finally fills, opening a <b>second golden age.</b>
+  </div>
+
+  <main>
+
+    <div class="era-banner" style="background:#faf4e8;border-color:var(--line)">
+      <div class="eh" style="color:var(--gold)">十神 · The Ten Archetypes</div>
+      <b>The Ally</b> 比肩 · <b>The Rival</b> 劫財 · <b>The Creator</b> 食神 · <b>The Maverick</b> 傷官 · <b>The Steward</b> 正財 · <b>The Entrepreneur</b> 偏財 · <b>The Governor</b> 正官 · <b>The Challenger</b> 偏官 · <b>The Scholar</b> 正印 · <b>The Mystic</b> 偏印 — the ten forces BaZi reads in a chart, named as archetypes (classical terms &amp; characters kept for reference).
+    </div>
+
+
+    <!-- 2026 -->
+    <div class="yblock fire">
+      <div class="yhead"><div class="yr">2026<span class="age">age 48</span></div><div class="gz">丙午<span class="oh">Fire · Fire</span></div><div class="god">Stem: The Maverick<br>Branch: The Creator</div><div class="badge good">▲▲ Bloom</div></div>
+      <div class="ybody">
+        <div class="summ"><b>Output at its peak — the year Yi Wood blooms.</b> Bing (the Maverick) and Wu (the Creator) overlap, and the energy of expression bursts as strongly as it ever will. But Output drains the weak self, so the balance is: unfold without burning out.</div>
+        <div class="row"><div class="k">Ten Gods</div><div class="v">The Maverick + The Creator together — <b>a surge of talent, ideas, expression.</b> the Maverick shakes the Governor (rules), so you feel confined by old frames and crave new ventures.</div></div>
+        <div class="row"><div class="k">Work</div><div class="v">Ideal for <b>creative, planning, writing, teaching, content</b> work. Good for new projects and finding your voice — but "Maverick-meets-Governor" brings <b>friction with superiors/authority.</b> Ideas for independence bubble up.</div></div>
+        <div class="row"><div class="k">Wealth</div><div class="v">Hidden Ji Earth (Wealth) means <b>the seed is present</b> but not yet harvested. This year, focus on unfolding and getting known — it converts to income next year (2027).</div></div>
+        <div class="row"><div class="k">Relationships</div><div class="v">Expressiveness lifts charm and appeal. But the Maverick's <b>bluntness/criticism</b> can cause friction — watch the temperature of your words.</div></div>
+        <div class="row"><div class="k">Health</div><div class="v">Excess Fire — <b>heart, circulation, sleep, eyes.</b> Signs of overheating/burnout. The Mao–Wu Strain (卯午 friction) is reinforced by the annual Wu Fire, so manage stress-related symptoms.</div></div>
+        <div class="row"><div class="k">Key advice</div><div class="v"><b>"Put it out there — but don't scorch yourself."</b> The prime year to bring your talent into the world — while protecting body and emotion.</div></div>
+        <div class="flow"><div class="fbox"><div class="fh">First half</div>Wood &amp; Fire overlap — peak energy. Good for launches, presentations, expansion. Avoid overspeeding.</div><div class="fbox"><div class="fh">Second half</div>Metal enters, restraining the Maverick. <b>Consolidate</b> what you started; prepare for next year.</div></div>
+      </div>
+    </div>
+
+    <!-- 2027 -->
+    <div class="yblock fire">
+      <div class="yhead"><div class="yr">2027<span class="age">age 49</span></div><div class="gz">丁未<span class="oh">Fire · Earth</span></div><div class="god">Stem: The Creator<br>Branch: The Entrepreneur</div><div class="badge good">▲ Harvest</div></div>
+      <div class="ybody">
+        <div class="summ"><b>Talent turns to income — "the Creator feeds Wealth" (食神生財).</b> Ding (the Creator) generates Wei (Wealth): the expression unfolded in 2026 becomes tangible earnings and opportunity. Prime time to monetize a side venture or expertise.</div>
+        <div class="row"><div class="k">Ten Gods</div><div class="v">The Creator→Wealth <b>generating line</b> forms — ideas become money. But Wei (The Entrepreneur) is a burden to the weak self, so don't expand beyond capacity.</div></div>
+        <div class="row"><div class="k">Work</div><div class="v">Good for <b>productizing income, contracts, deals.</b> Freelance / business / investment openings. The year to <b>execute and monetize</b> last year's ideas.</div></div>
+        <div class="row"><div class="k">Wealth</div><div class="v"><b>The most active wealth-inflow of the decade.</b> The Entrepreneur = large, opportunity-driven gains. But being weak — <b>no leverage or speculation</b>; focus on keeping what comes in.</div></div>
+        <div class="row"><div class="k">Relationships</div><div class="v">Hidden Yi (Peer) in Wei — a <b>partnership</b> energy. Collaboration can generate wealth, but Rob-Wealth rivalry over splits lurks. Keep contracts explicit.</div></div>
+        <div class="row"><div class="k">Health</div><div class="v">Fire+Earth — <b>digestion, spleen-stomach, circulation.</b> Watch accumulated overwork plus irregular meals. Wei's dryness parches the Wood.</div></div>
+        <div class="row"><div class="k">Key advice</div><div class="v"><b>"Earn — but only what you can carry."</b> A peak wealth year, yet don't exceed the vessel of a weak self. The one who holds, wins.</div></div>
+        <div class="flow"><div class="fbox"><div class="fh">First half</div>The Creator energy makes income opportunities visible. Good for closing contracts and deals.</div><div class="fbox"><div class="fh">Second half</div>Wei (Wealth) strengthens — manage finances, consolidate. Substance over expansion.</div></div>
+      </div>
+    </div>
+
+    <!-- 2028 -->
+    <div class="yblock earth">
+      <div class="yhead"><div class="yr">2028<span class="age">age 50</span></div><div class="gz">戊申<span class="oh">Earth · Metal</span></div><div class="god">Stem: The Steward<br>Branch: The Governor</div><div class="badge mid">△ Defend</div></div>
+      <div class="ybody">
+        <div class="summ"><b>The year Wealth and Officer both grow heavy.</b> Wu (Wealth) and Shen (Officer) arrive together — responsibility and money press the self from both sides. Shen Metal controls Yi Wood, so <b>work pressure and busyness</b> rise. A year to <b>defend and manage,</b> not expand.</div>
+        <div class="row"><div class="k">Ten Gods</div><div class="v"><b>"Wealth generates Officer" (財生官)</b> — money enlarges duty and obligation. The more you earn, the more work/responsibility, so drain is high. The chart's "much wealth, weak self" replays this year.</div></div>
+        <div class="row"><div class="k">Work</div><div class="v">Officer strengthens — <b>titles, responsibility, public roles</b> increase. Possibly promotion/heavy duty, but a burden to the weak self. Shen clashes the Hour's Yin (寅申沖) — <b>movement, travel, relocation.</b></div></div>
+        <div class="row"><div class="k">Wealth</div><div class="v">The Steward = <b>steady income,</b> but with spending &amp; obligation. Prefer <b>maintenance and saving</b> over big investment. Substance without flash.</div></div>
+        <div class="row"><div class="k">Relationships</div><div class="v">Officer emphasizes hierarchy, norms, superiors. <b>Patience and adjustment</b> needed with authority. The Yin–Shen clash may relocate/reshuffle ties.</div></div>
+        <div class="row"><div class="k">Health</div><div class="v">Strong Metal — <b>respiratory, large intestine, skin, joints.</b> Shen Metal controlling Wood (liver/nerves) → <b>fatigue, tension pain.</b> An overloaded schedule shows up in the body.</div></div>
+        <div class="row"><div class="k">Key advice</div><div class="v"><b>"Don't widen — hold."</b> A year responsibility floods in — reinforce what you have rather than taking on new weight.</div></div>
+        <div class="flow"><div class="fbox"><div class="fh">First half</div>Wealth/Officer form — work &amp; duty rise. Refuse over-commitment.</div><div class="fbox"><div class="fh">Second half</div>Shen Officer + Yin-Shen clash — movement &amp; tension peak. Health first.</div></div>
+      </div>
+    </div>
+
+    <!-- 2029 -->
+    <div class="yblock metal">
+      <div class="yhead"><div class="yr">2029<span class="age">age 51</span></div><div class="gz">己酉<span class="oh">Earth · Metal</span></div><div class="god">Stem: The Entrepreneur<br>Branch: The Challenger (偏官/七殺)</div><div class="badge warn">⚠ Hardest year</div></div>
+      <div class="ybody">
+        <div class="summ"><b>The most careful year of the decade.</b> You (酉) is pure The Challenger (偏官) — the most demanding form of authority — controlling weak Yi Wood <b>most sharply.</b> And it forms a <b>Mao–You clash (卯酉沖)</b> — striking the very root (Mao) that is your support. Pressure from career, health, and relationships converge.</div>
+        <div class="row"><div class="k">Ten Gods</div><div class="v"><b>The Entrepreneur + The Challenger</b> = "Wealth feeds the Officer" (財生殺) — the toughest combination, where money amplifies the force that pressures you. Greed invites trouble.</div></div>
+        <div class="row"><div class="k">Work</div><div class="v"><b>The Mao–You clash shakes position/belonging.</b> Conflict, gossip, pressure, overload. Temptation to change jobs or fight — but <b>no impulsive decisions.</b> Enduring is the winning move.</div></div>
+        <div class="row"><div class="k">Wealth</div><div class="v"><b>The most dangerous wealth year.</b> The Entrepreneur's lure (big money, speculation) feeds that pressure. <b>No guarantees, loans, aggressive investment, or expanded partnerships.</b> Just holding = success.</div></div>
+        <div class="row"><div class="k">Relationships</div><div class="v">The Challenger = pressuring people, authority, rivals. Watch for friction, litigation, gossip. Mao–You clash can <b>crack close ties.</b> Be careful with words and signatures.</div></div>
+        <div class="row"><div class="k">Health</div><div class="v"><b>The year to watch health most.</b> The The Challenger directly pressures the self — acute illness, accident/surgery risk, stress conditions. Screenings, safety, rest essential. No overexertion.</div></div>
+        <div class="row"><div class="k">Key advice</div><div class="v"><b>"Don't move — hold."</b> Postpone expansion, investment, job changes, big decisions. Pass this year safely and the next ones shine.</div></div>
+        <div class="flow"><div class="fbox"><div class="fh">First half</div>Beware traps disguised as opportunity (The Entrepreneur). Caution, and again caution.</div><div class="fbox"><div class="fh">Second half (autumn, You month)</div><b>Peak pressure &amp; Mao–You clash.</b> Guard health, relationships, contracts. Start nothing large.</div></div>
+      </div>
+    </div>
+
+    <!-- 2030 -->
+    <div class="yblock metal">
+      <div class="yhead"><div class="yr">2030<span class="age">age 52</span></div><div class="gz">庚戌<span class="oh">Metal · Earth</span></div><div class="god">Stem: The Governor<br>Branch: The Steward</div><div class="badge mid">△ Consolidate</div></div>
+      <div class="ybody">
+        <div class="summ"><b>Order and substance — the Officer begins to settle.</b> Last year's sharp The Challenger softens into Geng <b>The Governor.</b> Still heavy, but now in the form of <b>achievement, recognition, and stability within the system.</b> Yi-Geng combine, so you are bound to the Officer — constraint and stability coexist.</div>
+        <div class="row"><div class="k">Ten Gods</div><div class="v">Officer + Wealth = <b>orthodox "wealth &amp; office."</b> Keep principle and duty, and substance follows. Yi-Geng combination ties the self to the Officer — less freedom, but <b>more standing and trust.</b></div></div>
+        <div class="row"><div class="k">Work</div><div class="v"><b>Stability and recognition within the system.</b> Roles and duties consolidate. Settling in after last year's ordeal — <b>secure your position</b> rather than expand.</div></div>
+        <div class="row"><div class="k">Wealth</div><div class="v">The Steward — <b>steady, legitimate income.</b> Xu Earth hides Metal/Fire/Earth, so it's complex, but without overreach you keep substance.</div></div>
+        <div class="row"><div class="k">Relationships</div><div class="v">Yi-Geng combination — bonds through duty/promise (contracts, roles, commitments). Stable but <b>binding.</b> A good time to build trust.</div></div>
+        <div class="row"><div class="k">Health</div><div class="v">Metal/Earth — respiratory, digestion, joints. Eased from last year, but manage cumulative fatigue. Hydrate against Xu Earth's dryness.</div></div>
+        <div class="row"><div class="k">Key advice</div><div class="v"><b>"Hold your ground, build trust."</b> A stable year after the ordeal — consolidate your position without overreach.</div></div>
+        <div class="flow"><div class="fbox"><div class="fh">First half</div>Officer energy — establish roles &amp; duties. Diligence turns to recognition.</div><div class="fbox"><div class="fh">Second half (Xu month)</div>Secure the Wealth substance. Prepare for the coming Water — study &amp; plan.</div></div>
+      </div>
+    </div>
+
+    <!-- 2031 -->
+    <div class="yblock water">
+      <div class="yhead"><div class="yr">2031<span class="age">age 53</span></div><div class="gz">辛亥<span class="oh">Metal · Water</span></div><div class="god">Stem: The Challenger<br>Branch: The Scholar</div><div class="badge good">△▲ Turning</div></div>
+      <div class="ybody">
+        <div class="summ"><b>The door to the second golden age opens.</b> The stem Xin (The Challenger) tension resolves into the branch <b>Hai (The Scholar)</b> — <b>"the Officer turns to Resource" (殺印相生)!</b> The Officer that struck you now flows into Resource and revives the self. The <b>Useful God Water this chart always lacked finally enters.</b></div>
+        <div class="row"><div class="k">Ten Gods</div><div class="v"><b>Officer-into-Resource</b> — pressure (The Challenger) converts to acceptance/learning (Resource) that nourishes the self. Stress sublimates into wisdom and growth. The chart's "Officer attacks Resource" flaw is healed this year.</div></div>
+        <div class="row"><div class="k">Work</div><div class="v">Tension/pressure converts to <b>learning, credentials, expertise.</b> Good for study, research, retraining, preparing a move. The second half's stability wraps the first half's tension.</div></div>
+        <div class="row"><div class="k">Wealth</div><div class="v">Hai hides Wu (Wealth), Jia (Rob), Ren (Resource) — mixed. This is a year to invest in <b>learning and foundation over money.</b> A year to plant seeds.</div></div>
+        <div class="row"><div class="k">Relationships</div><div class="v">Resource = elders, teachers, helpers. A <b>mentor or benefactor</b> may appear. Xin's rival exists, but Resource cushions it.</div></div>
+        <div class="row"><div class="k">Health</div><div class="v">Water inflow — <b>kidney &amp; fluid metabolism recover.</b> The Metal-excess burden of prior years begins to ease. A year of recovery and recharge.</div></div>
+        <div class="row"><div class="k">Key advice</div><div class="v"><b>"The ordeal is over — now fill up."</b> The year that turns pressure into learning — the start of the second golden age.</div></div>
+        <div class="flow"><div class="fbox"><div class="fh">First half</div>Residual Xin (The Challenger) tension — wrap up, tidy. Prepare rather than start big.</div><div class="fbox"><div class="fh">Second half (Hai month)</div><b>Hai Resource in full — Officer-into-Resource activates.</b> Learning, recovery, stability. The tide turns.</div></div>
+      </div>
+    </div>
+
+    <!-- 2032 -->
+    <div class="yblock water">
+      <div class="yhead"><div class="yr">2032<span class="age">age 54</span></div><div class="gz">壬子<span class="oh">Water · Water</span></div><div class="god">Stem: The Scholar<br>Branch: The Mystic</div><div class="badge good">▲▲ The best</div></div>
+      <div class="ybody">
+        <div class="summ"><b>Water at its peak — the best year of the decade.</b> Ren (The Scholar) and Zi (The Mystic) overlap, and <b>the water this chart craved all its life fills to the brim.</b> Weak Yi Wood is firmly nourished by Resource, and the Officer's pressure softens through it. Prime time for study, credentials, research, inner substance.</div>
+        <div class="row"><div class="k">Ten Gods</div><div class="v"><b>Resource at maximum — the perfect "Officer→Resource→Self" flow.</b> The chart's greatest flaw (Water 4%, Resource critically absent) is fully supplied this year — a year of <b>structural healing.</b></div></div>
+        <div class="row"><div class="k">Work</div><div class="v"><b>Best for study, credentials, degrees, establishing expertise.</b> New skills, retraining, research results. Good for documents, contracts, exams. The year that lays the footing for later life.</div></div>
+        <div class="row"><div class="k">Wealth</div><div class="v">A Resource year, so <b>capability grows more than direct money.</b> The skills/credentials built now become later income. Self-investment over speculation.</div></div>
+        <div class="row"><div class="k">Relationships</div><div class="v">Resource = mentors, patrons, mother-like figures. <b>Relationships that teach; benefactors.</b> Yet The Mystic's solitude means more time alone.</div></div>
+        <div class="row"><div class="k">Health</div><div class="v"><b>Water abundant — kidney, circulation, general recovery.</b> The body's most comfortable stretch of the decade. Mildly manage cold/edema/weak digestion from excess Water.</div></div>
+        <div class="row"><div class="k">Key advice</div><div class="v"><b>"Learn — now is the time."</b> The year the missing water fills — plant, this year, the seed that reshapes your later life.</div></div>
+        <div class="flow"><div class="fbox"><div class="fh">First half</div>Ren Resource — best for learning, planning, documents. A great time to begin.</div><div class="fbox"><div class="fh">Second half (Zi month)</div>Zi Resource peaks — deep immersion, research, inner substance. Results.</div></div>
+      </div>
+    </div>
+
+    <!-- 2033 -->
+    <div class="yblock water">
+      <div class="yhead"><div class="yr">2033<span class="age">age 55</span></div><div class="gz">癸丑<span class="oh">Water · Earth</span></div><div class="god">Stem: The Mystic<br>Branch: The Entrepreneur</div><div class="badge good">▲ Insight</div></div>
+      <div class="ybody">
+        <div class="summ"><b>A year of reflection and insight — but learning and wealth mix.</b> Gui (The Mystic) continues the deep wisdom, while Chou (The Entrepreneur) mingles — a <b>Wealth-clashes-Resource (財剋印)</b> tension. Weight the year toward <b>careful sorting and reflection</b> over big decisions.</div>
+        <div class="row"><div class="k">Ten Gods</div><div class="v">The Mystic + The Entrepreneur = <b>Wealth-clashes-Resource</b> tension. Learning (Resource) and money (Wealth) pull against each other. Chase money and learning wavers; focus on learning and you miss wealth chances.</div></div>
+        <div class="row"><div class="k">Work</div><div class="v"><b>Organize, apply, complete</b> last year's learning. Consolidation over new starts. The Mystic favors independent/niche fields, but execute with caution.</div></div>
+        <div class="row"><div class="k">Wealth</div><div class="v">Chou The Entrepreneur — money openings appear, but <b>Wealth-clashes-Resource</b> means overreach shakes the foundation you built. <b>Careful investment, cash management.</b> No big bets.</div></div>
+        <div class="row"><div class="k">Relationships</div><div class="v">The Mystic's solitude + The Entrepreneur's realism — balance inner and outer. A time to focus on a few deep relationships.</div></div>
+        <div class="row"><div class="k">Health</div><div class="v">Water/Earth mix — digestion, kidney, damp-phlegm. Watch cold/edema from Chou's dampness. Balance through regular living.</div></div>
+        <div class="row"><div class="k">Key advice</div><div class="v"><b>"Between money and learning, choose learning."</b> A Wealth-clashes-Resource year — protecting the substance you built beats near-term gain.</div></div>
+        <div class="flow"><div class="fbox"><div class="fh">First half</div>Gui Resource — reflection, research, sorting. Build substance.</div><div class="fbox"><div class="fh">Second half (Chou month)</div>Chou Wealth rises — money temptation &amp; tension. Judge carefully.</div></div>
+      </div>
+    </div>
+
+    <!-- 2034 -->
+    <div class="yblock wood">
+      <div class="yhead"><div class="yr">2034<span class="age">age 56</span></div><div class="gz">甲寅<span class="oh">Wood · Wood</span></div><div class="god">Stem: The Rival<br>Branch: The Rival</div><div class="badge warn">⚠▲ Upheaval</div></div>
+      <div class="ybody">
+        <div class="summ"><b>Entering the Bing-Yin pillar + strong Peers — an upheaval.</b> Jia and Yin overlap, giving the self a <b>powerful root.</b> The weak self is greatly reinforced — best for independence — but as the <b>Rival star,</b> it brings rivalry, spending, and partnership friction. Coinciding with the pillar change, a new chapter of life.</div>
+        <div class="row"><div class="k">Ten Gods</div><div class="v">Doubled Rival star — <b>strong self-assertion, drive for independence.</b> Strength for the self, but the Rival splits money — <b>spending, division, rivalry</b> rise. Yin doubling the Hour's Yin boosts mobility.</div></div>
+        <div class="row"><div class="k">Work</div><div class="v"><b>Force behind independence, starting a venture, changing course.</b> With the Bing-Yin (the Maverick) pillar, a big break from old frames. Good for a solo decision, but friction in partnership/cooperation.</div></div>
+        <div class="row"><div class="k">Wealth</div><div class="v"><b>The Rival = money-dispersion alert.</b> Spending, investment, and expanded partnership can turn to loss. Earnings rise but so do leaks. Manage cash strictly.</div></div>
+        <div class="row"><div class="k">Relationships</div><div class="v">Colleagues/siblings/rivals grow stronger. More collaborators, but also <b>clashes of interest.</b> Keep money-entangled ties especially clear.</div></div>
+        <div class="row"><div class="k">Health</div><div class="v">Overexuberant Wood — liver/gallbladder/nerves overactive. Watch overwork, overheating, impatience. A year it's easy to overdo it with surplus energy.</div></div>
+        <div class="row"><div class="k">Key advice</div><div class="v"><b>"Stand — but don't scatter."</b> The best year for independence — tame the Rival's spending and rivalry, and a new chapter opens.</div></div>
+        <div class="flow"><div class="fbox"><div class="fh">First half</div>Peer strength — decisions, independence, starts. Pair with money management.</div><div class="fbox"><div class="fh">Second half (Yin month)</div>Mobility peaks — movement &amp; change active. Control spending.</div></div>
+      </div>
+    </div>
+
+    <!-- 2035 -->
+    <div class="yblock wood">
+      <div class="yhead"><div class="yr">2035<span class="age">age 57</span></div><div class="gz">乙卯<span class="oh">Wood · Wood</span></div><div class="god">Stem: The Ally<br>Branch: The Ally</div><div class="badge good">▲▲ Standing</div></div>
+      <div class="ybody">
+        <div class="summ"><b>Yi-Mao, identical to the Day Pillar — the perfect "ally" year.</b> The annual pillar exactly repeats the day pillar (a "Fu-Yin," 伏吟), and weak Yi Wood is <b>fully reinforced.</b> The apex of self-reliance, re-consolidation, and fresh starts — luck-pillar Peer and annual Peer together crown the "build the self" arc.</div>
+        <div class="row"><div class="k">Ten Gods</div><div class="v">Doubled Friend — <b>pure self-strengthening.</b> Gentler "ally" than 2034's competitive Rob. But the Yi-Mao Fu-Yin (repeated pillar) also carries <b>stasis/repetition</b> — a year of consolidation more than novelty.</div></div>
+        <div class="row"><div class="k">Work</div><div class="v"><b>Stability and standing on independent footing.</b> After last year's upheaval, secure your position. What you built by your own strength takes hold. <b>Consolidate</b> over big expansion.</div></div>
+        <div class="row"><div class="k">Wealth</div><div class="v">As Friend (not Rob), <b>money rivalry/dispersion eases</b> (gentler than 2034). Stable independent income. Without overreach, a year to hold and accumulate.</div></div>
+        <div class="row"><div class="k">Relationships</div><div class="v">Friend = equal companions. <b>Independent yet dependable ties.</b> Fu-Yin may bring reunions/recurrences of old bonds.</div></div>
+        <div class="row"><div class="k">Health</div><div class="v">Wood settles — better balanced than last year. Keep managing liver/nerves. Mildly manage the Fu-Yin's inertia — listlessness, ennui.</div></div>
+        <div class="row"><div class="k">Key advice</div><div class="v"><b>"Now it is fully yours."</b> The year that completes self-reliance beyond the weak self — the one who endured finally stands on their own axis.</div></div>
+        <div class="flow"><div class="fbox"><div class="fh">First half</div>Peer strength stabilizes your base. Consolidation &amp; realignment.</div><div class="fbox"><div class="fh">Second half (Mao month)</div>Mao peaks — the root completes. Ground the next ten years.</div></div>
+      </div>
+    </div>
+
+    <div class="era-banner" style="margin-top:24px">
+      <div class="eh">🏁 The decade in conclusion</div>
+      <b>2026–2027</b> unfold your talent and convert it to income → <b>2028–2030</b> hold and endure the incoming weight of Wealth and Officer, and above all <b>do not move in 2029</b> → <b>2031–2033</b> the Water (Resource) this chart always lacked finally fills, a second golden age to <b>learn and rise again</b> → <b>2034–2035</b> the strength of the Peers completes your self-reliance at last. The key of this chart never changes: <b>the one who endures is the one who finally blooms.</b>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="brand">乙 · Precision BaZi · Annual Expansion</div>
+    <p class="disc">This Annual Expansion is based on the calculated annual pillars, Ten Gods, and hidden stems from a deterministic ephemeris engine (bazi.py) with true-solar-time and longitude correction. The fortune tone and half-year flow follow the principles of BaZi. BaZi is offered as a resource for self-reflection and life planning, and does not replace medical, legal, or financial advice.</p>
+    <div>© 2026 · Precision BaZi · Generated 2026-07-09</div>
+  </footer>
+
+</div>
+</div>
+</body>
+</html>

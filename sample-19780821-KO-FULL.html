@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>사주명리 정밀 리포트 (풀버전) · 乙卯 일주</title>
+<style>
+  :root{
+    --ink:#1a1613; --sub:#6b5d4f; --line:#e3d9cb; --bg:#faf6ef; --card:#fffdf9;
+    --gold:#a8842c; --gold2:#c9a227; --red:#8f3a2e; --blue:#2f4858; --green:#3d5a3d;
+    --serif:'Noto Serif KR',ui-serif,Georgia,'Batang',serif;
+    --sans:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.75;
+    background-image:radial-gradient(circle at 15% 8%,#f3ead9 0,transparent 42%),radial-gradient(circle at 85% 92%,#f0e6d3 0,transparent 38%);}
+  .wrap{max-width:840px;margin:0 auto;padding:0 20px 80px}
+  .doc{background:var(--card);margin-top:28px;border:1px solid var(--line);border-radius:6px;
+    box-shadow:0 1px 0 #fff inset,0 12px 40px -18px rgba(80,60,30,.25);overflow:hidden}
+  header{padding:46px 40px 34px;text-align:center;border-bottom:2px solid var(--gold);position:relative;
+    background:linear-gradient(180deg,#fffdf8,#fbf6ec);}
+  header .seal{position:absolute;top:26px;right:34px;width:54px;height:54px;border:1.5px solid var(--red);
+    color:var(--red);border-radius:6px;display:flex;align-items:center;justify-content:center;
+    font-family:var(--serif);font-size:21px;font-weight:700;transform:rotate(4deg);opacity:.82;line-height:1.05}
+  header .kicker{font-family:var(--serif);letter-spacing:7px;color:var(--gold);font-size:12px;margin-bottom:12px}
+  header h1{font-family:var(--serif);font-size:33px;margin:0 0 6px;letter-spacing:2px;font-weight:700}
+  header .hanja{font-family:var(--serif);font-size:15px;color:var(--sub);letter-spacing:6px}
+  header .meta{margin-top:15px;font-size:13px;color:var(--sub)}
+  .accuracy{margin:0 40px;margin-top:-1px;background:#f6efe0;border:1px solid var(--line);border-top:none;
+    border-radius:0 0 6px 6px;padding:13px 18px;font-size:12px;color:var(--sub);display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:center}
+  .accuracy b{color:var(--gold);font-family:var(--serif)}
+  .accuracy .chip{background:#fff;border:1px solid var(--line);border-radius:20px;padding:3px 11px;white-space:nowrap}
+  /* TOC */
+  .toc{padding:20px 40px;background:#faf4e8;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:6px 18px;justify-content:center;font-size:12.5px}
+  .toc a{color:var(--sub);text-decoration:none;font-family:var(--serif)}
+  .toc a:hover{color:var(--gold)}
+  main{padding:6px 40px 40px}
+  section{padding:32px 0;border-bottom:1px solid var(--line)}
+  section:last-child{border-bottom:none}
+  h2{font-family:var(--serif);font-size:21px;letter-spacing:1px;margin:0 0 4px;display:flex;align-items:baseline;gap:10px;scroll-margin-top:20px}
+  h2 .n{color:var(--gold);font-size:15px;font-weight:700}
+  h2 .en{font-size:11px;color:var(--sub);letter-spacing:2px;font-weight:400;text-transform:uppercase;margin-left:auto}
+  h3{font-family:var(--serif);font-size:15.5px;color:var(--blue);margin:20px 0 8px;letter-spacing:.5px}
+  .lead{color:var(--sub);font-size:13.5px;margin:2px 0 18px}
+  .pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:8px 0 4px}
+  .pil{background:#fbf5e9;border:1px solid var(--line);border-radius:8px;text-align:center;padding:14px 6px}
+  .pil .lab{font-size:11px;color:var(--sub);letter-spacing:1px}
+  .pil .stem,.pil .branch{font-family:var(--serif);font-size:30px;font-weight:700;line-height:1.2}
+  .pil .stem{color:var(--red)} .pil .branch{color:var(--blue)}
+  .pil .ko{font-size:12px;color:var(--sub);margin-top:2px}
+  .pil .god{font-size:10.5px;color:var(--gold);margin-top:5px}
+  .pil.day{border-color:var(--gold);border-width:1.5px;background:#fdf3df;box-shadow:0 0 0 3px #f3e6c9}
+  .pil.day .lab{color:var(--gold);font-weight:700}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  @media(max-width:600px){.grid2,.pillars{grid-template-columns:1fr 1fr}}
+  .kv{width:100%;border-collapse:collapse;font-size:13.5px}
+  .kv td{padding:7px 4px;border-bottom:1px dashed var(--line);vertical-align:top}
+  .kv td:first-child{color:var(--sub);white-space:nowrap;width:38%}
+  .kv td:last-child{font-weight:600}
+  .tag{display:inline-block;background:#f3ead7;border:1px solid var(--line);color:var(--gold);
+    border-radius:5px;padding:2px 9px;font-size:12px;font-family:var(--serif);margin:2px 3px 2px 0}
+  .tag.red{background:#f7e8e4;color:var(--red);border-color:#e8cfc8}
+  .tag.blue{background:#e9eff2;color:var(--blue);border-color:#cfdde3}
+  .tag.green{background:#e8efe6;color:var(--green);border-color:#cfdec9}
+  p{margin:0 0 12px} p.body{font-size:14.5px}
+  .callout{background:#f6efe0;border-left:3px solid var(--gold);border-radius:0 6px 6px 0;padding:14px 18px;margin:14px 0;font-size:13.5px}
+  .callout b{color:var(--gold);font-family:var(--serif)}
+  .callout.blue{background:#eef3f5;border-left-color:var(--blue)}
+  .callout.blue b{color:var(--blue)}
+  .timeline{display:flex;gap:6px;overflow-x:auto;padding:10px 0 4px}
+  .du{flex:none;min-width:80px;text-align:center;border:1px solid var(--line);border-radius:8px;padding:9px 4px;background:#fbf5e9}
+  .du.now{border-color:var(--gold);border-width:1.5px;background:#fdf3df}
+  .du .age{font-size:10px;color:var(--sub)}
+  .du .gz{font-family:var(--serif);font-size:18px;font-weight:700;color:var(--ink);margin:2px 0}
+  .du .g{font-size:9.5px;color:var(--gold)}
+  .du.now .age{color:var(--gold);font-weight:700}
+  /* seun table */
+  .seun{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:6px}
+  .seun th{background:#f3ead7;color:var(--gold);font-family:var(--serif);padding:8px 6px;border:1px solid var(--line);font-weight:700}
+  .seun td{padding:7px 6px;border:1px solid var(--line);text-align:center}
+  .seun td.yr{font-weight:700;color:var(--ink)}
+  .seun td.gz{font-family:var(--serif);font-size:15px}
+  .seun tr:nth-child(even) td{background:#fdfaf3}
+  .seun tr.hl td{background:#fdf3df}
+  .seun td.cell{text-align:left;font-size:12.5px;line-height:1.6;padding:9px 10px}
+  .seun .age2{font-size:10px;color:var(--sub);font-weight:400}
+  .seun .oh{font-size:10px;color:var(--sub)}
+  .seun td.gz{white-space:nowrap}
+  .str{font-family:var(--serif);font-weight:700;font-size:14px;white-space:nowrap}
+  .str-good{color:var(--green)} .str-warn{color:var(--red)} .str-mid{color:var(--gold)}
+  .seun .tone{font-size:11px}
+  .tone-good{color:var(--green)} .tone-warn{color:var(--red)} .tone-mid{color:var(--sub)}
+  ul.clean{margin:6px 0 0;padding-left:0;list-style:none}
+  ul.clean li{padding:6px 0 6px 22px;position:relative;font-size:13.8px;border-bottom:1px dashed var(--line)}
+  ul.clean li:last-child{border-bottom:none}
+  ul.clean li:before{content:"◆";color:var(--gold);position:absolute;left:2px;font-size:10px;top:9px}
+  .health-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
+  .hcard{background:#fbf5e9;border:1px solid var(--line);border-radius:8px;padding:12px 14px;font-size:13px}
+  .hcard b{font-family:var(--serif);color:var(--gold)}
+  footer{padding:26px 40px 34px;text-align:center;font-size:11.5px;color:var(--sub);background:#f8f2e7;border-top:1px solid var(--line)}
+  footer .disc{max-width:580px;margin:0 auto 10px;line-height:1.6}
+  .brand{font-family:var(--serif);color:var(--gold);letter-spacing:3px;font-size:13px;margin-bottom:6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="doc">
+
+  <header>
+    <div class="seal">乙<br>木</div>
+    <div class="kicker">四 柱 命 理 精 密 分 析</div>
+    <h1>사주명리 정밀 리포트</h1>
+    <div class="hanja">戊午 · 庚申 · 乙卯 · 戊寅</div>
+    <div class="meta">1978년 8월 21일 (양력) · 오전 5시 00분 · 남성 · 서울</div>
+  </header>
+  <div class="accuracy">
+    <span class="chip">🌞 진태양시 <b>05:00 → 04:25</b></span>
+    <span class="chip">📍 경도보정 <b>126.98°E</b></span>
+    <span class="chip">🧮 율리우스일 결정론</span>
+    <span class="chip">✓ 재현 가능 · 오차 없음</span>
+  </div>
+  <nav class="toc">
+    <a href="#s1">一 사주팔자</a>
+    <a href="#s2">二 십성·격국</a>
+    <a href="#s3">三 성격·생김새</a>
+    <a href="#s4">四 일주 통관</a>
+    <a href="#s5">五 대운</a>
+    <a href="#s6">六 세운 10년</a>
+    <a href="#s7">七 재물운</a>
+    <a href="#s8">八 건강</a>
+    <a href="#s9">九 용신 개운법</a>
+    <a href="#s10">十 종합·실전</a>
+  </nav>
+
+  <main>
+
+    <!-- 1 -->
+    <section id="s1">
+      <h2><span class="n">一</span> 사주팔자 <span class="en">Four Pillars</span></h2>
+      <p class="lead">태어난 순간의 천간·지지. 진태양시로 보정된 정확한 네 기둥입니다.</p>
+      <div class="pillars">
+        <div class="pil"><div class="lab">시주 時</div><div class="stem">戊</div><div class="branch">寅</div><div class="ko">무인</div><div class="god">정재 · 겁재</div></div>
+        <div class="pil day"><div class="lab">일주 日 ★</div><div class="stem">乙</div><div class="branch">卯</div><div class="ko">을묘</div><div class="god">일간 · 비견</div></div>
+        <div class="pil"><div class="lab">월주 月</div><div class="stem">庚</div><div class="branch">申</div><div class="ko">경신</div><div class="god">정관 · 정관</div></div>
+        <div class="pil"><div class="lab">년주 年</div><div class="stem">戊</div><div class="branch">午</div><div class="ko">무오</div><div class="god">정재 · 식신</div></div>
+      </div>
+      <div class="callout">
+        <b>일간 = 을목(乙木)</b> · 음(陰)의 나무. 화초·덩굴·잔디처럼 부드럽되 끈질긴 생명력. 갑목이 홀로 우뚝 선다면, 을목은 <b>휘어지되 꺾이지 않고 얽혀서 살아남는</b> 유형입니다.
+      </div>
+    </section>
+
+    <!-- 2 -->
+    <section id="s2">
+      <h2><span class="n">二</span> 십성 분포와 격국 <span class="en">Ten Gods · Structure</span></h2>
+      <div class="grid2">
+        <table class="kv">
+          <tr><td>정재 (正財)</td><td>2 — 꾸준·안정적 재물</td></tr>
+          <tr><td>정관 (正官)</td><td>2 — 규범·책임·명예</td></tr>
+          <tr><td>식신 (食神)</td><td>1 — 표현·생산</td></tr>
+          <tr><td>비견 (比肩)</td><td>1 — 자립·동료</td></tr>
+          <tr><td>겁재 (劫財)</td><td>1 — 경쟁·추진</td></tr>
+        </table>
+        <table class="kv">
+          <tr><td>격국</td><td><span class="tag">정관격 正官格</span></td></tr>
+          <tr><td>신강·신약</td><td><span class="tag red">신약</span> (부조 2.5 / 설기 6.0)</td></tr>
+          <tr><td>득령·득지</td><td>득령 ✗ · 득지 ✓ (일지 卯)</td></tr>
+          <tr><td>용신</td><td><span class="tag blue">수(水)</span><span class="tag green">목(木)</span></td></tr>
+          <tr><td>기신</td><td>토(재성)·금(관성) 과다</td></tr>
+        </table>
+      </div>
+      <h3>명리 구조 요약</h3>
+      <p class="body">
+        <b>정관격에 재성이 튼튼한(정재 2·정관 2) 구조</b>. 규범과 책임을 중시하고 조직·사회의 룰 안에서 신뢰를 쌓아 안정적 재물을 만드는 전형입니다. 다만 일간(을목)이 <b>신약</b>하여 관성·재성의 무게가 큽니다 — <b>책임과 재물이 나를 끌고 가는</b> 형국이라, 나 자신(비겁·인성)을 세우는 것이 평생 과제입니다.
+      </p>
+    </section>
+
+    <!-- 3 -->
+    <section id="s3">
+      <h2><span class="n">三</span> 성격과 생김새 <span class="en">Character · Appearance</span></h2>
+      <h3>성격</h3>
+      <ul class="clean">
+        <li><b>유연한 원칙주의자.</b> 을목의 부드러움 + 정관의 규범 의식. 강압적이지 않게, 그러나 선은 지킴.</li>
+        <li><b>책임감이 자산이자 짐.</b> 정관 2 — 끝까지 해내지만 남의 기대까지 떠안아 소모되기 쉬움.</li>
+        <li><b>안정 지향의 재물관.</b> 정재 2 — 투기보다 꾸준함, 복리로 쌓는 유형.</li>
+        <li><b>신약의 예민함.</b> 환경·사람에 크게 영향받음. 내 편(비겁)·배움(인성)이 있을 때 강해짐.</li>
+      </ul>
+      <h3>생김새</h3>
+      <p class="body">
+        을목 일간은 대개 <b>부드러운 인상, 유연한 몸가짐</b>. 화초·덩굴의 기운이라 날카롭기보다 온화하고, 미소가 자연스럽습니다. 월지 신금(申)·시지 인목(寅)의 인신충 기운이 있어 <b>겉은 유순하나 속엔 강단</b>이 있는 이중적 인상을 줍니다. 오화(午·식신)의 밝음이 표정에 온기를 더합니다.
+      </p>
+    </section>
+
+    <!-- 4 -->
+    <section id="s4">
+      <h2><span class="n">四</span> 일주 통관 — 乙卯 <span class="en">Day Pillar</span></h2>
+      <p class="body">
+        <b>을묘(乙卯) 일주 — 간여지동(干與支同).</b> 천간 을목이 지지 묘목(卯) 위에 앉아, 같은 목(木) 기운으로 <b>뿌리가 튼튼</b>합니다. 신약한 사주에서 이 일지 묘목은 <b>가장 든든한 자기 편(득지)</b> — 아무리 관성·재성이 무거워도 무너지지 않는 최후의 버팀목입니다.
+      </p>
+      <div class="callout">
+        을묘 일주는 <b>"부드러운 겉, 단단한 뿌리"</b>. 겉으로는 유하지만 자기 신념·자존은 쉽게 꺾이지 않습니다. 다만 묘목이 지나치게 왕하면 고집으로 흐를 수 있으니, 유연함을 잃지 않는 것이 관건입니다.
+      </div>
+    </section>
+
+    <!-- 5 -->
+    <section id="s5">
+      <h2><span class="n">五</span> 대운의 흐름 <span class="en">Luck Pillars</span></h2>
+      <p class="lead">순행 · 6세 1개월 개운. 10년 단위 인생의 계절.</p>
+      <div class="timeline">
+        <div class="du"><div class="age">6~15</div><div class="gz">辛酉</div><div class="g">편관</div></div>
+        <div class="du"><div class="age">16~25</div><div class="gz">壬戌</div><div class="g">정인</div></div>
+        <div class="du"><div class="age">26~35</div><div class="gz">癸亥</div><div class="g">편인</div></div>
+        <div class="du"><div class="age">36~45</div><div class="gz">甲子</div><div class="g">겁재</div></div>
+        <div class="du now"><div class="age">46~55</div><div class="gz">乙丑</div><div class="g">비견 ★</div></div>
+        <div class="du"><div class="age">56~65</div><div class="gz">丙寅</div><div class="g">상관</div></div>
+        <div class="du"><div class="age">66~75</div><div class="gz">丁卯</div><div class="g">식신</div></div>
+        <div class="du"><div class="age">76~85</div><div class="gz">戊辰</div><div class="g">정재</div></div>
+      </div>
+      <h3>대운 분석 — 현재 을축(乙丑) 46~55세 · 비견운</h3>
+      <p class="body">
+        신약한 명주에게 <b>비견(같은 을목)은 반가운 내 편</b>입니다. 자립·독립·동업의 기운이 강해지고, 그동안 나를 눌러온 관성·재성의 무게를 스스로 감당할 힘이 붙는 시기. <b>축(丑土)</b>은 재성이라 재물 기반은 유지되나, 축-오(丑午) 마찰 등 관계 갈등은 관리가 필요합니다.
+      </p>
+      <h3>향후 대운 전망</h3>
+      <p class="body">
+        56세 이후 <b>병인(상관)→정묘(식신)</b> 대운으로 흐릅니다. 상관·식신은 을목이 <b>피워내는 꽃</b> — 표현·창작·저술·전문성의 현금화에 유리한 국면입니다. 신약을 비겁운(현재)으로 보강한 뒤 식상운으로 꽃피우는, <b>"나를 세우고 → 펼치는"</b> 이상적 흐름입니다.
+      </p>
+    </section>
+
+    <!-- 6 -->
+    <section id="s6">
+      <h2><span class="n">六</span> 향후 10년 세운 <span class="en">Annual · 2026–2035</span></h2>
+      <p class="lead">연도별 유년(流年)의 흐름. 간지·십성은 만세력 계산값, 길흉 톤은 용신(수·목)·기신(토·금) 기준 해석입니다. <b>신약 을목에게는 목·수 운이 길, 토·금 운이 압박</b>입니다.</p>
+      <table class="seun">
+        <thead><tr><th>연도·나이</th><th>간지<br>(오행)</th><th>십성<br>(천간/지지)</th><th>강도</th><th>연도별 해석</th></tr></thead>
+        <tbody>
+          <tr class="hl"><td class="yr">2026<br><span class="age2">48세</span></td><td class="gz">丙午<br><span class="oh">火火</span></td><td>상관/식신</td><td class="str str-good">▲▲</td><td class="cell">식상운의 절정 — 을목이 <b>꽃을 피우는 해</b>. 표현·창작·저술·새 시도에 최적. 다만 화(火) 과다로 기운 소모가 크니 건강·과열 주의. 재능을 세상에 내놓기 시작하라.</td></tr>
+          <tr><td class="yr">2027<br><span class="age2">49세</span></td><td class="gz">丁未<br><span class="oh">火土</span></td><td>식신/편재</td><td class="str str-good">▲</td><td class="cell"><b>재능이 수익으로 연결</b>되는 해. 식신생재(食神生財) — 2026에 펼친 것이 실질 소득으로. 부업·전문성 현금화의 최적기. 미토(재성)로 실속 챙김.</td></tr>
+          <tr><td class="yr">2028<br><span class="age2">50세</span></td><td class="gz">戊申<br><span class="oh">土金</span></td><td>정재/정관</td><td class="str str-mid">△</td><td class="cell">재관(財官)이 동시에 무거워지는 해. 신금(정관)이 을목을 극하니 <b>책임·업무 압박↑, 분주</b>. 재물은 들어오나 소모도 큼. 확장보다 <b>수비·관리</b> 모드로.</td></tr>
+          <tr><td class="yr">2029<br><span class="age2">51세</span></td><td class="gz">己酉<br><span class="oh">土金</span></td><td>편재/편관</td><td class="str str-warn">⚠</td><td class="cell"><b>10년 중 가장 주의할 해.</b> 편관(칠살) 유금이 신약 을목을 강하게 극함 — 관재·건강·관계의 압박. 무리한 책임·보증·투자 금물. <b>버티고 지키는 한 해</b>로 삼으라.</td></tr>
+          <tr><td class="yr">2030<br><span class="age2">52세</span></td><td class="gz">庚戌<br><span class="oh">金土</span></td><td>정관/정재</td><td class="str str-mid">△</td><td class="cell">경금(정관)의 규범·명예 운. 관성이 여전히 무거우나 정관이라 <b>제도권 성취·인정</b>의 형태. 실속(정재) 챙기되, 을경합(乙庚合)으로 얽매임 주의.</td></tr>
+          <tr><td class="yr">2031<br><span class="age2">53세</span></td><td class="gz">辛亥<br><span class="oh">金水</span></td><td>편관/정인</td><td class="str str-mid">△▲</td><td class="cell">전반의 긴장(편관)이 <b>해수(정인)로 풀리는</b> 전환의 해. 용신 수(水)가 들어와 을목을 생조 — 후반부터 배움·회복·안정. 긴장 뒤 숨 고르기.</td></tr>
+          <tr><td class="yr">2032<br><span class="age2">54세</span></td><td class="gz">壬子<br><span class="oh">水水</span></td><td>정인/편인</td><td class="str str-good">▲▲</td><td class="cell"><b>용신 수(水)의 절정 — 최고의 충전기.</b> 임수·자수가 신약 을목을 든든히 생조. 학습·연구·자격·내실 다지기에 최적. 인생 후반을 준비하는 <b>씨앗의 해</b>.</td></tr>
+          <tr><td class="yr">2033<br><span class="age2">55세</span></td><td class="gz">癸丑<br><span class="oh">水土</span></td><td>편인/편재</td><td class="str str-mid">△</td><td class="cell">계수(편인)의 사색·통찰. 다만 축토(편재)가 섞여 <b>배움과 재물의 혼재</b>. 신중한 투자·정리의 해. 큰 결정보다 내실·성찰에 무게를.</td></tr>
+          <tr><td class="yr">2034<br><span class="age2">56세</span></td><td class="gz">甲寅<br><span class="oh">木木</span></td><td>겁재/겁재</td><td class="str str-warn">⚠▲</td><td class="cell">비겁(목)이 강하게 들어와 <b>일간은 힘을 받으나</b>, 겁재라 <b>경쟁·지출·동업 마찰</b>도 동반. 내 편이 늘되 재물 분산 주의. 자립엔 좋고 돈 관리엔 경계.</td></tr>
+          <tr><td class="yr">2035<br><span class="age2">57세</span></td><td class="gz">乙卯<br><span class="oh">木木</span></td><td>비견/비견</td><td class="str str-good">▲▲</td><td class="cell"><b>일간과 같은 을묘 — 완벽한 내 편의 해.</b> 신약이 온전히 보강되어 자립·재정비·새 출발에 최적. 대운(비견)과 세운(비견)이 겹쳐 <b>"나를 세우는" 흐름의 정점</b>.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>구간별 추세</h3>
+      <table class="kv" style="margin-top:4px">
+        <tr><td>2026~2027 <span class="str str-good">▲▲</span></td><td><b>개화·수익기</b> — 식상운. 재능을 펼치고 현금화하는 최적 구간.</td></tr>
+        <tr><td>2028~2029 <span class="str str-warn">⚠</span></td><td><b>압박·수비기</b> — 재관 과중, 특히 2029 편관년이 최대 고비. 지키는 전략.</td></tr>
+        <tr><td>2030~2031 <span class="str str-mid">△</span></td><td><b>전환기</b> — 관성의 무게가 정인(수)으로 풀리기 시작. 회복의 실마리.</td></tr>
+        <tr><td>2032~2033 <span class="str str-good">▲▲</span></td><td><b>충전·내실기</b> — 용신 수(水) 절정. 배움·연구로 후반을 준비.</td></tr>
+        <tr><td>2034~2035 <span class="str str-good">▲</span></td><td><b>자립·재정비기</b> — 비겁(목) 강화. 대운·세운 겹쳐 "나를 세우는" 정점.</td></tr>
+      </table>
+
+      <div class="callout">
+        <b>💡 핵심 신호.</b> 앞으로 10년의 서사는 <b>"펼치고(2026~27) → 지키고(2028~29) → 충전하고(2032~33) → 다시 서는(2034~35)"</b> 흐름입니다. 가장 조심할 해는 <b>2029(기유·편관)</b> — 신약 을목을 가장 세게 극하는 해라 무리한 책임·투자·건강 방심을 피하십시오. 반대로 <b>2032(임자)·2035(을묘)</b>는 용신·비겁이 완벽히 들어오는 최고의 해 — 배움과 자립의 결실을 이때 거두십시오.
+      </div>
+    </section>
+
+    <!-- 7 -->
+    <section id="s7">
+      <h2><span class="n">七</span> 재물의 흐름 <span class="en">Wealth</span></h2>
+      <p class="body">
+        <b>정재격의 안정형 재물.</b> 버는 힘(재성)은 충분하나 신약이라 <b>지키고 굴리는 힘</b>이 관건입니다. 재성 강한 신약은 재물이 들어와도 그릇(일간)을 함께 키워야 합니다.
+      </p>
+      <h3>재물 흐름 타임라인</h3>
+      <ul class="clean">
+        <li><b>~현재(46~55, 비견):</b> 자기 힘이 붙는 시기 → <b>운용·투자 주도권을 남에게 넘기지 말 것.</b></li>
+        <li><b>2026~27(식상):</b> 재능의 현금화 유리 — 부업·저술·전문성 수익화의 적기.</li>
+        <li><b>2028~29(재관 과중):</b> 확장 자제·수비 모드. 보증·공동명의 경계.</li>
+        <li><b>56~65(상관운):</b> 새 수입원·확장에 유리한 큰 흐름.</li>
+        <li><b>전략:</b> 한 방(편재)보다 <b>복리·분산(정재)</b>. 관성(책임)이 재물을 끌고 가는 구조 경계.</li>
+      </ul>
+    </section>
+
+    <!-- 8 -->
+    <section id="s8">
+      <h2><span class="n">八</span> 건강 <span class="en">Health</span></h2>
+      <p class="lead">오행 균형으로 본 체질 경향 (참고용 · 의학적 진단 아님).</p>
+      <div class="health-grid">
+        <div class="hcard"><b>목(木) — 간·담, 신경</b><br>일간 을목이 신약 → 간·담 기운과 자율신경이 과부하에 약함. 스트레스·과로 시 눈·근육 긴장, 편두통 주의.</div>
+        <div class="hcard"><b>금(金) 과다 — 호흡기·대장</b><br>월주 경신(金) 강 → 목을 극함. 환절기 호흡기·피부, 대장 리듬 관리. 을목을 지치게 하는 방향.</div>
+        <div class="hcard"><b>수(水) 부족 — 신·방광</b><br>용신인 수(水)가 약함 → 수분·신장 대사, 하체·허리. 충분한 수분·휴식이 곧 보약.</div>
+        <div class="hcard"><b>실전 관리</b><br>과로·책임 과중이 최대 리스크. 규칙적 수면·수분·유산소로 목기(木氣)를 부드럽게 순환시키는 것이 핵심.</div>
+      </div>
+    </section>
+
+    <!-- 9 -->
+    <section id="s9">
+      <h2><span class="n">九</span> 용신 — 실전 개운법 <span class="en">Remedy</span></h2>
+      <p class="lead">신약한 을목을 살리는 두 기운: <span class="tag blue">수(水)·인성</span> <span class="tag green">목(木)·비겁</span></p>
+      <div class="grid2">
+        <div>
+          <h3 style="color:var(--blue)">💧 수(水) 강화 — 나를 생(生)하는 물</h3>
+          <ul class="clean">
+            <li>배움·독서·연구 — 인성은 을목을 키우는 물</li>
+            <li>북쪽 방위, 검정·남색, 물가·수(水) 이미지</li>
+            <li>서두르지 않고 <b>축적</b>하는 습관</li>
+            <li>충분한 수분·휴식 (건강과 직결)</li>
+          </ul>
+        </div>
+        <div>
+          <h3 style="color:var(--green)">🌿 목(木) 강화 — 나와 같은 편</h3>
+          <ul class="clean">
+            <li>동료·네트워크·자립 기반</li>
+            <li>동쪽 방위, 초록, 아침 시간대 활동</li>
+            <li>남에게 기대기보다 <b>내 축</b>을 먼저</li>
+            <li>식물·숲·목재 환경이 기운을 북돋움</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10 -->
+    <section id="s10">
+      <h2><span class="n">十</span> 종합 조언 & 실전 액션 <span class="en">Synthesis</span></h2>
+      <p class="body">
+        <b>규범과 재물을 갖춘 정관격</b>, 그러나 그 무게에 눌리지 않으려면 <b>나 자신을 세우는 것</b>이 핵심인 명(命)입니다. 다행히 지금부터의 대운(비견→식신)이 <b>바로 그 방향</b>으로 흐릅니다. 젊은 날 남의 기대와 책임을 지고 왔다면, 46세 이후는 <b>그 힘이 온전히 내 것이 되는 시기</b>입니다.
+      </p>
+      <h3>실전 행동 지침</h3>
+      <ul class="clean">
+        <li><b>기대지 말고 내 축을 세운다</b> — 자립·독립의 결정을 미루지 말 것.</li>
+        <li><b>축적하고 배운다</b> — 수(水)·인성이 용신. 배움이 곧 개운.</li>
+        <li><b>2026~27 식상운에 펼친다</b> — 재능·전문성의 현금화 시도.</li>
+        <li><b>2028~29엔 지킨다</b> — 재관 과중, 보증·확장 자제.</li>
+        <li><b>과로를 경계한다</b> — 책임 과중이 건강·재물 양쪽의 최대 리스크.</li>
+      </ul>
+      <div class="callout">
+        <b>한 문장으로.</b> 유연하되 꺾이지 않는 을묘처럼 — <b>기대지 말고, 축적하고, 내 판단으로 지키십시오.</b> 그것이 이 사주가 가진 안정을 온전히 꽃피우는 길입니다.
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="brand">乙 · 精密四柱</div>
+    <p class="disc">본 리포트는 진태양시·경도 보정을 적용한 결정론적 만세력 계산(bazi.py)에 기반합니다. 사주팔자·십성·대운·세운 간지는 계산값이며, 해석은 명리 원칙에 따른 것입니다. 사주명리는 자기 성찰과 인생 설계를 위한 <b>참고 자료</b>이며, 의학적·법률적·재무적 판단을 대체하지 않습니다.</p>
+    <div>© 2026 · 정밀사주 · 생성일 2026-07-09</div>
+  </footer>
+
+</div>
+</div>
+</body>
+</html>

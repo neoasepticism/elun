@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>세운 확장판 · 향후 10년 정밀 유년 · 乙卯 일주</title>
+<style>
+  :root{
+    --ink:#1a1613; --sub:#6b5d4f; --faint:#9c8b78; --line:#e3d9cb; --line2:#efe7d8;
+    --bg:#faf6ef; --card:#fffdf9; --cream:#fbf5e9; --cream2:#faf4e8;
+    --gold:#a8842c; --gold2:#c9a227; --red:#8f3a2e; --blue:#2f4858; --green:#3d5a3d;
+    --wood:#3d7a4e; --fire:#c0392b; --earth:#a8842c; --metal:#8a8f96; --water:#2f6f9f;
+    --serif:'Noto Serif KR',ui-serif,Georgia,'Batang',serif;
+    --sans:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.78;font-size:15px;
+    background-image:radial-gradient(circle at 12% 6%,#f3ead9 0,transparent 40%),radial-gradient(circle at 88% 94%,#f0e6d3 0,transparent 36%);}
+  .wrap{max-width:860px;margin:0 auto;padding:0 20px 90px}
+  .doc{background:var(--card);margin-top:28px;border:1px solid var(--line);border-radius:6px;
+    box-shadow:0 1px 0 #fff inset,0 14px 44px -20px rgba(80,60,30,.28);overflow:hidden}
+  .backlink{display:block;padding:12px 44px;background:var(--cream2);border-bottom:1px solid var(--line);font-size:12.5px}
+  .backlink a{color:var(--gold);text-decoration:none;font-family:var(--serif)}
+  header{padding:44px 44px 30px;text-align:center;border-bottom:2px solid var(--gold);position:relative;
+    background:linear-gradient(180deg,#fffdf8,#fbf6ec);}
+  header .seal{position:absolute;top:26px;right:36px;width:54px;height:54px;border:1.5px solid var(--red);
+    color:var(--red);border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    font-family:var(--serif);font-size:19px;font-weight:700;transform:rotate(4deg);opacity:.85;line-height:1.02}
+  header .kicker{font-family:var(--serif);letter-spacing:7px;color:var(--gold);font-size:11px;margin-bottom:12px}
+  header h1{font-family:var(--serif);font-size:30px;margin:0 0 8px;letter-spacing:1px;font-weight:700}
+  header .sub{font-size:13px;color:var(--sub)}
+  header .oneline{font-size:13px;color:var(--gold);font-family:var(--serif);margin-top:8px}
+
+  /* era banner */
+  .era-banner{margin:22px 44px 0;background:#eef3f5;border:1px solid #cfdde3;border-radius:8px;padding:16px 20px;font-size:13.5px}
+  .era-banner .eh{font-family:var(--serif);color:var(--blue);font-size:15px;margin-bottom:6px}
+  .era-banner b{color:var(--blue)}
+
+  main{padding:16px 44px 44px}
+
+  /* year block */
+  .yblock{border:1px solid var(--line);border-radius:10px;margin:20px 0;overflow:hidden;background:var(--card)}
+  .yblock .yhead{padding:16px 22px;display:flex;align-items:center;gap:16px;border-bottom:1px solid var(--line);position:relative}
+  .yblock.wood .yhead{background:linear-gradient(90deg,#eef5ef,#fbfdfb)}
+  .yblock.fire .yhead{background:linear-gradient(90deg,#f9ece9,#fefbfa)}
+  .yblock.earth .yhead{background:linear-gradient(90deg,#f6efe0,#fefcf7)}
+  .yblock.metal .yhead{background:linear-gradient(90deg,#eef0f2,#fdfdfe)}
+  .yblock.water .yhead{background:linear-gradient(90deg,#e9f0f5,#fafcfe)}
+  .yhead .yr{font-family:var(--serif);font-size:26px;font-weight:700;line-height:1}
+  .yhead .yr .age{display:block;font-size:11px;color:var(--sub);font-weight:400;margin-top:3px}
+  .yhead .gz{font-family:var(--serif);font-size:30px;font-weight:700;color:var(--red);line-height:1}
+  .yhead .gz .oh{display:block;font-size:11px;color:var(--sub);font-weight:400;text-align:center;margin-top:3px}
+  .yhead .god{font-size:12px;color:var(--gold);font-family:var(--serif);line-height:1.5}
+  .yhead .badge{margin-left:auto;font-family:var(--serif);font-weight:700;font-size:14px;padding:5px 12px;border-radius:20px;white-space:nowrap}
+  .badge.good{background:#e8efe6;color:var(--green);border:1px solid #cfdec9}
+  .badge.warn{background:#f7e8e4;color:var(--red);border:1px solid #e8cfc8}
+  .badge.mid{background:#f3ead7;color:var(--gold);border:1px solid var(--line)}
+
+  .ybody{padding:18px 22px}
+  .ybody .row{display:flex;gap:12px;padding:9px 0;border-bottom:1px dashed var(--line2);font-size:13.5px;line-height:1.68}
+  .ybody .row:last-of-type{border-bottom:none}
+  .ybody .row .k{flex:none;width:78px;font-family:var(--serif);color:var(--gold);font-size:12.5px;padding-top:1px}
+  .ybody .row .v{flex:1}
+  .ybody .row .v b{color:var(--ink)}
+  .summ{font-size:14px;line-height:1.72;margin:0 0 14px;padding:12px 16px;background:var(--cream);border-radius:8px;border-left:3px solid var(--gold)}
+  .summ b{color:var(--gold);font-family:var(--serif)}
+
+  /* half-year flow */
+  .flow{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+  @media(max-width:620px){.flow{grid-template-columns:1fr}}
+  .fbox{background:var(--cream2);border:1px solid var(--line);border-radius:7px;padding:10px 13px;font-size:12.5px;line-height:1.6}
+  .fbox .fh{font-family:var(--serif);color:var(--blue);font-size:12.5px;margin-bottom:3px}
+
+  footer{padding:26px 44px 34px;text-align:center;font-size:11.5px;color:var(--sub);background:#f8f2e7;border-top:1px solid var(--line)}
+  footer .disc{max-width:600px;margin:0 auto 10px;line-height:1.62}
+  .brand{font-family:var(--serif);color:var(--gold);letter-spacing:3px;font-size:13px;margin-bottom:6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="doc">
+
+  <div class="backlink"><a href="CLAUDE-19780821-bazi.html">← 기본 리포트로 돌아가기</a></div>
+
+  <header>
+    <div class="seal">乙<br>木</div>
+    <div class="kicker">流 年 精 密 分 析 · 擴 張 版</div>
+    <h1>세운 확장판 — 향후 10년 정밀 유년</h1>
+    <div class="sub">戊午 · 庚申 · 乙卯 · 戊寅 · 남성 · 2026–2035</div>
+    <div class="oneline">乙木 일간 · 身弱 · 용신 水 / 부용신 木 · 기신 金土</div>
+  </header>
+
+  <div class="era-banner">
+    <div class="eh">🗺 10년의 큰 지도</div>
+    <b>2026–2033</b>은 <b>을축(乙丑) 대운</b>(46–55세, 비견/편재) — 첫 황금기가 끝나고 새 기반을 다지는 <b>전환의 골짜기</b>. <b>2034–2035</b>는 <b>병인(丙寅) 대운</b>(56–65세, 상관/겁재) 진입 — 격변과 새 국면. 이 10년의 서사는 <b>"펼치고(26–27) → 견디고(28–30) → 다시 빛나는(31–33) → 새로 서는(34–35)"</b> 흐름입니다. 핵심 분기점은 <b>2029(최대 고비)</b>와 <b>2031년부터 유입되는 수(水) 인성</b> — 평생 부족했던 물이 채워지며 <b>인생 두 번째 황금기</b>가 열립니다.
+  </div>
+
+  <main>
+
+    <!-- 2026 -->
+    <div class="yblock fire">
+      <div class="yhead">
+        <div class="yr">2026<span class="age">48세</span></div>
+        <div class="gz">丙午<span class="oh">火 · 火</span></div>
+        <div class="god">천간 상관(傷官)<br>지지 식신(食神)</div>
+        <div class="badge good">▲▲ 개화</div>
+      </div>
+      <div class="ybody">
+        <div class="summ"><b>식상운의 절정 — 을목이 꽃을 피우는 해.</b> 병화 상관과 오화 식신이 겹쳐, 표현·창작의 에너지가 평생 중 가장 강하게 터지는 시기입니다. 다만 식상이 신약한 일간을 설기(泄氣)하니, 펼치되 소진되지 않는 균형이 관건입니다.</div>
+        <div class="row"><div class="k">십성 작용</div><div class="v">상관+식신 동시 발현 — <b>재능·아이디어·표현의 분출</b>. 상관은 규범(정관)을 흔드는 기운이라, 기존 틀에 답답함을 느끼고 새 시도를 갈망하게 됩니다.</div></div>
+        <div class="row"><div class="k">일·직업</div><div class="v"><b>창의·기획·저술·강의·콘텐츠</b>에 최적. 조직 내에서도 새 프로젝트·목소리 내기에 좋으나, 상관견관(傷官見官)으로 <b>상사·권위와의 마찰</b> 주의. 독립·부업 아이디어가 샘솟는 해.</div></div>
+        <div class="row"><div class="k">재물</div><div class="v">장간 기토(편재)가 있어 <b>재물의 씨앗은 있으나</b> 아직 결실 전. 이 해는 벌기보다 <b>펼치고 알리는</b> 데 집중 — 다음 해(2027) 수익으로 연결됩니다.</div></div>
+        <div class="row"><div class="k">관계</div><div class="v">표현력이 강해져 매력·인기 상승. 다만 상관 특유의 <b>직설·비판</b>이 관계 마찰을 부를 수 있으니 말의 온도 관리를.</div></div>
+        <div class="row"><div class="k">건강</div><div class="v">화(火) 과다 — <b>심장·순환·수면·눈</b> 주의. 과열·번아웃 신호. 묘오파(卯午破)가 세운 오화로 강화되니 스트레스성 신체 증상 관리 필요.</div></div>
+        <div class="row"><div class="k">핵심 조언</div><div class="v"><b>"내놓아라, 그러나 태우지 마라."</b> 재능을 세상에 꺼내는 최적의 해 — 단 체력·감정을 함께 지키며.</div></div>
+        <div class="flow">
+          <div class="fbox"><div class="fh">상반기 (봄·여름)</div>목·화 기운이 겹쳐 에너지 최고조. 새 일 시작·발표·확장에 유리. 과속 주의.</div>
+          <div class="fbox"><div class="fh">하반기 (가을·겨울)</div>금(金) 기운 유입으로 상관이 눌림. 벌인 일을 <b>정리·마무리</b>하고 다음 해를 준비.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2027 -->
+    <div class="yblock fire">
+      <div class="yhead">
+        <div class="yr">2027<span class="age">49세</span></div>
+        <div class="gz">丁未<span class="oh">火 · 土</span></div>
+        <div class="god">천간 식신(食神)<br>지지 편재(偏財)</div>
+        <div class="badge good">▲ 결실</div>
+      </div>
+      <div class="ybody">
+        <div class="summ"><b>재능이 수익으로 연결되는 해 — 식신생재(食神生財).</b> 정화 식신이 미토 편재를 생하니, 2026에 펼친 표현·재능이 <b>실질 소득·기회</b>로 이어집니다. 부업·전문성 현금화의 최적기.</div>
+        <div class="row"><div class="k">십성 작용</div><div class="v">식신→편재의 <b>생재(生財) 라인</b>이 형성. 아이디어가 돈이 되는 구조. 단 미토 편재는 신약 일간에겐 부담이라, 감당 범위를 넘는 확장은 경계.</div></div>
+        <div class="row"><div class="k">일·직업</div><div class="v"><b>수익 모델화·계약·거래</b>에 유리. 프리랜스·사업·투자 기회. 전년의 아이디어를 <b>실행·수익화</b>하는 실전의 해.</div></div>
+        <div class="row"><div class="k">재물</div><div class="v"><b>10년 중 재물 유입이 가장 활발한 축</b>. 편재라 큰 흐름·기회성 수익. 다만 신약이므로 <b>레버리지·투기 금지</b>, 들어온 것을 지키는 데 집중.</div></div>
+        <div class="row"><div class="k">관계</div><div class="v">미토에 을목(비견) 장간 — <b>동업·파트너</b>의 기운. 협력이 재물로 이어지나, 겁재적 경쟁·분배 갈등도 잠재. 계약은 명확히.</div></div>
+        <div class="row"><div class="k">건강</div><div class="v">화·토 조합 — <b>소화기·비위, 순환</b>. 과로+회식·불규칙 식사 누적 주의. 미토의 조열(燥熱)함이 목을 마르게 함.</div></div>
+        <div class="row"><div class="k">핵심 조언</div><div class="v"><b>"벌되, 감당 가능한 만큼."</b> 재물 최성기이나 신약의 그릇을 넘지 말 것. 지키는 자가 이긴다.</div></div>
+        <div class="flow">
+          <div class="fbox"><div class="fh">상반기</div>식신 기운으로 수익 기회 가시화. 계약·거래 성사에 유리한 시기.</div>
+          <div class="fbox"><div class="fh">하반기</div>미토 편재 강화 — 재정 관리·정리 필요. 확장보다 내실.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2028 -->
+    <div class="yblock earth">
+      <div class="yhead">
+        <div class="yr">2028<span class="age">50세</span></div>
+        <div class="gz">戊申<span class="oh">土 · 金</span></div>
+        <div class="god">천간 정재(正財)<br>지지 정관(正官)</div>
+        <div class="badge mid">△ 방어</div>
+      </div>
+      <div class="ybody">
+        <div class="summ"><b>재관(財官)이 함께 무거워지는 해.</b> 무토 정재와 신금 정관이 동시에 들어와, 책임과 재물이 양쪽에서 일간을 누릅니다. 신금이 을목을 극하니 <b>업무 압박·분주함</b>이 커집니다. 확장보다 <b>수비·관리</b>의 해.</div>
+        <div class="row"><div class="k">십성 작용</div><div class="v"><b>재생관(財生官)</b> — 재물이 책임·의무를 키우는 구조. 벌수록 일·책임도 늘어 소모가 큼. 원국의 재다신약이 세운으로 재현되는 해.</div></div>
+        <div class="row"><div class="k">일·직업</div><div class="v">정관 강화 — <b>직책·책임·공적 역할</b>이 늘어남. 승진·중책의 기회일 수 있으나, 신약엔 부담. 신금이 시지 인목과 인신충(寅申沖) — <b>이동·변동·출장</b>수.</div></div>
+        <div class="row"><div class="k">재물</div><div class="v">정재라 <b>안정적 수입</b>이나 지출·책임도 동반. 큰 투자보다 <b>현상 유지·저축</b>. 무토+신금이라 실속은 있되 화려하지 않은 해.</div></div>
+        <div class="row"><div class="k">관계</div><div class="v">정관 = 규범·조직·상하관계 강조. 권위와의 관계에서 <b>인내·조율</b>이 필요. 인신충으로 관계 이동·정리도.</div></div>
+        <div class="row"><div class="k">건강</div><div class="v">금(金) 강 — <b>호흡기·대장·피부, 관절</b>. 신금이 을목(간·신경)을 극하니 <b>피로·긴장성 통증</b> 주의. 무리한 스케줄이 몸으로.</div></div>
+        <div class="row"><div class="k">핵심 조언</div><div class="v"><b>"넓히지 말고 지켜라."</b> 책임이 밀려오는 해 — 새 짐을 더 지기보다 있는 것을 단단히.</div></div>
+        <div class="flow">
+          <div class="fbox"><div class="fh">상반기</div>재관 기운 형성 — 일·책임 증가. 무리한 수락 자제.</div>
+          <div class="fbox"><div class="fh">하반기</div>신금 관성 강화 + 인신충 — 이동·변동·긴장 고조. 건강 관리 우선.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2029 -->
+    <div class="yblock metal">
+      <div class="yhead">
+        <div class="yr">2029<span class="age">51세</span></div>
+        <div class="gz">己酉<span class="oh">土 · 金</span></div>
+        <div class="god">천간 편재(偏財)<br>지지 편관(偏官·七殺)</div>
+        <div class="badge warn">⚠ 최대 고비</div>
+      </div>
+      <div class="ybody">
+        <div class="summ"><b>10년 중 가장 조심해야 할 해.</b> 유금(酉)은 순수한 편관(칠살)으로, 신약한 을목을 <b>가장 날카롭게 극(剋)</b>합니다. 게다가 일지 묘목(卯)과 <b>묘유충(卯酉沖)</b> — 나의 뿌리(득지)를 직접 때립니다. 관재·건강·관계의 압박이 겹치는 시기.</div>
+        <div class="row"><div class="k">십성 작용</div><div class="v"><b>편재+칠살</b> = 재생살(財生殺). 재물이 오히려 나를 치는 칠살을 키우는 최악의 조합. 무리한 욕심이 화를 부르는 구조.</div></div>
+        <div class="row"><div class="k">일·직업</div><div class="v"><b>묘유충으로 자리·소속의 흔들림</b>. 갈등·구설·압박·과중 업무. 이직·다툼의 유혹이 있으나 <b>충동적 결정 금물</b> — 버티는 것이 상책.</div></div>
+        <div class="row"><div class="k">재물</div><div class="v"><b>가장 위험한 재물 해.</b> 편재의 유혹(큰돈·투기)이 칠살로 이어짐. <b>보증·대출·투자·동업 확대 절대 금지.</b> 지키기만 해도 성공.</div></div>
+        <div class="row"><div class="k">관계</div><div class="v">칠살 = 압박하는 사람·권위·경쟁자. 관계 마찰·소송·구설 주의. 묘유충으로 <b>가까운 관계의 균열</b>도. 말·서명 신중히.</div></div>
+        <div class="row"><div class="k">건강</div><div class="v"><b>가장 주의할 건강 해.</b> 칠살이 일간을 직접 극 — 급성 질환·사고·수술수·스트레스성 질환. 정기검진·안전·휴식 필수. 무리 금물.</div></div>
+        <div class="row"><div class="k">핵심 조언</div><div class="v"><b>"움직이지 말고, 지켜라."</b> 확장·투자·이직·큰 결정을 모두 미루는 해. 이 한 해를 무사히 넘기면 다음이 빛난다.</div></div>
+        <div class="flow">
+          <div class="fbox"><div class="fh">상반기</div>편재의 유혹·기회처럼 보이는 함정 주의. 신중 또 신중.</div>
+          <div class="fbox"><div class="fh">하반기 (가을 酉월)</div><b>칠살·묘유충 최강 구간.</b> 건강·관계·계약 각별히. 큰 일 벌이지 말 것.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2030 -->
+    <div class="yblock metal">
+      <div class="yhead">
+        <div class="yr">2030<span class="age">52세</span></div>
+        <div class="gz">庚戌<span class="oh">金 · 土</span></div>
+        <div class="god">천간 정관(正官)<br>지지 정재(正財)</div>
+        <div class="badge mid">△ 정비</div>
+      </div>
+      <div class="ybody">
+        <div class="summ"><b>규범과 실속의 해 — 관성이 정돈되기 시작.</b> 전년의 날카로운 칠살(편관)이 경금 <b>정관</b>으로 순화됩니다. 여전히 무거우나, 제도권 안에서의 <b>성취·인정·안정</b>의 형태. 을경합(乙庚合)으로 관성과 묶이니, 얽매임과 안정이 공존.</div>
+        <div class="row"><div class="k">십성 작용</div><div class="v">정관+정재 = <b>정통 재관</b>. 원칙·책임을 지키면 실속이 따르는 구조. 을경합(乙庚合)으로 일간이 정관에 붙잡히니 — 자유는 줄되 <b>지위·신뢰</b>는 오름.</div></div>
+        <div class="row"><div class="k">일·직업</div><div class="v"><b>제도권·조직 내 안정·인정</b>의 해. 직책·역할 정립. 전년 고비를 넘긴 뒤의 자리 잡기. 큰 확장보다 <b>입지 다지기</b>.</div></div>
+        <div class="row"><div class="k">재물</div><div class="v">정재 — <b>안정적·정당한 수입</b>. 술토(戌)에 신금(편관)·정화(식신)·무토(정재) 장간이라 복합적이나, 무리 없으면 실속 챙기는 해.</div></div>
+        <div class="row"><div class="k">관계</div><div class="v">을경합 — 책임·약속으로 묶이는 관계(계약·직책·혼약 등). 안정적이나 <b>구속감</b>도. 신뢰를 쌓기 좋은 시기.</div></div>
+        <div class="row"><div class="k">건강</div><div class="v">금·토 — 호흡기·소화기·관절. 전년보다 완화되나 누적 피로 관리. 술토의 조(燥)함에 수분 보충.</div></div>
+        <div class="row"><div class="k">핵심 조언</div><div class="v"><b>"자리를 지키고 신뢰를 쌓아라."</b> 고비 후의 안정기 — 무리 없이 입지를 굳히는 해.</div></div>
+        <div class="flow">
+          <div class="fbox"><div class="fh">상반기</div>정관 기운으로 책임·역할 정립. 성실이 인정으로.</div>
+          <div class="fbox"><div class="fh">하반기 (戌월)</div>재성 실속 챙기기. 다가올 수(水) 대운 준비 — 배움·계획.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2031 -->
+    <div class="yblock water">
+      <div class="yhead">
+        <div class="yr">2031<span class="age">53세</span></div>
+        <div class="gz">辛亥<span class="oh">金 · 水</span></div>
+        <div class="god">천간 편관(偏官)<br>지지 정인(正印)</div>
+        <div class="badge good">△▲ 전환</div>
+      </div>
+      <div class="ybody">
+        <div class="summ"><b>두 번째 황금기의 문이 열리는 해.</b> 천간 신금(편관)의 긴장이 지지 <b>해수(亥·정인)</b>로 풀립니다 — <b>살인상생(殺印相生)!</b> 나를 치던 관성이 인성으로 흐르며 일간을 살리는, 이 사주가 기다려온 구조. 평생 부족했던 <b>용신 수(水)가 마침내 유입</b>됩니다.</div>
+        <div class="row"><div class="k">십성 작용</div><div class="v"><b>살인상생</b> — 편관(압박)이 정인(수용·학습)으로 전환되어 일간을 생조. 스트레스가 지혜·성장으로 승화되는 최고의 흐름. 원국의 '관극인' 결함이 세운으로 치유되는 해.</div></div>
+        <div class="row"><div class="k">일·직업</div><div class="v">긴장·압박이 <b>배움·자격·전문성</b>으로 전환. 공부·연구·재교육·이직 준비에 유리. 상반의 긴장을 하반의 안정이 감쌈.</div></div>
+        <div class="row"><div class="k">재물</div><div class="v">해수 장간에 무토(정재)·갑목(겁재)·임수(정인) — 복합적. 이 해는 <b>돈보다 배움·기반</b>에 투자할 시기. 씨앗을 심는 해.</div></div>
+        <div class="row"><div class="k">관계</div><div class="v">정인 = 어른·스승·조력자. <b>도움 주는 인연·멘토</b>가 나타날 수 있음. 신금 편관의 경쟁자도 있으나 인성이 완충.</div></div>
+        <div class="row"><div class="k">건강</div><div class="v">수(水) 유입으로 <b>신장·수분 대사 회복</b>. 전년까지의 금 과다 부담이 완화되기 시작. 회복·재충전의 해.</div></div>
+        <div class="row"><div class="k">핵심 조언</div><div class="v"><b>"고비는 끝났다, 이제 채워라."</b> 압박을 배움으로 바꾸는 전환의 해 — 두 번째 황금기의 시작.</div></div>
+        <div class="flow">
+          <div class="fbox"><div class="fh">상반기</div>신금 편관의 잔여 긴장 — 마무리·정리. 큰일보다 준비.</div>
+          <div class="fbox"><div class="fh">하반기 (亥월)</div><b>해수 정인 본격 — 살인상생 발동.</b> 배움·회복·안정. 흐름이 바뀐다.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2032 -->
+    <div class="yblock water">
+      <div class="yhead">
+        <div class="yr">2032<span class="age">54세</span></div>
+        <div class="gz">壬子<span class="oh">水 · 水</span></div>
+        <div class="god">천간 정인(正印)<br>지지 편인(偏印)</div>
+        <div class="badge good">▲▲ 최고</div>
+      </div>
+      <div class="ybody">
+        <div class="summ"><b>용신 수(水)의 절정 — 10년 최고의 해.</b> 임수 정인과 자수 편인이 겹쳐, <b>이 사주가 평생 갈구하던 물이 가득 차는</b> 해입니다. 신약 을목이 인성의 생조로 든든해지고, 관성의 압박도 인성으로 순화됩니다. 학습·자격·연구·내실의 최적기.</div>
+        <div class="row"><div class="k">십성 작용</div><div class="v"><b>인성 최강 — 관인상생·인생일</b>의 완벽한 흐름. 원국의 최대 결함(수 4%·인성 극약)이 세운으로 완전히 채워지는, <b>구조적 치유의 해</b>.</div></div>
+        <div class="row"><div class="k">일·직업</div><div class="v"><b>공부·자격·학위·전문성 확립에 최고.</b> 새 기술·지식 습득, 재교육, 연구 성과. 문서·계약·시험운도 좋음. 후반 인생의 발판을 놓는 해.</div></div>
+        <div class="row"><div class="k">재물</div><div class="v">인성운이라 <b>직접 재물보다 기반·역량</b>이 커지는 해. 지금 쌓는 실력·자격이 향후 수입원. 투기보다 자기투자.</div></div>
+        <div class="row"><div class="k">관계</div><div class="v">정인·편인 = 스승·후원·어머니 같은 인연. <b>배움을 주는 관계·귀인</b>. 다만 편인의 고독·사색 성향으로 혼자만의 시간도 늘어남.</div></div>
+        <div class="row"><div class="k">건강</div><div class="v"><b>수(水) 충만 — 신장·순환·전반적 회복.</b> 10년 중 몸이 가장 편안한 축. 다만 수 과다로 냉·부종·소화 저하는 가볍게 관리.</div></div>
+        <div class="row"><div class="k">핵심 조언</div><div class="v"><b>"배워라, 지금이 그때다."</b> 평생 부족했던 물이 차는 해 — 인생 후반을 바꿀 씨앗을 이 해에 심어라.</div></div>
+        <div class="flow">
+          <div class="fbox"><div class="fh">상반기</div>임수 정인 — 학습·계획·문서운 최고. 시작하기 좋은 시기.</div>
+          <div class="fbox"><div class="fh">하반기 (子월)</div>자수 편인 절정 — 깊은 몰입·연구·내실. 성과 결실.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2033 -->
+    <div class="yblock water">
+      <div class="yhead">
+        <div class="yr">2033<span class="age">55세</span></div>
+        <div class="gz">癸丑<span class="oh">水 · 土</span></div>
+        <div class="god">천간 편인(偏印)<br>지지 편재(偏財)</div>
+        <div class="badge good">▲ 통찰</div>
+      </div>
+      <div class="ybody">
+        <div class="summ"><b>사색과 통찰의 해, 그러나 배움과 재물이 혼재.</b> 계수 편인의 깊은 지혜가 이어지되, 축토(丑) 편재가 섞여 <b>인성과 재성이 충돌(재극인)</b>합니다. 큰 결정보다 <b>신중한 정리·성찰</b>에 무게를 둘 해.</div>
+        <div class="row"><div class="k">십성 작용</div><div class="v">편인+편재 = <b>재극인(財剋印)</b>의 긴장. 배움(인)과 돈(재)이 서로 당김. 욕심내면 배움이 흔들리고, 배움에 집중하면 재물 기회를 놓치는 딜레마.</div></div>
+        <div class="row"><div class="k">일·직업</div><div class="v">전년의 배움을 <b>정리·응용·마무리</b>. 새 시작보다 다지기. 편인이라 독립·전문·틈새 분야에 유리하나 실행은 신중히.</div></div>
+        <div class="row"><div class="k">재물</div><div class="v">축토 편재 — 재물 기회가 보이나 <b>재극인</b>이라 무리하면 그동안 쌓은 기반이 흔들림. <b>신중한 투자·현금 관리</b>. 큰 베팅 금물.</div></div>
+        <div class="row"><div class="k">관계</div><div class="v">편인의 고독·사색 + 편재의 현실 — 내면과 외부 사이 균형. 소수 깊은 관계에 집중하는 시기.</div></div>
+        <div class="row"><div class="k">건강</div><div class="v">수·토 혼재 — 소화기·신장·습담. 축토의 습(濕)함에 냉·부종 주의. 규칙적 생활로 균형.</div></div>
+        <div class="row"><div class="k">핵심 조언</div><div class="v"><b>"돈과 배움 중 배움을 택하라."</b> 재극인의 해 — 눈앞의 이익보다 그간 쌓은 내실을 지키는 것이 길다.</div></div>
+        <div class="flow">
+          <div class="fbox"><div class="fh">상반기</div>계수 편인 — 사색·연구·정리. 내실 다지기.</div>
+          <div class="fbox"><div class="fh">하반기 (丑월)</div>축토 편재 대두 — 재물 유혹·긴장. 신중 판단.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2034 -->
+    <div class="yblock wood">
+      <div class="yhead">
+        <div class="yr">2034<span class="age">56세</span></div>
+        <div class="gz">甲寅<span class="oh">木 · 木</span></div>
+        <div class="god">천간 겁재(劫財)<br>지지 겁재(劫財)</div>
+        <div class="badge warn">⚠▲ 격변</div>
+      </div>
+      <div class="ybody">
+        <div class="summ"><b>병인(丙寅) 대운 진입 + 비겁 강세의 격변기.</b> 갑목·인목이 겹쳐 일간에 <b>강력한 힘(뿌리)</b>이 붙습니다. 신약이 크게 보강되어 자립·독립엔 최고이나, <b>겁재</b>라 경쟁·지출·동업 마찰도 함께 옵니다. 대운 교체와 맞물려 인생의 새 국면.</div>
+        <div class="row"><div class="k">십성 작용</div><div class="v">겁재 중첩 — <b>강한 자기 주장·독립 욕구</b>. 일간엔 힘이 되나, 겁재는 재물을 나누는 기운이라 <b>지출·분배·경쟁</b>이 커짐. 인목이 시지 인목과 겹쳐 역마·활동성 강화.</div></div>
+        <div class="row"><div class="k">일·직업</div><div class="v"><b>독립·창업·전직에 힘이 실리는 해.</b> 병인 대운(상관)과 맞물려 기존 틀을 벗는 큰 변화. 자립 결단에 유리하나, 동업·협력엔 마찰 주의.</div></div>
+        <div class="row"><div class="k">재물</div><div class="v"><b>겁재 = 재물 분산 주의보.</b> 지출·투자·동업 확대가 손실로 이어질 수 있음. 벌이는 늘되 새는 곳도 많은 해. 현금 관리 철저히.</div></div>
+        <div class="row"><div class="k">관계</div><div class="v">동료·형제·경쟁자의 기운 강화. 협력자가 늘되 <b>이해관계 충돌</b>도. 금전 얽힌 관계는 특히 명확히.</div></div>
+        <div class="row"><div class="k">건강</div><div class="v">목(木) 과왕 — 간·담·신경 항진. 과로·과열·조급증 주의. 힘이 넘쳐 무리하기 쉬운 해.</div></div>
+        <div class="row"><div class="k">핵심 조언</div><div class="v"><b>"서되, 흩뿌리지 마라."</b> 자립엔 최고의 해 — 단 겁재의 지출·경쟁을 다스리면 새 국면이 열린다.</div></div>
+        <div class="flow">
+          <div class="fbox"><div class="fh">상반기</div>비겁 힘 강화 — 결단·독립·시작. 재물 관리 병행.</div>
+          <div class="fbox"><div class="fh">하반기 (寅월 강화)</div>역마·활동성 최고. 이동·변화 활발. 지출 통제.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2035 -->
+    <div class="yblock wood">
+      <div class="yhead">
+        <div class="yr">2035<span class="age">57세</span></div>
+        <div class="gz">乙卯<span class="oh">木 · 木</span></div>
+        <div class="god">천간 비견(比肩)<br>지지 비견(比肩)</div>
+        <div class="badge good">▲▲ 정립</div>
+      </div>
+      <div class="ybody">
+        <div class="summ"><b>일간과 똑같은 을묘(乙卯) — 완벽한 "내 편"의 해.</b> 세운이 일주와 동일하게 겹치는 복음(伏吟)의 해로, 신약 을목이 <b>온전히 보강</b>됩니다. 자립·재정비·새 출발의 정점. 대운(비견)과 세운(비견)이 함께 "나를 세우는" 흐름의 절정입니다.</div>
+        <div class="row"><div class="k">십성 작용</div><div class="v">비견 중첩 — <b>순수한 자기 강화</b>. 겁재(2034)의 경쟁성보다 부드러운 '내 편'. 다만 을묘 복음(같은 간지 반복)은 <b>제자리·반복·정체</b>의 기운도 있어 새로움보다 정립의 해.</div></div>
+        <div class="row"><div class="k">일·직업</div><div class="v"><b>독립 기반의 안정·정립.</b> 전년 격변 후 자기 위치를 굳히는 해. 혼자 힘으로 세운 것이 자리 잡음. 큰 확장보다 <b>내 것을 다지기</b>.</div></div>
+        <div class="row"><div class="k">재물</div><div class="v">비견이라 <b>재물 경쟁·분산은 완화</b>(겁재보다 온건). 안정적 자립 수입. 무리 없으면 지키고 쌓는 해.</div></div>
+        <div class="row"><div class="k">관계</div><div class="v">비견 = 대등한 동료·동반자. <b>독립적이되 든든한 관계</b>. 복음이라 옛 인연의 재회·반복도.</div></div>
+        <div class="row"><div class="k">건강</div><div class="v">목 기운 안정 — 전년보다 균형. 간·신경 관리 지속. 복음의 정체 기운에 무기력·권태 가볍게 관리.</div></div>
+        <div class="row"><div class="k">핵심 조언</div><div class="v"><b>"이제 온전히 내 것이다."</b> 신약을 넘어 자립을 완성하는 해 — 견뎌온 자가 마침내 제 축으로 선다.</div></div>
+        <div class="flow">
+          <div class="fbox"><div class="fh">상반기</div>비견 힘으로 자기 기반 안정. 정립·재정비.</div>
+          <div class="fbox"><div class="fh">하반기 (卯월)</div>묘목 절정 — 뿌리 완성. 다음 10년의 토대 마련.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="era-banner" style="margin-top:24px">
+      <div class="eh">🏁 10년의 결론</div>
+      <b>2026–2027</b> 재능을 펼쳐 수익으로 연결하고 → <b>2028–2030</b> 밀려오는 재관의 무게를 지키며 견디되 특히 <b>2029년은 움직이지 말고</b> → <b>2031–2033</b> 평생 부족했던 수(水) 인성이 채워지는 두 번째 황금기에 <b>배우고 재도약</b>하며 → <b>2034–2035</b> 비겁의 힘으로 마침내 자립을 완성합니다. 이 사주의 열쇠는 변함없습니다: <b>견디는 자가 끝내 꽃을 피운다.</b>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="brand">乙 · 精密四柱 · 流年擴張版</div>
+    <p class="disc">본 세운 확장판은 진태양시·경도 보정을 적용한 결정론적 만세력 계산(bazi.py)의 세운 간지·십성·장간에 기반합니다. 길흉·월별 흐름 해석은 명리학 원칙에 따른 것이며, 사주명리는 자기 성찰과 인생 설계를 위한 <b>참고 자료</b>입니다. 의학적·법률적·재무적 판단을 대체하지 않습니다.</p>
+    <div>© 2026 · 精密四柱 Precision BaZi · 생성일 2026-07-09</div>
+  </footer>
+
+</div>
+</div>
+</body>
+</html>

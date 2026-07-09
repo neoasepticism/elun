@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>BaZi Precision Report · Yi-Wood Day Master</title>
+<style>
+  :root{
+    --ink:#1a1613; --sub:#6b5d4f; --line:#e3d9cb; --bg:#faf6ef; --card:#fffdf9;
+    --gold:#a8842c; --gold2:#c9a227; --red:#8f3a2e; --blue:#2f4858; --green:#3d5a3d;
+    --serif:'Noto Serif',ui-serif,Georgia,serif;
+    --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.75;
+    background-image:radial-gradient(circle at 15% 10%,#f3ead9 0,transparent 45%),radial-gradient(circle at 85% 90%,#f0e6d3 0,transparent 40%);}
+  .wrap{max-width:820px;margin:0 auto;padding:0 20px 80px}
+  .doc{background:var(--card);margin-top:28px;border:1px solid var(--line);border-radius:6px;
+    box-shadow:0 1px 0 #fff inset,0 12px 40px -18px rgba(80,60,30,.25);overflow:hidden}
+  header{padding:44px 40px 34px;text-align:center;border-bottom:2px solid var(--gold);position:relative;
+    background:linear-gradient(180deg,#fffdf8,#fbf6ec);}
+  header .seal{position:absolute;top:26px;right:34px;width:52px;height:52px;border:1.5px solid var(--red);
+    color:var(--red);border-radius:6px;display:flex;align-items:center;justify-content:center;
+    font-family:var(--serif);font-size:24px;font-weight:700;transform:rotate(4deg);opacity:.82}
+  header .kicker{font-family:var(--serif);letter-spacing:6px;color:var(--gold);font-size:11px;margin-bottom:14px;text-transform:uppercase}
+  header h1{font-family:var(--serif);font-size:32px;margin:0 0 6px;letter-spacing:1px;font-weight:700}
+  header .hanja{font-family:var(--serif);font-size:16px;color:var(--sub);letter-spacing:6px}
+  header .meta{margin-top:16px;font-size:13px;color:var(--sub)}
+  .accuracy{margin:0 40px;margin-top:-1px;background:#f6efe0;border:1px solid var(--line);border-top:none;
+    border-radius:0 0 6px 6px;padding:14px 18px;font-size:12px;color:var(--sub);display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:center}
+  .accuracy b{color:var(--gold);font-family:var(--serif)}
+  .accuracy .chip{background:#fff;border:1px solid var(--line);border-radius:20px;padding:3px 11px;white-space:nowrap}
+  main{padding:12px 40px 40px}
+  section{padding:30px 0;border-bottom:1px solid var(--line)}
+  section:last-child{border-bottom:none}
+  h2{font-family:var(--serif);font-size:20px;letter-spacing:.5px;margin:0 0 4px;display:flex;align-items:baseline;gap:10px}
+  h2 .n{color:var(--gold);font-size:14px;font-weight:700;font-family:var(--serif)}
+  h2 .cn{font-size:12px;color:var(--sub);letter-spacing:2px;margin-left:auto;font-weight:400}
+  .lead{color:var(--sub);font-size:13.5px;margin:2px 0 18px}
+  .pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:8px 0 4px}
+  .pil{background:#fbf5e9;border:1px solid var(--line);border-radius:8px;text-align:center;padding:14px 6px}
+  .pil .lab{font-size:10.5px;color:var(--sub);letter-spacing:.5px;text-transform:uppercase}
+  .pil .stem,.pil .branch{font-family:var(--serif);font-size:30px;font-weight:700;line-height:1.2}
+  .pil .stem{color:var(--red)} .pil .branch{color:var(--blue)}
+  .pil .ko{font-size:11px;color:var(--sub);margin-top:2px}
+  .pil .god{font-size:10px;color:var(--gold);margin-top:5px}
+  .pil.day{border-color:var(--gold);border-width:1.5px;background:#fdf3df;box-shadow:0 0 0 3px #f3e6c9}
+  .pil.day .lab{color:var(--gold);font-weight:700}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  @media(max-width:600px){.grid2,.pillars{grid-template-columns:1fr 1fr}}
+  .kv{width:100%;border-collapse:collapse;font-size:13px}
+  .kv td{padding:7px 4px;border-bottom:1px dashed var(--line);vertical-align:top}
+  .kv td:first-child{color:var(--sub);white-space:nowrap;width:42%}
+  .kv td:last-child{font-weight:600}
+  .tag{display:inline-block;background:#f3ead7;border:1px solid var(--line);color:var(--gold);
+    border-radius:5px;padding:2px 9px;font-size:12px;font-family:var(--serif);margin:2px 3px 2px 0}
+  .tag.red{background:#f7e8e4;color:var(--red);border-color:#e8cfc8}
+  .tag.blue{background:#e9eff2;color:var(--blue);border-color:#cfdde3}
+  p{margin:0 0 12px} p.body{font-size:14.5px}
+  .callout{background:#f6efe0;border-left:3px solid var(--gold);border-radius:0 6px 6px 0;padding:14px 18px;margin:14px 0;font-size:13.5px}
+  .callout b{color:var(--gold);font-family:var(--serif)}
+  .timeline{display:flex;gap:6px;overflow-x:auto;padding:10px 0 4px}
+  .du{flex:none;min-width:82px;text-align:center;border:1px solid var(--line);border-radius:8px;padding:9px 4px;background:#fbf5e9}
+  .du.now{border-color:var(--gold);border-width:1.5px;background:#fdf3df}
+  .du .age{font-size:10px;color:var(--sub)}
+  .du .gz{font-family:var(--serif);font-size:18px;font-weight:700;color:var(--ink);margin:2px 0}
+  .du .g{font-size:9.5px;color:var(--gold)}
+  .du.now .age{color:var(--gold);font-weight:700}
+  ul.clean{margin:6px 0 0;padding-left:0;list-style:none}
+  ul.clean li{padding:6px 0 6px 22px;position:relative;font-size:13.8px;border-bottom:1px dashed var(--line)}
+  ul.clean li:last-child{border-bottom:none}
+  ul.clean li:before{content:"◆";color:var(--gold);position:absolute;left:2px;font-size:10px;top:9px}
+  footer{padding:26px 40px 34px;text-align:center;font-size:11.5px;color:var(--sub);background:#f8f2e7;border-top:1px solid var(--line)}
+  footer .disc{max-width:560px;margin:0 auto 10px;line-height:1.6}
+  .brand{font-family:var(--serif);color:var(--gold);letter-spacing:3px;font-size:13px;margin-bottom:6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="doc">
+
+  <header>
+    <div class="seal">乙</div>
+    <div class="kicker">Four Pillars of Destiny · Precision Analysis</div>
+    <h1>BaZi Destiny Report</h1>
+    <div class="hanja">戊午 · 庚申 · 乙卯 · 戊寅</div>
+    <div class="meta">21 August 1978 (Gregorian) · 05:00 · Male · Seoul</div>
+  </header>
+  <div class="accuracy">
+    <span class="chip">🌞 True Solar Time <b>05:00 → 04:25</b></span>
+    <span class="chip">📍 Longitude-corrected <b>126.98°E</b></span>
+    <span class="chip">🧮 Deterministic (Julian-day) engine</span>
+    <span class="chip">✓ Reproducible · zero drift</span>
+  </div>
+
+  <main>
+
+    <!-- 0. Why this is accurate -->
+    <section>
+      <h2><span class="n">·</span> Why this chart is correct <span class="cn">精密</span></h2>
+      <p class="body">
+        Most BaZi tools — and general AI chatbots — read the clock time as-is. But Korea's clock runs on the <b>135°E</b> meridian (Japan), while Seoul actually sits at <b>127°E</b>. That is roughly <b>32 minutes</b> of difference. A birth logged at 05:00 is, by the true position of the sun, <b>04:25</b> — which changes the <b>Hour Pillar</b>, one full quarter of the chart. This report corrects for true solar time and longitude, and computes the pillars deterministically from the Julian day. <b>The same input always yields the same chart.</b>
+      </p>
+    </section>
+
+    <!-- 1. Pillars -->
+    <section>
+      <h2><span class="n">I</span> The Four Pillars <span class="cn">四柱</span></h2>
+      <p class="lead">The Heavenly Stem and Earthly Branch of the moment of birth — corrected to true solar time.</p>
+      <div class="pillars">
+        <div class="pil"><div class="lab">Hour 時</div><div class="stem">戊</div><div class="branch">寅</div><div class="ko">Wu-Yin</div><div class="god">Wealth · Rob</div></div>
+        <div class="pil day"><div class="lab">Day 日 ★</div><div class="stem">乙</div><div class="branch">卯</div><div class="ko">Yi-Mao</div><div class="god">Self · Peer</div></div>
+        <div class="pil"><div class="lab">Month 月</div><div class="stem">庚</div><div class="branch">申</div><div class="ko">Geng-Shen</div><div class="god">Officer ×2</div></div>
+        <div class="pil"><div class="lab">Year 年</div><div class="stem">戊</div><div class="branch">午</div><div class="ko">Wu-Wu</div><div class="god">Wealth · Eating</div></div>
+      </div>
+      <div class="callout">
+        <b>Day Master = Yi Wood (乙木)</b> · Yin Wood. Not the towering tree (Jia Wood) but the <b>vine, the grass, the flowering plant</b> — soft and yielding, yet tenacious. Yi Wood <b>bends without breaking</b> and survives by adapting and intertwining, not by standing rigid.
+      </div>
+    </section>
+
+    <!-- 2. Ten Gods / Structure -->
+    <section>
+      <h2><span class="n">II</span> Ten Gods &amp; Structure <span class="cn">十神·格局</span></h2>
+      <p class="lead">How the innate energy is distributed — what is abundant, what is absent.</p>
+      <div class="grid2">
+        <div>
+          <table class="kv">
+            <tr><td>Direct Wealth (正財)</td><td>2 — steady, reliable income</td></tr>
+            <tr><td>Direct Officer (正官)</td><td>2 — order, duty, reputation</td></tr>
+            <tr><td>Eating God (食神)</td><td>1 — expression, output</td></tr>
+            <tr><td>Friend / Peer (比肩)</td><td>1 — independence</td></tr>
+            <tr><td>Rob Wealth (劫財)</td><td>1 — drive, competition</td></tr>
+          </table>
+        </div>
+        <div>
+          <table class="kv">
+            <tr><td>Structure (格局)</td><td><span class="tag">Direct Officer</span></td></tr>
+            <tr><td>Strength</td><td><span class="tag red">Weak Self (身弱)</span> (ally 2.5 / drain 6.0)</td></tr>
+            <tr><td>Root support</td><td>No season · yes root (Mao branch)</td></tr>
+            <tr><td>Favorable (用神)</td><td><span class="tag blue">Water · Wood</span></td></tr>
+            <tr><td>Unfavorable</td><td>excess Earth (wealth) / Metal (officer)</td></tr>
+          </table>
+        </div>
+      </div>
+      <p class="body" style="margin-top:16px">
+        A <b>Direct-Officer structure with strong wealth</b> (Wealth ×2, Officer ×2): a person who values rules and responsibility, and builds steady prosperity by earning trust inside the systems of work and society. But the Day Master (Yi Wood) is <b>weak</b>, while Officer (Metal) and Wealth (Earth) press heavily. In plain terms — <b>duty and money tend to drive the self</b>, rather than the reverse. The lifelong task is to <b>strengthen the self</b> so it can carry that weight.
+      </p>
+    </section>
+
+    <!-- 3. Character -->
+    <section>
+      <h2><span class="n">III</span> Character <span class="cn">性情</span></h2>
+      <ul class="clean">
+        <li><b>A flexible principlist.</b> Yi-Wood softness + Officer discipline. Holds the line without being forceful.</li>
+        <li><b>Responsibility as both asset and burden.</b> Two Officers — finishes what is entrusted, but easily absorbs others' expectations and burns out.</li>
+        <li><b>Stability-oriented with money.</b> Two Direct-Wealth — compounding over speculation; the slow build over the big bet.</li>
+        <li><b>The sensitivity of a weak self.</b> Strongly shaped by environment and people. Grows powerful when supported by allies (peers) and learning.</li>
+      </ul>
+    </section>
+
+    <!-- 4. Luck Pillars -->
+    <section>
+      <h2><span class="n">IV</span> Luck Pillars <span class="cn">大運</span></h2>
+      <p class="lead">Forward sequence · begins age 6y1m. The ten-year seasons of a life.</p>
+      <div class="timeline">
+        <div class="du"><div class="age">6–15</div><div class="gz">辛酉</div><div class="g">7-Killings</div></div>
+        <div class="du"><div class="age">16–25</div><div class="gz">壬戌</div><div class="g">Dir.Resource</div></div>
+        <div class="du"><div class="age">26–35</div><div class="gz">癸亥</div><div class="g">Ind.Resource</div></div>
+        <div class="du"><div class="age">36–45</div><div class="gz">甲子</div><div class="g">Rob Wealth</div></div>
+        <div class="du now"><div class="age">46–55</div><div class="gz">乙丑</div><div class="g">Peer ★</div></div>
+        <div class="du"><div class="age">56–65</div><div class="gz">丙寅</div><div class="g">Hurting</div></div>
+        <div class="du"><div class="age">66–75</div><div class="gz">丁卯</div><div class="g">Eating</div></div>
+        <div class="du"><div class="age">76–85</div><div class="gz">戊辰</div><div class="g">Dir.Wealth</div></div>
+      </div>
+      <div class="callout" style="margin-top:18px">
+        <b>Now — Yi-Chou (乙丑) Luck Pillar, age 46–55 · Peer.</b> For a weak Day Master, a <b>Peer (another Yi Wood) is a welcome ally</b>. Independence, self-reliance, and partnership grow stronger, and for the first time the self can carry the weight of Officer and Wealth on its own terms. The <b>Chou</b> branch is Wealth, so the financial base holds — but relational friction (the Chou–Wu tension) needs tending. This is <b>a decade for building the self.</b> Lean on no one; set your own axis.
+      </div>
+    </section>
+
+    <!-- 5. Wealth -->
+    <section>
+      <h2><span class="n">V</span> The Flow of Wealth <span class="cn">財運</span></h2>
+      <p class="body">
+        A <b>stable, Direct-Wealth pattern.</b> Structurally the <b>earning power is ample</b>, but because the self is weak, the real question is the <b>power to hold and grow</b> it. A weak self with strong wealth must build the vessel (the self) alongside the money it receives.
+      </p>
+      <ul class="clean">
+        <li><b>Now (46–55, Peer):</b> the self is strengthening → <b>keep decision-making in your own hands.</b> A phase of holding through your own judgment.</li>
+        <li><b>Next (56–65, Hurting Officer):</b> expression and expansion — favorable for <b>monetizing talent</b> (a new income stream, a side venture, writing).</li>
+        <li><b>Strategy:</b> compounding and diversification (Direct Wealth) over the single big bet. Be wary of structures where <b>duty drags the money</b> — guarantees, joint liabilities.</li>
+      </ul>
+    </section>
+
+    <!-- 6. Remedy -->
+    <section>
+      <h2><span class="n">VI</span> Favorable Elements — Practical Remedy <span class="cn">用神</span></h2>
+      <p class="lead">Two energies revive weak Yi Wood: <span class="tag blue">Water — Resource</span> <span class="tag">Wood — Peer</span></p>
+      <div class="grid2">
+        <div>
+          <p style="font-family:var(--serif);color:var(--blue);font-size:15px;margin-bottom:6px">💧 Strengthen Water — what nourishes you</p>
+          <ul class="clean">
+            <li>Study, reading, research — the Resource star is the water that grows Yi Wood</li>
+            <li>North direction; black &amp; deep blue; water imagery</li>
+            <li>The habit of <b>accumulating</b> without rushing</li>
+          </ul>
+        </div>
+        <div>
+          <p style="font-family:var(--serif);color:var(--green);font-size:15px;margin-bottom:6px">🌿 Strengthen Wood — your own kind</p>
+          <ul class="clean">
+            <li>Allies, networks, a base of independence</li>
+            <li>East direction; green; morning activity</li>
+            <li>Set <b>your own axis</b> before leaning on others</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. Synthesis -->
+    <section>
+      <h2><span class="n">VII</span> Synthesis <span class="cn">總評</span></h2>
+      <p class="body">
+        A <b>Direct-Officer life endowed with order and wealth</b> — but one whose central task is to <b>build the self</b> so as not to be crushed by that weight. Fortunately, the luck pillars from here on (Peer → Eating God) flow in exactly that <b>self-building</b> direction. If the early decades were spent carrying others' expectations and duties, the years after 46 are when <b>that strength finally becomes fully your own.</b>
+      </p>
+      <div class="callout">
+        <b>In one line.</b> Like Yi Wood — yielding yet unbroken — <b>lean on no one, accumulate, and hold by your own judgment.</b> That is how the stability written in this chart comes fully into bloom.
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="brand">乙 · Precision BaZi</div>
+    <p class="disc">This report is computed by a deterministic ephemeris engine (bazi.py) with true-solar-time and longitude correction. BaZi is offered as a resource for self-reflection and life planning; it does not replace medical, legal, or financial advice.</p>
+    <div>© 2026 · Precision BaZi · Generated 2026-07-09</div>
+  </footer>
+
+</div>
+</div>
+</body>
+</html>
