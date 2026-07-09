@@ -53,6 +53,7 @@
   .card .cost{font-family:var(--serif);font-size:11px;color:var(--ink2);border:1px solid #ffffff26;border-radius:10px;padding:1px 7px;white-space:nowrap}
   .card .art{flex:1;display:flex;align-items:center;justify-content:center;position:relative;z-index:2}
   .card .art .glyph{font-size:52px;filter:drop-shadow(0 4px 12px #0009)}
+  .card .art .glyph-svg{width:92px;height:92px;filter:drop-shadow(0 6px 14px #000b)}
   .card .name{font-family:var(--serif);font-size:15px;font-weight:700;text-align:center;color:var(--accent,#fff);position:relative;z-index:2;letter-spacing:.3px}
   .card .type{text-align:center;font-size:9.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--sub);margin-top:1px;position:relative;z-index:2}
   .card .desc{font-size:10.5px;line-height:1.42;color:var(--ink2);text-align:center;margin-top:7px;position:relative;z-index:2;
@@ -187,7 +188,7 @@
   <div class="card self"><div class="frame"></div>
     <div class="top"><span class="han">劫財</span><span class="cost">同 · Self</span></div>
     <div class="art"><span class="glyph">⚡</span></div>
-    <div class="name">The Rival</div><div class="type">Rob Wealth · drive</div>
+    <div class="name">The Rival</div><div class="type">Competition · drive</div>
     <div class="desc">Competitive fire, boldness, ambition — a partner that is both spur and threat.</div>
     <div class="rel">pairs with <b>The Ally</b></div>
   </div>
@@ -195,7 +196,7 @@
   <div class="card output"><div class="frame"></div>
     <div class="top"><span class="han">食神</span><span class="cost">洩 · Output</span></div>
     <div class="art"><span class="glyph">🎨</span></div>
-    <div class="name">The Creator</div><div class="type">Eating God · flow</div>
+    <div class="name">The Creator</div><div class="type">Expression · flow</div>
     <div class="desc">Gentle expression, craft, enjoyment — talent that pours out with ease.</div>
     <div class="rel">pairs with <b>The Maverick</b></div>
   </div>
@@ -203,7 +204,7 @@
   <div class="card output"><div class="frame"></div>
     <div class="top"><span class="han">傷官</span><span class="cost">洩 · Output</span></div>
     <div class="art"><span class="glyph">🎭</span></div>
-    <div class="name">The Maverick</div><div class="type">Hurting Officer · genius</div>
+    <div class="name">The Maverick</div><div class="type">Defiance · genius</div>
     <div class="desc">Bold, rule-breaking brilliance — the rebel talent that reshapes the frame.</div>
     <div class="rel">pairs with <b>The Creator</b></div>
   </div>
@@ -211,7 +212,7 @@
   <div class="card wealth"><div class="frame"></div>
     <div class="top"><span class="han">正財</span><span class="cost">財 · Wealth</span></div>
     <div class="art"><span class="glyph">💎</span></div>
-    <div class="name">The Steward</div><div class="type">Direct Wealth · steady</div>
+    <div class="name">The Steward</div><div class="type">Earned wealth · steady</div>
     <div class="desc">Diligent, methodical prosperity — wealth built slowly and held with care.</div>
     <div class="rel">pairs with <b>The Entrepreneur</b></div>
   </div>
@@ -219,7 +220,7 @@
   <div class="card wealth"><div class="frame"></div>
     <div class="top"><span class="han">偏財</span><span class="cost">財 · Wealth</span></div>
     <div class="art"><span class="glyph">🎲</span></div>
-    <div class="name">The Entrepreneur</div><div class="type">Indirect Wealth · bold</div>
+    <div class="name">The Entrepreneur</div><div class="type">Windfall · bold</div>
     <div class="desc">Opportunity, big moves, dynamic fortune — the gambler's eye for the deal.</div>
     <div class="rel">pairs with <b>The Steward</b></div>
   </div>
@@ -227,7 +228,7 @@
   <div class="card officer"><div class="frame"></div>
     <div class="top"><span class="han">正官</span><span class="cost">官 · Officer</span></div>
     <div class="art"><span class="glyph">👑</span></div>
-    <div class="name">The Governor</div><div class="type">Direct Officer · order</div>
+    <div class="name">The Governor</div><div class="type">Authority · order</div>
     <div class="desc">Duty, honor, legitimate power — the one who upholds the rules and is trusted for it.</div>
     <div class="rel">pairs with <b>The Challenger</b></div>
   </div>
@@ -235,7 +236,7 @@
   <div class="card officer"><div class="frame"></div>
     <div class="top"><span class="han">偏官</span><span class="cost">殺 · Officer</span></div>
     <div class="art"><span class="glyph">🗡️</span></div>
-    <div class="name">The Challenger</div><div class="type">Seven Killings · force</div>
+    <div class="name">The Challenger</div><div class="type">Conquest · force</div>
     <div class="desc">Intense drive under pressure — decisiveness, courage, the will to break through.</div>
     <div class="rel">pairs with <b>The Governor</b></div>
   </div>
@@ -243,7 +244,7 @@
   <div class="card resource"><div class="frame"></div>
     <div class="top"><span class="han">正印</span><span class="cost">印 · Resource</span></div>
     <div class="art"><span class="glyph">📖</span></div>
-    <div class="name">The Scholar</div><div class="type">Direct Resource · nurture</div>
+    <div class="name">The Scholar</div><div class="type">Mentorship · nurture</div>
     <div class="desc">Learning, protection, support — the mentor's gift that grows and shelters you.</div>
     <div class="rel">pairs with <b>The Mystic</b></div>
   </div>
@@ -251,7 +252,7 @@
   <div class="card resource"><div class="frame"></div>
     <div class="top"><span class="han">偏印</span><span class="cost">印 · Resource</span></div>
     <div class="art"><span class="glyph">🔮</span></div>
-    <div class="name">The Mystic</div><div class="type">Indirect Resource · insight</div>
+    <div class="name">The Mystic</div><div class="type">Intuition · insight</div>
     <div class="desc">Intuition, unconventional wisdom, solitary depth — the seer who knows without being told.</div>
     <div class="rel">pairs with <b>The Scholar</b></div>
   </div>
@@ -268,9 +269,35 @@
 <div class="wrap"><div class="grid five">
   <div class="card wood"><div class="frame"></div>
     <div class="top"><span class="han">甲</span><span class="cost">Yang · Wood</span></div>
-    <div class="art"><span class="glyph">🌳</span></div>
+    <div class="art"><svg class="glyph-svg" viewBox="0 0 100 100" aria-label="A colossal ancient tree towering over a tiny human figure">
+      <defs>
+        <radialGradient id="jiaGlow" cx="50%" cy="30%" r="65%">
+          <stop offset="0%" stop-color="#4fae63" stop-opacity=".28"/>
+          <stop offset="100%" stop-color="#4fae63" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <rect x="0" y="0" width="100" height="100" fill="url(#jiaGlow)"/>
+      <!-- ground -->
+      <path d="M2 93 Q30 90 50 91 Q75 92 98 90 L98 100 L2 100 Z" fill="#1e2a1a"/>
+      <!-- roots & colossal trunk -->
+      <path d="M42 92 C43 76 44 62 45.5 50 L54.5 50 C56 62 57 76 58 92
+               C60 92 63 90 66 91 L66 93 L34 93 L34 91 C37 90 40 92 42 92 Z" fill="#6b4a2e"/>
+      <path d="M46 88 C46.5 72 47 60 48 50 L50 50 C50 62 50.2 74 50.5 88 Z" fill="#835c3a" opacity=".7"/>
+      <!-- vast layered canopy, edge to edge -->
+      <ellipse cx="50" cy="30" rx="46" ry="22" fill="#2e5c3a"/>
+      <ellipse cx="28" cy="38" rx="26" ry="14" fill="#387046"/>
+      <ellipse cx="72" cy="37" rx="26" ry="14" fill="#387046"/>
+      <ellipse cx="50" cy="22" rx="32" ry="15" fill="#4fae63"/>
+      <ellipse cx="38" cy="14" rx="16" ry="8" fill="#66c07a"/>
+      <ellipse cx="62" cy="28" rx="18" ry="9" fill="#4fae63" opacity=".85"/>
+      <!-- tiny human for scale -->
+      <circle cx="24" cy="88.4" r="1.1" fill="#0d0b08"/>
+      <path d="M24 89.5 L24 92.4 M24 90.3 L22.9 91.6 M24 90.3 L25.1 91.6" stroke="#0d0b08" stroke-width=".8" stroke-linecap="round"/>
+      <!-- birds dwarfed by the crown -->
+      <path d="M14 52 q1.4 -1.4 2.8 0 M17.6 55 q1.2 -1.2 2.4 0" stroke="#c9bda9" stroke-width=".7" fill="none" stroke-linecap="round"/>
+    </svg></div>
     <div class="name">Jia</div>
-    <div class="type">The towering tree</div>
+    <div class="type">The colossal tree</div>
     <div class="desc">Pioneer, upright and unbending — the great tree that leads and shelters.</div>
     <div class="rel">Heavenly Stem · Wood Yang</div>
   </div>

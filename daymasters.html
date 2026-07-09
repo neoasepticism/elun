@@ -1,0 +1,596 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Ten Day Masters — Your BaZi Core Identity, Explained | Elun</title>
+<meta name="description" content="Jia, Yi, Bing, Ding, Wu, Ji, Geng, Xin, Ren, Gui — the ten Day Masters of BaZi explained in modern psychological language. Find your core self: strengths, shadow side, love, and work." />
+<style>
+  :root{
+    --ink:#f3ece0; --ink2:#c9bda9; --sub:#9c8f79; --faint:#6e6353;
+    --bg:#100d0a; --bg2:#161210; --card:#1c1712; --line:#332a22; --line2:#40342a;
+    --gold:#c9a227; --gold2:#e0c05a; --red:#c86a58;
+    --wood:#5aa06a; --fire:#d0604e; --earth:#c9a227; --metal:#a8b0b8; --water:#5a9fd0;
+    --serif:'Noto Serif',ui-serif,Georgia,serif;
+    --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.7;font-size:16px;
+    background-image:radial-gradient(ellipse at 50% -10%,#221a10 0,transparent 55%),radial-gradient(circle at 85% 30%,#1a2028 0,transparent 40%);}
+  a{color:var(--gold2);text-decoration:none}
+  .wrap{max-width:860px;margin:0 auto;padding:0 22px}
+
+  nav{position:sticky;top:0;z-index:20;background:#100d0acc;backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;max-width:1040px}
+  .logo{font-family:var(--serif);font-size:22px;font-weight:700;letter-spacing:1px;display:flex;align-items:center;gap:9px;color:var(--ink)}
+  .logo .m{color:var(--gold2)}
+  .logo .seal{width:26px;height:26px;border:1px solid var(--gold);color:var(--gold2);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:14px;font-family:var(--serif)}
+  .navlinks{font-size:13px;color:var(--sub)}
+  .btn{background:linear-gradient(180deg,var(--gold2),var(--gold));color:#1a1206;font-weight:700;
+    padding:10px 20px;border-radius:24px;font-size:14px;border:none;cursor:pointer;font-family:var(--sans);display:inline-block}
+  .btn:hover{filter:brightness(1.08)}
+  .btn.ghost{background:transparent;border:1px solid var(--line2);color:var(--ink)}
+
+  .hero{text-align:center;padding:70px 0 40px}
+  .hero .kick{font-family:var(--serif);letter-spacing:6px;color:var(--gold);font-size:12px;text-transform:uppercase;margin-bottom:20px}
+  .hero h1{font-family:var(--serif);font-size:clamp(34px,6vw,54px);line-height:1.1;margin:0 0 18px;font-weight:700}
+  .hero h1 .em{color:var(--gold2);font-style:italic}
+  .hero .lede{color:var(--ink2);max-width:640px;margin:0 auto;font-size:clamp(15px,2.2vw,18px)}
+  .hero .lede b{color:var(--ink)}
+
+  /* quick nav chips */
+  .chips{position:sticky;top:60px;z-index:15;background:#100d0aee;backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);padding:12px 0}
+  .chips .row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;max-width:820px;margin:0 auto;padding:0 16px}
+  .chip{border:1px solid var(--line2);border-radius:20px;padding:5px 13px;font-size:13px;color:var(--ink2);
+    display:flex;align-items:center;gap:6px;transition:.15s;background:var(--card)}
+  .chip:hover{border-color:var(--gold);color:var(--gold2)}
+  .chip .h{font-family:var(--serif);font-size:15px}
+  .chip.w .h{color:var(--wood)} .chip.f .h{color:var(--fire)} .chip.e .h{color:var(--earth)}
+  .chip.m .h{color:var(--metal)} .chip.a .h{color:var(--water)}
+
+  .intro{max-width:680px;margin:0 auto;padding:36px 22px 8px;color:var(--ink2);font-size:15.5px}
+  .intro p{margin:0 0 16px}
+  .intro b{color:var(--ink)}
+  .intro .hanrow{font-family:var(--serif);text-align:center;font-size:24px;letter-spacing:16px;color:var(--gold2);margin:26px 0 4px;opacity:.9}
+  .intro .hanrow-cap{text-align:center;font-size:12px;color:var(--faint);letter-spacing:2px;margin-bottom:8px}
+
+  /* day master section */
+  .dm{padding:56px 0 8px;scroll-margin-top:130px}
+  .dm .card{border:1px solid var(--line);border-radius:18px;background:var(--card);padding:34px 34px 28px;position:relative;overflow:hidden}
+  @media(max-width:600px){.dm .card{padding:26px 20px 22px}}
+  .dm .card:before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--ac)}
+  .dm .head{display:flex;align-items:center;gap:18px;margin-bottom:6px;flex-wrap:wrap}
+  .dm .han{font-family:var(--serif);font-size:52px;line-height:1;color:var(--ac);text-shadow:0 0 30px color-mix(in srgb,var(--ac) 40%,transparent)}
+  .dm .tt h2{font-family:var(--serif);font-size:clamp(22px,4vw,30px);margin:0;font-weight:700}
+  .dm .tt .meta{font-size:12.5px;color:var(--sub);letter-spacing:2px;text-transform:uppercase;margin-top:3px}
+  .dm .tt .meta b{color:var(--ac);font-weight:600}
+  .dm .arch{margin-left:auto;font-family:var(--serif);font-style:italic;font-size:15px;color:var(--gold2);
+    border:1px solid var(--line2);border-radius:20px;padding:6px 16px}
+  @media(max-width:600px){.dm .arch{margin-left:0}}
+  .dm .ess{font-size:15.5px;color:var(--ink2);margin:16px 0 0}
+  .dm .ess:first-letter{color:var(--ac)}
+  .dm h3{font-family:var(--serif);font-size:14px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin:26px 0 10px;font-weight:600}
+  .dm p{font-size:14.5px;color:var(--ink2);margin:0 0 10px}
+  .dm .str{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+  .dm .str span{border:1px solid var(--line2);border-radius:16px;padding:4px 13px;font-size:12.5px;color:var(--ink)}
+  .dm .str span:before{content:"◆ ";color:var(--ac);font-size:9px;vertical-align:2px}
+  .dm .two{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:4px}
+  @media(max-width:640px){.dm .two{grid-template-columns:1fr}}
+  .dm .cta{margin-top:24px;padding-top:18px;border-top:1px solid var(--line);font-size:13.5px;color:var(--sub);
+    display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+  .dm .cta a{white-space:nowrap}
+
+  .dm .fam{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+  .dm .fam span{border:1px solid var(--gold);border-radius:16px;padding:4px 13px;font-size:12.5px;color:var(--gold2);background:#c9a2270d}
+  .dm .fam span i{font-style:normal;font-family:var(--serif);color:var(--sub);margin-left:5px;font-size:12px}
+
+  /* 60 pillars */
+  .sixty{padding:76px 0 20px;scroll-margin-top:130px}
+  .sixty .eyebrow{font-family:var(--serif);letter-spacing:4px;color:var(--gold);font-size:11px;text-transform:uppercase;text-align:center;margin-bottom:14px}
+  .sixty h2{font-family:var(--serif);font-size:clamp(28px,4.5vw,42px);text-align:center;margin:0 0 14px;font-weight:700}
+  .sixty .sub{text-align:center;color:var(--sub);max-width:640px;margin:0 auto 18px;font-size:15px}
+  .legend{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;font-size:11.5px;color:var(--sub);margin-bottom:34px}
+  .legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px;font-style:normal}
+  .pgroup{margin:0 0 34px}
+  .pgroup .gh{display:flex;align-items:baseline;gap:12px;margin:0 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+  .pgroup .gh .h{font-family:var(--serif);font-size:26px;color:var(--gac)}
+  .pgroup .gh .n{font-family:var(--serif);font-size:17px;font-weight:700}
+  .pgroup .gh a{margin-left:auto;font-size:12.5px;color:var(--sub)}
+  .pgroup .gh a:hover{color:var(--gold2)}
+  .pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media(max-width:820px){.pgrid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:520px){.pgrid{grid-template-columns:1fr}}
+  .p60{border:1px solid var(--line);border-radius:14px;background:var(--card);padding:16px 16px 13px;transition:.15s;position:relative}
+  .p60:hover{border-color:var(--gold);transform:translateY(-2px)}
+  .p60 .top{display:flex;align-items:baseline;gap:9px;margin-bottom:6px}
+  .p60 .gj{font-family:var(--serif);font-size:24px;color:var(--gac)}
+  .p60 .py{font-family:var(--serif);font-size:14px;font-weight:700}
+  .p60 .an{font-size:11px;color:var(--faint);margin-left:auto;letter-spacing:1px;text-transform:uppercase}
+  .p60 .pd{font-size:12.8px;color:var(--ink2);line-height:1.55;margin:0 0 10px;min-height:40px}
+  .p60 .pd b{color:var(--ink);font-weight:600}
+  .p60 .cb{font-size:11px;color:var(--gold2);margin:0 0 9px}
+  .p60 .cb:before{content:"★ ";font-size:9px}
+  .ebar{display:flex;height:8px;border-radius:4px;overflow:hidden;background:#0d0b08}
+  .ebar i{height:100%}
+  .ebar .w{background:var(--wood)} .ebar .f{background:var(--fire)} .ebar .e{background:var(--earth)}
+  .ebar .m{background:var(--metal)} .ebar .a{background:var(--water)}
+
+  .endcta{text-align:center;padding:70px 0 80px}
+  .endcta h2{font-family:var(--serif);font-size:clamp(26px,4.5vw,38px);margin:0 0 12px;font-weight:700}
+  .endcta p{color:var(--ink2);max-width:560px;margin:0 auto 28px;font-size:15.5px}
+
+  footer{border-top:1px solid var(--line);padding:34px 0;text-align:center;color:var(--faint);font-size:12px}
+  footer .disc{max-width:560px;margin:0 auto 12px;line-height:1.6}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a href="index.html" class="logo"><span class="seal">乙</span><span class="m">Elun</span></a>
+    <span class="navlinks"><a href="index.html">Home</a> · <a href="cards.html">The Cards</a> · <a href="start.html">Create your chart</a></span>
+  </div>
+</nav>
+
+<div class="hero wrap">
+  <div class="kick">The Core of Your Chart</div>
+  <h1>The Ten <span class="em">Day Masters</span></h1>
+  <p class="lede">Of the eight characters in your BaZi chart, one is <b>you</b> — the heavenly stem of your day of birth. Everything else in the chart is read in relation to it. This page is a field guide to all ten.</p>
+</div>
+
+<div class="chips">
+  <div class="row">
+    <a class="chip w" href="#jia"><span class="h">甲</span>Jia</a>
+    <a class="chip w" href="#yi"><span class="h">乙</span>Yi</a>
+    <a class="chip f" href="#bing"><span class="h">丙</span>Bing</a>
+    <a class="chip f" href="#ding"><span class="h">丁</span>Ding</a>
+    <a class="chip e" href="#wu"><span class="h">戊</span>Wu</a>
+    <a class="chip e" href="#ji"><span class="h">己</span>Ji</a>
+    <a class="chip m" href="#geng"><span class="h">庚</span>Geng</a>
+    <a class="chip m" href="#xin"><span class="h">辛</span>Xin</a>
+    <a class="chip a" href="#ren"><span class="h">壬</span>Ren</a>
+    <a class="chip a" href="#gui"><span class="h">癸</span>Gui</a>
+    <a class="chip" href="#sixty" style="border-color:var(--gold)"><span class="h" style="color:var(--gold2)">六十</span>All 60</a>
+  </div>
+</div>
+
+<div class="intro">
+  <p><b>What is a Day Master?</b> In BaZi, your birth moment is written as four pillars — year, month, day, hour — each made of two characters. The upper character of the day pillar is called the <b>Day Master</b> (日干). It isn't one trait among many; it's the reference point. Whether another element in your chart acts as wealth, pressure, support, or expression depends entirely on its relationship to this one character.</p>
+  <p>There are ten Day Masters: five elements — Wood, Fire, Earth, Metal, Water — each in a <b>yang</b> (expansive, direct) and <b>yin</b> (adaptive, precise) mode. Think of them less as fortune-telling categories and more as ten distinct operating systems: ten ways of processing the world, wanting things, and being under pressure.</p>
+  <p>One honest caveat: the Day Master is the core of the reading, not the whole reading. Two Jia Wood people with different charts can live very different lives — season of birth, supporting elements, and luck cycles shape how the core expresses itself. Take what follows as the center of the portrait, not the finished painting.</p>
+  <div class="hanrow">甲乙丙丁戊己庚辛壬癸</div>
+  <div class="hanrow-cap">THE TEN HEAVENLY STEMS</div>
+  <p style="font-size:13px;color:var(--faint);margin-top:22px">Two notes on what follows. “Appearance & Presence” relays traditional BaZi physiognomy — enjoy it as folklore, not science. Celebrity day pillars were computed with Elun's own engine from public birth records (noon is used where the birth time is unrecorded; the day pillar is stable except within an hour of midnight).</p>
+</div>
+
+<!-- 甲 JIA -->
+<section class="dm" id="jia" style="--ac:var(--wood)">
+  <div class="wrap"><div class="card">
+    <div class="head">
+      <div class="han">甲</div>
+      <div class="tt"><h2>Jia — Yang Wood</h2><div class="meta"><b>The Tall Tree</b> · upward, principled, unbending</div></div>
+      <div class="arch">“The Pioneer”</div>
+    </div>
+    <p class="ess">Jia is the towering tree: it grows in one direction — up. People with this Day Master tend to have a strong internal compass and visible integrity; they'd rather break than bend, and others sense it. They are natural first-movers who feel most alive when building something long-term: a career, an institution, a family, a body of work. Growth for its own sake isn't enough — it has to be growth with a trunk, a direction, a point.</p>
+    <h3>Strengths</h3>
+    <div class="str"><span>Principled leadership</span><span>Long-term vision</span><span>Reliability</span><span>Moral courage</span></div>
+    <h3>The Shadow Side</h3>
+    <p>The tree's weakness is its stiffness. Under stress, Jia becomes rigid — unable to pivot, slow to admit a chosen path was wrong, prone to doubling down out of pride. Because they equate flexibility with weakness, they can stay too long in dying projects and relationships. The growth edge for Jia is learning that bending is not breaking.</p>
+    <div class="two">
+      <div><h3>In Love & Connection</h3>
+      <p>Loyal, protective, and slow to open — Jia loves like it grows: gradually, then permanently. Partners get stability and honesty, but may have to push for spontaneity and for Jia to say what it feels rather than what it decided.</p></div>
+      <div><h3>Work & Direction</h3>
+      <p>Thrives where vision and integrity are rewarded: founding, leadership, law, education, architecture — any field where things are built to last. Suffocates under micromanagement and short-term churn.</p></div>
+    </div>
+    <div class="two">
+      <div><h3>Appearance & Presence</h3>
+      <p>Traditionally: tall or long-limbed, with an upright, straight-backed posture — a longer face, prominent brow, and a steady, level gaze. Jia carries itself like something that grew, not something assembled.</p></div>
+      <div><h3>Famous Jia Day Masters</h3>
+      <div class="fam"><span>Elon Musk<i>甲申</i></span><span>Keanu Reeves<i>甲寅</i></span><span>Bruce Lee<i>甲戌</i></span><span>Lionel Messi<i>甲辰</i></span></div></div>
+    </div>
+    <div class="cta"><span>Born on a Jia day? There's only one way to know.</span><a href="start.html">Calculate your chart →</a></div>
+  </div></div>
+</section>
+
+<!-- 乙 YI -->
+<section class="dm" id="yi" style="--ac:var(--wood)">
+  <div class="wrap"><div class="card">
+    <div class="head">
+      <div class="han">乙</div>
+      <div class="tt"><h2>Yi — Yin Wood</h2><div class="meta"><b>The Vine</b> · adaptive, persuasive, quietly unstoppable</div></div>
+      <div class="arch">“The Diplomat”</div>
+    </div>
+    <p class="ess">Yi is the vine, the orchid, the grass that survives the storm that snaps the tree. Where Jia grows by force of will, Yi grows by finding the way around: reading the room, borrowing support, turning obstacles into trellises. People with this Day Master are socially intelligent, aesthetically tuned, and far tougher than they look — their flexibility <i>is</i> their strength, and it is easy to underestimate until you notice they've reached the top of the wall.</p>
+    <h3>Strengths</h3>
+    <div class="str"><span>Adaptability</span><span>Social intelligence</span><span>Persuasion</span><span>Quiet resilience</span></div>
+    <h3>The Shadow Side</h3>
+    <p>The vine needs something to climb — and there lies the trap. Under stress, Yi can become dependent on stronger figures, conflict-avoidant to the point of self-erasure, or quietly manipulative when direct asking feels too risky. The growth edge is developing its own trunk: stating needs plainly and tolerating the discomfort of open disagreement.</p>
+    <div class="two">
+      <div><h3>In Love & Connection</h3>
+      <p>Warm, attentive, and highly responsive to a partner's moods — sometimes too responsive. Yi flourishes with partners who offer steadiness without domination, and wilts around people who mistake its gentleness for endless supply.</p></div>
+      <div><h3>Work & Direction</h3>
+      <p>Excels in negotiation, design, counseling, marketing, medicine, diplomacy — anywhere nuance beats force. Yi does its best work embedded in networks rather than alone on a mountaintop.</p></div>
+    </div>
+    <div class="two">
+      <div><h3>Appearance & Presence</h3>
+      <p>Traditionally: slender and flexible in build, with soft, graceful features and expressive eyes. Movements are fluid, dress sense quietly aesthetic — and Yi often looks younger than its years.</p></div>
+      <div><h3>Famous Yi Day Masters</h3>
+      <div class="fam"><span>Princess Diana<i>乙未</i></span><span>Beyoncé<i>乙酉</i></span><span>Oprah Winfrey<i>乙酉</i></span><span>Cristiano Ronaldo<i>乙亥</i></span></div></div>
+    </div>
+    <div class="cta"><span>Elun's own seal is 乙 — the vine that finds a way.</span><a href="start.html">Calculate your chart →</a></div>
+  </div></div>
+</section>
+
+<!-- 丙 BING -->
+<section class="dm" id="bing" style="--ac:var(--fire)">
+  <div class="wrap"><div class="card">
+    <div class="head">
+      <div class="han">丙</div>
+      <div class="tt"><h2>Bing — Yang Fire</h2><div class="meta"><b>The Sun</b> · radiant, generous, impossible to ignore</div></div>
+      <div class="arch">“The Radiant”</div>
+    </div>
+    <p class="ess">Bing is the sun: it shines on everyone, without calculation, because shining is simply what it does. People with this Day Master carry natural warmth and visibility — they energize rooms, speak in headlines, and give praise and help freely. There's an innate optimism and a big-picture instinct; details bore them, but direction excites them. Like the sun, they don't chase attention so much as attract it by existing.</p>
+    <h3>Strengths</h3>
+    <div class="str"><span>Charisma</span><span>Generosity</span><span>Optimism</span><span>Big-picture instinct</span></div>
+    <h3>The Shadow Side</h3>
+    <p>The sun cannot see its own shadow. Bing under stress burns hot: impatience, dramatics, promises made in enthusiasm and abandoned in boredom. Its self-worth can become tied to being seen — dimming badly when ignored or outshone. The growth edge is learning that warmth still counts when nobody is watching, and that follow-through is the sincerest form of shine.</p>
+    <div class="two">
+      <div><h3>In Love & Connection</h3>
+      <p>Openhearted, demonstrative, and fun — Bing loves loudly. It needs a partner who genuinely enjoys its light rather than competing with it, and it must learn that steady presence, not grand gestures, is what intimacy runs on.</p></div>
+      <div><h3>Work & Direction</h3>
+      <p>Built for the front of the room: leadership, media, sales, entertainment, teaching, evangelizing a vision. Pair Bing with a detail-minded team and it becomes formidable; leave it alone with a spreadsheet and it dims.</p></div>
+    </div>
+    <div class="two">
+      <div><h3>Appearance & Presence</h3>
+      <p>Traditionally: a broad, open forehead and bright complexion; an expressive face that flushes with feeling, a big natural smile, an energetic stride. Bing is the person you notice when they enter.</p></div>
+      <div><h3>Famous Bing Day Masters</h3>
+      <div class="fam"><span>Steve Jobs<i>丙辰</i></span><span>Albert Einstein<i>丙申</i></span><span>Nelson Mandela<i>丙寅</i></span><span>Leonardo DiCaprio<i>丙辰</i></span></div></div>
+    </div>
+    <div class="cta"><span>Is the sun your core character?</span><a href="start.html">Calculate your chart →</a></div>
+  </div></div>
+</section>
+
+<!-- 丁 DING -->
+<section class="dm" id="ding" style="--ac:var(--fire)">
+  <div class="wrap"><div class="card">
+    <div class="head">
+      <div class="han">丁</div>
+      <div class="tt"><h2>Ding — Yin Fire</h2><div class="meta"><b>The Lantern</b> · focused, perceptive, warm at close range</div></div>
+      <div class="arch">“The Illuminator”</div>
+    </div>
+    <p class="ess">Ding is the candle, the lantern, the hearth — fire that is aimed rather than broadcast. Where Bing lights the world, Ding lights the page in front of it, and what it illuminates, it illuminates completely. People with this Day Master are perceptive to an almost uncomfortable degree: they notice moods, subtext, and the one detail everyone else missed. Their warmth is quieter but more personal — a Ding person makes you feel like the only one in the room.</p>
+    <h3>Strengths</h3>
+    <div class="str"><span>Insight</span><span>Depth of focus</span><span>Emotional attunement</span><span>Devotion</span></div>
+    <h3>The Shadow Side</h3>
+    <p>A flame this sensitive flickers. Ding under stress turns inward: brooding, overthinking, replaying conversations at 2 a.m., burning its own fuel as anxiety. It can also flare suddenly — the mild-mannered Ding temper surprises everyone precisely because it's rare. The growth edge is protecting the flame: boundaries, rest, and not taking custody of every emotion it detects in others.</p>
+    <div class="two">
+      <div><h3>In Love & Connection</h3>
+      <p>Deep, loyal, and intensely attentive — Ding bonds one-to-one and dislikes shallow circulation. It needs a partner who values emotional depth and won't exploit its instinct to keep others warm at its own expense.</p></div>
+      <div><h3>Work & Direction</h3>
+      <p>Shines in depth work: research, psychology, writing, craft, strategy, mentorship, spiritual or healing professions. Ding is the specialist, the editor, the advisor whom leaders quietly depend on.</p></div>
+    </div>
+    <div class="two">
+      <div><h3>Appearance & Presence</h3>
+      <p>Traditionally: finer features with striking, bright eyes — the flame shows in the gaze. Often a slighter frame, a refined manner, and a warm but slightly reserved expression.</p></div>
+      <div><h3>Famous Ding Day Masters</h3>
+      <div class="fam"><span>Taylor Swift<i>丁未</i></span><span>Walt Disney<i>丁巳</i></span><span>Serena Williams<i>丁未</i></span></div></div>
+    </div>
+    <div class="cta"><span>Recognize the lantern in yourself?</span><a href="start.html">Calculate your chart →</a></div>
+  </div></div>
+</section>
+
+<!-- 戊 WU -->
+<section class="dm" id="wu" style="--ac:var(--earth)">
+  <div class="wrap"><div class="card">
+    <div class="head">
+      <div class="han">戊</div>
+      <div class="tt"><h2>Wu — Yang Earth</h2><div class="meta"><b>The Mountain</b> · steadfast, protective, slow to move</div></div>
+      <div class="arch">“The Anchor”</div>
+    </div>
+    <p class="ess">Wu is the mountain: massive, dependable, unmoved by weather. People with this Day Master radiate stability — they are the ones others instinctively stand behind in a crisis. Trust, once given, is nearly geological; commitments are kept not out of duty but because keeping things is simply their nature. Wu absorbs pressure that would crack other people and often becomes the unofficial load-bearing wall of a family or team.</p>
+    <h3>Strengths</h3>
+    <div class="str"><span>Steadfastness</span><span>Trustworthiness</span><span>Crisis calm</span><span>Protective instinct</span></div>
+    <h3>The Shadow Side</h3>
+    <p>Mountains don't move — even when they should. Wu under stress becomes immovable: stubborn, change-resistant, emotionally sealed. It absorbs and absorbs and calls it strength, until the pressure surfaces as exhaustion or sudden rupture. The growth edge is twofold: letting some things go <i>through</i> rather than into it, and remembering that asking for help is not erosion.</p>
+    <div class="two">
+      <div><h3>In Love & Connection</h3>
+      <p>Utterly reliable and quietly devoted — Wu shows love through presence and provision rather than words. Partners get bedrock; what they may have to excavate for is vulnerability. Wu must learn that being known is different from being needed.</p></div>
+      <div><h3>Work & Direction</h3>
+      <p>Natural fit for stewardship at scale: operations, real estate, finance, public service, infrastructure, family enterprise. Wu is who you want holding the thing that must not fall.</p></div>
+    </div>
+    <div class="two">
+      <div><h3>Appearance & Presence</h3>
+      <p>Traditionally: a solid, broad-framed build with a strong nose and a calm, weighty presence. Unhurried movements, and a face that is hard to read and easy to trust.</p></div>
+      <div><h3>Famous Wu Day Masters</h3>
+      <div class="fam"><span>Mark Zuckerberg<i>戊申</i></span><span>Roger Federer<i>戊午</i></span><span>David Beckham<i>戊申</i></span><span>Ed Sheeran<i>戊午</i></span></div></div>
+    </div>
+    <div class="cta"><span>Are you the mountain everyone stands behind?</span><a href="start.html">Calculate your chart →</a></div>
+  </div></div>
+</section>
+
+<!-- 己 JI -->
+<section class="dm" id="ji" style="--ac:var(--earth)">
+  <div class="wrap"><div class="card">
+    <div class="head">
+      <div class="han">己</div>
+      <div class="tt"><h2>Ji — Yin Earth</h2><div class="meta"><b>The Garden</b> · nurturing, receptive, quietly productive</div></div>
+      <div class="arch">“The Cultivator”</div>
+    </div>
+    <p class="ess">Ji is the garden soil — the earth that feeds, not the earth that towers. People with this Day Master are natural cultivators: of talent, of teams, of children, of any living thing entrusted to them. They are tolerant, practical, and unglamorously essential; things simply grow better near them. Ji has a rare capacity to accept people as they are while patiently improving the conditions around them, and it accumulates resources the way soil accumulates richness — slowly, invisibly, permanently.</p>
+    <h3>Strengths</h3>
+    <div class="str"><span>Nurturance</span><span>Tolerance</span><span>Practical wisdom</span><span>Steady accumulation</span></div>
+    <h3>The Shadow Side</h3>
+    <p>Soil takes in everything — including what poisons it. Ji under stress over-accommodates: absorbing others' problems, saying yes past capacity, worrying in circles, and feeling used but unable to name it. Because it works underground, it can go chronically unrecognized and quietly resent it. The growth edge is boundaries: a garden has a fence for a reason, and Ji's care is more powerful when it is chosen, not extracted.</p>
+    <div class="two">
+      <div><h3>In Love & Connection</h3>
+      <p>Attentive, forgiving, and deeply loyal — Ji builds a home wherever it stands. It pairs best with partners who notice and replenish its giving, and it must resist confusing being useful with being loved.</p></div>
+      <div><h3>Work & Direction</h3>
+      <p>Excels wherever things or people are grown: education, HR, healthcare, agriculture, hospitality, community building, long-horizon investing. Ji is the manager whose team never wants to leave.</p></div>
+    </div>
+    <div class="two">
+      <div><h3>Appearance & Presence</h3>
+      <p>Traditionally: softer, rounded features and an approachable, easy face; a medium build and a warm, settled voice. Ji has the look of someone easy to sit next to — which is how it gets everywhere.</p></div>
+      <div><h3>Famous Ji Day Masters</h3>
+      <div class="fam"><span>Barack Obama<i>己巳</i></span><span>Donald Trump<i>己未</i></span><span>Audrey Hepburn<i>己酉</i></span></div></div>
+    </div>
+    <div class="cta"><span>Does the garden sound like home?</span><a href="start.html">Calculate your chart →</a></div>
+  </div></div>
+</section>
+
+<!-- 庚 GENG -->
+<section class="dm" id="geng" style="--ac:var(--metal)">
+  <div class="wrap"><div class="card">
+    <div class="head">
+      <div class="han">庚</div>
+      <div class="tt"><h2>Geng — Yang Metal</h2><div class="meta"><b>The Blade</b> · decisive, just, forged by hardship</div></div>
+      <div class="arch">“The Vanguard”</div>
+    </div>
+    <p class="ess">Geng is raw metal — the ore, the axe, the sword before polishing. People with this Day Master are direct to the point of bluntness, allergic to injustice, and strangely energized by adversity: Geng is the one Day Master traditionally said to <i>improve</i> under fire, the way steel improves in the forge. They cut through ambiguity, say the thing everyone is thinking, and act while others deliberate. Loyalty runs deep and is expressed in deeds, not speeches.</p>
+    <h3>Strengths</h3>
+    <div class="str"><span>Decisiveness</span><span>Sense of justice</span><span>Resilience under fire</span><span>Executional force</span></div>
+    <h3>The Shadow Side</h3>
+    <p>A blade cuts both ways. Geng under stress becomes harsh: brutal candor without timing, judgment without mercy, and a combativeness that turns allies into opponents. It can also mistake endurance for virtue, staying in punishing situations because hardship feels like proof of worth. The growth edge is sheathing the blade — learning that gentleness is a precision tool, not a compromise.</p>
+    <div class="two">
+      <div><h3>In Love & Connection</h3>
+      <p>Fiercely protective and honest to a fault — with Geng you always know where you stand, which is both the gift and the bruise. It needs a partner who doesn't flinch at directness and can show Geng that softness is safe.</p></div>
+      <div><h3>Work & Direction</h3>
+      <p>Built for hard problems and high stakes: surgery, military and law enforcement, litigation, engineering, turnarounds, competitive sport. Give Geng a worthy fight and stand back.</p></div>
+    </div>
+    <div class="two">
+      <div><h3>Appearance & Presence</h3>
+      <p>Traditionally: strong bone structure, a square jaw, an athletic or sturdy frame. Direct eye contact, a firm handshake, and a voice that carries to the back of the room.</p></div>
+      <div><h3>Famous Geng Day Masters</h3>
+      <div class="fam"><span>Jeff Bezos<i>庚申</i></span><span>Scarlett Johansson<i>庚申</i></span><span>Adele<i>庚申</i></span><span>Emma Watson<i>庚戌</i></span></div></div>
+    </div>
+    <div class="cta"><span>Forged sharper by every hardship?</span><a href="start.html">Calculate your chart →</a></div>
+  </div></div>
+</section>
+
+<!-- 辛 XIN -->
+<section class="dm" id="xin" style="--ac:var(--metal)">
+  <div class="wrap"><div class="card">
+    <div class="head">
+      <div class="han">辛</div>
+      <div class="tt"><h2>Xin — Yin Metal</h2><div class="meta"><b>The Jewel</b> · refined, exacting, quietly proud</div></div>
+      <div class="arch">“The Refiner”</div>
+    </div>
+    <p class="ess">Xin is finished metal — the jewel, the needle, the scalpel. Where Geng is force, Xin is precision. People with this Day Master have exquisite standards: for their work, their appearance, their words, their circle. They notice flaws the way others notice colors, and their craft — whatever the field — tends toward polish that looks effortless and isn't. Beneath the composed surface sits real pride: Xin knows its worth and quietly expects the world to notice.</p>
+    <h3>Strengths</h3>
+    <div class="str"><span>Precision</span><span>Taste & refinement</span><span>Persuasive charm</span><span>High standards</span></div>
+    <h3>The Shadow Side</h3>
+    <p>The jewel's flaw is needing to be flawless. Xin under stress turns critical — of others, and far more viciously of itself. Slights are remembered with jeweler's accuracy; vanity and sensitivity to face can drive decisions that logic wouldn't. The growth edge is separating worth from polish: Xin remains valuable scratched, and the people who matter already know it.</p>
+    <div class="two">
+      <div><h3>In Love & Connection</h3>
+      <p>Selective and devoted — Xin doesn't do casual well. It offers a partner elegance, attentiveness, and fierce behind-the-scenes loyalty, and it needs appreciation expressed <i>specifically</i>: Xin can tell a generic compliment from a true one at a hundred paces.</p></div>
+      <div><h3>Work & Direction</h3>
+      <p>Excels where precision is the product: medicine, design, finance, luxury and beauty industries, jewelry, writing and editing, quality-driven craft of any kind. Xin is the standard-setter.</p></div>
+    </div>
+    <div class="two">
+      <div><h3>Appearance & Presence</h3>
+      <p>Traditionally: fine, polished features and clear skin; a delicate frame, impeccable grooming, and a composed face with a glint in the eye — the jewel shows, even in a plain setting.</p></div>
+      <div><h3>Famous Xin Day Masters</h3>
+      <div class="fam"><span>Michael Jordan<i>辛卯</i></span><span>Marilyn Monroe<i>辛酉</i></span><span>Stephen Hawking<i>辛酉</i></span><span>Angelina Jolie<i>辛巳</i></span></div></div>
+    </div>
+    <div class="cta"><span>Exacting standards, quiet pride — sound familiar?</span><a href="start.html">Calculate your chart →</a></div>
+  </div></div>
+</section>
+
+<!-- 壬 REN -->
+<section class="dm" id="ren" style="--ac:var(--water)">
+  <div class="wrap"><div class="card">
+    <div class="head">
+      <div class="han">壬</div>
+      <div class="tt"><h2>Ren — Yang Water</h2><div class="meta"><b>The Ocean</b> · expansive, strategic, always moving</div></div>
+      <div class="arch">“The Navigator”</div>
+    </div>
+    <p class="ess">Ren is the ocean and the great river: vast, restless, connecting distant shores. People with this Day Master think in systems and horizons — they absorb information omnivorously, adapt to any container, and carry an entrepreneurial current that keeps them moving toward the next opening. Ren is socially fluid in a different way from Yi: not by climbing, but by flowing — comfortable with strangers, at ease in foreign contexts, natural at connecting people and ideas across boundaries.</p>
+    <h3>Strengths</h3>
+    <div class="str"><span>Strategic breadth</span><span>Adaptability at scale</span><span>Connector instinct</span><span>Bold momentum</span></div>
+    <h3>The Shadow Side</h3>
+    <p>Water that never settles never deepens. Ren under stress scatters: too many projects, too many directions, commitments dissolving as the current shifts. Its freedom-loving nature can read as evasiveness, and floods of ambition can swamp the people downstream. The growth edge is banks: chosen constraints — one harbor, one mission, one promise kept boring and long — that turn Ren's power from flood into voyage.</p>
+    <div class="two">
+      <div><h3>In Love & Connection</h3>
+      <p>Generous, exciting, and hard to pin — Ren needs room to move and a partner who is a fellow traveler, not an anchor dragging bottom. Its loyalty is real but expressed in motion; it must learn that showing up on schedule is also romance.</p></div>
+      <div><h3>Work & Direction</h3>
+      <p>Thrives in trade, logistics, travel, media, venture-building, international anything — roles with moving parts and open water. Cage Ren in routine and it evaporates.</p></div>
+    </div>
+    <div class="two">
+      <div><h3>Appearance & Presence</h3>
+      <p>Traditionally: a fuller or fluid build with lively, roving eyes and an animated expression. Restless energy, expansive gestures — Ren is magnetic in motion and visibly bored at anchor.</p></div>
+      <div><h3>Famous Ren Day Masters</h3>
+      <div class="fam"><span>Bill Gates<i>壬戌</i></span><span>Warren Buffett<i>壬子</i></span><span>Freddie Mercury<i>壬午</i></span><span>Paul McCartney<i>壬寅</i></span></div></div>
+    </div>
+    <div class="cta"><span>Always sensing the next horizon?</span><a href="start.html">Calculate your chart →</a></div>
+  </div></div>
+</section>
+
+<!-- 癸 GUI -->
+<section class="dm" id="gui" style="--ac:var(--water)">
+  <div class="wrap"><div class="card">
+    <div class="head">
+      <div class="han">癸</div>
+      <div class="tt"><h2>Gui — Yin Water</h2><div class="meta"><b>The Rain</b> · subtle, intuitive, deeper than it appears</div></div>
+      <div class="arch">“The Seer”</div>
+    </div>
+    <p class="ess">Gui is rain, mist, the underground spring — water in its most subtle form. People with this Day Master perceive what others miss: patterns, motives, the weather of a room before anyone speaks. They are the most inward of the ten, often rich in imagination and memory, with a quiet persistence that — like water finding cracks — eventually gets everywhere it intends to go. Gui influences without announcing itself; by the time you notice, the landscape has already changed.</p>
+    <h3>Strengths</h3>
+    <div class="str"><span>Intuition</span><span>Imagination</span><span>Subtle persistence</span><span>Emotional depth</span></div>
+    <h3>The Shadow Side</h3>
+    <p>Mist obscures — including to itself. Gui under stress dissolves into moods, secrecy, and passive routes around conflicts it should walk through; its rich inner world can slide into rumination and quiet pessimism. Because it reveals so little, others misread it, and Gui lets them. The growth edge is condensation: giving its insights form — said aloud, written down, acted on — before they evaporate.</p>
+    <div class="two">
+      <div><h3>In Love & Connection</h3>
+      <p>Tender, perceptive, and slow to fully surface — Gui bonds deeply but shows it in undercurrents. It needs a patient partner who invites expression without forcing it, and safety enough to stop speaking in weather patterns.</p></div>
+      <div><h3>Work & Direction</h3>
+      <p>Gifted in research, analysis, art, psychology, writing, strategy, and any behind-the-scenes role where perception is the edge. Gui is the advisor whose whisper outweighs the room's shouting.</p></div>
+    </div>
+    <div class="two">
+      <div><h3>Appearance & Presence</h3>
+      <p>Traditionally: delicate features and soft, dreamy eyes that seem lit from underneath; a quiet voice, a gentle presence, often luminous skin. Gui is easy to overlook and hard to forget.</p></div>
+      <div><h3>Famous Gui Day Masters</h3>
+      <div class="fam"><span>Meryl Streep<i>癸未</i></span><span>Jackie Chan<i>癸巳</i></span><span>Johnny Depp<i>癸未</i></span></div></div>
+    </div>
+    <div class="cta"><span>Deeper than you let on?</span><a href="start.html">Calculate your chart →</a></div>
+  </div></div>
+</section>
+
+<!-- 60 DAY PILLARS -->
+<section class="sixty" id="sixty">
+  <div class="wrap">
+    <div class="eyebrow">六十甲子 · Beyond the Ten</div>
+    <h2>The Sixty Day Pillars</h2>
+    <p class="sub">Your Day Master never stands alone — it sits on one of twelve earthly branches, producing <b style="color:var(--ink)">sixty distinct personality signatures</b>. Same tree, different ground: 甲申 (tree on iron) and 甲辰 (tree in rich soil) live very different lives. Each card shows the pillar's five-element composition, computed from its stem and hidden stems.</p>
+    <div class="legend">
+      <span><i style="background:var(--wood)"></i>Wood</span>
+      <span><i style="background:var(--fire)"></i>Fire</span>
+      <span><i style="background:var(--earth)"></i>Earth</span>
+      <span><i style="background:var(--metal)"></i>Metal</span>
+      <span><i style="background:var(--water)"></i>Water</span>
+      <span style="color:var(--gold2)">★ verified famous chart</span>
+    </div>
+    <div id="sixtyRoot"></div>
+  </div>
+</section>
+
+<script>
+/* ELUN-P60-DATA-BEGIN (source of truth: elun-engine/pillar60.json) */
+const P60 = [
+{gj:"甲子",py:"Jia Zi",an:"Rat",d:"The tree over deep water — brilliant, restless roots; ideas flow faster than commitments.",c:[]},
+{gj:"甲寅",py:"Jia Yin",an:"Tiger",d:"The tree in its own forest — pure, towering will; leadership that doesn't ask permission.",c:["Keanu Reeves"]},
+{gj:"甲辰",py:"Jia Chen",an:"Dragon",d:"The tree in rich soil — ambition with resources; builds empires patiently.",c:["Lionel Messi"]},
+{gj:"甲午",py:"Jia Wu",an:"Horse",d:"The tree in blazing sun — expressive and generous; burns bright and gives its shade away.",c:[]},
+{gj:"甲申",py:"Jia Shen",an:"Monkey",d:"The tree on iron ground — tested early, resilient; genius sharpened under pressure.",c:["Elon Musk"]},
+{gj:"甲戌",py:"Jia Xu",an:"Dog",d:"The tree on dry highland — a principled loner; guards what it loves.",c:["Bruce Lee"]},
+{gj:"乙丑",py:"Yi Chou",an:"Ox",d:"The orchid in winter soil — endures quietly, blooms late and deliberately.",c:["Madonna"]},
+{gj:"乙卯",py:"Yi Mao",an:"Rabbit",d:"The grass in a spring field — pure charm and flexibility; bends everyone, breaks for no one.",c:[]},
+{gj:"乙巳",py:"Yi Si",an:"Snake",d:"The vine in the flame — artistic and expressive; brilliance with a nervous pulse.",c:["Rihanna"]},
+{gj:"乙未",py:"Yi Wei",an:"Goat",d:"The flower in dry earth — gentle surface, wiry roots; survives what should have ended it.",c:["Princess Diana","Brad Pitt"]},
+{gj:"乙酉",py:"Yi You",an:"Rooster",d:"The flower on the blade — beauty under pressure; polish, poise, hidden steel.",c:["Beyoncé","Oprah Winfrey","John Lennon"]},
+{gj:"乙亥",py:"Yi Hai",an:"Pig",d:"The water-lily — carried by currents, blooming anywhere; grace that travels.",c:["Cristiano Ronaldo"]},
+{gj:"丙子",py:"Bing Zi",an:"Rat",d:"The sun over midnight water — public radiance, private depths; a paradox that fascinates.",c:[]},
+{gj:"丙寅",py:"Bing Yin",an:"Tiger",d:"The rising sun over the forest — fed by conviction; a natural torchbearer.",c:["Nelson Mandela"]},
+{gj:"丙辰",py:"Bing Chen",an:"Dragon",d:"The sun over spring fields — warmth that makes things grow; visionary generosity.",c:["Steve Jobs","Leonardo DiCaprio"]},
+{gj:"丙午",py:"Bing Wu",an:"Horse",d:"The sun at high noon — maximum radiance; magnetic, unignorable, all-in.",c:[]},
+{gj:"丙申",py:"Bing Shen",an:"Monkey",d:"The sun over metal cities — inventive fire; charisma wired to a restless mind.",c:["Albert Einstein","Kanye West"]},
+{gj:"丙戌",py:"Bing Xu",an:"Dog",d:"The sunset over the hills — dignified warmth; shines for a chosen few.",c:[]},
+{gj:"丁丑",py:"Ding Chou",an:"Ox",d:"The lantern in the barn — patient warmth; devotion that outlasts winters.",c:[]},
+{gj:"丁卯",py:"Ding Mao",an:"Rabbit",d:"The candle among flowers — refined, artistic, a tender-hearted flame.",c:[]},
+{gj:"丁巳",py:"Ding Si",an:"Snake",d:"The torch that feeds itself — quiet intensity; imagination that builds worlds.",c:["Walt Disney"]},
+{gj:"丁未",py:"Ding Wei",an:"Goat",d:"The hearth-fire — warm center of the room; creative, loyal, feels everything.",c:["Taylor Swift","Serena Williams"]},
+{gj:"丁酉",py:"Ding You",an:"Rooster",d:"The flame on gold — precise brilliance; taste, timing, and a perfectionist's glow.",c:[]},
+{gj:"丁亥",py:"Ding Hai",an:"Pig",d:"The lamp over night water — intuitive and romantic; sees in the dark.",c:[]},
+{gj:"戊子",py:"Wu Zi",an:"Rat",d:"The mountain over a spring — stern outside, providing within; a secret softness.",c:[]},
+{gj:"戊寅",py:"Wu Yin",an:"Tiger",d:"The mountain with a tiger inside — still surface, bold core; moves rarely, decisively.",c:[]},
+{gj:"戊辰",py:"Wu Chen",an:"Dragon",d:"The mountain range — vast capacity; carries teams, companies, dynasties.",c:[]},
+{gj:"戊午",py:"Wu Wu",an:"Horse",d:"The volcano — earth with a fire heart; calm until it absolutely isn't.",c:["Roger Federer","Ed Sheeran"]},
+{gj:"戊申",py:"Wu Shen",an:"Monkey",d:"The mountain of ore — practical genius; the quiet systems-builder.",c:["Mark Zuckerberg","David Beckham"]},
+{gj:"戊戌",py:"Wu Xu",an:"Dog",d:"The fortress — loyal and immovable; guards the gate for everyone inside.",c:[]},
+{gj:"己丑",py:"Ji Chou",an:"Ox",d:"The winter field — endurance itself; slow accumulation that ends in abundance.",c:[]},
+{gj:"己卯",py:"Ji Mao",an:"Rabbit",d:"The garden in bloom — nurture with charm; grows people effortlessly.",c:[]},
+{gj:"己巳",py:"Ji Si",an:"Snake",d:"The sunlit field — warm intelligence; cultivates minds as easily as moods.",c:["Barack Obama"]},
+{gj:"己未",py:"Ji Wei",an:"Goat",d:"The dry summer field — willful soil; stubborn, spirited, oddly magnetic.",c:["Donald Trump"]},
+{gj:"己酉",py:"Ji You",an:"Rooster",d:"The field after harvest — refined giving; elegance in service.",c:["Audrey Hepburn"]},
+{gj:"己亥",py:"Ji Hai",an:"Pig",d:"The riverbank field — fertile and adaptive; wealth flows through, and some always stays.",c:[]},
+{gj:"庚子",py:"Geng Zi",an:"Rat",d:"The sword in the stream — sharp mind, cool delivery; wit as a weapon.",c:[]},
+{gj:"庚寅",py:"Geng Yin",an:"Tiger",d:"The axe in the forest — action first; fearless, occasionally reckless, always forward.",c:[]},
+{gj:"庚辰",py:"Geng Chen",an:"Dragon",d:"The ore in the mountain — raw power awaiting the forge; a late-blooming force.",c:[]},
+{gj:"庚午",py:"Geng Wu",an:"Horse",d:"The blade in the fire — tempered daily; passion disciplined into an edge.",c:[]},
+{gj:"庚申",py:"Geng Shen",an:"Monkey",d:"Pure steel, twice over — decisive and unbending; born for the arena.",c:["Jeff Bezos","Scarlett Johansson","Adele"]},
+{gj:"庚戌",py:"Geng Xu",an:"Dog",d:"The sword on the altar — a principled fighter; justice before comfort.",c:["Emma Watson"]},
+{gj:"辛丑",py:"Xin Chou",an:"Ox",d:"The gem in the mine — undervalued early, priceless with time.",c:[]},
+{gj:"辛卯",py:"Xin Mao",an:"Rabbit",d:"The needle among flowers — soft setting, sharp point; charm that cuts.",c:["Michael Jordan"]},
+{gj:"辛巳",py:"Xin Si",an:"Snake",d:"The jewel in the flame — beauty forged under heat; glamour with a temper.",c:["Angelina Jolie"]},
+{gj:"辛未",py:"Xin Wei",an:"Goat",d:"The gold in warm dust — modest brilliance; shine that doesn't need the display case.",c:["Lady Gaga","Novak Djokovic"]},
+{gj:"辛酉",py:"Xin You",an:"Rooster",d:"The finished jewel, twice metal — flawless standards, exacting self.",c:["Marilyn Monroe","Stephen Hawking"]},
+{gj:"辛亥",py:"Xin Hai",an:"Pig",d:"The gem in clear water — washed brilliance; clarity, honesty, quiet sparkle.",c:[]},
+{gj:"壬子",py:"Ren Zi",an:"Rat",d:"The open ocean, twice water — vast appetite for the world; sleepless currents.",c:["Warren Buffett"]},
+{gj:"壬寅",py:"Ren Yin",an:"Tiger",d:"The river through the forest — a bold explorer; feeds everything it passes.",c:["Tom Cruise","Paul McCartney"]},
+{gj:"壬辰",py:"Ren Chen",an:"Dragon",d:"The reservoir — contained immensity; the dragon in still water plots the weather.",c:[]},
+{gj:"壬午",py:"Ren Wu",an:"Horse",d:"The steam engine — water on fire; spectacular energy, dazzling reach.",c:["Freddie Mercury"]},
+{gj:"壬申",py:"Ren Shen",an:"Monkey",d:"The spring at the source — self-renewing; clever currents that never run dry.",c:[]},
+{gj:"壬戌",py:"Ren Xu",an:"Dog",d:"The sea against the cliff — ambition with walls to test; the tide that keeps coming.",c:["Bill Gates","Jack Ma"]},
+{gj:"癸丑",py:"Gui Chou",an:"Ox",d:"The frost on the field — patient subtlety; endures, remembers, outlasts.",c:[]},
+{gj:"癸卯",py:"Gui Mao",an:"Rabbit",d:"The dew on flowers — a gentle nourisher; kindness used as an instrument.",c:[]},
+{gj:"癸巳",py:"Gui Si",an:"Snake",d:"The rain into flame — feeling meets fire; volatile brilliance, dramatic gifts.",c:["Jackie Chan"]},
+{gj:"癸未",py:"Gui Wei",an:"Goat",d:"The rain on dry earth — needed everywhere; empathy that soaks in deep.",c:["Meryl Streep","Johnny Depp"]},
+{gj:"癸酉",py:"Gui You",an:"Rooster",d:"The spring from the rock — filtered clarity; precise intuition, immaculate instincts.",c:[]},
+{gj:"癸亥",py:"Gui Hai",an:"Pig",d:"The night ocean, twice water — a bottomless inner world; the deepest of the sixty.",c:[]}
+];
+/* ELUN-P60-DATA-END */
+
+// element of each stem: w(ood) f(ire) e(arth) m(etal) a(qua/water)
+const SEL={ "甲":"w","乙":"w","丙":"f","丁":"f","戊":"e","己":"e","庚":"m","辛":"m","壬":"a","癸":"a" };
+// hidden stems per branch (지장간) with weights
+const HID={ "子":[["癸",1]], "丑":[["己",.6],["癸",.3],["辛",.1]], "寅":[["甲",.6],["丙",.3],["戊",.1]],
+  "卯":[["乙",1]], "辰":[["戊",.6],["乙",.3],["癸",.1]], "巳":[["丙",.6],["庚",.3],["戊",.1]],
+  "午":[["丁",.7],["己",.3]], "未":[["己",.6],["丁",.3],["乙",.1]], "申":[["庚",.6],["壬",.3],["戊",.1]],
+  "酉":[["辛",1]], "戌":[["戊",.6],["辛",.3],["丁",.1]], "亥":[["壬",.7],["甲",.3]] };
+const DM=[["甲","Jia — Yang Wood","jia","var(--wood)"],["乙","Yi — Yin Wood","yi","var(--wood)"],
+  ["丙","Bing — Yang Fire","bing","var(--fire)"],["丁","Ding — Yin Fire","ding","var(--fire)"],
+  ["戊","Wu — Yang Earth","wu","var(--earth)"],["己","Ji — Yin Earth","ji","var(--earth)"],
+  ["庚","Geng — Yang Metal","geng","var(--metal)"],["辛","Xin — Yin Metal","xin","var(--metal)"],
+  ["壬","Ren — Yang Water","ren","var(--water)"],["癸","Gui — Yin Water","gui","var(--water)"]];
+
+function scores(gj){
+  const s={w:0,f:0,e:0,m:0,a:0};
+  s[SEL[gj[0]]]+=50;                                  // day stem = 50%
+  for(const [h,wt] of HID[gj[1]]) s[SEL[h]]+=50*wt;   // hidden stems = 50%
+  return s;
+}
+function bar(s){
+  return '<div class="ebar">'+["w","f","e","m","a"]
+    .map(k=>s[k]>0?`<i class="${k}" style="width:${s[k]}%" title="${{w:'Wood',f:'Fire',e:'Earth',m:'Metal',a:'Water'}[k]} ${Math.round(s[k])}%"></i>`:"")
+    .join("")+'</div>';
+}
+const root=document.getElementById("sixtyRoot");
+let html="";
+for(const [stem,name,anchor,color] of DM){
+  const group=P60.filter(p=>p.gj[0]===stem);
+  html+=`<div class="pgroup" style="--gac:${color}">
+    <div class="gh"><span class="h">${stem}</span><span class="n">${name}</span><a href="#${anchor}">read the ${name.split(" ")[0]} profile ↑</a></div>
+    <div class="pgrid">`+
+    group.map(p=>`<div class="p60" style="--gac:${color}">
+      <div class="top"><span class="gj">${p.gj}</span><span class="py">${p.py}</span><span class="an">${p.an}</span></div>
+      <p class="pd">${p.d.replace(/^(The [^—]+)—/,"<b>$1</b>—")}</p>
+      ${p.c.length?`<div class="cb">${p.c.join(" · ")}</div>`:""}
+      ${bar(scores(p.gj))}
+    </div>`).join("")+`</div></div>`;
+}
+root.innerHTML=html;
+</script>
+
+<div class="endcta wrap">
+  <h2>Which of the ten is <span style="color:var(--gold2);font-style:italic">you</span>?</h2>
+  <p>Guessing from personality is folk astrology. Your Day Master is determined by your exact birth date — and near midnight or a solar-term boundary, precision decides. Elun calculates it with true solar time, not approximations.</p>
+  <a href="start.html" class="btn">Calculate my chart — free</a>
+  &nbsp;&nbsp;<a href="cards.html" class="btn ghost">Explore the 37 cards</a>
+</div>
+
+<footer>
+  <div class="disc">Elun offers interpretive readings of the BaZi tradition in modern psychological language, for reflection and entertainment. It is not medical, financial, or legal advice.</div>
+  <div>© 2026 Elun · <a href="index.html">Home</a> · <a href="start.html">Create your chart</a></div>
+</footer>
+
+</body>
+</html>
