@@ -256,22 +256,77 @@ document.querySelectorAll('#gender button').forEach(b=>{
   b.onclick=()=>{gender=b.dataset.g;document.querySelectorAll('#gender button').forEach(x=>x.classList.toggle('on',x===b));};
 });
 
-// submit (demo)
-document.getElementById('bform').addEventListener('submit',e=>{
+// ---- API endpoint ----
+// 로컬 테스트: file:// 또는 localhost 에서 열면 로컬 서버(:8500)로.
+// 배포: 그 외엔 실제 API 도메인으로 (배포 시 아래 PROD 값 교체).
+const API_BASE = (location.hostname==='localhost'||location.hostname==='127.0.0.1'||location.protocol==='file:')
+  ? 'http://127.0.0.1:8500'
+  : 'https://api.elun.me';
+
+const submitBtn=document.getElementById('submit');
+
+document.getElementById('bform').addEventListener('submit',async e=>{
   e.preventDefault();
   const g=id=>document.getElementById(id).value;
-  const y=g('year'),mo=g('month'),d=g('day'),h=g('hour'),mi=g('minute')||'0';
-  if(!y||!mo||!d||!h&&h!=='0'){alert('Please fill in your birth date and time.');return;}
+  const y=+g('year'),mo=+g('month'),d=+g('day'),h=g('hour'),mi=+g('minute')||0;
+  if(!y||!mo||!d||(h===''&&h!=='0')){alert('Please fill in your birth date and time.');return;}
   if(!selectedCity){alert('Please select your birth city from the list.');return;}
   const [name,country,lon,tz]=selectedCity;
-  document.getElementById('resultData').innerHTML=
-    `<div><b>Born:</b> ${y}-${String(mo).padStart(2,'0')}-${String(d).padStart(2,'0')} ${String(h).padStart(2,'0')}:${String(mi).padStart(2,'0')}</div>`+
-    `<div><b>City:</b> ${name}, ${country}</div>`+
-    `<div><b>Longitude:</b> ${lon>0?lon.toFixed(2)+'°E':(-lon).toFixed(2)+'°W'}</div>`+
-    `<div><b>Timezone:</b> ${tz} (DST auto)</div>`+
-    `<div><b>Gender:</b> ${gender==='M'?'Male':'Female'}</div>`;
-  document.getElementById('overlay').classList.add('show');
+
+  // 로딩 상태
+  submitBtn.disabled=true;
+  const orig=submitBtn.textContent;
+  submitBtn.textContent='Calculating your chart…';
+
+  try{
+    const res=await fetch(API_BASE+'/calculate',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        year:y,month:mo,day:d,hour:+h,minute:mi,
+        gender:gender,longitude:lon,timezone:tz
+      })
+    });
+    if(!res.ok){throw new Error('server '+res.status);}
+    const data=await res.json();
+    showResult(data,name,country);
+  }catch(err){
+    // API 연결 실패 시 (서버 안 떠있을 때) — 입력값만 미리보기
+    document.getElementById('resultData').innerHTML=
+      `<div style="color:var(--red)">⚠ Could not reach the calculation server.</div>`+
+      `<div style="margin-top:8px"><b>Your inputs:</b></div>`+
+      `<div><b>Born:</b> ${y}-${String(mo).padStart(2,'0')}-${String(d).padStart(2,'0')} ${String(h).padStart(2,'0')}:${String(mi).padStart(2,'0')}</div>`+
+      `<div><b>City:</b> ${name}, ${country} · ${tz}</div>`+
+      `<div style="margin-top:8px;color:var(--faint);font-size:12px">(Start the local API: <code>uvicorn server:app --port 8500</code>)</div>`;
+    document.getElementById('overlay').classList.add('show');
+  }finally{
+    submitBtn.disabled=false;
+    submitBtn.textContent=orig;
+  }
 });
+
+function showResult(data,name,country){
+  const i=data.input, fp=data.four_pillars, dm=data.day_master;
+  const order=[['year','Year'],['month','Month'],['day','Day'],['hour','Hour']];
+  const pillars=order.map(([k,lab])=>
+    `<div style="text-align:center;flex:1">
+       <div style="font-size:10px;color:var(--faint)">${lab}</div>
+       <div style="font-family:var(--serif);font-size:22px;color:${k==='day'?'var(--gold2)':'var(--ink)'}">${fp[k].ganji_hanja}</div>
+     </div>`).join('');
+  document.getElementById('resultData').innerHTML=
+    `<div style="display:flex;gap:6px;margin-bottom:12px;padding:10px;background:var(--card);border-radius:8px">${pillars}</div>`+
+    `<div><b>Day Master:</b> ${dm.stem}${dm.element} (${dm.yin_yang})</div>`+
+    `<div><b>Structure:</b> ${data.geokguk.label} · <b>Strength:</b> ${data.strength.label}</div>`+
+    `<div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--line);color:var(--green);font-size:12.5px">`+
+    `🌞 True solar time <b>${i.true_solar_time}</b> · 🕓 UTC${i.utc_offset>=0?'+':''}${i.utc_offset}${i.summer_time?' (DST)':''} · 📍 ${name}</div>`;
+  // 헤더 문구도 실제 결과용으로
+  const h3=document.querySelector('.modal h3');
+  if(h3) h3.textContent=`Your chart 乙`;
+  const pdesc=document.querySelector('.modal p');
+  if(pdesc) pdesc.textContent=`Calculated with true solar time — here's your Four Pillars. Your full report is generated from this.`;
+  document.getElementById('overlay').classList.add('show');
+}
+
 document.getElementById('overlay').addEventListener('click',e=>{if(e.target.id==='overlay')e.currentTarget.classList.remove('show');});
 </script>
 </body>
