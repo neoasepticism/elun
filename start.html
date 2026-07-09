@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Elun — Create your chart</title>
+<style>
+  :root{
+    --ink:#f3ece0; --ink2:#c9bda9; --sub:#9c8f79; --faint:#6e6353;
+    --bg:#100d0a; --bg2:#161210; --card:#1c1712; --line:#332a22; --line2:#40342a;
+    --gold:#c9a227; --gold2:#e0c05a; --red:#c86a58; --green:#5aa06a;
+    --serif:'Noto Serif',ui-serif,Georgia,serif;
+    --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.7;font-size:16px;min-height:100vh;
+    background-image:radial-gradient(ellipse at 50% -10%,#221a10 0,transparent 55%),radial-gradient(circle at 85% 90%,#1a2028 0,transparent 40%);}
+  a{color:var(--gold2);text-decoration:none}
+  nav{border-bottom:1px solid var(--line)}
+  nav .wrap{max-width:1040px;margin:0 auto;padding:0 22px;display:flex;align-items:center;height:60px}
+  .logo{font-family:var(--serif);font-size:22px;font-weight:700;letter-spacing:1px;display:flex;align-items:center;gap:9px}
+  .logo .m{color:var(--gold2)}
+  .logo .seal{width:26px;height:26px;border:1px solid var(--gold);color:var(--gold2);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:14px;font-family:var(--serif)}
+  .wrap{max-width:560px;margin:0 auto;padding:0 22px}
+  .form-wrap{padding:56px 0 90px}
+  .kick{font-family:var(--serif);letter-spacing:5px;color:var(--gold);font-size:11px;text-transform:uppercase;text-align:center;margin-bottom:14px}
+  h1{font-family:var(--serif);font-size:clamp(28px,5vw,40px);text-align:center;margin:0 0 10px;font-weight:700}
+  .sub{text-align:center;color:var(--sub);margin:0 auto 40px;max-width:420px;font-size:15px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:32px 28px;box-shadow:0 20px 50px -24px #000}
+  label{display:block;font-size:13px;color:var(--ink2);margin:0 0 7px;font-family:var(--serif);letter-spacing:.3px}
+  .field{margin-bottom:22px;position:relative}
+  input,select{width:100%;background:var(--bg2);border:1px solid var(--line2);color:var(--ink);
+    padding:13px 14px;border-radius:10px;font-size:15px;font-family:var(--sans);transition:.15s}
+  input:focus,select:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px #c9a2271f}
+  input::placeholder{color:var(--faint)}
+  .row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:460px){.row{grid-template-columns:1fr 1fr}.row .span{grid-column:1/-1}}
+  select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%239c8f79' fill='none' stroke-width='1.4'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:34px}
+  /* city autocomplete */
+  .ac-list{position:absolute;top:100%;left:0;right:0;background:var(--card);border:1px solid var(--line2);border-radius:10px;margin-top:4px;max-height:240px;overflow-y:auto;z-index:10;display:none;box-shadow:0 14px 34px -14px #000}
+  .ac-list.show{display:block}
+  .ac-item{padding:11px 14px;cursor:pointer;font-size:14px;border-bottom:1px solid var(--line)}
+  .ac-item:last-child{border-bottom:none}
+  .ac-item:hover,.ac-item.active{background:var(--bg2)}
+  .ac-item .city{color:var(--ink)}
+  .ac-item .meta{color:var(--faint);font-size:12px;margin-left:6px}
+  .hint{font-size:12px;color:var(--faint);margin-top:6px}
+  /* precision preview */
+  .precision{margin-top:6px;background:#14201f;border:1px solid #2a4a3a;border-radius:10px;padding:12px 14px;font-size:12.5px;color:var(--ink2);display:none}
+  .precision.show{display:block}
+  .precision b{color:var(--green)}
+  .precision .row3{display:flex;gap:14px;flex-wrap:wrap;margin-top:4px}
+  .precision .chip{background:#0f1a17;border:1px solid #2a4a3a;border-radius:14px;padding:2px 10px;white-space:nowrap}
+  .btn{width:100%;background:linear-gradient(180deg,var(--gold2),var(--gold));color:#1a1206;font-weight:700;
+    padding:15px;border-radius:12px;font-size:16px;border:none;cursor:pointer;font-family:var(--sans);margin-top:6px}
+  .btn:hover{filter:brightness(1.07)}
+  .btn:disabled{opacity:.5;cursor:default}
+  .toggle{display:flex;gap:8px;margin-top:7px}
+  .toggle button{flex:1;background:var(--bg2);border:1px solid var(--line2);color:var(--ink2);padding:10px;border-radius:9px;cursor:pointer;font-size:13.5px;font-family:var(--sans)}
+  .toggle button.on{background:#2a2116;border-color:var(--gold);color:var(--gold2);font-weight:700}
+  .foot{text-align:center;color:var(--faint);font-size:12px;margin-top:26px}
+  .foot a{color:var(--sub)}
+  /* result modal (demo) */
+  .overlay{position:fixed;inset:0;background:#05040399;backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;padding:20px;z-index:50}
+  .overlay.show{display:flex}
+  .modal{background:var(--card);border:1px solid var(--gold);border-radius:18px;max-width:460px;width:100%;padding:30px;text-align:center}
+  .modal h3{font-family:var(--serif);font-size:22px;margin:0 0 10px}
+  .modal p{color:var(--ink2);font-size:14px;margin:0 0 8px}
+  .modal .data{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:14px;margin:16px 0;font-size:13px;text-align:left;font-family:var(--serif)}
+  .modal .data div{padding:3px 0;color:var(--ink2)}
+  .modal .data b{color:var(--gold2)}
+  .modal .btn{margin-top:6px}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap" style="max-width:1040px">
+    <a href="index.html" class="logo"><span class="seal">乙</span><span class="m">Elun</span></a>
+  </div>
+</nav>
+
+<div class="form-wrap">
+  <div class="wrap">
+    <div class="kick">Create your chart</div>
+    <h1>When &amp; where were you born?</h1>
+    <p class="sub">Your birth city sets the longitude — the key to true solar time. Historical daylight-saving is handled automatically.</p>
+
+    <div class="card">
+      <form id="bform" autocomplete="off">
+        <!-- name (optional) -->
+        <div class="field">
+          <label for="name">Name <span style="color:var(--faint)">(optional)</span></label>
+          <input type="text" id="name" placeholder="e.g. Alex" />
+        </div>
+
+        <!-- birth date -->
+        <div class="field">
+          <label>Date of birth</label>
+          <div class="row">
+            <div><input type="number" id="year" placeholder="Year" min="1900" max="2030" /></div>
+            <div><input type="number" id="month" placeholder="Month" min="1" max="12" /></div>
+            <div><input type="number" id="day" placeholder="Day" min="1" max="31" /></div>
+          </div>
+        </div>
+
+        <!-- birth time -->
+        <div class="field">
+          <label>Time of birth</label>
+          <div class="row2">
+            <div><input type="number" id="hour" placeholder="Hour (0–23)" min="0" max="23" /></div>
+            <div><input type="number" id="minute" placeholder="Minute" min="0" max="59" /></div>
+          </div>
+          <div class="hint">Don't know the exact time? Enter your best estimate — precision matters most near hour boundaries.</div>
+        </div>
+
+        <!-- birth city (autocomplete) -->
+        <div class="field">
+          <label for="city">Birth city</label>
+          <input type="text" id="city" placeholder="Start typing… e.g. Seoul, New York, London" />
+          <div class="ac-list" id="aclist"></div>
+          <div class="precision" id="precision"></div>
+        </div>
+
+        <!-- gender -->
+        <div class="field">
+          <label>Gender <span style="color:var(--faint)">(for luck-pillar direction)</span></label>
+          <div class="toggle" id="gender">
+            <button type="button" data-g="M" class="on">Male</button>
+            <button type="button" data-g="F">Female</button>
+          </div>
+        </div>
+
+        <button type="submit" class="btn" id="submit">Calculate my chart →</button>
+      </form>
+    </div>
+
+    <div class="foot">
+      🌞 True solar time · 📍 longitude-corrected · ⏱ auto daylight-saving · deterministic engine<br>
+      <a href="index.html">← back to Elun</a>
+    </div>
+  </div>
+</div>
+
+<!-- demo result -->
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <h3>Your inputs are ready 乙</h3>
+    <p>This is a preview. In the live version, this computes your precise chart and generates your report.</p>
+    <div class="data" id="resultData"></div>
+    <p style="font-size:12.5px;color:var(--faint)">These values (true solar time, longitude, timezone with DST) are exactly what the engine needs.</p>
+    <button class="btn" onclick="document.getElementById('overlay').classList.remove('show')">Close</button>
+  </div>
+</div>
+
+<script>
+// ---- city database: name, country, lon, IANA timezone ----
+// (starter set of major cities; the live version uses a full geo database)
+const CITIES = [
+  ["Seoul","South Korea",126.98,"Asia/Seoul"],
+  ["Busan","South Korea",129.08,"Asia/Seoul"],
+  ["Incheon","South Korea",126.71,"Asia/Seoul"],
+  ["Daegu","South Korea",128.60,"Asia/Seoul"],
+  ["Tokyo","Japan",139.69,"Asia/Tokyo"],
+  ["Osaka","Japan",135.50,"Asia/Tokyo"],
+  ["Beijing","China",116.41,"Asia/Shanghai"],
+  ["Shanghai","China",121.47,"Asia/Shanghai"],
+  ["Hong Kong","Hong Kong",114.17,"Asia/Hong_Kong"],
+  ["Taipei","Taiwan",121.56,"Asia/Taipei"],
+  ["Singapore","Singapore",103.82,"Asia/Singapore"],
+  ["Bangkok","Thailand",100.50,"Asia/Bangkok"],
+  ["Ho Chi Minh City","Vietnam",106.63,"Asia/Ho_Chi_Minh"],
+  ["Manila","Philippines",120.98,"Asia/Manila"],
+  ["Mumbai","India",72.88,"Asia/Kolkata"],
+  ["New Delhi","India",77.21,"Asia/Kolkata"],
+  ["Dubai","UAE",55.27,"Asia/Dubai"],
+  ["New York","USA",-74.01,"America/New_York"],
+  ["Los Angeles","USA",-118.24,"America/Los_Angeles"],
+  ["Chicago","USA",-87.63,"America/Chicago"],
+  ["San Francisco","USA",-122.42,"America/Los_Angeles"],
+  ["Seattle","USA",-122.33,"America/Los_Angeles"],
+  ["Houston","USA",-95.37,"America/Chicago"],
+  ["Boston","USA",-71.06,"America/New_York"],
+  ["Toronto","Canada",-79.38,"America/Toronto"],
+  ["Vancouver","Canada",-123.12,"America/Vancouver"],
+  ["London","UK",-0.13,"Europe/London"],
+  ["Paris","France",2.35,"Europe/Paris"],
+  ["Berlin","Germany",13.40,"Europe/Berlin"],
+  ["Madrid","Spain",-3.70,"Europe/Madrid"],
+  ["Rome","Italy",12.50,"Europe/Rome"],
+  ["Amsterdam","Netherlands",4.90,"Europe/Amsterdam"],
+  ["Moscow","Russia",37.62,"Europe/Moscow"],
+  ["Sydney","Australia",151.21,"Australia/Sydney"],
+  ["Melbourne","Australia",144.96,"Australia/Melbourne"],
+  ["Auckland","New Zealand",174.76,"Pacific/Auckland"],
+  ["São Paulo","Brazil",-46.63,"America/Sao_Paulo"],
+  ["Mexico City","Mexico",-99.13,"America/Mexico_City"],
+  ["Cairo","Egypt",31.24,"Africa/Cairo"],
+  ["Johannesburg","South Africa",28.05,"Africa/Johannesburg"],
+];
+
+const cityInput=document.getElementById('city');
+const acList=document.getElementById('aclist');
+const precision=document.getElementById('precision');
+let selectedCity=null, activeIdx=-1;
+
+function renderAC(items){
+  if(!items.length){acList.classList.remove('show');return;}
+  acList.innerHTML=items.map((c,i)=>
+    `<div class="ac-item" data-i="${i}"><span class="city">${c[0]}</span><span class="meta">${c[1]} · ${c[2]>0?c[2].toFixed(1)+'°E':(-c[2]).toFixed(1)+'°W'}</span></div>`
+  ).join('');
+  acList.classList.add('show');
+  [...acList.children].forEach(el=>{
+    el.onclick=()=>pick(items[+el.dataset.i]);
+  });
+}
+function pick(c){
+  selectedCity=c;
+  cityInput.value=c[0]+", "+c[1];
+  acList.classList.remove('show');
+  updatePrecision();
+}
+function updatePrecision(){
+  if(!selectedCity){precision.classList.remove('show');return;}
+  const [name,country,lon,tz]=selectedCity;
+  // approximate longitude vs its timezone standard meridian → solar offset
+  precision.innerHTML=
+    `<b>✓ ${name}</b> · precision inputs locked<div class="row3">`+
+    `<span class="chip">📍 ${lon>0?lon.toFixed(2)+'°E':(-lon).toFixed(2)+'°W'}</span>`+
+    `<span class="chip">🕓 ${tz}</span>`+
+    `<span class="chip">⏱ DST auto</span></div>`;
+  precision.classList.add('show');
+}
+cityInput.addEventListener('input',()=>{
+  selectedCity=null;precision.classList.remove('show');
+  const q=cityInput.value.trim().toLowerCase();
+  if(q.length<1){acList.classList.remove('show');return;}
+  const items=CITIES.filter(c=>c[0].toLowerCase().includes(q)||c[1].toLowerCase().includes(q)).slice(0,7);
+  activeIdx=-1;renderAC(items);
+});
+cityInput.addEventListener('keydown',e=>{
+  const items=[...acList.children];
+  if(!items.length)return;
+  if(e.key==='ArrowDown'){e.preventDefault();activeIdx=Math.min(activeIdx+1,items.length-1);}
+  else if(e.key==='ArrowUp'){e.preventDefault();activeIdx=Math.max(activeIdx-1,0);}
+  else if(e.key==='Enter'){e.preventDefault();if(activeIdx>=0)items[activeIdx].click();return;}
+  else return;
+  items.forEach((el,i)=>el.classList.toggle('active',i===activeIdx));
+});
+document.addEventListener('click',e=>{if(!e.target.closest('.field'))acList.classList.remove('show');});
+
+// gender toggle
+let gender='M';
+document.querySelectorAll('#gender button').forEach(b=>{
+  b.onclick=()=>{gender=b.dataset.g;document.querySelectorAll('#gender button').forEach(x=>x.classList.toggle('on',x===b));};
+});
+
+// submit (demo)
+document.getElementById('bform').addEventListener('submit',e=>{
+  e.preventDefault();
+  const g=id=>document.getElementById(id).value;
+  const y=g('year'),mo=g('month'),d=g('day'),h=g('hour'),mi=g('minute')||'0';
+  if(!y||!mo||!d||!h&&h!=='0'){alert('Please fill in your birth date and time.');return;}
+  if(!selectedCity){alert('Please select your birth city from the list.');return;}
+  const [name,country,lon,tz]=selectedCity;
+  document.getElementById('resultData').innerHTML=
+    `<div><b>Born:</b> ${y}-${String(mo).padStart(2,'0')}-${String(d).padStart(2,'0')} ${String(h).padStart(2,'0')}:${String(mi).padStart(2,'0')}</div>`+
+    `<div><b>City:</b> ${name}, ${country}</div>`+
+    `<div><b>Longitude:</b> ${lon>0?lon.toFixed(2)+'°E':(-lon).toFixed(2)+'°W'}</div>`+
+    `<div><b>Timezone:</b> ${tz} (DST auto)</div>`+
+    `<div><b>Gender:</b> ${gender==='M'?'Male':'Female'}</div>`;
+  document.getElementById('overlay').classList.add('show');
+});
+document.getElementById('overlay').addEventListener('click',e=>{if(e.target.id==='overlay')e.currentTarget.classList.remove('show');});
+</script>
+</body>
+</html>
