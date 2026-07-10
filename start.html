@@ -307,6 +307,13 @@ document.getElementById('bform').addEventListener('submit',async e=>{
 });
 
 function showResult(data,name,country){
+  // 결과 페이지로 이동 (모달은 sessionStorage 미지원 등 예외시 폴백)
+  try{
+    sessionStorage.setItem('elun_result', JSON.stringify(data));
+    sessionStorage.setItem('elun_meta', JSON.stringify({name:document.getElementById('name')?.value||'', city:name+', '+country}));
+    location.href='result.html';
+    return;
+  }catch(_){/* fall through to modal */}
   const i=data.input, fp=data.four_pillars, dm=data.day_master;
   const order=[['year','Year'],['month','Month'],['day','Day'],['hour','Hour']];
   const pillars=order.map(([k,lab])=>

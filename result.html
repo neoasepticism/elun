@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex" />
+<title>Your Chart — Elun</title>
+<style>
+  :root{
+    --ink:#f3ece0; --ink2:#c9bda9; --sub:#9c8f79; --faint:#6e6353;
+    --bg:#100d0a; --card:#1c1712; --line:#332a22; --line2:#40342a;
+    --gold:#c9a227; --gold2:#e0c05a; --red:#c86a58; --green:#7ba874;
+    --wood:#5aa06a; --fire:#d0604e; --earth:#c9a227; --metal:#a8b0b8; --water:#5a9fd0;
+    --serif:'Noto Serif',ui-serif,Georgia,serif;
+    --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.65;font-size:15.5px;
+    background-image:radial-gradient(ellipse at 50% -10%,#221a10 0,transparent 55%)}
+  a{color:var(--gold2);text-decoration:none}
+  .wrap{max-width:760px;margin:0 auto;padding:0 20px}
+  nav{position:sticky;top:0;z-index:20;background:#100d0acc;backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  nav .inner{max-width:1040px;margin:0 auto;padding:0 22px;display:flex;align-items:center;justify-content:space-between;height:60px}
+  .logo{font-family:var(--serif);font-size:22px;font-weight:700;display:flex;align-items:center;gap:9px;color:var(--ink)}
+  .logo .m{color:var(--gold2)}
+  .logo .seal{width:26px;height:26px;border:1px solid var(--gold);color:var(--gold2);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:14px;font-family:var(--serif)}
+  .navlinks{font-size:13px;color:var(--sub)}
+  .btn{background:linear-gradient(180deg,var(--gold2),var(--gold));color:#1a1206;font-weight:700;
+    padding:11px 22px;border-radius:24px;font-size:14px;border:none;cursor:pointer;font-family:var(--sans);display:inline-block}
+  .btn:hover{filter:brightness(1.08)}
+  .btn.ghost{background:transparent;border:1px solid var(--line2);color:var(--ink)}
+
+  .hero{text-align:center;padding:44px 0 10px}
+  .hero .kick{font-family:var(--serif);letter-spacing:5px;color:var(--gold);font-size:11px;text-transform:uppercase;margin-bottom:12px}
+  .hero h1{font-family:var(--serif);font-size:clamp(26px,5vw,38px);margin:0 0 6px;font-weight:700}
+  .hero .sub{color:var(--sub);font-size:13.5px}
+
+  .pillars{display:flex;gap:10px;margin:28px 0 8px}
+  .pil{flex:1;border:1px solid var(--line);border-radius:14px;background:var(--card);padding:14px 8px;text-align:center}
+  .pil.day{border-color:var(--gold);box-shadow:0 0 0 3px #c9a2271f;background:#221b10}
+  .pil .lab{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--faint)}
+  .pil.day .lab{color:var(--gold2)}
+  .pil .gj{font-family:var(--serif);font-size:clamp(22px,5vw,32px);margin:6px 0 4px;line-height:1.15}
+  .pil .gods{font-size:10.5px;color:var(--sub);line-height:1.5}
+  .tst{text-align:center;font-size:12.5px;color:var(--green);margin:10px 0 0}
+
+  .box{border:1px solid var(--line);border-radius:16px;background:var(--card);padding:24px 26px;margin:18px 0}
+  h2{font-family:var(--serif);font-size:13px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin:0 0 14px;font-weight:600}
+
+  .dmrow{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+  .dmrow .han{font-family:var(--serif);font-size:56px;line-height:1;color:var(--ac,var(--gold2));text-shadow:0 0 30px color-mix(in srgb,var(--ac,var(--gold2)) 40%,transparent)}
+  .dmrow .t .nm{font-family:var(--serif);font-size:21px;font-weight:700}
+  .dmrow .t .meta{font-size:12px;color:var(--sub);letter-spacing:1.5px;text-transform:uppercase;margin-top:2px}
+  .dmrow .arch{margin-left:auto;font-family:var(--serif);font-style:italic;font-size:14px;color:var(--gold2);border:1px solid var(--line2);border-radius:20px;padding:5px 14px}
+  .dmrow + p{color:var(--ink2);font-size:14px;margin:14px 0 0}
+
+  .dpcard{border:1.5px solid var(--gold);border-radius:14px;background:#221b10;padding:18px 20px;margin-top:14px}
+  .dpcard .top{display:flex;gap:14px;align-items:center}
+  .dpcard .gj{font-family:var(--serif);font-size:34px;color:var(--gold2);white-space:nowrap;line-height:1.1}
+  .dpcard .py{font-weight:700}
+  .dpcard .an{font-size:11px;color:var(--sub);letter-spacing:1px;text-transform:uppercase}
+  .dpcard .pd{font-style:italic;font-family:var(--serif);color:var(--ink2);font-size:13.5px;margin:10px 0 0}
+  .dpcard .cb{font-size:12px;color:var(--gold2);margin-top:9px}
+  .dpcard .cb:before{content:"★ ";font-size:10px}
+  .dpcard .go{display:inline-block;margin-top:12px;font-size:13px}
+
+  .ebars .row{display:flex;align-items:center;gap:10px;margin:7px 0;font-size:12.5px}
+  .ebars .en{width:52px;color:var(--ink2);font-family:var(--serif)}
+  .ebars .tr{flex:1;height:14px;background:#0d0b08;border-radius:7px;overflow:hidden}
+  .ebars .fl{display:block;height:100%;border-radius:7px}
+  .ebars .pc{width:38px;text-align:right;color:var(--sub)}
+
+  .tg{display:flex;gap:8px;flex-wrap:wrap}
+  .tg span{border:1px solid var(--line2);border-radius:16px;padding:5px 13px;font-size:12.5px;color:var(--ink)}
+  .tg span b{color:var(--gold2);font-weight:700}
+  .kv{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:4px}
+  .kv td{padding:8px 4px;border-bottom:1px dashed var(--line);color:var(--ink2)}
+  .kv td:first-child{color:var(--sub);width:42%}
+
+  .cta{border:1.5px solid var(--gold);border-radius:16px;background:linear-gradient(160deg,#241c0e,#1a140b);padding:28px;margin:26px 0;text-align:center}
+  .cta h3{font-family:var(--serif);font-size:22px;margin:0 0 8px}
+  .cta p{color:var(--ink2);font-size:14px;max-width:520px;margin:0 auto 18px}
+  .cta .row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .cta .note{font-size:11.5px;color:var(--faint);margin-top:12px}
+
+  .actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;padding:6px 0 50px}
+  footer{border-top:1px solid var(--line);padding:28px 0;text-align:center;color:var(--faint);font-size:12px}
+  #empty{text-align:center;padding:90px 20px;display:none}
+</style>
+</head>
+<body>
+<nav><div class="inner">
+  <a href="index.html" class="logo"><span class="seal">乙</span><span class="m">Elun</span></a>
+  <span class="navlinks"><a href="daymasters.html">Day Masters</a> · <a href="cards.html">The Cards</a> · <a href="start.html">New chart</a></span>
+</div></nav>
+
+<div id="empty" class="wrap">
+  <p style="color:var(--ink2)">No chart data found — calculate your chart first.</p>
+  <a class="btn" href="start.html">Calculate my chart</a>
+</div>
+
+<div id="main" class="wrap" style="display:none">
+  <div class="hero">
+    <div class="kick">四柱 · Your Four Pillars</div>
+    <h1 id="title">Your Chart</h1>
+    <div class="sub" id="born"></div>
+  </div>
+
+  <div class="pillars" id="pillars"></div>
+  <div class="tst" id="tst"></div>
+
+  <div class="box" id="dmbox">
+    <h2>Your Day Master — the core of the chart</h2>
+    <div class="dmrow" id="dmrow"></div>
+    <p id="dmdesc"></p>
+    <div class="dpcard" id="dpcard"></div>
+  </div>
+
+  <div class="box">
+    <h2>Five Elements — your innate build</h2>
+    <div class="ebars" id="ebars"></div>
+    <p style="font-size:11.5px;color:var(--faint);margin:10px 0 0">Counted across the eight visible characters of your chart. The full report adds hidden stems and seasonal weighting.</p>
+  </div>
+
+  <div class="box">
+    <h2>Archetypes present in your chart</h2>
+    <div class="tg" id="tgods"></div>
+  </div>
+
+  <div class="box">
+    <h2>Structure &amp; Strength</h2>
+    <table class="kv" id="struct"></table>
+  </div>
+
+  <div class="cta">
+    <h3>This is the skeleton. The report is the story.</h3>
+    <p>Your full Precision Report reads all of this together — character, relationships, wealth, health, and a year-by-year map of your next decade — in twelve chapters written from your exact chart.</p>
+    <div class="row">
+      <a class="btn" href="sample-19780821-EN.html">Read a real sample report</a>
+      <a class="btn ghost" id="sharebtn" href="#">Share my pillars</a>
+    </div>
+    <div class="note">Premium reports are launching soon — the sample shows the exact depth you'll get.</div>
+  </div>
+
+  <div class="actions">
+    <a class="btn ghost" href="start.html">Calculate another chart</a>
+  </div>
+</div>
+
+<footer>© 2026 Elun · elun.me · results are for reflection &amp; entertainment</footer>
+
+<script>
+const P60 = {"甲子":{"py":"Jia Zi","an":"Rat","d":"The tree over deep water — brilliant, restless roots; ideas flow faster than commitments.","c":[]},"甲寅":{"py":"Jia Yin","an":"Tiger","d":"The tree in its own forest — pure, towering will; leadership that doesn't ask permission.","c":["Keanu Reeves"]},"甲辰":{"py":"Jia Chen","an":"Dragon","d":"The tree in rich soil — ambition with resources; builds empires patiently.","c":["Lionel Messi"]},"甲午":{"py":"Jia Wu","an":"Horse","d":"The tree in blazing sun — expressive and generous; burns bright and gives its shade away.","c":[]},"甲申":{"py":"Jia Shen","an":"Monkey","d":"The tree on iron ground — tested early, resilient; genius sharpened under pressure.","c":["Elon Musk"]},"甲戌":{"py":"Jia Xu","an":"Dog","d":"The tree on dry highland — a principled loner; guards what it loves.","c":["Bruce Lee"]},"乙丑":{"py":"Yi Chou","an":"Ox","d":"The orchid in winter soil — endures quietly, blooms late and deliberately.","c":["Madonna"]},"乙卯":{"py":"Yi Mao","an":"Rabbit","d":"The grass in a spring field — pure charm and flexibility; bends everyone, breaks for no one.","c":[]},"乙巳":{"py":"Yi Si","an":"Snake","d":"The vine in the flame — artistic and expressive; brilliance with a nervous pulse.","c":["Rihanna"]},"乙未":{"py":"Yi Wei","an":"Goat","d":"The flower in dry earth — gentle surface, wiry roots; survives what should have ended it.","c":["Princess Diana","Brad Pitt"]},"乙酉":{"py":"Yi You","an":"Rooster","d":"The flower on the blade — beauty under pressure; polish, poise, hidden steel.","c":["Beyoncé","Oprah Winfrey","John Lennon"]},"乙亥":{"py":"Yi Hai","an":"Pig","d":"The water-lily — carried by currents, blooming anywhere; grace that travels.","c":["Cristiano Ronaldo"]},"丙子":{"py":"Bing Zi","an":"Rat","d":"The sun over midnight water — public radiance, private depths; a paradox that fascinates.","c":[]},"丙寅":{"py":"Bing Yin","an":"Tiger","d":"The rising sun over the forest — fed by conviction; a natural torchbearer.","c":["Nelson Mandela"]},"丙辰":{"py":"Bing Chen","an":"Dragon","d":"The sun over spring fields — warmth that makes things grow; visionary generosity.","c":["Steve Jobs","Leonardo DiCaprio"]},"丙午":{"py":"Bing Wu","an":"Horse","d":"The sun at high noon — maximum radiance; magnetic, unignorable, all-in.","c":[]},"丙申":{"py":"Bing Shen","an":"Monkey","d":"The sun over metal cities — inventive fire; charisma wired to a restless mind.","c":["Albert Einstein","Kanye West"]},"丙戌":{"py":"Bing Xu","an":"Dog","d":"The sunset over the hills — dignified warmth; shines for a chosen few.","c":[]},"丁丑":{"py":"Ding Chou","an":"Ox","d":"The lantern in the barn — patient warmth; devotion that outlasts winters.","c":[]},"丁卯":{"py":"Ding Mao","an":"Rabbit","d":"The candle among flowers — refined, artistic, a tender-hearted flame.","c":[]},"丁巳":{"py":"Ding Si","an":"Snake","d":"The torch that feeds itself — quiet intensity; imagination that builds worlds.","c":["Walt Disney"]},"丁未":{"py":"Ding Wei","an":"Goat","d":"The hearth-fire — warm center of the room; creative, loyal, feels everything.","c":["Taylor Swift","Serena Williams"]},"丁酉":{"py":"Ding You","an":"Rooster","d":"The flame on gold — precise brilliance; taste, timing, and a perfectionist's glow.","c":[]},"丁亥":{"py":"Ding Hai","an":"Pig","d":"The lamp over night water — intuitive and romantic; sees in the dark.","c":[]},"戊子":{"py":"Wu Zi","an":"Rat","d":"The mountain over a spring — stern outside, providing within; a secret softness.","c":[]},"戊寅":{"py":"Wu Yin","an":"Tiger","d":"The mountain with a tiger inside — still surface, bold core; moves rarely, decisively.","c":[]},"戊辰":{"py":"Wu Chen","an":"Dragon","d":"The mountain range — vast capacity; carries teams, companies, dynasties.","c":[]},"戊午":{"py":"Wu Wu","an":"Horse","d":"The volcano — earth with a fire heart; calm until it absolutely isn't.","c":["Roger Federer","Ed Sheeran"]},"戊申":{"py":"Wu Shen","an":"Monkey","d":"The mountain of ore — practical genius; the quiet systems-builder.","c":["Mark Zuckerberg","David Beckham"]},"戊戌":{"py":"Wu Xu","an":"Dog","d":"The fortress — loyal and immovable; guards the gate for everyone inside.","c":[]},"己丑":{"py":"Ji Chou","an":"Ox","d":"The winter field — endurance itself; slow accumulation that ends in abundance.","c":[]},"己卯":{"py":"Ji Mao","an":"Rabbit","d":"The garden in bloom — nurture with charm; grows people effortlessly.","c":[]},"己巳":{"py":"Ji Si","an":"Snake","d":"The sunlit field — warm intelligence; cultivates minds as easily as moods.","c":["Barack Obama"]},"己未":{"py":"Ji Wei","an":"Goat","d":"The dry summer field — willful soil; stubborn, spirited, oddly magnetic.","c":["Donald Trump"]},"己酉":{"py":"Ji You","an":"Rooster","d":"The field after harvest — refined giving; elegance in service.","c":["Audrey Hepburn"]},"己亥":{"py":"Ji Hai","an":"Pig","d":"The riverbank field — fertile and adaptive; wealth flows through, and some always stays.","c":[]},"庚子":{"py":"Geng Zi","an":"Rat","d":"The sword in the stream — sharp mind, cool delivery; wit as a weapon.","c":[]},"庚寅":{"py":"Geng Yin","an":"Tiger","d":"The axe in the forest — action first; fearless, occasionally reckless, always forward.","c":[]},"庚辰":{"py":"Geng Chen","an":"Dragon","d":"The ore in the mountain — raw power awaiting the forge; a late-blooming force.","c":[]},"庚午":{"py":"Geng Wu","an":"Horse","d":"The blade in the fire — tempered daily; passion disciplined into an edge.","c":[]},"庚申":{"py":"Geng Shen","an":"Monkey","d":"Pure steel, twice over — decisive and unbending; born for the arena.","c":["Jeff Bezos","Scarlett Johansson","Adele"]},"庚戌":{"py":"Geng Xu","an":"Dog","d":"The sword on the altar — a principled fighter; justice before comfort.","c":["Emma Watson"]},"辛丑":{"py":"Xin Chou","an":"Ox","d":"The gem in the mine — undervalued early, priceless with time.","c":[]},"辛卯":{"py":"Xin Mao","an":"Rabbit","d":"The needle among flowers — soft setting, sharp point; charm that cuts.","c":["Michael Jordan"]},"辛巳":{"py":"Xin Si","an":"Snake","d":"The jewel in the flame — beauty forged under heat; glamour with a temper.","c":["Angelina Jolie"]},"辛未":{"py":"Xin Wei","an":"Goat","d":"The gold in warm dust — modest brilliance; shine that doesn't need the display case.","c":["Lady Gaga","Novak Djokovic"]},"辛酉":{"py":"Xin You","an":"Rooster","d":"The finished jewel, twice metal — flawless standards, exacting self.","c":["Marilyn Monroe","Stephen Hawking"]},"辛亥":{"py":"Xin Hai","an":"Pig","d":"The gem in clear water — washed brilliance; clarity, honesty, quiet sparkle.","c":[]},"壬子":{"py":"Ren Zi","an":"Rat","d":"The open ocean, twice water — vast appetite for the world; sleepless currents.","c":["Warren Buffett"]},"壬寅":{"py":"Ren Yin","an":"Tiger","d":"The river through the forest — a bold explorer; feeds everything it passes.","c":["Tom Cruise","Paul McCartney"]},"壬辰":{"py":"Ren Chen","an":"Dragon","d":"The reservoir — contained immensity; the dragon in still water plots the weather.","c":[]},"壬午":{"py":"Ren Wu","an":"Horse","d":"The steam engine — water on fire; spectacular energy, dazzling reach.","c":["Freddie Mercury"]},"壬申":{"py":"Ren Shen","an":"Monkey","d":"The spring at the source — self-renewing; clever currents that never run dry.","c":[]},"壬戌":{"py":"Ren Xu","an":"Dog","d":"The sea against the cliff — ambition with walls to test; the tide that keeps coming.","c":["Bill Gates","Jack Ma"]},"癸丑":{"py":"Gui Chou","an":"Ox","d":"The frost on the field — patient subtlety; endures, remembers, outlasts.","c":[]},"癸卯":{"py":"Gui Mao","an":"Rabbit","d":"The dew on flowers — a gentle nourisher; kindness used as an instrument.","c":[]},"癸巳":{"py":"Gui Si","an":"Snake","d":"The rain into flame — feeling meets fire; volatile brilliance, dramatic gifts.","c":["Jackie Chan"]},"癸未":{"py":"Gui Wei","an":"Goat","d":"The rain on dry earth — needed everywhere; empathy that soaks in deep.","c":["Meryl Streep","Johnny Depp"]},"癸酉":{"py":"Gui You","an":"Rooster","d":"The spring from the rock — filtered clarity; precise intuition, immaculate instincts.","c":[]},"癸亥":{"py":"Gui Hai","an":"Pig","d":"The night ocean, twice water — a bottomless inner world; the deepest of the sixty.","c":[]}};
+const STEM = {
+  '갑':{han:'甲',py:'Jia',en:'Yang Wood',el:'wood',a:'jia',arch:'The Pioneer',img:'the colossal tree',d:'grows in one direction — up. Strong compass, visible integrity, builder’s patience.'},
+  '을':{han:'乙',py:'Yi',en:'Yin Wood',el:'wood',a:'yi',arch:'The Diplomat',img:'the vine & flower',d:'grows by finding the way around — flexible, persuasive, far tougher than it looks.'},
+  '병':{han:'丙',py:'Bing',en:'Yang Fire',el:'fire',a:'bing',arch:'The Radiant',img:'the blazing sun',d:'shines on everyone without calculation — warmth, visibility, big-picture optimism.'},
+  '정':{han:'丁',py:'Ding',en:'Yin Fire',el:'fire',a:'ding',arch:'The Illuminator',img:'the candle flame',d:'aimed fire — illuminates completely what it focuses on, warms one person at a time.'},
+  '무':{han:'戊',py:'Wu',en:'Yang Earth',el:'earth',a:'wu',arch:'The Anchor',img:'the mountain',d:'massive, dependable, unmoved by weather — the load-bearing wall of any group.'},
+  '기':{han:'己',py:'Ji',en:'Yin Earth',el:'earth',a:'ji',arch:'The Cultivator',img:'the fertile field',d:'the earth that feeds — things and people simply grow better nearby.'},
+  '경':{han:'庚',py:'Geng',en:'Yang Metal',el:'metal',a:'geng',arch:'The Vanguard',img:'the forged blade',d:'raw metal that improves in the forge — direct, just, energized by adversity.'},
+  '신':{han:'辛',py:'Xin',en:'Yin Metal',el:'metal',a:'xin',arch:'The Refiner',img:'the fine jewel',d:'finished metal — exquisite standards, effortless-looking polish, quiet pride.'},
+  '임':{han:'壬',py:'Ren',en:'Yang Water',el:'water',a:'ren',arch:'The Navigator',img:'the vast ocean',d:'vast, restless, connecting shores — thinks in systems and horizons.'},
+  '계':{han:'癸',py:'Gui',en:'Yin Water',el:'water',a:'gui',arch:'The Seer',img:'the gentle rain',d:'water at its most subtle — perceives what others miss, arrives everywhere it intends.'}
+};
+const ELK = {'목':'wood','화':'fire','토':'earth','금':'metal','수':'water'};
+const ELN = {wood:'Wood',fire:'Fire',earth:'Earth',metal:'Metal',water:'Water'};
+const GODK = {'비견':'The Ally','겁재':'The Rival','식신':'The Creator','상관':'The Maverick',
+  '정재':'The Steward','편재':'The Entrepreneur','정관':'The Governor','편관':'The Challenger','칠살':'The Challenger',
+  '정인':'The Scholar','편인':'The Mystic','일간':'Day Master'};
+const STR = {'신약':'Leaning weak — your chart gains from support (resource & peers)',
+  '신강':'Leaning strong — your chart gains from expression & output',
+  '중화':'Well balanced — rare and prized',
+  '태왕':'Very strong','태약':'Very weak'};
+
+const raw = sessionStorage.getItem('elun_result');
+if(!raw){ document.getElementById('empty').style.display='block'; }
+else{
+  const D = JSON.parse(raw);
+  const meta = JSON.parse(sessionStorage.getItem('elun_meta')||'{}');
+  const fp = D.four_pillars, dmk = D.day_master.stem, dm = STEM[dmk];
+  document.getElementById('main').style.display='block';
+
+  // header
+  if(meta.name) document.getElementById('title').textContent = meta.name + '’s Chart';
+  const i = D.input;
+  document.getElementById('born').textContent =
+    `Born ${i.year}-${String(i.month).padStart(2,'0')}-${String(i.day).padStart(2,'0')} ${String(i.hour).padStart(2,'0')}:${String(i.minute).padStart(2,'0')}${meta.city? ' · '+meta.city : ''}`;
+
+  // pillars
+  const order=[['year','Year'],['month','Month'],['day','Day ★'],['hour','Hour']];
+  document.getElementById('pillars').innerHTML = order.map(([k,lab])=>{
+    const p=fp[k];
+    const gods = k==='day' ? `Day Master<br>${GODK[p.branch_god]||p.branch_god}` : `${GODK[p.stem_god]||p.stem_god}<br>${GODK[p.branch_god]||p.branch_god}`;
+    return `<div class="pil${k==='day'?' day':''}"><div class="lab">${lab}</div><div class="gj">${p.ganji_hanja}</div><div class="gods">${gods}</div></div>`;
+  }).join('');
+  document.getElementById('tst').innerHTML =
+    `🌞 True solar time <b>${i.true_solar_time}</b> · UTC${i.utc_offset>=0?'+':''}${i.utc_offset}${i.summer_time?' (DST)':''} — this precision is why your pillars are right.`;
+
+  // day master
+  document.getElementById('dmbox').style.setProperty('--ac', `var(--${dm.el})`);
+  document.getElementById('dmrow').innerHTML =
+    `<div class="han">${dm.han}</div>
+     <div class="t"><div class="nm">${dm.py} — ${dm.en}</div><div class="meta">${dm.img}</div></div>
+     <div class="arch">“${dm.arch}”</div>`;
+  document.getElementById('dmdesc').innerHTML =
+    `${dm.py} ${dm.d} <a href="daymasters.html#${dm.a}">Read the full ${dm.py} profile →</a>`;
+
+  // day pillar card
+  const gj = fp.day.ganji_hanja, p60 = P60[gj];
+  if(p60){
+    const slug = p60.py.toLowerCase().replace(' ','-');
+    document.getElementById('dpcard').innerHTML =
+      `<div class="top"><span class="gj">${gj}</span>
+        <span><span class="py">The ${p60.py} Day</span><br><span class="an">one of sixty signatures · day of the ${p60.an}</span></span></div>
+      <div class="pd">“${p60.d}”</div>
+      ${p60.c && p60.c.length ? `<div class="cb">Famous ${gj} charts: ${p60.c.join(' · ')}</div>` : ''}
+      <a class="go" href="pillars/${slug}.html">Read your full ${p60.py} profile →</a>`;
+  } else { document.getElementById('dpcard').style.display='none'; }
+
+  // five elements (8 visible chars)
+  const cnt={wood:0,fire:0,earth:0,metal:0,water:0};
+  for(const k of ['year','month','day','hour']){
+    cnt[ELK[fp[k].stem_element]]++; cnt[ELK[fp[k].branch_element]]++;
+  }
+  document.getElementById('ebars').innerHTML = Object.entries(cnt).map(([el,c])=>{
+    const pc = Math.round(c/8*100);
+    return `<div class="row"><span class="en">${ELN[el]}</span>
+      <span class="tr"><span class="fl" style="width:${pc}%;background:var(--${el})"></span></span>
+      <span class="pc">${pc}%</span></div>`;
+  }).join('');
+
+  // ten gods
+  const tg = D.ten_gods_count || {};
+  document.getElementById('tgods').innerHTML = Object.entries(tg)
+    .sort((a,b)=>b[1]-a[1])
+    .map(([k,v])=>`<span>${GODK[k]||k} <b>×${v}</b></span>`).join('') || '<span>—</span>';
+
+  // structure
+  const g = D.geokguk||{}, st = D.strength||{};
+  const gGod = GODK[g.bongi_god] || g.bongi_god || '—';
+  document.getElementById('struct').innerHTML =
+    `<tr><td>Structure (格局)</td><td>${gGod} structure · ${g.label||''}</td></tr>
+     <tr><td>Day Master strength</td><td>${STR[st.label]||st.label||'—'}</td></tr>
+     <tr><td>Luck cycle</td><td>${D.dawun ? `begins age ${D.dawun.start_age_years} · ${D.dawun.direction==='순행'?'forward':'reverse'}` : '—'}</td></tr>`;
+
+  // share
+  document.getElementById('sharebtn').addEventListener('click', async e=>{
+    e.preventDefault();
+    const txt = `My BaZi pillars: ${fp.year.ganji_hanja} ${fp.month.ganji_hanja} ${fp.day.ganji_hanja} ${fp.hour.ganji_hanja} — Day Master ${dm.py} (${dm.en}), “${dm.arch}”. Calculated with true solar time at elun.me`;
+    if(navigator.share){ try{ await navigator.share({text:txt, url:'https://elun.me'}); }catch(_){} }
+    else{ await navigator.clipboard.writeText(txt); e.target.textContent='Copied!'; setTimeout(()=>e.target.textContent='Share my pillars',1500); }
+  });
+}
+</script>
+</body>
+</html>
