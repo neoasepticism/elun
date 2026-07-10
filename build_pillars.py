@@ -178,6 +178,36 @@ STAGE_INFO = [  # (한자, 영문명, 한 줄 의미)
  ('養', 'Nurture', 'quietly fed and protected — growth in a sheltered chamber before emergence'),
 ]
 
+# ── 신살 (일주 단독 판정분만, no-fear-selling 카피) ──────────────────
+BRANCH_NATURE = {  # 일지 사정·사생·사고 (왕지/생지/고지)
+ '子': 'peach', '午': 'peach', '卯': 'peach', '酉': 'peach',
+ '寅': 'horse', '申': 'horse', '巳': 'horse', '亥': 'horse',
+ '辰': 'canopy', '戌': 'canopy', '丑': 'canopy', '未': 'canopy',
+}
+NATURE_INFO = {
+ 'peach': ('桃花', 'Peach Blossom energy',
+   'a cardinal branch — natural magnetism and aesthetic presence; people remember this pillar after one meeting'),
+ 'horse': ('驛馬', 'Sky Horse energy',
+   'a travelling branch — movement is medicine; careers, ideas and addresses that keep moving, restlessness if caged'),
+ 'canopy': ('華蓋', 'Canopy energy',
+   'a storage branch — contemplative, artistic-scholarly depth; genuinely comfortable in its own company'),
+}
+DAY_STARS = {  # 특정 일주에만 붙는 별
+ '庚辰': ['kui'], '庚戌': ['kui'], '壬辰': ['kui'], '壬戌': ['kui', 'tiger'],
+ '甲辰': ['tiger'], '乙未': ['tiger'], '丙戌': ['tiger'], '丁丑': ['tiger'],
+ '戊辰': ['tiger'], '癸丑': ['tiger'],
+ '丙午': ['blade'], '戊午': ['blade'], '壬子': ['blade'],
+ '丁酉': ['noble'], '丁亥': ['noble'], '癸巳': ['noble'], '癸卯': ['noble'],
+}
+STAR_INFO = {
+ 'kui': ('魁罡', 'Kui Gang — the Commander',
+   'classical texts call this the star of generals: all-or-nothing intensity, uncompromising standards, and a fortune that prefers bold moves to safe ones. It rewards high-stakes fields and punishes half-measures'),
+ 'tiger': ('白虎', 'White Tiger',
+   'a pillar that runs at higher voltage — old folklore feared its ferocity; the modern reading is courage and crisis-competence. This energy wants demanding work; give it a real outlet and it protects rather than disrupts'),
+ 'blade': ('羊刃', 'The Blade', 'a yang stem seated on its own peak — surgical decisiveness and a competitive edge that needs a worthy arena; idle, it turns on its owner as impatience'),
+ 'noble': ('天乙貴人', 'The Nobleman', 'the classical "luckiest" star — help tends to arrive when it is most needed; benefactors, timely doors, and grace under pressure are this pillar\'s quiet privilege'),
+}
+
 def sitting_stage(gj):
     start, d = STAGE_START[gj[0]]
     return STAGE_INFO[(B_ORD.index(gj[1]) - B_ORD.index(start)) * d % 12]
@@ -411,6 +441,12 @@ def page(p, prev_p, next_p, all_pillars):
     ny_hj, ny_en, ny_gloss = NAYIN[gi // 2]
     void1, void2 = VOID_PAIRS[gi // 10]
     st_hj, st_en, st_gloss = sitting_stage(gj)
+    nt_hj, nt_en, nt_gloss = NATURE_INFO[BRANCH_NATURE[gj[1]]]
+    star_rows = ''.join(
+        f'<tr><td style="padding:8px 4px;border-bottom:1px dashed var(--line);color:var(--sub)">Star 神煞</td>'
+        f'<td style="padding:8px 4px;border-bottom:1px dashed var(--line);color:var(--ink2)">'
+        f'<b style="color:var(--gold2)">{STAR_INFO[k][1]}</b> ({STAR_INFO[k][0]}) — {STAR_INFO[k][2]}</td></tr>'
+        for k in DAY_STARS.get(gj, []))
     siblings = ''.join(
         f'<a href="{slug(q["py"])}.html" style="border:1px solid var(--line2);border-radius:16px;padding:4px 13px;font-size:12.5px;color:var(--ink2);text-decoration:none">{q["gj"]} {q["py"]}</a>'
         for q in all_pillars if q['gj'][0] == gj[0] and q['gj'] != gj)
@@ -489,6 +525,9 @@ def page(p, prev_p, next_p, all_pillars):
           <td style="padding:8px 4px;border-bottom:1px dashed var(--line);color:var(--ink2)"><b style="color:var(--ink)">{ny_en}</b> ({ny_hj}) — {ny_gloss}</td></tr>
       <tr><td style="padding:8px 4px;border-bottom:1px dashed var(--line);color:var(--sub)">Sitting stage 十二運星</td>
           <td style="padding:8px 4px;border-bottom:1px dashed var(--line);color:var(--ink2)"><b style="color:var(--ink)">{st_en}</b> ({st_hj}) — {st_gloss}</td></tr>
+      <tr><td style="padding:8px 4px;border-bottom:1px dashed var(--line);color:var(--sub)">Branch nature</td>
+          <td style="padding:8px 4px;border-bottom:1px dashed var(--line);color:var(--ink2)"><b style="color:var(--ink)">{nt_en}</b> ({nt_hj}) — {nt_gloss}</td></tr>
+      {star_rows}
       <tr><td style="padding:8px 4px;color:var(--sub)">Void branches 空亡</td>
           <td style="padding:8px 4px;color:var(--ink2)"><b style="color:var(--ink)">{void1} · {void2}</b> — areas of life this pillar holds lightly; classical astrologers read them as themes to approach without grasping</td></tr>
     </table>
