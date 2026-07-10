@@ -61,7 +61,7 @@
 
   <form id="claim">
     <label>Order number</label>
-    <input id="order" placeholder="e.g. 1024 (on your Lemon Squeezy receipt)" required />
+    <input id="order" placeholder="from your receipt — auto-filled if you came from checkout" required />
     <label>Purchase email</label>
     <input id="email" type="email" placeholder="you@example.com" required />
 
@@ -110,6 +110,16 @@ document.getElementById('bnotime').addEventListener('change',e=>{
   t.disabled=e.target.checked; t.style.opacity=e.target.checked?'.4':'1';
   if(e.target.checked)t.value='';
 });
+
+// 결제 완료 리다이렉트(?order=&email=&name=)에서 온 경우 프리필
+try{
+  const q=new URLSearchParams(location.search);
+  const clean=v=>(v&&!v.includes('{')&&!v.includes('['))?v:'';
+  const qo=clean(q.get('order')), qe=clean(q.get('email')), qn=clean(q.get('name'));
+  if(qo) document.getElementById('order').value=qo;
+  if(qe) document.getElementById('email').value=qe;
+  if(qn) document.getElementById('rname').value=qn;
+}catch(_){}
 
 // result.html 에서 온 경우 생년월일 프리필
 try{
