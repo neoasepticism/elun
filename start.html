@@ -109,11 +109,15 @@
         <!-- birth time -->
         <div class="field">
           <label>Time of birth</label>
-          <div class="row2">
+          <div class="row2" id="timerow">
             <div><input type="number" id="hour" placeholder="Hour (0–23)" min="0" max="23" /></div>
             <div><input type="number" id="minute" placeholder="Minute" min="0" max="59" /></div>
           </div>
-          <div class="hint">Don't know the exact time? Enter your best estimate — precision matters most near hour boundaries.</div>
+          <label style="display:flex;align-items:center;gap:8px;margin-top:10px;font-size:13.5px;color:var(--ink2);cursor:pointer;text-transform:none;letter-spacing:0">
+            <input type="checkbox" id="noTime" style="width:auto;accent-color:var(--gold)" />
+            I don't know my birth time
+          </label>
+          <div class="hint" id="timehint">Don't know the exact time? Check the box above — we'll read your three known pillars (day, month, year), which is still a full personality reading.</div>
         </div>
 
         <!-- birth city (autocomplete) -->
@@ -265,12 +269,19 @@ const API_BASE = (location.hostname==='localhost'||location.hostname==='127.0.0.
   : 'https://api.elun.me';
 
 const submitBtn=document.getElementById('submit');
+const noTimeCb=document.getElementById('noTime');
+noTimeCb.addEventListener('change',()=>{
+  const dis=noTimeCb.checked;
+  for(const id of ['hour','minute']){const el=document.getElementById(id);el.disabled=dis;el.style.opacity=dis?'.4':'1';if(dis)el.value='';}
+});
 
 document.getElementById('bform').addEventListener('submit',async e=>{
   e.preventDefault();
   const g=id=>document.getElementById(id).value;
+  const noTime=document.getElementById('noTime').checked;
   const y=+g('year'),mo=+g('month'),d=+g('day'),h=g('hour'),mi=+g('minute')||0;
-  if(!y||!mo||!d||(h===''&&h!=='0')){alert('Please fill in your birth date and time.');return;}
+  if(!y||!mo||!d){alert('Please fill in your birth date.');return;}
+  if(!noTime&&h===''&&h!=='0'){alert('Please fill in your birth time — or check "I don\'t know my birth time".');return;}
   if(!selectedCity){alert('Please select your birth city from the list.');return;}
   const [name,country,lon,tz]=selectedCity;
 
@@ -284,7 +295,7 @@ document.getElementById('bform').addEventListener('submit',async e=>{
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
-        year:y,month:mo,day:d,hour:+h,minute:mi,
+        year:y,month:mo,day:d,hour:noTime?null:+h,minute:noTime?0:mi,
         gender:gender,longitude:lon,timezone:tz
       })
     });

@@ -70,8 +70,12 @@
 
     <div class="row">
       <div><label>Birth date</label><input id="bdate" type="date" required /></div>
-      <div><label>Time</label><input id="btime" type="time" required /></div>
+      <div><label>Time</label><input id="btime" type="time" /></div>
     </div>
+    <label style="display:flex;align-items:center;gap:8px;margin-top:10px;font-size:13px;color:var(--ink2);cursor:pointer;text-transform:none;letter-spacing:0">
+      <input type="checkbox" id="bnotime" style="width:auto;accent-color:var(--gold)" />
+      I don't know my birth time (3-pillar reading)
+    </label>
     <div class="row">
       <div><label>Gender</label>
         <select id="bgender"><option value="M">Male</option><option value="F">Female</option></select></div>
@@ -101,6 +105,12 @@ const CITIES = {
 const sel=document.getElementById('bcity');
 sel.innerHTML=Object.keys(CITIES).map(c=>`<option>${c}</option>`).join('');
 
+document.getElementById('bnotime').addEventListener('change',e=>{
+  const t=document.getElementById('btime');
+  t.disabled=e.target.checked; t.style.opacity=e.target.checked?'.4':'1';
+  if(e.target.checked)t.value='';
+});
+
 // result.html 에서 온 경우 생년월일 프리필
 try{
   const D=JSON.parse(sessionStorage.getItem('elun_result')||'null');
@@ -108,7 +118,8 @@ try{
   if(D){
     const i=D.input;
     document.getElementById('bdate').value=`${i.year}-${String(i.month).padStart(2,'0')}-${String(i.day).padStart(2,'0')}`;
-    document.getElementById('btime').value=`${String(i.hour).padStart(2,'0')}:${String(i.minute).padStart(2,'0')}`;
+    if(i.hour_unknown){document.getElementById('bnotime').checked=true;document.getElementById('btime').disabled=true;document.getElementById('btime').style.opacity='.4';}
+    else document.getElementById('btime').value=`${String(i.hour).padStart(2,'0')}:${String(i.minute).padStart(2,'0')}`;
     document.getElementById('bgender').value = (i.gender==='남'||i.gender==='M')?'M':'F';
     if(M.name) document.getElementById('rname').value=M.name;
     const city=(M.city||'').split(',')[0];
@@ -123,8 +134,11 @@ let mi=0, mt;
 document.getElementById('claim').addEventListener('submit', async e=>{
   e.preventDefault();
   const err=document.getElementById('err'); err.style.display='none';
+  const noTime=document.getElementById('bnotime').checked;
   const [y,mo,d]=document.getElementById('bdate').value.split('-').map(Number);
-  const [h,mi2]=document.getElementById('btime').value.split(':').map(Number);
+  const tval=document.getElementById('btime').value;
+  if(!noTime && !tval){err.textContent='⚠ Enter your birth time — or check the box if unknown.';err.style.display='block';return;}
+  const [h,mi2]=noTime?[null,0]:tval.split(':').map(Number);
   const city=sel.value, [lon,tz]=CITIES[city];
   const body={
     order_number:document.getElementById('order').value.trim(),

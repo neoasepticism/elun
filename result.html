@@ -119,7 +119,7 @@
   <div class="box">
     <h2>Five Elements — your innate build</h2>
     <div class="ebars" id="ebars"></div>
-    <p style="font-size:11.5px;color:var(--faint);margin:10px 0 0">Counted across the eight visible characters of your chart. The full report adds hidden stems and seasonal weighting.</p>
+    <p style="font-size:11.5px;color:var(--faint);margin:10px 0 0" id="ecap">Counted across the eight visible characters of your chart. The full report adds hidden stems and seasonal weighting.</p>
   </div>
 
   <div class="box">
@@ -196,18 +196,21 @@ else{
   // header
   if(meta.name) document.getElementById('title').textContent = meta.name + '’s Chart';
   const i = D.input;
+  const hourUnknown = !!i.hour_unknown || !fp.hour;
   document.getElementById('born').textContent =
-    `Born ${i.year}-${String(i.month).padStart(2,'0')}-${String(i.day).padStart(2,'0')} ${String(i.hour).padStart(2,'0')}:${String(i.minute).padStart(2,'0')}${meta.city? ' · '+meta.city : ''}`;
+    `Born ${i.year}-${String(i.month).padStart(2,'0')}-${String(i.day).padStart(2,'0')} ${hourUnknown?'(time unknown)':String(i.hour).padStart(2,'0')+':'+String(i.minute).padStart(2,'0')}${meta.city? ' · '+meta.city : ''}`;
 
   // pillars
   const order=[['year','Year'],['month','Month'],['day','Day ★'],['hour','Hour']];
   document.getElementById('pillars').innerHTML = order.map(([k,lab])=>{
     const p=fp[k];
+    if(!p) return `<div class="pil" style="opacity:.5"><div class="lab">${lab}</div><div class="gj">?</div><div class="gods">time<br>unknown</div></div>`;
     const gods = k==='day' ? `Day Master<br>${GODK[p.branch_god]||p.branch_god}` : `${GODK[p.stem_god]||p.stem_god}<br>${GODK[p.branch_god]||p.branch_god}`;
     return `<div class="pil${k==='day'?' day':''}"><div class="lab">${lab}</div><div class="gj">${p.ganji_hanja}</div><div class="gods">${gods}</div></div>`;
   }).join('');
-  document.getElementById('tst').innerHTML =
-    `🌞 True solar time <b>${i.true_solar_time}</b> · UTC${i.utc_offset>=0?'+':''}${i.utc_offset}${i.summer_time?' (DST)':''} — this precision is why your pillars are right.`;
+  document.getElementById('tst').innerHTML = hourUnknown
+    ? `⏱ Birth time unknown — a <b>3-pillar (三柱)</b> reading. Your day, month & year pillars are exact; only the hour pillar is omitted.`
+    : `🌞 True solar time <b>${i.true_solar_time}</b> · UTC${i.utc_offset>=0?'+':''}${i.utc_offset}${i.summer_time?' (DST)':''} — this precision is why your pillars are right.`;
 
   // day master
   document.getElementById('dmbox').style.setProperty('--ac', `var(--${dm.el})`);
@@ -232,11 +235,17 @@ else{
 
   // five elements (8 visible chars)
   const cnt={wood:0,fire:0,earth:0,metal:0,water:0};
+  let nchars=0;
   for(const k of ['year','month','day','hour']){
-    cnt[ELK[fp[k].stem_element]]++; cnt[ELK[fp[k].branch_element]]++;
+    if(!fp[k]) continue;
+    cnt[ELK[fp[k].stem_element]]++; cnt[ELK[fp[k].branch_element]]++; nchars+=2;
+  }
+  if(hourUnknown){
+    document.getElementById('ecap').textContent='Counted across the six visible characters of your three known pillars. The full report adds hidden stems and seasonal weighting.';
+    document.querySelector('.hero .kick').textContent='\uC0BC\uC8FC \u00B7 Your Three Pillars'.replace('\uC0BC\uC8FC','三柱');
   }
   document.getElementById('ebars').innerHTML = Object.entries(cnt).map(([el,c])=>{
-    const pc = Math.round(c/8*100);
+    const pc = Math.round(c/nchars*100);
     return `<div class="row"><span class="en">${ELN[el]}</span>
       <span class="tr"><span class="fl" style="width:${pc}%;background:var(--${el})"></span></span>
       <span class="pc">${pc}%</span></div>`;
