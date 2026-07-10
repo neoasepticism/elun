@@ -135,11 +135,23 @@
   <div class="cta">
     <h3>This is the skeleton. The report is the story.</h3>
     <p>Your full Precision Report reads all of this together — character, relationships, wealth, health, and a year-by-year map of your next decade — in twelve chapters written from your exact chart.</p>
-    <div class="row">
-      <a class="btn" href="sample-19780821-EN.html">Read a real sample report</a>
+    <div class="row" id="ctarow">
+      <a class="btn" id="buybtn" href="#" style="display:none">Get my full report — $24</a>
+      <a class="btn" id="samplebtn" href="sample-19780821-EN.html">Read a real sample report</a>
       <a class="btn ghost" id="sharebtn" href="#">Share my pillars</a>
     </div>
-    <div class="note">Premium reports are launching soon — the sample shows the exact depth you'll get.</div>
+    <div class="note" id="ctanote">Premium reports are launching soon — the sample shows the exact depth you'll get.</div>
+    <script>
+    // Lemon Squeezy 체크아웃 URL — 상품 생성 후 여기에 붙여넣으면 구매 버튼이 켜집니다.
+    const CHECKOUT_URL = "";
+    if(CHECKOUT_URL){
+      const b=document.getElementById('buybtn');
+      b.href=CHECKOUT_URL; b.style.display='inline-block';
+      document.getElementById('samplebtn').classList.add('ghost');
+      document.getElementById('samplebtn').textContent='See a sample first';
+      document.getElementById('ctanote').innerHTML='One-time purchase · after checkout, claim your report at <a href="report.html">elun.me/report.html</a> with your order number.';
+    }
+    </script>
   </div>
 
   <div class="actions">
