@@ -146,6 +146,117 @@ DM = {
    app="delicate features, soft luminous eyes, a quiet voice, easy to overlook and hard to forget"),
 }
 
+
+# ── 납음(納音) 30쌍 · 공망(空亡) · 일주별 생김새 ──────────────────────
+S_ORD = '甲乙丙丁戊己庚辛壬癸'
+B_ORD = '子丑寅卯辰巳午未申酉戌亥'
+
+def gz_index(gj):
+    st, br = S_ORD.index(gj[0]), B_ORD.index(gj[1])
+    for i in range(60):
+        if i % 10 == st and i % 12 == br:
+            return i
+    raise ValueError(gj)
+
+VOID_PAIRS = [('戌', '亥'), ('申', '酉'), ('午', '未'), ('辰', '巳'), ('寅', '卯'), ('子', '丑')]
+
+NAYIN = [  # (한자, 영문명, 한 줄 의미) — 갑자부터 2주씩 30개
+ ('海中金', 'Gold in the Sea', 'treasure hidden in deep water — worth that must be discovered, not displayed'),
+ ('爐中火', 'Fire in the Furnace', 'contained, working fire — heat with a purpose'),
+ ('大林木', 'Great Forest Wood', 'a whole forest, not one tree — growth that shelters many'),
+ ('路傍土', 'Roadside Earth', 'the ground everyone travels on — useful, humble, indispensable'),
+ ('劍鋒金', 'Sword-Edge Metal', 'metal honed to its finest point — decisive and exacting'),
+ ('山頭火', 'Mountain-Top Fire', 'a beacon seen from afar — influence that carries'),
+ ('澗下水', 'Stream in the Ravine', 'water finding its way down rock — quiet persistence'),
+ ('城頭土', 'City-Wall Earth', 'earth built into defense — reliability under siege'),
+ ('白蠟金', 'White Wax Metal', 'metal still being refined — potential mid-forming'),
+ ('楊柳木', 'Willow Wood', 'the tree that bends in every wind and snaps in none'),
+ ('泉中水', 'Water of the Spring', 'a self-renewing source — freshness from within'),
+ ('屋上土', 'Rooftop Earth', 'earth that shelters — protection as a calling'),
+ ('霹靂火', 'Thunderbolt Fire', 'sudden illumination — power in the instant'),
+ ('松柏木', 'Pine and Cypress', 'evergreen through winter — constancy as character'),
+ ('長流水', 'Long-Flowing River', 'water with distance in it — endurance over speed'),
+ ('沙中金', 'Gold in the Sand', 'value mixed with the ordinary — panning required'),
+ ('山下火', 'Fire Below the Mountain', 'warmth close to the ground — intimate light'),
+ ('平地木', 'Wood of the Plains', 'trees in open land — growth without shelter, and strong for it'),
+ ('壁上土', 'Earth on the Wall', 'finished plaster — refinement over a firm base'),
+ ('金箔金', 'Gold Foil', 'brilliance spread thin and wide — presentation as art'),
+ ('覆燈火', 'Lamp-Light Fire', 'a shaded lamp — glow kept for the room, not the street'),
+ ('天河水', 'Water of the Sky River', 'rain from the milky way — blessing that falls on everyone'),
+ ('大驛土', 'Earth of the Great Station', 'the crossroads ground — where journeys meet'),
+ ('釵釧金', 'Hairpin Gold', 'ornament metal — strength worn as beauty'),
+ ('桑柘木', 'Mulberry Wood', 'the tree that feeds silk — quiet usefulness that clothes an empire'),
+ ('大溪水', 'Great Stream Water', 'a widening creek — momentum gathering as it goes'),
+ ('沙中土', 'Earth in the Sand', 'soft ground that teaches careful footing — adaptability'),
+ ('天上火', 'Heavenly Fire', 'the sun and stars themselves — light as a birthright'),
+ ('石榴木', 'Pomegranate Wood', 'fruit full of seeds — one talent bearing many'),
+ ('大海水', 'Water of the Great Sea', 'the ocean that receives all rivers — capacity without limit'),
+]
+
+# 일주별 고유 생김새 — 간지 물상 상호작용 (예: 乙酉 = 칼로 깎은 나무 → 조각한 듯 세련)
+APP = {
+ '甲子': 'A tall tree standing over deep water: long lines, a cool and reflective gaze — striking from a distance, subtly restless up close.',
+ '甲寅': 'Timber at full strength: broad-shouldered bearing, unhurried stride, a face that meets you level and does not look away first.',
+ '甲辰': 'A tree in rich loam: substantial, well-planted build; a settled face that suggests reserves — someone who looks like they own land, even when they do not.',
+ '甲午': 'Sunlit timber: warm coloring, an easy open smile, expressive brows — the tree in bloom, visibly alive.',
+ '甲申': 'Timber hewn by the axe: rugged, angular features, visible bone structure — a face with edges, weathered handsome rather than pretty.',
+ '甲戌': 'A lone tree on high ground: lean, upright, a touch austere — the profile of a sentinel, dignified and a little apart.',
+ '乙丑': 'An orchid in winter soil: delicate features over surprising sturdiness — a soft face that endures, beauty that reads late.',
+ '乙卯': 'Spring grass in spring wind: fresh, youthful looks that age slowly; fluid gestures, a natural charm that seems effortless.',
+ '乙巳': 'A vine beside flame: fine features with heat behind the eyes — glamour with a flicker of nervous intensity.',
+ '乙未': 'A flower out of dry earth: gentle, rounded features that disguise wiry resilience — prettier than tough, tougher than pretty.',
+ '乙酉': 'Wood shaped by the blade: features that look sculpted rather than grown — clean jawline, precise brows, a polished elegance even in casual clothes.',
+ '乙亥': 'A water-lily on the current: soft, luminous skin, graceful drifting movements — beauty that seems to float.',
+ '丙子': 'The sun mirrored on midnight water: high-gloss presence, bright eyes over unreadable depths — radiant and mysterious at once.',
+ '丙寅': 'Sunrise over the forest: a broad brow, upward energy, color that rises easily to the face — morning made visible.',
+ '丙辰': 'Sunlight on spring fields: generous, open features; a warm glow that makes others relax and lean in.',
+ '丙午': 'High noon embodied: impossible to miss — vivid coloring, big expressions, a voice and smile that fill the room to its corners.',
+ '丙申': 'Sunlight glinting off metal: sharp bright eyes, quick expressions, a flashing smile — brilliance with an engineered edge.',
+ '丙戌': 'Sunset over the hills: warm but composed features, a banked-fire dignity — handsome in the evening-light way.',
+ '丁丑': 'A lantern in the barn: small, steady features; quiet warmth that shows at close range and lasts all night.',
+ '丁卯': 'Candlelight among flowers: fine-boned, artistic looks; a gentle flame in the eyes — the most delicate fire.',
+ '丁巳': 'A torch feeding itself: compact intensity, a focused gaze that seems lit from within — presence out of proportion to size.',
+ '丁未': 'The hearth at home: soft warm features, comfortable to look at — a face people instinctively gather toward.',
+ '丁酉': 'Flame on polished gold: precise, refined features with a perfectionist gleam — nothing on this face is accidental.',
+ '丁亥': 'A lamp over night water: dreamy, reflective eyes; a softness that seems to see more than it says.',
+ '戊子': 'A mountain hiding a spring: solid, stern exterior — and an unexpected softness when the face finally opens.',
+ '戊寅': 'A mountain with a tiger inside: still, weighty features that flash suddenly alive — don\'t mistake the calm.',
+ '戊辰': 'The mountain range: broad frame, commanding scale, a face built for responsibility — people stand behind it by instinct.',
+ '戊午': 'The volcano: an even, composed face with heat detectable underneath — the jaw sets before the voice rises.',
+ '戊申': 'A mountain of ore: blocky, practical features, capable hands — someone who looks like they can fix things.',
+ '戊戌': 'The fortress: square, guarded features, a gatekeeper\'s steadiness — trust made visible.',
+ '己丑': 'The field under snow: plain, patient features that improve with every year of knowing them.',
+ '己卯': 'A garden in bloom: soft, approachable prettiness; a nurturing face that children and animals trust on sight.',
+ '己巳': 'A sunlit field: warm, intelligent eyes in a kind face — the look of a favorite teacher.',
+ '己未': 'The willful summer field: gentle rounded features over a stubborn jaw — sweetness with its heels dug in.',
+ '己酉': 'The field after harvest: neat, orderly features, everything in its place — tidiness as a physical trait.',
+ '己亥': 'The riverbank field: soft, fertile-looking features with mobile expressions — a face that absorbs and reflects the company it keeps.',
+ '庚子': 'A sword in the winter stream: cool, pale sharpness; a wit that shows at the mouth\'s corner before it is spoken.',
+ '庚寅': 'The axe in the forest: strong, forward-set features, an athletic charge in the posture — always about to move.',
+ '庚辰': 'Ore in the dragon\'s mountain: heavy, unfinished handsomeness — a face that strengthens dramatically with age.',
+ '庚午': 'A blade in the fire: taut, tempered features; heat and discipline visible in the same face.',
+ '庚申': 'Steel on steel: the most chiseled of the sixty — hard clean lines, direct eyes, zero softness wasted.',
+ '庚戌': 'A sword on the altar: stern, upright features with a ceremonial gravity — the look of sworn duty.',
+ '辛丑': 'A gem still in the mine: understated features that catch the light unexpectedly — beauty that must be noticed to be seen.',
+ '辛卯': 'A needle among flowers: fine, pretty features with one glint of sharpness — disarming until it isn\'t.',
+ '辛巳': 'A jewel in the flame: polished glamour with heat behind it — the shine is the discipline showing.',
+ '辛未': 'Gold in warm dust: soft matte elegance — refinement that doesn\'t announce itself and lasts longer for it.',
+ '辛酉': 'The finished jewel: flawless grooming, symmetrical fine features — the sixty\'s most immaculate face.',
+ '辛亥': 'A gem washed in clear water: transparent, clean beauty — skin and eyes that look rinsed in light.',
+ '壬子': 'The open ocean: large, fluid presence; restless eyes that are always scanning a horizon somewhere past you.',
+ '壬寅': 'A river through the forest: vigorous, flowing movements, a traveler\'s tan and readiness — motion visible at rest.',
+ '壬辰': 'The reservoir: a calm, deep-set face holding more than it shows — stillness with pressure behind it.',
+ '壬午': 'Water on fire: steam-engine vitality — flushed, energetic, expressive; a face that runs warm and fast.',
+ '壬申': 'A spring from the source-rock: clear quick eyes, refreshing presence — the face of someone whose ideas never run dry.',
+ '壬戌': 'The sea against the cliff: weathered persistence in the features — patience and force in the same expression.',
+ '癸丑': 'Frost on the winter field: pale, fine, quietly enduring features — delicacy that outlasts everyone\'s expectations.',
+ '癸卯': 'Dew on spring flowers: fresh, dewy skin, a morning-light gentleness — the most tender face of the water days.',
+ '癸巳': 'Rain falling into flame: expressive, changeable features — weather moves visibly across this face.',
+ '癸未': 'Rain on dry earth: soft, needed warmth in the eyes — a face people confide in within minutes.',
+ '癸酉': 'A spring filtered through rock: immaculate clarity — clean features, steady gaze, an unsettling accuracy of attention.',
+ '癸亥': 'The night ocean: deep, dark, unhurried eyes — the sixty\'s most unreadable and most remembered face.',
+}
+
 # ── 60 unique syntheses ──────────────────────────────────────────────
 SYN = {
  '甲子':"Roots in deep midnight water: this tree is fed by the Scholar's spring, so the mind never stops absorbing. Brilliance comes easily; commitment is the discipline. When 甲子 finally plants itself in one field, the growth is spectacular.",
@@ -271,9 +382,15 @@ CSS = '''
   footer{border-top:1px solid var(--line);padding:30px 0;text-align:center;color:var(--faint);font-size:12px}
 '''
 
-def page(p, prev_p, next_p):
+def page(p, prev_p, next_p, all_pillars):
     gj, py, br = p['gj'], p['py'], p['gj'][1]
     dm, b = DM[gj[0]], BR[br]
+    gi = gz_index(gj)
+    ny_hj, ny_en, ny_gloss = NAYIN[gi // 2]
+    void1, void2 = VOID_PAIRS[gi // 10]
+    siblings = ''.join(
+        f'<a href="{slug(q["py"])}.html" style="border:1px solid var(--line2);border-radius:16px;padding:4px 13px;font-size:12.5px;color:var(--ink2);text-decoration:none">{q["gj"]} {q["py"]}</a>'
+        for q in all_pillars if q['gj'][0] == gj[0] and q['gj'] != gj)
     main_god = GODS[god(gj[0], HID[br][0][0])]
     ac = f"var(--{SEL[gj[0]]})"
     hid_rows = ''.join(
@@ -325,7 +442,8 @@ def page(p, prev_p, next_p):
 
   <div class="box">
     <h2>Appearance &amp; Presence</h2>
-    <p>The {dm['nm']} base — {dm['app']} — is shaded by the {b['an']}: {b['app']}. Traditional physiognomy; enjoy as folklore, not science.</p>
+    <p><b>{APP.get(gj,'')}</b></p>
+    <p>The {dm['nm']} base — {dm['app']} — shaded by the {b['an']}: {b['app']}. Traditional physiognomy; enjoy as folklore, not science.</p>
     <p><b>Temperament note:</b> {b['tem']}.</p>
   </div>
 
@@ -340,6 +458,21 @@ def page(p, prev_p, next_p):
   </div>
 
   {celebs}
+
+  <div class="box">
+    <h2>Classical Markers</h2>
+    <table class="kv" style="font-size:13.5px;width:100%;border-collapse:collapse">
+      <tr><td style="padding:8px 4px;border-bottom:1px dashed var(--line);color:var(--sub);width:36%">Nayin 納音</td>
+          <td style="padding:8px 4px;border-bottom:1px dashed var(--line);color:var(--ink2)"><b style="color:var(--ink)">{ny_en}</b> ({ny_hj}) — {ny_gloss}</td></tr>
+      <tr><td style="padding:8px 4px;color:var(--sub)">Void branches 空亡</td>
+          <td style="padding:8px 4px;color:var(--ink2)"><b style="color:var(--ink)">{void1} · {void2}</b> — areas of life this pillar holds lightly; classical astrologers read them as themes to approach without grasping</td></tr>
+    </table>
+  </div>
+
+  <div class="box">
+    <h2>The Other {dm['nm']} Days</h2>
+    <div class="fam">{siblings}</div>
+  </div>
 </section>
 
 <div class="pn">
@@ -363,7 +496,7 @@ def main():
     os.makedirs(OUT, exist_ok=True)
     for i, p in enumerate(data):
         prev_p, next_p = data[(i-1) % 60], data[(i+1) % 60]
-        html = page(p, prev_p, next_p)
+        html = page(p, prev_p, next_p, data)
         open(os.path.join(OUT, slug(p['py'])+'.html'), 'w', encoding='utf-8').write(html)
     # index
     items = ''.join(
