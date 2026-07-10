@@ -56,7 +56,7 @@
 <div class="wrap">
   <div class="hero">
     <h1>Claim your Precision Report</h1>
-    <p>Enter the order number from your purchase receipt and the email you bought with — plus the birth details for the report. Generation takes 2–4 minutes. When your report appears, use the <b style="color:var(--gold2)">⬇ Save report</b> button to keep it forever.</p>
+    <p>Enter the order number from your purchase receipt and the email you bought with — plus the birth details for the report. Generation takes 2–4 minutes. Your report file (.html) is also saved to your Downloads automatically — keep it forever, it opens offline.</p>
   </div>
 
   <form id="claim">
@@ -169,6 +169,14 @@ document.getElementById('claim').addEventListener('submit', async e=>{
       throw new Error(t.detail||('server '+res.status));
     }
     const html=await res.text();
+    // 확실히 작동하는 이 문서 컨텍스트에서 파일을 먼저 자동 저장 (탭 닫아도 소실 방지)
+    try{
+      const nm=(document.getElementById('rname').value.trim()||'Report').replace(/[^A-Za-z0-9._-]+/g,'-');
+      const blob=new Blob([html],{type:'text/html;charset=utf-8'});
+      const a=document.createElement('a');
+      a.href=URL.createObjectURL(blob); a.download='Elun-'+nm+'-BaZi-Report.html';
+      document.body.appendChild(a); a.click(); a.remove();
+    }catch(_){}
     document.open(); document.write(html); document.close();
   }catch(ex){
     err.textContent='⚠ '+ex.message; err.style.display='block';
