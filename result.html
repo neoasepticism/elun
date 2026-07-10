@@ -136,7 +136,8 @@
     <h3>This is the skeleton. The report is the story.</h3>
     <p>Your full Precision Report reads all of this together — character, relationships, wealth, health, and a year-by-year map of your next decade — in twelve chapters written from your exact chart.</p>
     <div class="row" id="ctarow">
-      <a class="btn" id="buybtn" href="#" style="display:none">Get my full report — $24</a>
+      <a class="btn" id="buybtn" href="#" style="display:none">Precision Report — $24</a>
+      <a class="btn" id="buydecadebtn" href="#" style="display:none">Report + Decade — $44</a>
       <a class="btn" id="samplebtn" href="sample-19780821-EN.html">Read a real sample report</a>
       <a class="btn ghost" id="sharebtn" href="#">Share my pillars</a>
     </div>
@@ -144,11 +145,16 @@
     <script>
     // Lemon Squeezy 체크아웃 URL — 상품 생성 후 여기에 붙여넣으면 구매 버튼이 켜집니다.
     const CHECKOUT_URL = "https://elun.lemonsqueezy.com/checkout/buy/a89d47ac-7832-48cf-8d45-3fac9ab7c747";
+    const DECADE_CHECKOUT_URL = "https://elun.lemonsqueezy.com/checkout/buy/0e38106a-5015-43d0-80d4-bcd800dd0b67";
     if(CHECKOUT_URL){
       const b=document.getElementById('buybtn');
       b.href=CHECKOUT_URL; b.style.display='inline-block';
       document.getElementById('samplebtn').classList.add('ghost');
       document.getElementById('samplebtn').textContent='See a sample first';
+      if(DECADE_CHECKOUT_URL){
+        const db=document.getElementById('buydecadebtn');
+        db.href=DECADE_CHECKOUT_URL; db.style.display='inline-block';
+      }
       document.getElementById('ctanote').innerHTML='One-time purchase · after checkout, claim your report at <a href="report.html">elun.me/report.html</a> with your order number.';
     }
     </script>
