@@ -30,6 +30,22 @@
   .btn:hover{filter:brightness(1.08)}
   .btn.ghost{background:transparent;border:1px solid var(--line2);color:var(--ink)}
 
+  /* your hand */
+  .hand{display:flex;gap:14px;justify-content:center;margin:26px 0 6px}
+  .hcard{flex:1;max-width:200px;border:1.5px solid var(--hc,var(--line2));border-radius:16px;
+    background:linear-gradient(165deg,#1e1a13,#151109);padding:18px 14px 14px;text-align:center;position:relative;
+    box-shadow:0 14px 34px -18px #000}
+  .hcard .role{font-size:9.5px;letter-spacing:2.5px;text-transform:uppercase;color:var(--faint);margin-bottom:10px}
+  .hcard .big{font-family:var(--serif);font-size:44px;line-height:1.1;color:var(--hc,var(--gold2));
+    text-shadow:0 0 26px color-mix(in srgb,var(--hc,var(--gold2)) 45%,transparent)}
+  .hcard .glyph{font-size:34px;line-height:1.4}
+  .hcard .nm{font-family:var(--serif);font-size:15px;font-weight:700;margin-top:8px}
+  .hcard .sub{font-size:10.5px;color:var(--sub);margin-top:3px;line-height:1.5;min-height:30px}
+  .hcard .rare{position:absolute;top:-9px;left:50%;transform:translateX(-50%);background:#241c0e;border:1px solid var(--gold);
+    color:var(--gold2);border-radius:12px;padding:2px 10px;font-size:9px;letter-spacing:2px;white-space:nowrap}
+  .handcap{text-align:center;font-size:11.5px;color:var(--faint);margin-bottom:8px}
+  .handactions{text-align:center;margin:12px 0 4px}
+  @media(max-width:560px){.hand{flex-direction:row;flex-wrap:wrap}.hcard{min-width:44%}}
   .hero{text-align:center;padding:44px 0 10px}
   .hero .kick{font-family:var(--serif);letter-spacing:5px;color:var(--gold);font-size:11px;text-transform:uppercase;margin-bottom:12px}
   .hero h1{font-family:var(--serif);font-size:clamp(26px,5vw,38px);margin:0 0 6px;font-weight:700}
@@ -104,6 +120,12 @@
     <div class="kick">四柱 · Your Four Pillars</div>
     <h1 id="title">Your Chart</h1>
     <div class="sub" id="born"></div>
+  </div>
+
+  <div id="handwrap">
+    <div class="hand" id="hand"></div>
+    <div class="handcap">Your hand — the three cards at the core of this chart</div>
+    <div class="handactions"><button class="btn ghost" id="savehand" style="font-size:13px;padding:9px 18px">📸 Save my cards</button></div>
   </div>
 
   <div class="pillars" id="pillars"></div>
@@ -191,6 +213,14 @@ const STR = {'신약':'Leaning weak — your chart gains from support (resource 
   '중화':'Well balanced — rare and prized',
   '태왕':'Very strong','태약':'Very weak'};
 
+const GGLYPH={'The Ally':'🤝','The Rival':'⚡','The Creator':'🎨','The Maverick':'🎭','The Steward':'💎',
+ 'The Entrepreneur':'🎲','The Governor':'👑','The Challenger':'🗡️','The Scholar':'📖','The Mystic':'🔮'};
+const SGLYPH={'갑':'🌳','을':'🌿','병':'☀️','정':'🕯️','무':'⛰️','기':'🌾','경':'⚔️','신':'💍','임':'🌊','계':'🌧️'};
+const RAREP={'庚辰':'RARE · KUI GANG','庚戌':'RARE · KUI GANG','壬辰':'RARE · KUI GANG','壬戌':'RARE · KUI GANG',
+ '甲寅':'RARE · PURE PILLAR','乙卯':'RARE · PURE PILLAR','丙午':'RARE · PURE PILLAR','丁巳':'RARE · PURE PILLAR',
+ '戊戌':'RARE · PURE PILLAR','戊辰':'RARE · PURE PILLAR','己丑':'RARE · PURE PILLAR','己未':'RARE · PURE PILLAR',
+ '庚申':'RARE · PURE PILLAR','辛酉':'RARE · PURE PILLAR','壬子':'RARE · PURE PILLAR','癸亥':'RARE · PURE PILLAR',
+ '丁酉':'LUCKY · NOBLEMAN','丁亥':'LUCKY · NOBLEMAN','癸巳':'LUCKY · NOBLEMAN','癸卯':'LUCKY · NOBLEMAN'};
 const raw = sessionStorage.getItem('elun_result');
 if(!raw){ document.getElementById('empty').style.display='block'; }
 else{
@@ -205,6 +235,61 @@ else{
   const hourUnknown = !!i.hour_unknown || !fp.hour;
   document.getElementById('born').textContent =
     `Born ${i.year}-${String(i.month).padStart(2,'0')}-${String(i.day).padStart(2,'0')} ${hourUnknown?'(time unknown)':String(i.hour).padStart(2,'0')+':'+String(i.minute).padStart(2,'0')}${meta.city? ' · '+meta.city : ''}`;
+
+  // your hand — 일간 · 일주 · 격국
+  const gjH = fp.day.ganji_hanja, p60H = P60[gjH];
+  const handGod = GODK[D.geokguk?.bongi_god] || D.geokguk?.bongi_god || '';
+  const structArch = handGod && handGod !== 'Day Master' ? handGod : null;
+  const rare = RAREP[gjH];
+  document.getElementById('hand').innerHTML =
+    `<div class="hcard" style="--hc:var(--${dm.el})">
+       <div class="role">Day Master · 일간</div>
+       <div class="big">${dm.han}</div>
+       <div class="nm">${dm.py}</div>
+       <div class="sub">${dm.en}<br>“${dm.arch}”</div>
+     </div>
+     <div class="hcard" style="--hc:var(--gold)">
+       ${rare?`<div class="rare">◆ ${rare}</div>`:''}
+       <div class="role">Day Pillar · 일주</div>
+       <div class="big">${gjH}</div>
+       <div class="nm">${p60H?p60H.py:''}</div>
+       <div class="sub">${p60H?('Day of the '+p60H.an):''}<br>one of sixty</div>
+     </div>
+     <div class="hcard" style="--hc:var(--gold2)">
+       <div class="role">Structure · 격국</div>
+       <div class="glyph">${GGLYPH[structArch]||'✦'}</div>
+       <div class="nm">${structArch||(D.geokguk?.label||'—')}</div>
+       <div class="sub">${D.geokguk?.label||''}<br>life's organizing force</div>
+     </div>`;
+
+  // save-as-image
+  document.getElementById('savehand').addEventListener('click', async e=>{
+    const btn=e.target; btn.disabled=true; btn.textContent='Rendering…';
+    try{
+      if(!window.html2canvas){
+        await new Promise((res,rej)=>{const sc=document.createElement('script');
+          sc.src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+          sc.onload=res; sc.onerror=rej; document.head.appendChild(sc);});
+      }
+      const wrap=document.getElementById('handwrap');
+      const canvas=await html2canvas(wrap,{backgroundColor:'#100d0a',scale:2});
+      // 브랜드 워터마크
+      const ctx=canvas.getContext('2d');
+      ctx.font=(18*2)+'px Georgia'; ctx.fillStyle='#c9a227'; ctx.textAlign='right';
+      ctx.fillText('elun.me', canvas.width-24, canvas.height-16);
+      canvas.toBlob(async blob=>{
+        const file=new File([blob],'elun-my-cards.png',{type:'image/png'});
+        if(navigator.canShare && navigator.canShare({files:[file]})){
+          try{ await navigator.share({files:[file],text:'My BaZi cards — elun.me'}); }catch(_){}
+        } else {
+          const a=document.createElement('a');
+          a.href=URL.createObjectURL(blob); a.download='elun-my-cards.png';
+          document.body.appendChild(a); a.click(); a.remove();
+        }
+        btn.disabled=false; btn.textContent='📸 Save my cards';
+      });
+    }catch(_){ btn.disabled=false; btn.textContent='📸 Save my cards'; }
+  });
 
   // pillars
   const order=[['year','Year'],['month','Month'],['day','Day ★'],['hour','Hour']];

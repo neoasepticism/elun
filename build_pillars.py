@@ -208,6 +208,23 @@ STAR_INFO = {
  'noble': ('天乙貴人', 'The Nobleman', 'the classical "luckiest" star — help tends to arrive when it is most needed; benefactors, timely doors, and grace under pressure are this pillar\'s quiet privilege'),
 }
 
+PURE_PILLARS = {'甲寅','乙卯','丙午','丁巳','戊戌','戊辰','己丑','己未','庚申','辛酉','壬子','癸亥'}
+
+def badges(gj):
+    """희귀/특수 배지 (최대 2개)."""
+    out = []
+    stars = DAY_STARS.get(gj, [])
+    if 'kui' in stars:
+        out.append(('RARE', 'Kui Gang 魁罡'))
+    if gj in PURE_PILLARS:
+        out.append(('RARE', 'Pure Pillar 干支一氣'))
+    if 'noble' in stars:
+        out.append(('LUCKY', 'Nobleman 天乙貴人'))
+    if 'blade' in stars and len(out) < 2:
+        out.append(('INTENSE', 'The Blade 羊刃'))
+    return out[:2]
+
+
 def sitting_stage(gj):
     start, d = STAGE_START[gj[0]]
     return STAGE_INFO[(B_ORD.index(gj[1]) - B_ORD.index(start)) * d % 12]
@@ -434,6 +451,54 @@ CSS = '''
   footer{border-top:1px solid var(--line);padding:30px 0;text-align:center;color:var(--faint);font-size:12px}
 '''
 
+
+
+# ── OG 카드 이미지 (1200×630) 생성 — headless Chrome ────────────────
+OG_TEMPLATE = """<!doctype html><html><head><meta charset="utf-8"><style>
+  body{{margin:0;width:1200px;height:630px;background:#100d0a;
+    background-image:radial-gradient(ellipse at 30% -20%,#221a10 0,transparent 60%),radial-gradient(circle at 90% 110%,#1a2028 0,transparent 45%);
+    font-family:-apple-system,'Segoe UI',sans-serif;color:#f3ece0;display:flex;align-items:center;justify-content:center}}
+  .card{{width:1080px;height:510px;border:2px solid {ac};border-radius:26px;background:linear-gradient(160deg,#1d1913,#14100c);
+    display:flex;align-items:center;padding:0 70px;gap:64px;box-shadow:0 0 90px -30px {ac}}}
+  .gj{{font-family:'Noto Serif',Georgia,serif;font-size:190px;line-height:1;color:{ac};text-shadow:0 0 70px {ac}66;white-space:nowrap}}
+  .t .py{{font-family:'Noto Serif',Georgia,serif;font-size:54px;font-weight:700;margin-bottom:6px}}
+  .t .an{{font-size:22px;letter-spacing:5px;text-transform:uppercase;color:#9c8f79;margin-bottom:26px}}
+  .t .d{{font-family:'Noto Serif',Georgia,serif;font-style:italic;font-size:30px;line-height:1.5;color:#c9bda9;max-width:640px}}
+  .badge{{display:inline-block;border:1.5px solid #c9a227;color:#e0c05a;border-radius:18px;padding:5px 18px;font-size:19px;letter-spacing:3px;margin-top:24px}}
+  .brand{{position:absolute;bottom:36px;right:70px;font-family:'Noto Serif',Georgia,serif;font-size:26px;color:#c9a227;letter-spacing:2px}}
+  .seal{{position:absolute;bottom:30px;left:70px;width:44px;height:44px;border:1.5px solid #c9a227;color:#e0c05a;border-radius:9px;
+    display:flex;align-items:center;justify-content:center;font-size:24px;font-family:'Noto Serif',serif}}
+</style></head><body>
+<div class="card"><div class="gj">{gj}</div>
+  <div class="t"><div class="py">The {py} Day</div><div class="an">One of the sixty · Day of the {an}</div>
+  <div class="d">&ldquo;{d}&rdquo;</div>{badge}</div></div>
+<div class="seal">乙</div><div class="brand">elun.me</div>
+</body></html>"""
+
+EL_HEX = {'wood': '#5aa06a', 'fire': '#d0604e', 'earth': '#c9a227', 'metal': '#a8b0b8', 'water': '#5a9fd0'}
+CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
+
+
+def build_og(data):
+    import subprocess, tempfile
+    ogdir = os.path.join(OUT, 'og')
+    os.makedirs(ogdir, exist_ok=True)
+    for p in data:
+        gj = p['gj']
+        bds = badges(gj)
+        badge = f'<div class="badge">◆ {bds[0][0]} · {bds[0][1]}</div>' if bds else ''
+        html = OG_TEMPLATE.format(ac=EL_HEX[SEL[gj[0]]], gj=gj, py=p['py'],
+                                  an=BR[gj[1]]['an'], d=p['d'], badge=badge)
+        with tempfile.NamedTemporaryFile('w', suffix='.html', delete=False, encoding='utf-8') as f:
+            f.write(html); tmp = f.name
+        out_png = os.path.join(ogdir, slug(p['py']) + '.png')
+        subprocess.run([CHROME, '--headless', '--disable-gpu', '--hide-scrollbars',
+                        f'--screenshot={out_png}', '--window-size=1200,630', f'file://{tmp}'],
+                       capture_output=True)
+        os.unlink(tmp)
+    print(f'og: {len(data)} images -> {ogdir}')
+
+
 def page(p, prev_p, next_p, all_pillars):
     gj, py, br = p['gj'], p['py'], p['gj'][1]
     dm, b = DM[gj[0]], BR[br]
@@ -441,6 +506,12 @@ def page(p, prev_p, next_p, all_pillars):
     ny_hj, ny_en, ny_gloss = NAYIN[gi // 2]
     void1, void2 = VOID_PAIRS[gi // 10]
     st_hj, st_en, st_gloss = sitting_stage(gj)
+    bds = badges(gj)
+    badge_html = ''.join(
+        f'<span style="display:inline-block;border:1px solid var(--gold);color:var(--gold2);border-radius:14px;padding:3px 12px;font-size:11px;letter-spacing:2px;margin:0 4px">◆ {label} · {name}</span>'
+        for label, name in bds)
+    if badge_html:
+        badge_html = f'<div style="margin-top:14px">{badge_html}</div>'
     nt_hj, nt_en, nt_gloss = NATURE_INFO[BRANCH_NATURE[gj[1]]]
     star_rows = ''.join(
         f'<tr><td style="padding:8px 4px;border-bottom:1px dashed var(--line);color:var(--sub)">Star 神煞</td>'
@@ -464,6 +535,13 @@ def page(p, prev_p, next_p, all_pillars):
 <head>
 <meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>{py} {gj} Day Pillar — Personality, Love & Career | Elun</title>
+<meta property="og:type" content="article"/>
+<meta property="og:title" content="{py} {gj} — one of the sixty day pillars"/>
+<meta property="og:description" content="{p['d']}"/>
+<meta property="og:image" content="https://elun.me/pillars/og/{slug(py)}.png"/>
+<meta property="og:url" content="https://elun.me/pillars/{slug(py)}.html"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://elun.me/pillars/og/{slug(py)}.png"/>
 <link rel="canonical" href="https://elun.me/pillars/{slug(py)}.html"/>
 <meta name="description" content="{py} ({gj}) day pillar explained: {p['d']} Personality, appearance, love and career of the {py} day in BaZi."/>
 <style>{CSS}</style>
@@ -479,6 +557,7 @@ def page(p, prev_p, next_p, all_pillars):
   <h1>The {py} Day</h1>
   <div class="meta"><b>{dm['nm']} · {dm['en']}</b> sitting on the <b>{b['an']}</b> · {b['img']}</div>
   <p class="poetic">“{p['d']}”</p>
+  {badge_html}
   <div class="ebarbox">{ebar(gj)}
     <div class="ecap">Five-element composition — day stem 50% · hidden stems 50%</div></div>
 </div>
@@ -589,6 +668,9 @@ def main():
 <footer>© 2026 Elun · <a href="../daymasters.html">The Ten Day Masters</a></footer>
 </body></html>''')
     print(f'wrote 60 pages + index → {OUT}')
+    import sys
+    if '--og' in sys.argv:
+        build_og(data)
 
 if __name__ == '__main__':
     main()
