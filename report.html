@@ -82,6 +82,8 @@
       <div><label>Birth city</label>
         <select id="bcity"></select></div>
     </div>
+    <label>Report language</label>
+    <select id="blang"><option value="en">English</option><option value="ko">한국어 (Korean)</option></select>
     <div class="hint">Near midnight or a time-zone boundary? Double-check the time — it can change your day pillar.</div>
 
     <button class="btn" id="go" type="submit">Generate my report</button>
@@ -156,7 +158,7 @@ document.getElementById('claim').addEventListener('submit', async e=>{
     name:document.getElementById('rname').value.trim(),
     year:y,month:mo,day:d,hour:h,minute:mi2||0,
     gender:document.getElementById('bgender').value,
-    longitude:lon,timezone:tz};
+    longitude:lon,timezone:tz,lang:document.getElementById('blang').value};
   const go=document.getElementById('go'), st=document.getElementById('status');
   go.disabled=true; st.style.display='block'; mi=0;
   document.getElementById('stxt').textContent=msgs[0];
