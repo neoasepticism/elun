@@ -160,6 +160,28 @@ def gz_index(gj):
 
 VOID_PAIRS = [('戌', '亥'), ('申', '酉'), ('午', '未'), ('辰', '巳'), ('寅', '卯'), ('子', '丑')]
 
+# 십이운성 — 고전 순역법 (양간 순행 · 음간 역행, 화토동궁)
+STAGE_START = {'甲': ('亥', 1), '丙': ('寅', 1), '戊': ('寅', 1), '庚': ('巳', 1), '壬': ('申', 1),
+               '乙': ('午', -1), '丁': ('酉', -1), '己': ('酉', -1), '辛': ('子', -1), '癸': ('卯', -1)}
+STAGE_INFO = [  # (한자, 영문명, 한 줄 의미)
+ ('長生', 'Birth', 'fresh vitality — a pillar that begins things and keeps a beginner\'s openness'),
+ ('沐浴', 'Bath', 'raw and newly exposed — charm, sensitivity, and a changeable current'),
+ ('冠帶', 'Coming of Age', 'putting on the robes — ambition dressing itself for the world'),
+ ('建祿', 'Prosperity', 'standing on its own ground — self-made strength at full stride'),
+ ('帝旺', 'Peak', 'the zenith of the cycle — maximum force, and the turn that follows it'),
+ ('衰', 'Decline', 'past the summit — mellow, seasoned energy that conserves rather than conquers'),
+ ('病', 'Weakening', 'energy turned inward — sensitivity, empathy, and a reflective cast'),
+ ('死', 'Stillness', 'motion suspended — depth, focus, and detachment from the surface game'),
+ ('墓', 'Storage', 'gathered into the vault — a collector\'s nature; resources banked, feelings kept'),
+ ('絶', 'Severance', 'the thread cut — energy at its most precarious and most transformable'),
+ ('胎', 'Conception', 'new potential forming unseen — imagination gestating its next life'),
+ ('養', 'Nurture', 'quietly fed and protected — growth in a sheltered chamber before emergence'),
+]
+
+def sitting_stage(gj):
+    start, d = STAGE_START[gj[0]]
+    return STAGE_INFO[(B_ORD.index(gj[1]) - B_ORD.index(start)) * d % 12]
+
 NAYIN = [  # (한자, 영문명, 한 줄 의미) — 갑자부터 2주씩 30개
  ('海中金', 'Gold in the Sea', 'treasure hidden in deep water — worth that must be discovered, not displayed'),
  ('爐中火', 'Fire in the Furnace', 'contained, working fire — heat with a purpose'),
@@ -388,6 +410,7 @@ def page(p, prev_p, next_p, all_pillars):
     gi = gz_index(gj)
     ny_hj, ny_en, ny_gloss = NAYIN[gi // 2]
     void1, void2 = VOID_PAIRS[gi // 10]
+    st_hj, st_en, st_gloss = sitting_stage(gj)
     siblings = ''.join(
         f'<a href="{slug(q["py"])}.html" style="border:1px solid var(--line2);border-radius:16px;padding:4px 13px;font-size:12.5px;color:var(--ink2);text-decoration:none">{q["gj"]} {q["py"]}</a>'
         for q in all_pillars if q['gj'][0] == gj[0] and q['gj'] != gj)
@@ -464,9 +487,12 @@ def page(p, prev_p, next_p, all_pillars):
     <table class="kv" style="font-size:13.5px;width:100%;border-collapse:collapse">
       <tr><td style="padding:8px 4px;border-bottom:1px dashed var(--line);color:var(--sub);width:36%">Nayin 納音</td>
           <td style="padding:8px 4px;border-bottom:1px dashed var(--line);color:var(--ink2)"><b style="color:var(--ink)">{ny_en}</b> ({ny_hj}) — {ny_gloss}</td></tr>
+      <tr><td style="padding:8px 4px;border-bottom:1px dashed var(--line);color:var(--sub)">Sitting stage 十二運星</td>
+          <td style="padding:8px 4px;border-bottom:1px dashed var(--line);color:var(--ink2)"><b style="color:var(--ink)">{st_en}</b> ({st_hj}) — {st_gloss}</td></tr>
       <tr><td style="padding:8px 4px;color:var(--sub)">Void branches 空亡</td>
           <td style="padding:8px 4px;color:var(--ink2)"><b style="color:var(--ink)">{void1} · {void2}</b> — areas of life this pillar holds lightly; classical astrologers read them as themes to approach without grasping</td></tr>
     </table>
+    <p style="font-size:11px;color:var(--faint);margin-top:8px">Twelve-stage cycle follows the classical tradition (yin stems run the cycle in reverse).</p>
   </div>
 
   <div class="box">
