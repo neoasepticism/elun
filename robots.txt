@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+# 개인 샘플 리포트는 색인 제외
+Disallow: /CLAUDE-
+Disallow: /sample-
+
+Sitemap: https://elun.me/sitemap.xml

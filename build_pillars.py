@@ -288,6 +288,7 @@ def page(p, prev_p, next_p):
 <head>
 <meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>{py} {gj} Day Pillar — Personality, Love & Career | Elun</title>
+<link rel="canonical" href="https://elun.me/pillars/{slug(py)}.html"/>
 <meta name="description" content="{py} ({gj}) day pillar explained: {p['d']} Personality, appearance, love and career of the {py} day in BaZi."/>
 <style>{CSS}</style>
 </head>
@@ -372,6 +373,7 @@ def main():
     open(os.path.join(OUT, 'index.html'), 'w', encoding='utf-8').write(f'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>The Sixty Day Pillars — Index | Elun</title>
+<link rel="canonical" href="https://elun.me/pillars/"/>
 <meta name="description" content="All sixty BaZi day pillars — personality, love, career and appearance for each 干支 combination."/>
 <style>{CSS}
 .gridx{{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;padding:30px 0 60px}}
