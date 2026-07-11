@@ -531,6 +531,14 @@ STEM_SCENE = {
 </g>''',
 }
 
+def scene_boost(svg, factor=1.9, cap=0.92):
+    """씬 SVG의 opacity 계열 값 일괄 증폭."""
+    def f(m):
+        v = min(float(m.group(2)) * factor, cap)
+        return f'{m.group(1)}"{v:.2f}"'
+    return re.sub(r'(opacity=)"(\.?[0-9.]+)"', f, svg)
+
+
 OG_TEMPLATE = """<!doctype html><html><head><meta charset="utf-8"><style>
   body{{margin:0;width:1200px;height:630px;background:#100d0a;
     background-image:radial-gradient(ellipse at 30% -20%,#221a10 0,transparent 60%),radial-gradient(circle at 90% 110%,#1a2028 0,transparent 45%);
@@ -547,8 +555,8 @@ OG_TEMPLATE = """<!doctype html><html><head><meta charset="utf-8"><style>
     display:flex;align-items:center;justify-content:center;font-size:24px;font-family:'Noto Serif',serif}}
 </style></head><body>
 <div class="card">
-<svg style="position:absolute;inset:0;width:100%;height:100%;border-radius:24px" viewBox="0 0 1200 630" preserveAspectRatio="xMidYMid slice">{scene}</svg>
-<div style="position:absolute;inset:0;border-radius:24px;background:linear-gradient(90deg,transparent 30%,#14100cd9 55%,#14100cbb 100%)"></div>
+<svg style="position:absolute;inset:0;width:100%;height:100%;border-radius:24px" viewBox="0 0 1200 630" preserveAspectRatio="xMidYMid slice"><g transform="scale(-1,1) translate(-1200,0)">{scene}</g></svg>
+<div style="position:absolute;inset:0;border-radius:24px;background:linear-gradient(90deg,transparent 38%,#14100ccc 58%,#14100ce8 100%)"></div>
 <div class="gj" style="position:relative">{gj}</div>
   <div class="t" style="position:relative"><div class="py">The {py} Day</div><div class="an">One of the sixty · Day of the {an}</div>
   <div class="d">&ldquo;{d}&rdquo;</div>{badge}</div></div>
@@ -569,7 +577,7 @@ def build_og(data):
         badge = f'<div class="badge">◆ {bds[0][0]} · {bds[0][1]}</div>' if bds else ''
         html = OG_TEMPLATE.format(ac=EL_HEX[SEL[gj[0]]], gj=gj, py=p['py'],
                                   an=BR[gj[1]]['an'], d=p['d'], badge=badge,
-                                  scene=STEM_SCENE.get(gj[0], ''))
+                                  scene=scene_boost(STEM_SCENE.get(gj[0], '')))
         with tempfile.NamedTemporaryFile('w', suffix='.html', delete=False, encoding='utf-8') as f:
             f.write(html); tmp = f.name
         out_png = os.path.join(ogdir, slug(p['py']) + '.png')
@@ -587,6 +595,7 @@ def page(p, prev_p, next_p, all_pillars):
     ny_hj, ny_en, ny_gloss = NAYIN[gi // 2]
     void1, void2 = VOID_PAIRS[gi // 10]
     st_hj, st_en, st_gloss = sitting_stage(gj)
+    hero_scene = scene_boost(STEM_SCENE.get(gj[0], ''), factor=1.6)
     bds = badges(gj)
     badge_html = ''.join(
         f'<span style="display:inline-block;border:1px solid var(--gold);color:var(--gold2);border-radius:14px;padding:3px 12px;font-size:11px;letter-spacing:2px;margin:0 4px">◆ {label} · {name}</span>'
@@ -633,8 +642,10 @@ def page(p, prev_p, next_p, all_pillars):
   <span class="navlinks"><a href="../daymasters.html">Day Masters</a> · <a href="../daymasters.html#sixty">All 60</a> · <a href="../start.html">Create your chart</a></span>
 </div></nav>
 
-<div class="hero wrap">
-  <div class="gj">{gj}</div>
+<div class="hero wrap" style="position:relative;overflow:hidden">
+  <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:.5;pointer-events:none" viewBox="0 0 1200 630" preserveAspectRatio="xMidYMid slice">{hero_scene}</svg>
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 45%,#100d0acc 0%,#100d0a55 55%,transparent 100%);pointer-events:none"></div>
+  <div class="gj" style="position:relative">{gj}</div>
   <h1>The {py} Day</h1>
   <div class="meta"><b>{dm['nm']} · {dm['en']}</b> sitting on the <b>{b['an']}</b> · {b['img']}</div>
   <p class="poetic">“{p['d']}”</p>
