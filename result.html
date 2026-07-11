@@ -191,6 +191,20 @@
   </div>
 </div>
 
+<div id="sharecut" style="position:absolute;left:-12000px;top:0;width:1080px;height:1080px;overflow:hidden;
+  background:#0e0b08;background-image:radial-gradient(ellipse at 50% -15%,#241a0e 0,transparent 60%),radial-gradient(circle at 85% 110%,#141c24 0,transparent 45%);
+  font-family:var(--sans);color:#f3ece0">
+  <div style="text-align:center;padding-top:64px">
+    <div style="font-family:var(--serif);letter-spacing:8px;color:#c9a227;font-size:19px;text-transform:uppercase" id="sc-kick">四柱 · FOUR PILLARS OF DESTINY</div>
+    <div style="font-family:var(--serif);font-size:58px;font-weight:700;margin-top:14px" id="sc-title">My Destiny</div>
+    <div style="font-family:var(--serif);font-size:25px;color:#9c8f79;letter-spacing:10px;margin-top:12px" id="sc-pillars"></div>
+  </div>
+  <div id="sc-cards" style="position:absolute;left:0;right:0;top:295px;height:600px;display:flex;justify-content:center;align-items:center"></div>
+  <div style="position:absolute;bottom:44px;left:0;right:0;text-align:center">
+    <span style="font-family:var(--serif);font-size:22px;color:#c9a227;letter-spacing:2px">Calculate yours — elun.me</span>
+  </div>
+</div>
+
 <footer>© 2026 Elun · elun.me · results are for reflection &amp; entertainment</footer>
 
 <script>
@@ -272,6 +286,36 @@ else{
        <div class="sub">${D.geokguk?.label||''}<br>life's organizing force</div>
      </div>`;
 
+  // ── 소셜 셰어컷 구성 (일지 | 일간 | 격국 3카드 부채꼴) ──
+  function buildShareCut(){
+    const nm=(meta.name||'').trim();
+    document.getElementById('sc-title').textContent = nm ? nm+"’s Destiny" : "My Destiny";
+    const pk=['year','month','day','hour'].map(k=>fp[k]?fp[k].ganji_hanja:'?時');
+    document.getElementById('sc-pillars').textContent = pk.join(' · ');
+    const branchArt=BSLUG[gjH[1]]?`pillars/art/${BSLUG[gjH[1]]}.jpg`:null;
+    const stemArt=`pillars/art/${SSLUG[dmk]}.jpg`;
+    const godArt=GSLUG[structArch]?`pillars/art/${GSLUG[structArch]}.jpg`:null;
+    const card=(art,role,big,name2,sub,rot,extra)=>`
+      <div style="width:${big?300:258}px;height:${big?470:420}px;margin:0 ${big?'18px':'0'};transform:rotate(${rot}deg) translateY(${big?0:26}px);
+        border:2px solid ${big?'#c9a227':'#40342a'};border-radius:22px;overflow:hidden;position:relative;flex:none;
+        background:#151109;box-shadow:0 30px 60px -25px #000">
+        <div style="position:absolute;inset:0;background-image:url(${art});background-size:cover;background-position:center;opacity:.92"></div>
+        <div style="position:absolute;inset:0;background:linear-gradient(180deg,#0e0b0899 0%,transparent 26%,transparent 55%,#0e0b08f2 82%)"></div>
+        <div style="position:absolute;top:16px;left:0;right:0;text-align:center;font-size:13px;letter-spacing:4px;color:#c9bda9;text-transform:uppercase">${role}</div>
+        ${extra||''}
+        <div style="position:absolute;bottom:20px;left:0;right:0;text-align:center">
+          <div style="font-family:var(--serif);font-size:${big?40:32}px;font-weight:700;color:#f3ece0;text-shadow:0 2px 12px #000">${name2}</div>
+          <div style="font-size:14px;color:#9c8f79;margin-top:4px">${sub}</div>
+        </div>
+      </div>`;
+    let html='';
+    html+=branchArt?card(branchArt,'Day Branch · 일지',false,gjH[1],(p60H?p60H.an:'' )+' · the ground',-7):'';
+    html+=card(stemArt,'Day Master · 일간',true,dm.han+' '+dm.py,dm.en+' · “'+dm.arch+'”',0,
+      rare?`<div style="position:absolute;top:44px;left:0;right:0;text-align:center"><span style="border:1.5px solid #c9a227;color:#e0c05a;border-radius:14px;padding:3px 14px;font-size:12px;letter-spacing:3px;background:#0e0b08cc">◆ ${rare}</span></div>`:'');
+    html+=godArt?card(godArt,'Structure · 격국',false,structArch,(D.geokguk?.label||'')+' · the path',7):'';
+    document.getElementById('sc-cards').innerHTML=html;
+  }
+
   // save-as-image
   document.getElementById('savehand').addEventListener('click', async e=>{
     const btn=e.target; btn.disabled=true; btn.textContent='Rendering…';
@@ -281,12 +325,9 @@ else{
           sc.src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
           sc.onload=res; sc.onerror=rej; document.head.appendChild(sc);});
       }
-      const wrap=document.getElementById('handwrap');
-      const canvas=await html2canvas(wrap,{backgroundColor:'#100d0a',scale:2});
-      // 브랜드 워터마크
-      const ctx=canvas.getContext('2d');
-      ctx.font=(18*2)+'px Georgia'; ctx.fillStyle='#c9a227'; ctx.textAlign='right';
-      ctx.fillText('elun.me', canvas.width-24, canvas.height-16);
+      buildShareCut();
+      const wrap=document.getElementById('sharecut');
+      const canvas=await html2canvas(wrap,{backgroundColor:'#0e0b08',scale:1.5,width:1080,height:1080,windowWidth:1400});
       canvas.toBlob(async blob=>{
         const file=new File([blob],'elun-my-cards.png',{type:'image/png'});
         if(navigator.canShare && navigator.canShare({files:[file]})){
