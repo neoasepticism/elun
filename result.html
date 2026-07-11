@@ -143,6 +143,7 @@
 
   <div id="handwrap">
     <div class="hand" id="hand"></div>
+    <div class="handcap" id="handrare" style="margin-top:10px"></div>
     <div class="handcap">Your hand — the three cards at the core of this chart</div>
     <div class="handactions">
       <button class="btn" id="sharehand" style="font-size:13px;padding:9px 20px">🔗 Share my cards</button>
@@ -216,6 +217,7 @@
     <div style="font-family:var(--serif);letter-spacing:8px;color:#c9a227;font-size:19px;text-transform:uppercase" id="sc-kick">四柱 · FOUR PILLARS OF DESTINY</div>
     <div style="font-family:var(--serif);font-size:58px;font-weight:700;margin-top:14px" id="sc-title">My Destiny</div>
     <div style="font-family:var(--serif);font-size:25px;color:#9c8f79;letter-spacing:10px;margin-top:12px" id="sc-pillars"></div>
+    <div id="sc-badge" style="margin-top:16px"></div>
   </div>
   <div id="sc-cards" style="position:absolute;left:0;right:0;top:270px;height:640px;display:flex;justify-content:center;align-items:center"></div>
   <div style="position:absolute;bottom:44px;left:0;right:0;text-align:center">
@@ -287,7 +289,7 @@ else{
       <span class="bg" style="background-image:url(pillars/art/${d.art})"></span>
       <span class="scrim"></span><span class="fr"></span>
       <div class="top2"><span class="han2">${d.han}</span><span class="pill">${roleLabel}</span></div>
-      ${showRare&&rare?`<div class="rare2"><span>◆ ${rare}</span></div>`:''}
+
       <div class="bot"><div class="nm2">${d.name}</div><div class="tp2">${d.typ}</div></div>
     </div>`;
   }
@@ -295,9 +297,10 @@ else{
     const bd=DECK.branches[gjH[1]], sd=DECK.stems[KOSTEM[dmk]], gd=DECK.gods[structArch];
     let hh='';
     if(bd) hh+=faCard(bd,'Day Branch');
-    if(sd) hh+=faCard(sd,'Day Master',true);
+    if(sd) hh+=faCard(sd,'Day Master');
     if(gd) hh+=faCard(gd,'Structure');
     document.getElementById('hand').innerHTML=hh;
+    if(rare) document.getElementById('handrare').innerHTML=`<span style="border:1px solid var(--gold);color:var(--gold2);border-radius:12px;padding:3px 12px;font-size:10.5px;letter-spacing:2px;background:#0e0b08cc">◆ ${rare} — ${gjH}</span>`;
   }
 
   function deckCard(d, roleLabel, badge){
@@ -322,11 +325,12 @@ else{
     document.getElementById('sc-title').textContent = nm ? nm+"\u2019s Destiny" : "My Destiny";
     const pk=['year','month','day','hour'].map(k=>fp[k]?fp[k].ganji_hanja:'?時');
     document.getElementById('sc-pillars').textContent = pk.join(' · ');
-    const badge = rare ? `<div style="position:absolute;top:78px;left:0;right:0;text-align:center"><span style="border:1.5px solid #c9a227;color:#e0c05a;border-radius:13px;padding:3px 13px;font-size:13px;letter-spacing:3px;background:#0e0b08cc">◆ ${rare}</span></div>` : '';
+    document.getElementById('sc-badge').innerHTML = rare
+      ? `<span style="border:1.5px solid #c9a227;color:#e0c05a;border-radius:14px;padding:4px 16px;font-size:15px;letter-spacing:3px;background:#0e0b08cc">◆ ${rare} — ${gjH}</span>` : '';
     let html='';
     const bd=DECK.branches[gjH[1]], sd=DECK.stems[KOSTEM[dmk]], gd=DECK.gods[structArch];
     if(bd) html+=deckCard(bd,'Day Branch');
-    if(sd) html+=deckCard(sd,'Day Master',badge);
+    if(sd) html+=deckCard(sd,'Day Master');
     if(gd) html+=deckCard(gd,'Structure');
     document.getElementById('sc-cards').innerHTML=html;
   }
