@@ -294,9 +294,9 @@ else{
   {
     const bd=DECK.branches[gjH[1]], sd=DECK.stems[KOSTEM[dmk]], gd=DECK.gods[structArch];
     let hh='';
-    if(bd) hh+=faCard(bd,'일지 · Branch');
-    if(sd) hh+=faCard(sd,'일간 · Day Master',true);
-    if(gd) hh+=faCard(gd,'격국 · Structure');
+    if(bd) hh+=faCard(bd,'Day Branch');
+    if(sd) hh+=faCard(sd,'Day Master',true);
+    if(gd) hh+=faCard(gd,'Structure');
     document.getElementById('hand').innerHTML=hh;
   }
 
@@ -325,9 +325,9 @@ else{
     const badge = rare ? `<div style="position:absolute;top:78px;left:0;right:0;text-align:center"><span style="border:1.5px solid #c9a227;color:#e0c05a;border-radius:13px;padding:3px 13px;font-size:13px;letter-spacing:3px;background:#0e0b08cc">◆ ${rare}</span></div>` : '';
     let html='';
     const bd=DECK.branches[gjH[1]], sd=DECK.stems[KOSTEM[dmk]], gd=DECK.gods[structArch];
-    if(bd) html+=deckCard(bd,'일지 · Branch');
-    if(sd) html+=deckCard(sd,'일간 · Day Master',badge);
-    if(gd) html+=deckCard(gd,'격국 · Structure');
+    if(bd) html+=deckCard(bd,'Day Branch');
+    if(sd) html+=deckCard(sd,'Day Master',badge);
+    if(gd) html+=deckCard(gd,'Structure');
     document.getElementById('sc-cards').innerHTML=html;
   }
 
