@@ -221,6 +221,7 @@ const GGLYPH={'The Ally':'🤝','The Rival':'⚡','The Creator':'🎨','The Mave
  'The Entrepreneur':'🎲','The Governor':'👑','The Challenger':'🗡️','The Scholar':'📖','The Mystic':'🔮'};
 const SGLYPH={'갑':'🌳','을':'🌿','병':'☀️','정':'🕯️','무':'⛰️','기':'🌾','경':'⚔️','신':'💍','임':'🌊','계':'🌧️'};
 const SSLUG={'갑':'jia','을':'yi','병':'bing','정':'ding','무':'wu','기':'ji','경':'geng','신':'xin','임':'ren','계':'gui'};
+const GSLUG={'The Ally':'g-ally','The Rival':'g-rival','The Creator':'g-creator','The Maverick':'g-maverick','The Steward':'g-steward','The Entrepreneur':'g-entrepreneur','The Governor':'g-governor','The Challenger':'g-challenger','The Scholar':'g-scholar','The Mystic':'g-mystic'};
 const RAREP={'庚辰':'RARE · KUI GANG','庚戌':'RARE · KUI GANG','壬辰':'RARE · KUI GANG','壬戌':'RARE · KUI GANG',
  '甲寅':'RARE · PURE PILLAR','乙卯':'RARE · PURE PILLAR','丙午':'RARE · PURE PILLAR','丁巳':'RARE · PURE PILLAR',
  '戊戌':'RARE · PURE PILLAR','戊辰':'RARE · PURE PILLAR','己丑':'RARE · PURE PILLAR','己未':'RARE · PURE PILLAR',
@@ -263,8 +264,9 @@ else{
        <div class="sub">${p60H?('Day of the '+p60H.an):''}<br>one of sixty</div>
      </div>
      <div class="hcard" style="--hc:var(--gold2)">
+       ${GSLUG[structArch]?`<span class="art" style="background-image:url(pillars/art/${GSLUG[structArch]}.jpg)"></span><span class="shade"></span>`:''}
        <div class="role">Structure · 격국</div>
-       <div class="glyph">${GGLYPH[structArch]||'✦'}</div>
+       <div class="glyph">${GSLUG[structArch]?'':(GGLYPH[structArch]||'✦')}</div>
        <div class="nm">${structArch||(D.geokguk?.label||'—')}</div>
        <div class="sub">${D.geokguk?.label||''}<br>life's organizing force</div>
      </div>`;
