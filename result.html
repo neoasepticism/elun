@@ -149,6 +149,13 @@
       <button class="btn" id="sharehand" style="font-size:13px;padding:9px 20px">🔗 Share my cards</button>
       <button class="btn ghost" id="savehand" style="font-size:13px;padding:9px 18px;margin-left:8px">⬇ Save image</button>
     </div>
+    <div id="socialrow" style="text-align:center;margin-top:10px;font-size:12.5px;color:var(--faint)">
+      or share your pillar page:
+      <a id="shx" target="_blank" rel="noopener" style="margin:0 5px">𝕏</a>·
+      <a id="shf" target="_blank" rel="noopener" style="margin:0 5px">Facebook</a>·
+      <a id="shw" target="_blank" rel="noopener" style="margin:0 5px">WhatsApp</a>·
+      <a id="shc" href="#" style="margin:0 5px">Copy link</a>
+    </div>
   </div>
 
   <div class="pillars" id="pillars"></div>
@@ -433,6 +440,23 @@ else{
     `<tr><td>Structure (格局)</td><td>${gGod} structure · ${g.label||''}</td></tr>
      <tr><td>Day Master strength</td><td>${STR[st.label]||st.label||'—'}</td></tr>
      <tr><td>Luck cycle</td><td>${D.dawun ? `begins age ${D.dawun.start_age_years} · ${D.dawun.direction==='순행'?'forward':'reverse'}` : '—'}</td></tr>`;
+
+  // 소셜 링크 공유 (일주 페이지 — OG 카드가 미리보기로 뜸)
+  {
+    const slugP = p60H ? p60H.py.toLowerCase().replace(' ','-') : null;
+    if(slugP){
+      const url='https://elun.me/pillars/'+slugP+'.html';
+      const txt=`My BaZi day pillar is ${gjH} — the ${p60H.py} day. Find yours:`;
+      document.getElementById('shx').href='https://twitter.com/intent/tweet?text='+encodeURIComponent(txt)+'&url='+encodeURIComponent(url);
+      document.getElementById('shf').href='https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(url);
+      document.getElementById('shw').href='https://wa.me/?text='+encodeURIComponent(txt+' '+url);
+      document.getElementById('shc').addEventListener('click', async e2=>{
+        e2.preventDefault();
+        try{ await navigator.clipboard.writeText(url); e2.target.textContent='Copied!';
+          setTimeout(()=>e2.target.textContent='Copy link',1400); }catch(_){}
+      });
+    } else { document.getElementById('socialrow').style.display='none'; }
+  }
 
   // share
   document.getElementById('sharebtn').addEventListener('click', async e=>{

@@ -606,6 +606,9 @@ def build_og(data):
 def page(p, prev_p, next_p, all_pillars):
     gj, py, br = p['gj'], p['py'], p['gj'][1]
     dm, b = DM[gj[0]], BR[br]
+    import urllib.parse as _up
+    q_url = _up.quote(f'https://elun.me/pillars/{slug(py)}.html', safe='')
+    q_txt = _up.quote(f'{gj} — The {py} Day: "{p["d"]}"', safe='')
     gi = gz_index(gj)
     ny_hj, ny_en, ny_gloss = NAYIN[gi // 2]
     void1, void2 = VOID_PAIRS[gi // 10]
@@ -669,6 +672,12 @@ def page(p, prev_p, next_p, all_pillars):
   {badge_html}
   <div class="ebarbox">{ebar(gj)}
     <div class="ecap">Five-element composition — day stem 50% · hidden stems 50%</div></div>
+  <div style="margin-top:18px;font-size:12.5px;color:var(--faint);position:relative">
+    Share this pillar:
+    <a target="_blank" rel="noopener" style="margin:0 5px" href="https://twitter.com/intent/tweet?text={q_txt}&url={q_url}">𝕏</a>·
+    <a target="_blank" rel="noopener" style="margin:0 5px" href="https://www.facebook.com/sharer/sharer.php?u={q_url}">Facebook</a>·
+    <a target="_blank" rel="noopener" style="margin:0 5px" href="https://wa.me/?text={q_txt}%20{q_url}">WhatsApp</a>
+  </div>
 </div>
 
 <div class="wrap">
