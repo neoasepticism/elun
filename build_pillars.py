@@ -674,7 +674,7 @@ def page(p, prev_p, next_p, all_pillars):
     <div class="ecap">Five-element composition — day stem 50% · hidden stems 50%</div></div>
   <div style="margin-top:18px;font-size:12.5px;color:var(--faint);position:relative">
     Share this pillar:
-    <a target="_blank" rel="noopener" style="margin:0 5px" href="https://twitter.com/intent/tweet?text={q_txt}&url={q_url}">𝕏</a>·
+    <a target="_blank" rel="noopener" style="margin:0 5px" href="https://x.com/intent/post?text={q_txt}&url={q_url}">𝕏</a>·
     <a target="_blank" rel="noopener" style="margin:0 5px" href="https://www.facebook.com/sharer/sharer.php?u={q_url}">Facebook</a>·
     <a target="_blank" rel="noopener" style="margin:0 5px" href="https://wa.me/?text={q_txt}%20{q_url}">WhatsApp</a>
   </div>
