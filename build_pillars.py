@@ -531,6 +531,10 @@ STEM_SCENE = {
 </g>''',
 }
 
+STEM_SLUG = {'甲': 'jia', '乙': 'yi', '丙': 'bing', '丁': 'ding', '戊': 'wu',
+             '己': 'ji', '庚': 'geng', '辛': 'xin', '壬': 'ren', '癸': 'gui'}
+
+
 def scene_boost(svg, factor=1.9, cap=0.92):
     """씬 SVG의 opacity 계열 값 일괄 증폭."""
     def f(m):
@@ -555,8 +559,8 @@ OG_TEMPLATE = """<!doctype html><html><head><meta charset="utf-8"><style>
     display:flex;align-items:center;justify-content:center;font-size:24px;font-family:'Noto Serif',serif}}
 </style></head><body>
 <div class="card">
-<svg style="position:absolute;inset:0;width:100%;height:100%;border-radius:24px" viewBox="0 0 1200 630" preserveAspectRatio="xMidYMid slice"><g transform="scale(-1,1) translate(-1200,0)">{scene}</g></svg>
-<div style="position:absolute;inset:0;border-radius:24px;background:linear-gradient(90deg,transparent 38%,#14100ccc 58%,#14100ce8 100%)"></div>
+<div style="position:absolute;inset:0;border-radius:24px;background-image:url('{art}');background-size:cover;background-position:left center"></div>
+<div style="position:absolute;inset:0;border-radius:24px;background:linear-gradient(90deg,#14100c22 0%,transparent 22%,transparent 38%,#14100cbb 58%,#14100cd9 100%)"></div>
 <div class="gj" style="position:relative">{gj}</div>
   <div class="t" style="position:relative"><div class="py">The {py} Day</div><div class="an">One of the sixty · Day of the {an}</div>
   <div class="d">&ldquo;{d}&rdquo;</div>{badge}</div></div>
@@ -575,9 +579,10 @@ def build_og(data):
         gj = p['gj']
         bds = badges(gj)
         badge = f'<div class="badge">◆ {bds[0][0]} · {bds[0][1]}</div>' if bds else ''
+        art = os.path.abspath(os.path.join(os.path.dirname(OUT), 'art', 'src', STEM_SLUG[gj[0]] + '.jpg'))
         html = OG_TEMPLATE.format(ac=EL_HEX[SEL[gj[0]]], gj=gj, py=p['py'],
                                   an=BR[gj[1]]['an'], d=p['d'], badge=badge,
-                                  scene=scene_boost(STEM_SCENE.get(gj[0], '')))
+                                  art='file://' + art)
         with tempfile.NamedTemporaryFile('w', suffix='.html', delete=False, encoding='utf-8') as f:
             f.write(html); tmp = f.name
         out_png = os.path.join(ogdir, slug(p['py']) + '.png')
@@ -585,6 +590,10 @@ def build_og(data):
                         f'--screenshot={out_png}', '--window-size=1200,630', f'file://{tmp}'],
                        capture_output=True)
         os.unlink(tmp)
+        from PIL import Image as _Img
+        out_jpg = out_png[:-4] + '.jpg'
+        _Img.open(out_png).convert('RGB').save(out_jpg, quality=84, optimize=True)
+        os.unlink(out_png)
     print(f'og: {len(data)} images -> {ogdir}')
 
 
@@ -595,7 +604,7 @@ def page(p, prev_p, next_p, all_pillars):
     ny_hj, ny_en, ny_gloss = NAYIN[gi // 2]
     void1, void2 = VOID_PAIRS[gi // 10]
     st_hj, st_en, st_gloss = sitting_stage(gj)
-    hero_scene = scene_boost(STEM_SCENE.get(gj[0], ''), factor=1.6)
+    art_slug = STEM_SLUG[gj[0]]
     bds = badges(gj)
     badge_html = ''.join(
         f'<span style="display:inline-block;border:1px solid var(--gold);color:var(--gold2);border-radius:14px;padding:3px 12px;font-size:11px;letter-spacing:2px;margin:0 4px">◆ {label} · {name}</span>'
@@ -628,10 +637,10 @@ def page(p, prev_p, next_p, all_pillars):
 <meta property="og:type" content="article"/>
 <meta property="og:title" content="{py} {gj} — one of the sixty day pillars"/>
 <meta property="og:description" content="{p['d']}"/>
-<meta property="og:image" content="https://elun.me/pillars/og/{slug(py)}.png"/>
+<meta property="og:image" content="https://elun.me/pillars/og/{slug(py)}.jpg"/>
 <meta property="og:url" content="https://elun.me/pillars/{slug(py)}.html"/>
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="https://elun.me/pillars/og/{slug(py)}.png"/>
+<meta name="twitter:image" content="https://elun.me/pillars/og/{slug(py)}.jpg"/>
 <link rel="canonical" href="https://elun.me/pillars/{slug(py)}.html"/>
 <meta name="description" content="{py} ({gj}) day pillar explained: {p['d']} Personality, appearance, love and career of the {py} day in BaZi."/>
 <style>{CSS}</style>
@@ -643,8 +652,8 @@ def page(p, prev_p, next_p, all_pillars):
 </div></nav>
 
 <div class="hero wrap" style="position:relative;overflow:hidden">
-  <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:.5;pointer-events:none" viewBox="0 0 1200 630" preserveAspectRatio="xMidYMid slice">{hero_scene}</svg>
-  <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 45%,#100d0acc 0%,#100d0a55 55%,transparent 100%);pointer-events:none"></div>
+  <div style="position:absolute;inset:0;background-image:url('art/{art_slug}.jpg');background-size:cover;background-position:center;opacity:.75;pointer-events:none"></div>
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 48%,#100d0ad9 0%,#100d0a88 55%,#100d0a33 100%);pointer-events:none"></div>
   <div class="gj" style="position:relative">{gj}</div>
   <h1>The {py} Day</h1>
   <div class="meta"><b>{dm['nm']} · {dm['en']}</b> sitting on the <b>{b['an']}</b> · {b['img']}</div>

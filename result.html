@@ -34,7 +34,11 @@
   .hand{display:flex;gap:14px;justify-content:center;margin:26px 0 6px}
   .hcard{flex:1;max-width:200px;border:1.5px solid var(--hc,var(--line2));border-radius:16px;
     background:linear-gradient(165deg,#1e1a13,#151109);padding:18px 14px 14px;text-align:center;position:relative;
-    box-shadow:0 14px 34px -18px #000}
+    box-shadow:0 14px 34px -18px #000;overflow:hidden}
+  .hcard .art{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.5;pointer-events:none}
+  .hcard .shade{position:absolute;inset:0;background:linear-gradient(180deg,#15110966 0%,#151109cc 62%,#151109f0 100%);pointer-events:none}
+  .hcard>*{position:relative}
+  .hcard .art,.hcard .shade{position:absolute}
   .hcard .role{font-size:9.5px;letter-spacing:2.5px;text-transform:uppercase;color:var(--faint);margin-bottom:10px}
   .hcard .big{font-family:var(--serif);font-size:44px;line-height:1.1;color:var(--hc,var(--gold2));
     text-shadow:0 0 26px color-mix(in srgb,var(--hc,var(--gold2)) 45%,transparent)}
@@ -216,6 +220,7 @@ const STR = {'신약':'Leaning weak — your chart gains from support (resource 
 const GGLYPH={'The Ally':'🤝','The Rival':'⚡','The Creator':'🎨','The Maverick':'🎭','The Steward':'💎',
  'The Entrepreneur':'🎲','The Governor':'👑','The Challenger':'🗡️','The Scholar':'📖','The Mystic':'🔮'};
 const SGLYPH={'갑':'🌳','을':'🌿','병':'☀️','정':'🕯️','무':'⛰️','기':'🌾','경':'⚔️','신':'💍','임':'🌊','계':'🌧️'};
+const SSLUG={'갑':'jia','을':'yi','병':'bing','정':'ding','무':'wu','기':'ji','경':'geng','신':'xin','임':'ren','계':'gui'};
 const RAREP={'庚辰':'RARE · KUI GANG','庚戌':'RARE · KUI GANG','壬辰':'RARE · KUI GANG','壬戌':'RARE · KUI GANG',
  '甲寅':'RARE · PURE PILLAR','乙卯':'RARE · PURE PILLAR','丙午':'RARE · PURE PILLAR','丁巳':'RARE · PURE PILLAR',
  '戊戌':'RARE · PURE PILLAR','戊辰':'RARE · PURE PILLAR','己丑':'RARE · PURE PILLAR','己未':'RARE · PURE PILLAR',
@@ -243,12 +248,14 @@ else{
   const rare = RAREP[gjH];
   document.getElementById('hand').innerHTML =
     `<div class="hcard" style="--hc:var(--${dm.el})">
+       <span class="art" style="background-image:url(pillars/art/${SSLUG[dmk]}.jpg)"></span><span class="shade"></span>
        <div class="role">Day Master · 일간</div>
        <div class="big">${dm.han}</div>
        <div class="nm">${dm.py}</div>
        <div class="sub">${dm.en}<br>“${dm.arch}”</div>
      </div>
      <div class="hcard" style="--hc:var(--gold)">
+       <span class="art" style="background-image:url(pillars/art/${SSLUG[dmk]}.jpg);background-position:right center"></span><span class="shade"></span>
        ${rare?`<div class="rare">◆ ${rare}</div>`:''}
        <div class="role">Day Pillar · 일주</div>
        <div class="big">${gjH}</div>
