@@ -221,6 +221,7 @@ const GGLYPH={'The Ally':'🤝','The Rival':'⚡','The Creator':'🎨','The Mave
  'The Entrepreneur':'🎲','The Governor':'👑','The Challenger':'🗡️','The Scholar':'📖','The Mystic':'🔮'};
 const SGLYPH={'갑':'🌳','을':'🌿','병':'☀️','정':'🕯️','무':'⛰️','기':'🌾','경':'⚔️','신':'💍','임':'🌊','계':'🌧️'};
 const SSLUG={'갑':'jia','을':'yi','병':'bing','정':'ding','무':'wu','기':'ji','경':'geng','신':'xin','임':'ren','계':'gui'};
+const BSLUG={'子':'b-rat','丑':'b-ox','寅':'b-tiger','卯':'b-rabbit','辰':'b-dragon','巳':'b-snake','午':'b-horse','未':'b-goat','申':'b-monkey','酉':'b-rooster','戌':'b-dog','亥':'b-pig'};
 const GSLUG={'The Ally':'g-ally','The Rival':'g-rival','The Creator':'g-creator','The Maverick':'g-maverick','The Steward':'g-steward','The Entrepreneur':'g-entrepreneur','The Governor':'g-governor','The Challenger':'g-challenger','The Scholar':'g-scholar','The Mystic':'g-mystic'};
 const RAREP={'庚辰':'RARE · KUI GANG','庚戌':'RARE · KUI GANG','壬辰':'RARE · KUI GANG','壬戌':'RARE · KUI GANG',
  '甲寅':'RARE · PURE PILLAR','乙卯':'RARE · PURE PILLAR','丙午':'RARE · PURE PILLAR','丁巳':'RARE · PURE PILLAR',
@@ -256,7 +257,7 @@ else{
        <div class="sub">${dm.en}<br>“${dm.arch}”</div>
      </div>
      <div class="hcard" style="--hc:var(--gold)">
-       <span class="art" style="background-image:url(pillars/art/${SSLUG[dmk]}.jpg);background-position:right center"></span><span class="shade"></span>
+       <span class="art" style="background-image:url(pillars/art/${BSLUG[gjH[1]]||SSLUG[dmk]}.jpg)"></span><span class="shade"></span>
        ${rare?`<div class="rare">◆ ${rare}</div>`:''}
        <div class="role">Day Pillar · 일주</div>
        <div class="big">${gjH}</div>

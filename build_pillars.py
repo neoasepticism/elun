@@ -533,6 +533,9 @@ STEM_SCENE = {
 
 STEM_SLUG = {'甲': 'jia', '乙': 'yi', '丙': 'bing', '丁': 'ding', '戊': 'wu',
              '己': 'ji', '庚': 'geng', '辛': 'xin', '壬': 'ren', '癸': 'gui'}
+BRANCH_SLUG = {'子': 'b-rat', '丑': 'b-ox', '寅': 'b-tiger', '卯': 'b-rabbit',
+               '辰': 'b-dragon', '巳': 'b-snake', '午': 'b-horse', '未': 'b-goat',
+               '申': 'b-monkey', '酉': 'b-rooster', '戌': 'b-dog', '亥': 'b-pig'}
 
 
 def scene_boost(svg, factor=1.9, cap=0.92):
@@ -560,6 +563,7 @@ OG_TEMPLATE = """<!doctype html><html><head><meta charset="utf-8"><style>
 </style></head><body>
 <div class="card">
 <div style="position:absolute;inset:0;border-radius:24px;background-image:url('{art}');background-size:cover;background-position:left center"></div>
+<div style="position:absolute;inset:0;border-radius:24px;background-image:url('{branch_art}');background-size:78%;background-position:-40px center;background-repeat:no-repeat;mix-blend-mode:screen;opacity:.9"></div>
 <div style="position:absolute;inset:0;border-radius:24px;background:linear-gradient(90deg,#14100c22 0%,transparent 22%,transparent 38%,#14100cbb 58%,#14100cd9 100%)"></div>
 <div class="gj" style="position:relative">{gj}</div>
   <div class="t" style="position:relative"><div class="py">The {py} Day</div><div class="an">One of the sixty · Day of the {an}</div>
@@ -582,7 +586,8 @@ def build_og(data):
         art = os.path.abspath(os.path.join(os.path.dirname(OUT), 'art', 'src', STEM_SLUG[gj[0]] + '.jpg'))
         html = OG_TEMPLATE.format(ac=EL_HEX[SEL[gj[0]]], gj=gj, py=p['py'],
                                   an=BR[gj[1]]['an'], d=p['d'], badge=badge,
-                                  art='file://' + art)
+                                  art='file://' + art,
+                                  branch_art='file://' + os.path.abspath(os.path.join(os.path.dirname(OUT), 'art', 'src', BRANCH_SLUG[gj[1]] + '.jpg')))
         with tempfile.NamedTemporaryFile('w', suffix='.html', delete=False, encoding='utf-8') as f:
             f.write(html); tmp = f.name
         out_png = os.path.join(ogdir, slug(p['py']) + '.png')
@@ -605,6 +610,7 @@ def page(p, prev_p, next_p, all_pillars):
     void1, void2 = VOID_PAIRS[gi // 10]
     st_hj, st_en, st_gloss = sitting_stage(gj)
     art_slug = STEM_SLUG[gj[0]]
+    branch_slug = BRANCH_SLUG[gj[1]]
     bds = badges(gj)
     badge_html = ''.join(
         f'<span style="display:inline-block;border:1px solid var(--gold);color:var(--gold2);border-radius:14px;padding:3px 12px;font-size:11px;letter-spacing:2px;margin:0 4px">◆ {label} · {name}</span>'
@@ -653,6 +659,7 @@ def page(p, prev_p, next_p, all_pillars):
 
 <div class="hero wrap" style="position:relative;overflow:hidden">
   <div style="position:absolute;inset:0;background-image:url('art/{art_slug}.jpg');background-size:cover;background-position:center;opacity:.75;pointer-events:none"></div>
+  <div style="position:absolute;inset:0;background-image:url('art/{branch_slug}.jpg');background-size:cover;background-position:center;mix-blend-mode:screen;opacity:.6;pointer-events:none"></div>
   <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 48%,#100d0ad9 0%,#100d0a88 55%,#100d0a33 100%);pointer-events:none"></div>
   <div class="gj" style="position:relative">{gj}</div>
   <h1>The {py} Day</h1>
