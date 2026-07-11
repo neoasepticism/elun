@@ -454,11 +454,88 @@ CSS = '''
 
 
 # ── OG 카드 이미지 (1200×630) 생성 — headless Chrome ────────────────
+STEM_SCENE = {
+ '甲': '''<path d="M0 560 Q300 545 600 552 Q900 559 1200 550 L1200 630 L0 630 Z" fill="#5aa06a" opacity=".12"/>
+<g opacity=".30">
+<path d="M930 560 C935 480 938 420 941 360 L975 360 C978 420 981 480 986 560 Z" fill="#5aa06a"/>
+<ellipse cx="958" cy="300" rx="230" ry="120" fill="#5aa06a" opacity=".7"/>
+<ellipse cx="830" cy="360" rx="120" ry="65" fill="#5aa06a" opacity=".55"/>
+<ellipse cx="1090" cy="350" rx="120" ry="70" fill="#5aa06a" opacity=".55"/>
+<ellipse cx="958" cy="245" rx="140" ry="70" fill="#5aa06a" opacity=".9"/>
+</g>''',
+ '乙': '''<g stroke="#5aa06a" fill="none" stroke-linecap="round" opacity=".32">
+<path d="M850 630 C880 520 820 470 900 400 C980 330 920 280 1000 220 C1060 175 1040 120 1090 80" stroke-width="7"/>
+<path d="M900 400 C950 390 990 400 1020 430" stroke-width="5"/>
+<path d="M1000 220 C1050 215 1090 230 1110 260" stroke-width="5"/>
+<path d="M870 520 C820 510 780 520 750 550" stroke-width="5"/>
+</g>
+<g fill="#5aa06a" opacity=".38">
+<ellipse cx="1035" cy="435" rx="30" ry="13" transform="rotate(28 1035 435)"/>
+<ellipse cx="1122" cy="263" rx="30" ry="13" transform="rotate(22 1122 263)"/>
+<ellipse cx="737" cy="553" rx="30" ry="13" transform="rotate(-22 737 553)"/>
+<ellipse cx="1095" cy="72" rx="34" ry="15" transform="rotate(-35 1095 72)"/>
+</g>''',
+ '丙': '''<circle cx="960" cy="240" r="200" fill="#d0604e" opacity=".10"/>
+<circle cx="960" cy="240" r="140" fill="#d0604e" opacity=".16"/>
+<circle cx="960" cy="240" r="90" fill="#d0604e" opacity=".34"/>
+<path d="M0 560 Q400 540 800 552 Q1000 558 1200 552 L1200 630 L0 630 Z" fill="#d0604e" opacity=".10"/>
+<g stroke="#d0604e" stroke-width="4" opacity=".25" stroke-linecap="round">
+<path d="M960 60 L960 20"/><path d="M1105 95 L1130 65"/><path d="M1140 240 L1185 240"/><path d="M815 95 L790 65"/>
+</g>''',
+ '丁': '''<circle cx="980" cy="330" r="190" fill="#d0604e" opacity=".08"/>
+<circle cx="980" cy="330" r="110" fill="#d0604e" opacity=".13"/>
+<path d="M980 250 C1015 300 1030 340 1010 385 C997 412 962 412 950 385 C930 340 945 300 980 250 Z" fill="#d0604e" opacity=".45"/>
+<path d="M980 300 C997 325 1003 348 993 370 C987 383 972 383 967 370 C958 348 964 325 980 300 Z" fill="#e8a869" opacity=".5"/>
+<path d="M940 430 L1020 430 L1012 470 L948 470 Z" fill="#d0604e" opacity=".2"/>''',
+ '戊': '''<path d="M540 630 L820 190 L1100 630 Z" fill="#c9a227" opacity=".20"/>
+<path d="M780 630 L1000 320 L1200 630 Z" fill="#c9a227" opacity=".14"/>
+<path d="M380 630 L560 380 L760 630 Z" fill="#c9a227" opacity=".11"/>
+<path d="M790 235 L820 190 L850 235 L820 260 Z" fill="#f3ece0" opacity=".22"/>''',
+ '己': '''<g stroke="#c9a227" fill="none" opacity=".22">
+<path d="M300 630 Q750 520 1200 545" stroke-width="7"/>
+<path d="M420 630 Q800 555 1200 575" stroke-width="6"/>
+<path d="M560 630 Q860 585 1200 600" stroke-width="5"/>
+<path d="M200 630 Q700 480 1200 512" stroke-width="8"/>
+<path d="M80 630 Q650 445 1200 480" stroke-width="9"/>
+</g>
+<circle cx="1010" cy="330" r="70" fill="#c9a227" opacity=".10"/>''',
+ '庚': '''<path d="M760 630 L1130 90 L1160 108 L820 630 Z" fill="#a8b0b8" opacity=".26"/>
+<path d="M1130 90 L1160 108 L1150 60 Z" fill="#f3ece0" opacity=".4"/>
+<path d="M700 630 L1050 140 L1062 148 L730 630 Z" fill="#a8b0b8" opacity=".12"/>
+<g stroke="#f3ece0" stroke-width="3" opacity=".35" stroke-linecap="round">
+<path d="M1075 175 L1100 150"/><path d="M950 355 L968 337"/>
+</g>''',
+ '辛': '''<g opacity=".33">
+<path d="M900 210 L1020 210 L1080 300 L960 480 L840 300 Z" fill="#a8b0b8"/>
+<path d="M900 210 L960 300 L840 300 Z" fill="#f3ece0" opacity=".5"/>
+<path d="M1020 210 L1080 300 L960 300 Z" fill="#8a929c"/>
+<path d="M960 300 L960 480 L840 300 Z" fill="#c6ccd2" opacity=".6"/>
+</g>
+<circle cx="880" cy="180" r="4" fill="#f3ece0" opacity=".8"/>
+<path d="M1100 160 l6 14 14 6 -14 6 -6 14 -6 -14 -14 -6 14 -6 Z" fill="#f3ece0" opacity=".55"/>''',
+ '壬': '''<g stroke="#5a9fd0" fill="none" stroke-linecap="round" opacity=".30">
+<path d="M0 470 Q150 430 300 470 T600 470 T900 470 T1200 470" stroke-width="9"/>
+<path d="M0 530 Q150 495 300 530 T600 530 T900 530 T1200 530" stroke-width="7"/>
+<path d="M0 585 Q150 555 300 585 T600 585 T900 585 T1200 585" stroke-width="5"/>
+<path d="M600 410 Q700 380 800 410 T1000 410" stroke-width="5" opacity=".7"/>
+</g>
+<circle cx="1010" cy="220" r="60" fill="#5a9fd0" opacity=".10"/>''',
+ '癸': '''<g stroke="#5a9fd0" stroke-width="4" stroke-linecap="round" opacity=".28">
+<path d="M830 120 L805 210"/><path d="M930 90 L905 180"/><path d="M1030 130 L1005 220"/>
+<path d="M1110 70 L1085 160"/><path d="M880 270 L858 350"/><path d="M990 300 L968 380"/><path d="M1100 260 L1078 340"/>
+</g>
+<g stroke="#5a9fd0" fill="none" opacity=".25">
+<ellipse cx="860" cy="480" rx="70" ry="14" stroke-width="4"/>
+<ellipse cx="860" cy="480" rx="34" ry="7" stroke-width="3"/>
+<ellipse cx="1050" cy="540" rx="55" ry="11" stroke-width="4"/>
+</g>''',
+}
+
 OG_TEMPLATE = """<!doctype html><html><head><meta charset="utf-8"><style>
   body{{margin:0;width:1200px;height:630px;background:#100d0a;
     background-image:radial-gradient(ellipse at 30% -20%,#221a10 0,transparent 60%),radial-gradient(circle at 90% 110%,#1a2028 0,transparent 45%);
     font-family:-apple-system,'Segoe UI',sans-serif;color:#f3ece0;display:flex;align-items:center;justify-content:center}}
-  .card{{width:1080px;height:510px;border:2px solid {ac};border-radius:26px;background:linear-gradient(160deg,#1d1913,#14100c);
+  .card{{position:relative;overflow:hidden;width:1080px;height:510px;border:2px solid {ac};border-radius:26px;background:linear-gradient(160deg,#1d1913,#14100c);
     display:flex;align-items:center;padding:0 70px;gap:64px;box-shadow:0 0 90px -30px {ac}}}
   .gj{{font-family:'Noto Serif',Georgia,serif;font-size:190px;line-height:1;color:{ac};text-shadow:0 0 70px {ac}66;white-space:nowrap}}
   .t .py{{font-family:'Noto Serif',Georgia,serif;font-size:54px;font-weight:700;margin-bottom:6px}}
@@ -469,8 +546,11 @@ OG_TEMPLATE = """<!doctype html><html><head><meta charset="utf-8"><style>
   .seal{{position:absolute;bottom:30px;left:70px;width:44px;height:44px;border:1.5px solid #c9a227;color:#e0c05a;border-radius:9px;
     display:flex;align-items:center;justify-content:center;font-size:24px;font-family:'Noto Serif',serif}}
 </style></head><body>
-<div class="card"><div class="gj">{gj}</div>
-  <div class="t"><div class="py">The {py} Day</div><div class="an">One of the sixty · Day of the {an}</div>
+<div class="card">
+<svg style="position:absolute;inset:0;width:100%;height:100%;border-radius:24px" viewBox="0 0 1200 630" preserveAspectRatio="xMidYMid slice">{scene}</svg>
+<div style="position:absolute;inset:0;border-radius:24px;background:linear-gradient(90deg,transparent 30%,#14100cd9 55%,#14100cbb 100%)"></div>
+<div class="gj" style="position:relative">{gj}</div>
+  <div class="t" style="position:relative"><div class="py">The {py} Day</div><div class="an">One of the sixty · Day of the {an}</div>
   <div class="d">&ldquo;{d}&rdquo;</div>{badge}</div></div>
 <div class="seal">乙</div><div class="brand">elun.me</div>
 </body></html>"""
@@ -488,7 +568,8 @@ def build_og(data):
         bds = badges(gj)
         badge = f'<div class="badge">◆ {bds[0][0]} · {bds[0][1]}</div>' if bds else ''
         html = OG_TEMPLATE.format(ac=EL_HEX[SEL[gj[0]]], gj=gj, py=p['py'],
-                                  an=BR[gj[1]]['an'], d=p['d'], badge=badge)
+                                  an=BR[gj[1]]['an'], d=p['d'], badge=badge,
+                                  scene=STEM_SCENE.get(gj[0], ''))
         with tempfile.NamedTemporaryFile('w', suffix='.html', delete=False, encoding='utf-8') as f:
             f.write(html); tmp = f.name
         out_png = os.path.join(ogdir, slug(p['py']) + '.png')
