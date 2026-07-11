@@ -417,6 +417,7 @@ CSS = '''
   .logo .seal{width:26px;height:26px;border:1px solid var(--gold);color:var(--gold2);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:14px;font-family:var(--serif)}
   .navlinks{font-size:13px;color:var(--sub)}
   .hero{text-align:center;padding:56px 0 30px}
+  .hero>*{position:relative;z-index:1}
   .hero .gj{font-family:var(--serif);font-size:76px;line-height:1;color:var(--ac);text-shadow:0 0 40px color-mix(in srgb,var(--ac) 45%,transparent)}
   .hero h1{font-family:var(--serif);font-size:clamp(28px,5vw,40px);margin:14px 0 6px;font-weight:700}
   .hero .meta{font-size:13px;color:var(--sub);letter-spacing:2px;text-transform:uppercase}
@@ -563,7 +564,7 @@ OG_TEMPLATE = """<!doctype html><html><head><meta charset="utf-8"><style>
 </style></head><body>
 <div class="card">
 <div style="position:absolute;inset:0;border-radius:24px;background-image:url('{art}');background-size:cover;background-position:left center"></div>
-<div style="position:absolute;inset:0;border-radius:24px;background-image:url('{branch_art}');background-size:78%;background-position:-40px center;background-repeat:no-repeat;mix-blend-mode:screen;opacity:.9"></div>
+<div style="position:absolute;left:230px;top:10px;width:570px;height:610px;background-image:url('{branch_art}');background-size:cover;background-position:center;mix-blend-mode:screen;opacity:.95;-webkit-mask-image:radial-gradient(ellipse 60% 62% at center,black 45%,transparent 74%)"></div>
 <div style="position:absolute;inset:0;border-radius:24px;background:linear-gradient(90deg,#14100c22 0%,transparent 22%,transparent 38%,#14100cbb 58%,#14100cd9 100%)"></div>
 <div class="gj" style="position:relative">{gj}</div>
   <div class="t" style="position:relative"><div class="py">The {py} Day</div><div class="an">One of the sixty · Day of the {an}</div>
@@ -658,9 +659,9 @@ def page(p, prev_p, next_p, all_pillars):
 </div></nav>
 
 <div class="hero wrap" style="position:relative;overflow:hidden">
-  <div style="position:absolute;inset:0;background-image:url('art/{art_slug}.jpg');background-size:cover;background-position:center;opacity:.75;pointer-events:none"></div>
-  <div style="position:absolute;inset:0;background-image:url('art/{branch_slug}.jpg');background-size:cover;background-position:center;mix-blend-mode:screen;opacity:.6;pointer-events:none"></div>
-  <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 48%,#100d0ad9 0%,#100d0a88 55%,#100d0a33 100%);pointer-events:none"></div>
+  <div style="position:absolute;inset:0;background-image:url('art/{art_slug}.jpg');background-size:cover;background-position:left center;opacity:.7;pointer-events:none"></div>
+  <div style="position:absolute;right:-6%;top:0;width:46%;height:100%;background-image:url('art/{branch_slug}.jpg');background-size:cover;background-position:center;mix-blend-mode:screen;opacity:.75;pointer-events:none;-webkit-mask-image:radial-gradient(ellipse 62% 70% at center,black 40%,transparent 75%)"></div>
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse 75% 80% at 50% 45%,#100d0aee 0%,#100d0ab8 55%,#100d0a44 100%);pointer-events:none"></div>
   <div class="gj" style="position:relative">{gj}</div>
   <h1>The {py} Day</h1>
   <div class="meta"><b>{dm['nm']} · {dm['en']}</b> sitting on the <b>{b['an']}</b> · {b['img']}</div>
