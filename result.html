@@ -129,7 +129,10 @@
   <div id="handwrap">
     <div class="hand" id="hand"></div>
     <div class="handcap">Your hand — the three cards at the core of this chart</div>
-    <div class="handactions"><button class="btn ghost" id="savehand" style="font-size:13px;padding:9px 18px">📸 Save my cards</button></div>
+    <div class="handactions">
+      <button class="btn" id="sharehand" style="font-size:13px;padding:9px 20px">🔗 Share my cards</button>
+      <button class="btn ghost" id="savehand" style="font-size:13px;padding:9px 18px;margin-left:8px">⬇ Save image</button>
+    </div>
   </div>
 
   <div class="pillars" id="pillars"></div>
@@ -199,7 +202,7 @@
     <div style="font-family:var(--serif);font-size:58px;font-weight:700;margin-top:14px" id="sc-title">My Destiny</div>
     <div style="font-family:var(--serif);font-size:25px;color:#9c8f79;letter-spacing:10px;margin-top:12px" id="sc-pillars"></div>
   </div>
-  <div id="sc-cards" style="position:absolute;left:0;right:0;top:295px;height:600px;display:flex;justify-content:center;align-items:center"></div>
+  <div id="sc-cards" style="position:absolute;left:0;right:0;top:280px;height:620px;display:flex;justify-content:center;align-items:center"></div>
   <div style="position:absolute;bottom:44px;left:0;right:0;text-align:center">
     <span style="font-family:var(--serif);font-size:22px;color:#c9a227;letter-spacing:2px">Calculate yours — elun.me</span>
   </div>
@@ -287,60 +290,70 @@ else{
      </div>`;
 
   // ── 소셜 셰어컷 구성 (일지 | 일간 | 격국 3카드 부채꼴) ──
+  const DECK={"stems":{"甲":{"han":"甲","cost":"Yang · Wood","art":"jia.jpg","name":"Jia","typ":"The colossal tree","desc":"Pioneer, upright and unbending — the great tree that leads and shelters.","ac":"#5aa06a","edge":"#2e5a38","c1":"#15201a","c2":"#0c120e"},"乙":{"han":"乙","cost":"Yin · Wood","art":"yi.jpg","name":"Yi","typ":"The vine & flower","desc":"Supple survivor — bends without breaking, thrives in any crack of light.","ac":"#5aa06a","edge":"#2e5a38","c1":"#15201a","c2":"#0c120e"},"丙":{"han":"丙","cost":"Yang · Fire","art":"bing.jpg","name":"Bing","typ":"The blazing sun","desc":"Radiant and generous — warmth for all, impossible to hide.","ac":"#d0604e","edge":"#5e2e26","c1":"#20140f","c2":"#120b09"},"丁":{"han":"丁","cost":"Yin · Fire","art":"ding.jpg","name":"Ding","typ":"The candle flame","desc":"Intimate, focused light — quiet warmth that guides in the dark.","ac":"#d0604e","edge":"#5e2e26","c1":"#20140f","c2":"#120b09"},"戊":{"han":"戊","cost":"Yang · Earth","art":"wu.jpg","name":"Wu","typ":"The mountain","desc":"Immovable and steadfast — the wall that shelters and endures.","ac":"#c9a227","edge":"#5a4a1e","c1":"#1f1a0e","c2":"#120f09"},"己":{"han":"己","cost":"Yin · Earth","art":"ji.jpg","name":"Ji","typ":"The fertile field","desc":"Nurturing soil — humble, cultivating, quietly making things grow.","ac":"#c9a227","edge":"#5a4a1e","c1":"#1f1a0e","c2":"#120f09"},"庚":{"han":"庚","cost":"Yang · Metal","art":"geng.jpg","name":"Geng","typ":"The forged blade","desc":"Righteous force — decisive, sharp, cutting through to what matters.","ac":"#a8b0b8","edge":"#465059","c1":"#161a1e","c2":"#0d0f12"},"辛":{"han":"辛","cost":"Yin · Metal","art":"xin.jpg","name":"Xin","typ":"The fine jewel","desc":"Refined and precise — beauty under pressure, elegance with an edge.","ac":"#a8b0b8","edge":"#465059","c1":"#161a1e","c2":"#0d0f12"},"壬":{"han":"壬","cost":"Yang · Water","art":"ren.jpg","name":"Ren","typ":"The vast ocean","desc":"Boundless depth — powerful currents, ambition that moves nations.","ac":"#5a9fd0","edge":"#264a5e","c1":"#101c24","c2":"#0a1016"},"癸":{"han":"癸","cost":"Yin · Water","art":"gui.jpg","name":"Gui","typ":"The gentle rain","desc":"Quiet wisdom — mist and dew that nourish without being seen.","ac":"#5a9fd0","edge":"#264a5e","c1":"#101c24","c2":"#0a1016"}},"branches":{"子":{"han":"子","cost":"23–01","art":"b-rat.jpg","name":"Rat Zi","typ":"Water Yang 🌙","desc":"Midnight water — clever, resourceful, the seed of a new cycle.","ac":"#5a9fd0","edge":"#264a5e","c1":"#101c24","c2":"#0a1016"},"丑":{"han":"丑","cost":"01–03","art":"b-ox.jpg","name":"Ox Chou","typ":"Earth Yin ❄️","desc":"Frozen field — patient, steadfast, storing strength for spring.","ac":"#c9a227","edge":"#5a4a1e","c1":"#1f1a0e","c2":"#120f09"},"寅":{"han":"寅","cost":"03–05","art":"b-tiger.jpg","name":"Tiger Yin","typ":"Wood Yang 🌅","desc":"Dawn wood — bold new growth, courage that breaks the horizon.","ac":"#5aa06a","edge":"#2e5a38","c1":"#15201a","c2":"#0c120e"},"卯":{"han":"卯","cost":"05–07","art":"b-rabbit.jpg","name":"Rabbit Mao","typ":"Wood Yin 🌸","desc":"Morning bloom — gentle vitality, grace in quiet motion.","ac":"#5aa06a","edge":"#2e5a38","c1":"#15201a","c2":"#0c120e"},"辰":{"han":"辰","cost":"07–09","art":"b-dragon.jpg","name":"Dragon Chen","typ":"Earth Yang 🌫️","desc":"Storehouse of water — mysterious power, the meeting of forces.","ac":"#c9a227","edge":"#5a4a1e","c1":"#1f1a0e","c2":"#120f09"},"巳":{"han":"巳","cost":"09–11","art":"b-snake.jpg","name":"Snake Si","typ":"Fire Yin 🌤️","desc":"Kindling fire — subtle intelligence, transformation coiled and ready.","ac":"#d0604e","edge":"#5e2e26","c1":"#20140f","c2":"#120b09"},"午":{"han":"午","cost":"11–13","art":"b-horse.jpg","name":"Horse Wu","typ":"Fire Yang ☀️","desc":"High noon fire — peak vitality, passion at its brightest.","ac":"#d0604e","edge":"#5e2e26","c1":"#20140f","c2":"#120b09"},"未":{"han":"未","cost":"13–15","art":"b-goat.jpg","name":"Goat Wei","typ":"Earth Yin 🌾","desc":"Warm dry earth — gentle, artistic, the storehouse of wood.","ac":"#c9a227","edge":"#5a4a1e","c1":"#1f1a0e","c2":"#120f09"},"申":{"han":"申","cost":"15–17","art":"b-monkey.jpg","name":"Monkey Shen","typ":"Metal Yang 🍂","desc":"Autumn metal — clever, restless, the turn toward harvest.","ac":"#a8b0b8","edge":"#465059","c1":"#161a1e","c2":"#0d0f12"},"酉":{"han":"酉","cost":"17–19","art":"b-rooster.jpg","name":"Rooster You","typ":"Metal Yin 🌇","desc":"Refined metal — precise, proud, the polished edge of dusk.","ac":"#a8b0b8","edge":"#465059","c1":"#161a1e","c2":"#0d0f12"},"戌":{"han":"戌","cost":"19–21","art":"b-dog.jpg","name":"Dog Xu","typ":"Earth Yang 🌆","desc":"Guardian earth — loyal, watchful, the storehouse of fire.","ac":"#c9a227","edge":"#5a4a1e","c1":"#1f1a0e","c2":"#120f09"},"亥":{"han":"亥","cost":"21–23","art":"b-pig.jpg","name":"Pig Hai","typ":"Water Yin 🌌","desc":"Deep night water — honest, generous, the ocean that ends the cycle.","ac":"#5a9fd0","edge":"#264a5e","c1":"#101c24","c2":"#0a1016"}},"gods":{"The Ally":{"han":"比肩","cost":"同 · Self","art":"g-ally.jpg","name":"The Ally","typ":"Peer · same element","desc":"Independence, self-reliance, equal companions who stand beside you.","ac":"#5aa06a","edge":"#2e5a38","c1":"#15201a","c2":"#0c120e"},"The Rival":{"han":"劫財","cost":"同 · Self","art":"g-rival.jpg","name":"The Rival","typ":"Competition · drive","desc":"Competitive fire, boldness, ambition — a partner that is both spur and threat.","ac":"#5aa06a","edge":"#2e5a38","c1":"#15201a","c2":"#0c120e"},"The Creator":{"han":"食神","cost":"洩 · Output","art":"g-creator.jpg","name":"The Creator","typ":"Expression · flow","desc":"Gentle expression, craft, enjoyment — talent that pours out with ease.","ac":"#d0604e","edge":"#5e2e26","c1":"#20140f","c2":"#120b09"},"The Maverick":{"han":"傷官","cost":"洩 · Output","art":"g-maverick.jpg","name":"The Maverick","typ":"Defiance · genius","desc":"Bold, rule-breaking brilliance — the rebel talent that reshapes the frame.","ac":"#d0604e","edge":"#5e2e26","c1":"#20140f","c2":"#120b09"},"The Steward":{"han":"正財","cost":"財 · Wealth","art":"g-steward.jpg","name":"The Steward","typ":"Earned wealth · steady","desc":"Diligent, methodical prosperity — wealth built slowly and held with care.","ac":"#c9a227","edge":"#5a4a1e","c1":"#1f1a0e","c2":"#120f09"},"The Entrepreneur":{"han":"偏財","cost":"財 · Wealth","art":"g-entrepreneur.jpg","name":"The Entrepreneur","typ":"Windfall · bold","desc":"Opportunity, big moves, dynamic fortune — the gambler's eye for the deal.","ac":"#c9a227","edge":"#5a4a1e","c1":"#1f1a0e","c2":"#120f09"},"The Governor":{"han":"正官","cost":"官 · Officer","art":"g-governor.jpg","name":"The Governor","typ":"Authority · order","desc":"Duty, honor, legitimate power — the one who upholds the rules and is trusted for it.","ac":"#a8b0b8","edge":"#465059","c1":"#161a1e","c2":"#0d0f12"},"The Challenger":{"han":"偏官","cost":"殺 · Officer","art":"g-challenger.jpg","name":"The Challenger","typ":"Conquest · force","desc":"Intense drive under pressure — decisiveness, courage, the will to break through.","ac":"#a8b0b8","edge":"#465059","c1":"#161a1e","c2":"#0d0f12"},"The Scholar":{"han":"正印","cost":"印 · Resource","art":"g-scholar.jpg","name":"The Scholar","typ":"Mentorship · nurture","desc":"Learning, protection, support — the mentor's gift that grows and shelters you.","ac":"#5a9fd0","edge":"#264a5e","c1":"#101c24","c2":"#0a1016"},"The Mystic":{"han":"偏印","cost":"印 · Resource","art":"g-mystic.jpg","name":"The Mystic","typ":"Intuition · insight","desc":"Intuition, unconventional wisdom, solitary depth — the seer who knows without being told.","ac":"#5a9fd0","edge":"#264a5e","c1":"#101c24","c2":"#0a1016"}}};
+  function deckCard(d, roleLabel, badge){
+    return `<div style="width:300px;height:452px;border-radius:20px;position:relative;padding:18px;flex:none;
+      display:flex;flex-direction:column;overflow:hidden;margin:0 12px;
+      border:2px solid ${d.edge};background:linear-gradient(160deg,${d.c1},${d.c2});
+      box-shadow:0 16px 40px -16px #000">
+      <div style="position:absolute;inset:8px;border:1px solid #ffffff14;border-radius:14px"></div>
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;position:relative">
+        <span style="font-family:var(--serif);font-size:40px;font-weight:700;line-height:1;color:${d.ac};text-shadow:0 1px 8px #0008">${d.han}</span>
+        <span style="font-family:var(--serif);font-size:16px;color:#c9bda9;border:1px solid #ffffff26;border-radius:14px;padding:2px 11px;white-space:nowrap">${roleLabel}</span>
+      </div>
+      ${badge||''}
+      <div style="flex:1;min-height:180px;border-radius:13px;margin-top:12px;background-image:url(pillars/art/${d.art});background-size:cover;background-position:center;box-shadow:inset 0 0 0 1px #ffffff14, 0 8px 24px -10px #000c;position:relative"></div>
+      <div style="font-family:var(--serif);font-size:23px;font-weight:700;text-align:center;color:${d.ac};margin-top:12px;position:relative">${d.name}</div>
+      <div style="text-align:center;font-size:14px;letter-spacing:2px;text-transform:uppercase;color:#9c8f79;margin-top:2px;position:relative">${d.typ}</div>
+      <div style="font-size:15px;line-height:1.45;color:#c9bda9;text-align:center;margin-top:10px;border-top:1px solid #ffffff14;padding-top:10px;min-height:64px;position:relative">${d.desc}</div>
+    </div>`;
+  }
   function buildShareCut(){
     const nm=(meta.name||'').trim();
-    document.getElementById('sc-title').textContent = nm ? nm+"’s Destiny" : "My Destiny";
+    document.getElementById('sc-title').textContent = nm ? nm+"\u2019s Destiny" : "My Destiny";
     const pk=['year','month','day','hour'].map(k=>fp[k]?fp[k].ganji_hanja:'?時');
     document.getElementById('sc-pillars').textContent = pk.join(' · ');
-    const branchArt=BSLUG[gjH[1]]?`pillars/art/${BSLUG[gjH[1]]}.jpg`:null;
-    const stemArt=`pillars/art/${SSLUG[dmk]}.jpg`;
-    const godArt=GSLUG[structArch]?`pillars/art/${GSLUG[structArch]}.jpg`:null;
-    const card=(art,role,big,name2,sub,rot,extra)=>`
-      <div style="width:${big?300:258}px;height:${big?470:420}px;margin:0 ${big?'18px':'0'};transform:rotate(${rot}deg) translateY(${big?0:26}px);
-        border:2px solid ${big?'#c9a227':'#40342a'};border-radius:22px;overflow:hidden;position:relative;flex:none;
-        background:#151109;box-shadow:0 30px 60px -25px #000">
-        <div style="position:absolute;inset:0;background-image:url(${art});background-size:cover;background-position:center;opacity:.92"></div>
-        <div style="position:absolute;inset:0;background:linear-gradient(180deg,#0e0b0899 0%,transparent 26%,transparent 55%,#0e0b08f2 82%)"></div>
-        <div style="position:absolute;top:16px;left:0;right:0;text-align:center;font-size:13px;letter-spacing:4px;color:#c9bda9;text-transform:uppercase">${role}</div>
-        ${extra||''}
-        <div style="position:absolute;bottom:20px;left:0;right:0;text-align:center">
-          <div style="font-family:var(--serif);font-size:${big?40:32}px;font-weight:700;color:#f3ece0;text-shadow:0 2px 12px #000">${name2}</div>
-          <div style="font-size:14px;color:#9c8f79;margin-top:4px">${sub}</div>
-        </div>
-      </div>`;
+    const badge = rare ? `<div style="text-align:center;margin-top:10px;position:relative"><span style="border:1.5px solid #c9a227;color:#e0c05a;border-radius:13px;padding:3px 13px;font-size:13px;letter-spacing:3px;background:#0e0b08cc">◆ ${rare}</span></div>` : '';
     let html='';
-    html+=branchArt?card(branchArt,'Day Branch · 일지',false,gjH[1],(p60H?p60H.an:'' )+' · the ground',-7):'';
-    html+=card(stemArt,'Day Master · 일간',true,dm.han+' '+dm.py,dm.en+' · “'+dm.arch+'”',0,
-      rare?`<div style="position:absolute;top:44px;left:0;right:0;text-align:center"><span style="border:1.5px solid #c9a227;color:#e0c05a;border-radius:14px;padding:3px 14px;font-size:12px;letter-spacing:3px;background:#0e0b08cc">◆ ${rare}</span></div>`:'');
-    html+=godArt?card(godArt,'Structure · 격국',false,structArch,(D.geokguk?.label||'')+' · the path',7):'';
+    const bd=DECK.branches[gjH[1]], sd=DECK.stems[dmk==='갑'?'甲':({'갑':'甲','을':'乙','병':'丙','정':'丁','무':'戊','기':'己','경':'庚','신':'辛','임':'壬','계':'癸'})[dmk]], gd=DECK.gods[structArch];
+    if(bd) html+=deckCard(bd,'Day Branch · 일지');
+    if(sd) html+=deckCard(sd,'Day Master · 일간',badge);
+    if(gd) html+=deckCard(gd,'Structure · 격국');
     document.getElementById('sc-cards').innerHTML=html;
   }
-
-  // save-as-image
-  document.getElementById('savehand').addEventListener('click', async e=>{
-    const btn=e.target; btn.disabled=true; btn.textContent='Rendering…';
-    try{
-      if(!window.html2canvas){
-        await new Promise((res,rej)=>{const sc=document.createElement('script');
-          sc.src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
-          sc.onload=res; sc.onerror=rej; document.head.appendChild(sc);});
-      }
-      buildShareCut();
-      const wrap=document.getElementById('sharecut');
-      const canvas=await html2canvas(wrap,{backgroundColor:'#0e0b08',scale:1.5,width:1080,height:1080,windowWidth:1400});
-      canvas.toBlob(async blob=>{
-        const file=new File([blob],'elun-my-cards.png',{type:'image/png'});
-        if(navigator.canShare && navigator.canShare({files:[file]})){
-          try{ await navigator.share({files:[file],text:'My BaZi cards — elun.me'}); }catch(_){}
-        } else {
-          const a=document.createElement('a');
-          a.href=URL.createObjectURL(blob); a.download='elun-my-cards.png';
-          document.body.appendChild(a); a.click(); a.remove();
-        }
-        btn.disabled=false; btn.textContent='📸 Save my cards';
-      });
-    }catch(_){ btn.disabled=false; btn.textContent='📸 Save my cards'; }
-  });
+  // 공용: 셰어컷 → PNG blob
+  async function renderCutBlob(){
+    if(!window.html2canvas){
+      await new Promise((res,rej)=>{const sc=document.createElement('script');
+        sc.src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+        sc.onload=res; sc.onerror=rej; document.head.appendChild(sc);});
+    }
+    buildShareCut();
+    const canvas=await html2canvas(document.getElementById('sharecut'),
+      {backgroundColor:'#0e0b08',scale:1.5,width:1080,height:1080,windowWidth:1400,useCORS:true});
+    return new Promise(res=>canvas.toBlob(res,'image/png'));
+  }
+  function dl(blob){
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(blob); a.download='elun-my-cards.png';
+    document.body.appendChild(a); a.click(); a.remove();
+  }
+  async function withBtn(btn, fn){
+    const t=btn.textContent; btn.disabled=true; btn.textContent='Rendering…';
+    try{ await fn(); }catch(_){}
+    btn.disabled=false; btn.textContent=t;
+  }
+  document.getElementById('sharehand').addEventListener('click', e=>withBtn(e.target, async()=>{
+    const blob=await renderCutBlob();
+    const file=new File([blob],'elun-my-cards.png',{type:'image/png'});
+    if(navigator.canShare && navigator.canShare({files:[file]})){
+      try{ await navigator.share({files:[file],title:'My Destiny — elun.me',text:'My BaZi cards · calculate yours at elun.me'}); }
+      catch(_){/* 사용자가 시트 닫음 */}
+    } else { dl(blob); }
+  }));
+  document.getElementById('savehand').addEventListener('click', e=>withBtn(e.target, async()=>{
+    dl(await renderCutBlob());
+  }));
 
   // pillars
   const order=[['year','Year'],['month','Month'],['day','Day ★'],['hour','Hour']];
