@@ -442,7 +442,8 @@ CSS = '''
   .hidden-tbl td{padding:7px 4px;border-bottom:1px dashed var(--line);color:var(--ink2)}
   .hidden-tbl td:first-child{font-family:var(--serif);font-size:16px;width:44px;color:var(--ink)}
   .fam{display:flex;gap:8px;flex-wrap:wrap}
-  .fam span{border:1px solid var(--gold);border-radius:16px;padding:4px 13px;font-size:12.5px;color:var(--gold2);background:#c9a2270d}
+  .fam span,.fam a{border:1px solid var(--gold);border-radius:16px;padding:4px 13px;font-size:12.5px;color:var(--gold2);background:#c9a2270d;text-decoration:none}
+  .fam a:hover{background:#c9a22726}
   .pn{display:flex;justify-content:space-between;gap:10px;padding:30px 0 8px;font-size:13.5px}
   .pn a{border:1px solid var(--line2);border-radius:20px;padding:7px 16px;color:var(--ink2)}
   .pn a:hover{border-color:var(--gold);color:var(--gold2)}
@@ -636,9 +637,10 @@ def page(p, prev_p, next_p, all_pillars):
         f'<tr><td>{h}</td><td>{ENAME[SEL[h]]} · {GODS[god(gj[0],h)]["nm"]} {GODS[god(gj[0],h)]["han"]}'
         f'</td><td style="text-align:right;color:var(--faint)">{w*100:.0f}%</td></tr>'
         for h, w in HID[br])
+    nslug = lambda n: re.sub(r'[^a-z0-9]+', '-', n.lower()).strip('-')
     celebs = (f'<div class="box"><h2>Famous {gj} Charts</h2><div class="fam">'
-              + ''.join(f'<span>{c}</span>' for c in p['celebs'])
-              + '</div><p style="font-size:12px;color:var(--faint);margin-top:10px">Day pillars computed with Elun\'s engine from public birth records.</p></div>') if p['celebs'] else ''
+              + ''.join(f'<a href="../famous/{nslug(c)}.html">{c}</a>' for c in p['celebs'])
+              + '</div><p style="font-size:12px;color:var(--faint);margin-top:10px">Day pillars computed with Elun\'s engine from public birth records — click a name for the chart.</p></div>') if p['celebs'] else ''
     return f'''<!doctype html>
 <html lang="en">
 <head>
