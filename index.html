@@ -80,7 +80,7 @@
   @media(max-width:860px){.arche{grid-template-columns:repeat(2,1fr)}}
   .ac{border:1px solid var(--line);border-radius:14px;padding:18px 16px;background:var(--card);text-align:center;transition:.2s}
   .ac:hover{border-color:var(--gold);transform:translateY(-3px)}
-  .ac .gl{font-size:22px;margin-bottom:4px;filter:drop-shadow(0 3px 8px #0008)}
+  .ac .gart{width:100%;aspect-ratio:16/9;border-radius:9px;background-size:cover;background-position:center;margin-bottom:8px;box-shadow:inset 0 0 0 1px #ffffff14, 0 5px 14px -6px #000c}
   .ac .han{font-family:var(--serif);font-size:22px;color:var(--gold2);margin-bottom:4px}
   .ac .nm{font-family:var(--serif);font-size:15px;font-weight:700;margin-bottom:4px}
   .ac .de{font-size:11.5px;color:var(--sub);line-height:1.5}
@@ -89,8 +89,8 @@
   .rpg{background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
   .el-ring{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:0 auto 36px;max-width:640px}
   .el{flex:1;min-width:96px;border:1px solid var(--line);border-radius:14px;padding:16px 10px;text-align:center;background:var(--card)}
-  .el .dot{width:36px;height:36px;border-radius:50%;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:18px;color:#100d0a;font-weight:700}
-  .el.wood .dot{background:var(--wood)} .el.fire .dot{background:var(--fire)} .el.earth .dot{background:var(--earth)} .el.metal .dot{background:var(--metal)} .el.water .dot{background:var(--water)}
+  .el .eart{width:100%;aspect-ratio:16/10;border-radius:9px;margin:0 auto 8px;background-size:cover;background-position:center;position:relative;box-shadow:inset 0 0 0 1px #ffffff14, 0 5px 14px -6px #000c}
+  .el .eart span{position:absolute;top:6px;left:9px;font-family:var(--serif);font-size:17px;font-weight:700;color:#f3ece0;text-shadow:0 1px 8px #000}
   .el .nm{font-family:var(--serif);font-size:14px}
   .el .st{font-size:11px;color:var(--sub);margin-top:2px}
   .rpg-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:8px}
@@ -267,16 +267,16 @@ if(p){
     <h2 class="sec">Meet your ten archetypes</h2>
     <p class="sec-sub">BaZi reads your chart through ten forces. Elun names them as archetypes you'll actually remember — the classical terms and characters kept underneath.</p>
     <div class="arche">
-      <div class="ac"><div class="gl">🤝</div><div class="han">比肩</div><div class="nm">The Ally</div><div class="de">independence, equal companions</div></div>
-      <div class="ac"><div class="gl">⚡</div><div class="han">劫財</div><div class="nm">The Rival</div><div class="de">drive, competition</div></div>
-      <div class="ac"><div class="gl">🎨</div><div class="han">食神</div><div class="nm">The Creator</div><div class="de">gentle expression</div></div>
-      <div class="ac"><div class="gl">🎭</div><div class="han">傷官</div><div class="nm">The Maverick</div><div class="de">bold, rule-breaking talent</div></div>
-      <div class="ac"><div class="gl">💎</div><div class="han">正財</div><div class="nm">The Steward</div><div class="de">steady wealth</div></div>
-      <div class="ac"><div class="gl">🎲</div><div class="han">偏財</div><div class="nm">The Entrepreneur</div><div class="de">dynamic opportunity</div></div>
-      <div class="ac"><div class="gl">👑</div><div class="han">正官</div><div class="nm">The Governor</div><div class="de">order, legitimate power</div></div>
-      <div class="ac"><div class="gl">🗡️</div><div class="han">偏官</div><div class="nm">The Challenger</div><div class="de">intense drive, pressure</div></div>
-      <div class="ac"><div class="gl">📖</div><div class="han">正印</div><div class="nm">The Scholar</div><div class="de">learning, nurture</div></div>
-      <div class="ac"><div class="gl">🔮</div><div class="han">偏印</div><div class="nm">The Mystic</div><div class="de">intuition, insight</div></div>
+      <div class="ac"><div class="gart" style="background-image:url(pillars/art/g-ally.jpg)"></div><div class="han">比肩</div><div class="nm">The Ally</div><div class="de">independence, equal companions</div></div>
+      <div class="ac"><div class="gart" style="background-image:url(pillars/art/g-rival.jpg)"></div><div class="han">劫財</div><div class="nm">The Rival</div><div class="de">drive, competition</div></div>
+      <div class="ac"><div class="gart" style="background-image:url(pillars/art/g-creator.jpg)"></div><div class="han">食神</div><div class="nm">The Creator</div><div class="de">gentle expression</div></div>
+      <div class="ac"><div class="gart" style="background-image:url(pillars/art/g-maverick.jpg)"></div><div class="han">傷官</div><div class="nm">The Maverick</div><div class="de">bold, rule-breaking talent</div></div>
+      <div class="ac"><div class="gart" style="background-image:url(pillars/art/g-steward.jpg)"></div><div class="han">正財</div><div class="nm">The Steward</div><div class="de">steady wealth</div></div>
+      <div class="ac"><div class="gart" style="background-image:url(pillars/art/g-entrepreneur.jpg)"></div><div class="han">偏財</div><div class="nm">The Entrepreneur</div><div class="de">dynamic opportunity</div></div>
+      <div class="ac"><div class="gart" style="background-image:url(pillars/art/g-governor.jpg)"></div><div class="han">正官</div><div class="nm">The Governor</div><div class="de">order, legitimate power</div></div>
+      <div class="ac"><div class="gart" style="background-image:url(pillars/art/g-challenger.jpg)"></div><div class="han">偏官</div><div class="nm">The Challenger</div><div class="de">intense drive, pressure</div></div>
+      <div class="ac"><div class="gart" style="background-image:url(pillars/art/g-scholar.jpg)"></div><div class="han">正印</div><div class="nm">The Scholar</div><div class="de">learning, nurture</div></div>
+      <div class="ac"><div class="gart" style="background-image:url(pillars/art/g-mystic.jpg)"></div><div class="han">偏印</div><div class="nm">The Mystic</div><div class="de">intuition, insight</div></div>
     </div>
     <p style="text-align:center;margin-top:26px"><a href="cards.html" class="btn ghost">See all 37 as cards →</a></p>
   </div>
@@ -303,11 +303,11 @@ if(p){
     <h2 class="sec">Your chart is a living system</h2>
     <p class="sec-sub">Five elements, each generating and controlling the next — a balance of forces as elegant as any game system. Elun shows you your stats, your strengths, and the element that levels you up.</p>
     <div class="el-ring">
-      <div class="el wood"><div class="dot">木</div><div class="nm">Wood</div><div class="st">growth · self</div></div>
-      <div class="el fire"><div class="dot">火</div><div class="nm">Fire</div><div class="st">expression</div></div>
-      <div class="el earth"><div class="dot">土</div><div class="nm">Earth</div><div class="st">wealth</div></div>
-      <div class="el metal"><div class="dot">金</div><div class="nm">Metal</div><div class="st">structure</div></div>
-      <div class="el water"><div class="dot">水</div><div class="nm">Water</div><div class="st">wisdom</div></div>
+      <div class="el wood"><div class="eart" style="background-image:url(pillars/art/el-wood.jpg)"><span>木</span></div><div class="nm">Wood</div><div class="st">growth · self</div></div>
+      <div class="el fire"><div class="eart" style="background-image:url(pillars/art/el-fire.jpg)"><span>火</span></div><div class="nm">Fire</div><div class="st">expression</div></div>
+      <div class="el earth"><div class="eart" style="background-image:url(pillars/art/el-earth.jpg)"><span>土</span></div><div class="nm">Earth</div><div class="st">wealth</div></div>
+      <div class="el metal"><div class="eart" style="background-image:url(pillars/art/el-metal.jpg)"><span>金</span></div><div class="nm">Metal</div><div class="st">structure</div></div>
+      <div class="el water"><div class="eart" style="background-image:url(pillars/art/el-water.jpg)"><span>水</span></div><div class="nm">Water</div><div class="st">wisdom</div></div>
     </div>
     <div class="rpg-cards">
       <div class="rc"><div class="ic">📊</div><div class="h">Your stats</div><p>Every chart is a distribution across the five elements — your innate build. Elun maps it precisely, so you see what you're rich in and what you lack.</p></div>
@@ -335,7 +335,7 @@ if(p){
           <li>Ten-year forecast — the year to move, the year to hold</li>
           <li>Your Useful Element (用神): the one that revives you</li>
         </ul>
-        <p style="margin-top:20px"><a href="CLAUDE-19780821-bazi-EN.html" class="btn ghost">Open a real sample →</a></p>
+        <p style="margin-top:20px"><a href="sample-report-EN.html" class="btn ghost">Open a real sample →</a></p>
       </div>
       <div class="mock">
         <div class="mh">
