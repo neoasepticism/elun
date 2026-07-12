@@ -17,6 +17,7 @@ CORE = [  # (path, priority, changefreq)
     ('daymasters.html',   '0.9', 'monthly'),
     ('cards.html',        '0.8', 'monthly'),
     ('pillars/index.html','0.8', 'monthly'),
+    ('birth-time.html',   '0.7', 'yearly'),
 ]
 
 def lastmod(path):
