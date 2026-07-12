@@ -58,7 +58,7 @@ def balance_box(chart, py):
     dm_elem_en = rp.ELEM_KO_EN[chart['day_master']['element']]
     roles = rp._elem_roles(dm_elem_en)
     oh = fe3(fp)
-    st_label = chart.get('strength', {}).get('label', '')
+    st_label = rp._strength_three_pillar(chart)['label']   # 3주 기준 강약 (시간 미상)
     st_en = rp._strength_en(st_label)
     if 'Weak' in st_en:
         st_gloss = 'a chart that runs on support — its story turns on what feeds the Day Master'
