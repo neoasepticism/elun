@@ -537,7 +537,8 @@ else{
         <div class="csart" style="background-image:url(pillars/art/${SSLUG[dmk]}.jpg)"></div>
         <div><div class="csnm">${nm}</div>
           <div class="cscl">${dm.han} ${dm.py} · ${CLASSNM[dmk]||dm.arch}</div>
-          <div class="cssub">\u201C${dm.arch}\u201D class · ${dm.en}</div></div>
+          <div class="cssub">\u201C${dm.arch}\u201D class · ${dm.en}</div>
+          ${structArch?`<div class="cssub" style="color:var(--gold2);font-style:normal;margin-top:4px">⚜ Path of ${structArch} <span style="color:var(--faint)">· ${D.geokguk?.label||''} structure</span></div>`:''}</div>
       </div>
       <div class="csbody" style="position:relative">
         <div><h4>Stats</h4>${statRows}</div>
