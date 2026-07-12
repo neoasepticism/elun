@@ -437,7 +437,7 @@ else{
       `<div class="top"><span class="gj">${gj}</span>
         <span><span class="py">The ${p60.py} Day</span><br><span class="an">one of sixty signatures · day of the ${p60.an}</span></span></div>
       <div class="pd">“${p60.d}”</div>
-      ${p60.c && p60.c.length ? `<div class="cb">Famous ${gj} charts: ${p60.c.map(n=>`<a href="famous/${n.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')}.html" target="_blank" style="color:var(--gold2)">${n}</a>`).join(' · ')}</div>` : ''}
+      ${p60.c && p60.c.length ? `<div class="cb">Famous people born on this day: ${p60.c.map(n=>`<a href="famous/${n.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')}.html" target="_blank" style="color:var(--gold2)">${n}</a>`).join(' · ')}</div>` : ''}
       <a class="go" href="pillars/${slug}.html">Read your full ${p60.py} profile →</a>`;
   } else { document.getElementById('dpcard').style.display='none'; }
 

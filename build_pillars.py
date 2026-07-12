@@ -638,7 +638,7 @@ def page(p, prev_p, next_p, all_pillars):
         f'</td><td style="text-align:right;color:var(--faint)">{w*100:.0f}%</td></tr>'
         for h, w in HID[br])
     nslug = lambda n: re.sub(r'[^a-z0-9]+', '-', n.lower()).strip('-')
-    celebs = (f'<div class="box"><h2>Famous {gj} Charts</h2><div class="fam">'
+    celebs = (f'<div class="box"><h2>Famous People</h2><div class="fam">'
               + ''.join(f'<a href="../famous/{nslug(c)}.html">{c}</a>' for c in p['celebs'])
               + '</div><p style="font-size:12px;color:var(--faint);margin-top:10px">Day pillars computed with Elun\'s engine from public birth records — click a name for the chart.</p></div>') if p['celebs'] else ''
     return f'''<!doctype html>
