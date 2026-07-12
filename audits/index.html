@@ -25,8 +25,10 @@
   .meth{border-left:3px solid var(--green);border-radius:0 12px 12px 0;background:#14201a;
     padding:16px 20px;margin:30px auto;max-width:640px;font-size:13.5px;color:var(--ink2);text-align:left}
   .cards{display:grid;gap:18px;margin:36px 0 10px}
-  .ac{display:block;border:1px solid var(--line);border-radius:16px;background:var(--card);padding:26px 28px;transition:border-color .15s}
+  .ac{position:relative;display:block;border:1px solid var(--line);border-radius:16px;background:var(--card);padding:26px 28px;transition:border-color .15s}
   .ac:hover{border-color:var(--gold)}
+  .ac .go a::after{content:"";position:absolute;inset:0}
+  .ac .ko a{position:relative;z-index:1}
   .ac .no{font-size:11.5px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
   .ac .nm{font-family:var(--serif);font-size:24px;color:var(--ink);font-weight:700;margin-bottom:4px}
   .ac .born{font-size:12.5px;color:var(--faint);margin-bottom:12px}
@@ -51,22 +53,22 @@
 
 <div class="wrap">
   <div class="cards">
-    <a class="ac" href="masayoshi-son.html">
+    <div class="ac">
       <div class="no">Audit No.001</div>
       <div class="nm">Masayoshi Son</div>
       <div class="born">Born 1957-08-11 · Tosu, Japan</div>
       <div class="hl">“A Weak Yin Wood root gripping thin soil: how a chart built for survival, not dominance, produced the most leveraged bets in technology history.”</div>
-      <div class="go">Read the audit →</div>
+      <div class="go"><a href="masayoshi-son.html">Read the audit →</a></div>
       <div class="ko"><a href="masayoshi-son-ko.html">한국어판 →</a></div>
-    </a>
-    <a class="ac" href="steve-jobs.html">
+    </div>
+    <div class="ac">
       <div class="no">Audit No.002</div>
       <div class="nm">Steve Jobs</div>
       <div class="born">Born 1955-02-24 · San Francisco, USA</div>
       <div class="hl">“A mildly weak Yang Fire chart whose entire life turned on whether Wood fed the flame or Water extinguished it — and on what it cost to keep burning.”</div>
-      <div class="go">Read the audit →</div>
+      <div class="go"><a href="steve-jobs.html">Read the audit →</a></div>
       <div class="ko"><a href="steve-jobs-ko.html">한국어판 →</a></div>
-    </a>
+    </div>
   </div>
 </div>
 
