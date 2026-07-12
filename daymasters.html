@@ -104,7 +104,10 @@
   .pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
   @media(max-width:820px){.pgrid{grid-template-columns:repeat(2,1fr)}}
   @media(max-width:520px){.pgrid{grid-template-columns:1fr}}
-  .p60{display:block;color:inherit;border:1px solid var(--line);border-radius:14px;background:var(--card);padding:16px 16px 13px;transition:.15s;position:relative}
+  .p60{display:block;color:inherit;border:1px solid var(--line);border-radius:14px;background:var(--card);padding:16px 16px 13px;transition:.15s;position:relative;overflow:hidden}
+  .p60 .p60bg{position:absolute;inset:0;background-size:cover;background-position:left center;opacity:.2;pointer-events:none}
+  .p60 .p60br{position:absolute;right:-2%;top:50%;transform:translateY(-50%);width:54%;aspect-ratio:16/9;background-size:contain;background-repeat:no-repeat;background-position:center;mix-blend-mode:screen;opacity:.4;pointer-events:none;-webkit-mask-image:radial-gradient(ellipse 68% 68% at center,black 45%,transparent 80%);mask-image:radial-gradient(ellipse 68% 68% at center,black 45%,transparent 80%)}
+  .p60 .top,.p60 .pd,.p60 .cb,.p60 .ebar,.p60 .more{position:relative}
   .p60 .more{font-size:10.5px;color:var(--faint);margin-top:9px;text-align:right;letter-spacing:1px}
   .p60:hover .more{color:var(--gold2)}
   .p60:hover{border-color:var(--gold);transform:translateY(-2px)}
@@ -649,6 +652,8 @@ for(const [stem,name,anchor,color] of DM){
     <div class="gh"><span class="h">${stem}</span><span class="n">${name}</span><a href="#${anchor}">read the ${name.split(" ")[0]} profile ↑</a></div>
     <div class="pgrid">`+
     group.map(p=>`<a class="p60" href="pillars/${p.py.toLowerCase().replace(" ","-")}.html" style="--gac:${color}">
+      <span class="p60bg" style="background-image:url(pillars/art/${anchor}.jpg)"></span>
+      <span class="p60br" style="background-image:url(pillars/art/b-${p.an.toLowerCase()}.jpg)"></span>
       <div class="top"><span class="gj">${p.gj}</span><span class="py">${p.py}</span><span class="an">${p.an}</span></div>
       <p class="pd">${p.d.replace(/^(The [^—]+)—/,"<b>$1</b>—")}</p>
       ${p.c.length?`<div class="cb">${p.c.join(" · ")}</div>`:""}
