@@ -20,6 +20,10 @@ spec.loader.exec_module(bp)
 ROOT = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(ROOT, 'famous')
 
+# 천간 상징 한 단어 (acard 캡션용) — bp.DM[x]['img'] 축약
+STEM_SYM = {'甲': 'Tree', '乙': 'Vine', '丙': 'Sun', '丁': 'Flame', '戊': 'Mountain',
+            '己': 'Field', '庚': 'Blade', '辛': 'Jewel', '壬': 'Ocean', '癸': 'Rain'}
+
 # Destiny Audit deep links: slug -> audit number (page must exist at audits/<slug>.html + -ko)
 AUDITS = {
     'masayoshi-son': 'No.001',
@@ -161,7 +165,7 @@ def page(name):
 .fhero .bd{{color:var(--sub);font-size:13.5px}}
 .acard{{position:relative;max-width:460px;margin:26px auto 0;aspect-ratio:16/9;border-radius:16px;overflow:hidden;border:2px solid {ac.replace('var(--','var(--')};box-shadow:0 18px 44px -18px #000}}
 .acard .bg{{position:absolute;inset:0;background-image:url(../pillars/art/{stem_slug}.jpg);background-size:cover;background-position:left center}}
-.acard .st{{position:absolute;right:-3%;top:-14%;width:38%;height:128%;background-image:url(../pillars/art/{branch_slug}.jpg);background-size:cover;background-position:center;mix-blend-mode:screen;opacity:.75;-webkit-mask-image:radial-gradient(ellipse 58% 58% at center,black 38%,transparent 72%);mask-image:radial-gradient(ellipse 58% 58% at center,black 38%,transparent 72%)}}
+.acard .st{{position:absolute;right:-3%;top:-16%;width:44%;height:132%;background-image:url(../pillars/art/{branch_slug}.jpg);background-size:cover;background-position:center;mix-blend-mode:screen;opacity:.9;-webkit-mask-image:radial-gradient(ellipse 62% 62% at center,black 42%,transparent 78%);mask-image:radial-gradient(ellipse 62% 62% at center,black 42%,transparent 78%)}}
 .acard .sc{{position:absolute;inset:0;background:linear-gradient(180deg,#0e0b0888 0%,transparent 32%,transparent 58%,#0e0b08e6 88%)}}
 .acard .hj{{position:absolute;top:12px;left:16px;font-family:var(--serif);font-size:30px;font-weight:700;color:{ac};text-shadow:0 2px 12px #000}}
 .acard .pn{{position:absolute;bottom:12px;left:0;right:0;text-align:center;font-family:var(--serif);font-size:20px;font-weight:700;color:{ac};text-shadow:0 2px 10px #000}}
@@ -200,7 +204,7 @@ def page(name):
   <div class="nm">{name}</div>
   <div class="bd">Born {y}-{m:02d}-{d:02d} · day pillar computed with Elun's deterministic engine</div>
   <div class="acard"><span class="bg"></span><span class="st"></span><span class="sc"></span>
-    <span class="hj">{gj}</span><span class="pn">The {py} Day · {an}</span></div>
+    <span class="hj">{gj}</span><span class="pn">The {py} Day · {STEM_SYM[gj[0]]} &amp; {an}</span></div>
 </div>
 
 <div class="wrap" style="max-width:720px">
