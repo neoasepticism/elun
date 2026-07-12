@@ -32,7 +32,11 @@
     padding:11px 13px;font-size:15px;font-family:var(--sans)}
   input:focus,select:focus{outline:none;border-color:var(--gold)}
   .row{display:flex;gap:10px}
-  .row>div{flex:1}
+  .row>div{flex:1;min-width:0}
+  input[type=date],input[type=time]{min-width:0;-webkit-appearance:none;appearance:none}
+  @media(max-width:520px){
+    .row.dt{flex-direction:column;gap:0}
+  }
   fieldset{border:1px solid var(--line2);border-radius:12px;padding:6px 16px 16px;margin:20px 0 0}
   legend{font-family:var(--serif);font-size:15px;color:var(--gold2);padding:0 8px}
   .cklabel{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:13px;color:var(--ink2);cursor:pointer;text-transform:none;letter-spacing:0}
@@ -71,7 +75,7 @@
       <legend>Person A</legend>
       <label>Name (optional)</label>
       <input id="a_name" placeholder="e.g. Alex" />
-      <div class="row">
+      <div class="row dt">
         <div><label>Birth date</label><input id="a_date" type="date" required /></div>
         <div><label>Time</label><input id="a_time" type="time" /></div>
       </div>
@@ -87,7 +91,7 @@
       <legend>Person B</legend>
       <label>Name (optional)</label>
       <input id="b_name" placeholder="e.g. Sam" />
-      <div class="row">
+      <div class="row dt">
         <div><label>Birth date</label><input id="b_date" type="date" required /></div>
         <div><label>Time</label><input id="b_time" type="time" /></div>
       </div>
