@@ -6,9 +6,12 @@ Elun 유명인 사주 페이지 생성기 — famous/{slug}.html
 Run: python3 build_famous.py
 """
 import json, os, re, sys, importlib.util
+from collections import Counter
 
 sys.path.insert(0, os.path.expanduser('~/elun-engine'))
 import bazi_global as bg
+import report_premium as rp
+from report import GAN_OH, JI_OH
 
 spec = importlib.util.spec_from_file_location('bp', os.path.join(os.path.dirname(os.path.abspath(__file__)), 'build_pillars.py'))
 bp = importlib.util.module_from_spec(spec)
@@ -34,6 +37,65 @@ def chart_for(name):
     y, m, d, tz = CELEBS[name]
     opts = {'lon_corr': False, 'dst': False, 'std_meridian': None, 'lon': 0, 'auto_tz': True, 'tz': tz}
     return bg.build_result(y, m, d, 12, 0, 'M', opts)
+
+
+ELEM_META = {'목': ('Wood', '木', 'wood'), '화': ('Fire', '火', 'fire'), '토': ('Earth', '土', 'earth'),
+             '금': ('Metal', '金', 'metal'), '수': ('Water', '水', 'water')}
+
+
+def fe3(fp):
+    """3주(년월일) 기준 오행 분포 — 시주(정오 가정) 제외."""
+    c = Counter()
+    for k in ('year', 'month', 'day'):
+        c[GAN_OH[fp[k]['stem']]] += 1
+        c[JI_OH[fp[k]['branch']]] += 1
+    tot = sum(c.values()) or 1
+    return {oh: round(c[oh] / tot * 100) for oh in ('목', '화', '토', '금', '수')}
+
+
+def balance_box(chart, py):
+    fp = chart['four_pillars']
+    dm_elem_en = rp.ELEM_KO_EN[chart['day_master']['element']]
+    roles = rp._elem_roles(dm_elem_en)
+    oh = fe3(fp)
+    st_label = chart.get('strength', {}).get('label', '')
+    st_en = rp._strength_en(st_label)
+    if 'Weak' in st_en:
+        st_gloss = 'a chart that runs on support — its story turns on what feeds the Day Master'
+    elif 'Strong' in st_en:
+        st_gloss = 'a chart that carries its own weight — its story turns on where the surplus gets spent'
+    else:
+        st_gloss = 'a chart near balance — small shifts in luck tilt the whole board'
+    ug = rp._useful_god(dm_elem_en, st_label)
+    # 십성 카운트 (정오 가정 시주 몫 제거 → 3주 기준)
+    hp = fp.get('hour', {})
+    tg = dict(chart.get('ten_gods_count', {}))
+    for g in (hp.get('stem_god'), hp.get('branch_god')):
+        if g in tg:
+            tg[g] -= 1
+            if tg[g] <= 0:
+                del tg[g]
+    bars = ''
+    for ko in ('목', '화', '토', '금', '수'):
+        en, hj, var = ELEM_META[ko]
+        pct = oh[ko]
+        bars += (f'<div class="ebrow"><span class="ebl">{en} <b>{hj}</b><em>{roles[en]}</em></span>'
+                 f'<span class="ebt"><i style="width:{max(pct, 2)}%;background:var(--{var})"></i></span>'
+                 f'<span class="ebp">{pct}%</span></div>')
+    chips = ''.join(
+        f'<span class="tgc">{GOD_EN.get(g, g)}{f" ×{n}" if n > 1 else ""}</span>'
+        for g, n in sorted(tg.items(), key=lambda x: -x[1]) if g != '일간')
+    return f'''<div class="box">
+      <h2>The Balance — what makes this chart its own</h2>
+      <p style="font-size:13.5px">Every {py} day shares the same core — but the year and month around it never repeat.
+      This is the mix this particular chart was dealt (three pillars, hour excluded):</p>
+      <div class="ebars">{bars}</div>
+      <table class="kv" style="margin-top:14px">
+        <tr><td>Strength</td><td>{st_en} — {st_gloss}</td></tr>
+        <tr><td>Useful Element 用神</td><td>{ug["primary_elem"]} ({ug["primary_role"]}) first · {ug["secondary_elem"]} ({ug["secondary_role"]}) second</td></tr>
+      </table>
+      <div style="margin-top:12px"><span style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--faint)">Archetypes in the chart</span><br>{chips}</div>
+    </div>'''
 
 
 def page(name):
@@ -94,6 +156,15 @@ def page(name):
 .note3{{text-align:center;font-size:12px;color:var(--green);margin:6px 0 0}}
 .oc{{display:inline-block;border:1px solid var(--line2);border-radius:16px;padding:4px 13px;font-size:12.5px;color:var(--ink2);margin:3px 4px;text-decoration:none}}
 .oc:hover{{border-color:var(--gold);color:var(--gold2)}}
+.ebars{{margin-top:6px}}
+.ebrow{{display:flex;align-items:center;gap:10px;margin:7px 0}}
+.ebl{{width:132px;font-size:12.5px;color:var(--ink2);flex:none}}
+.ebl b{{font-family:var(--serif);font-weight:400;color:var(--sub)}}
+.ebl em{{display:block;font-style:normal;font-size:10px;color:var(--faint);letter-spacing:.5px}}
+.ebt{{flex:1;height:10px;background:#12100c;border-radius:5px;overflow:hidden;border:1px solid var(--line)}}
+.ebt i{{display:block;height:100%;border-radius:5px}}
+.ebp{{width:38px;text-align:right;font-size:12px;color:var(--sub);flex:none}}
+.tgc{{display:inline-block;border:1px solid var(--line2);border-radius:14px;padding:3px 11px;font-size:12px;color:var(--gold2);margin:4px 4px 0 0;background:#c9a2270d}}
 .kv{{width:100%;border-collapse:collapse;font-size:13.5px}}
 .kv td{{padding:9px 10px;border-bottom:1px solid var(--line);color:var(--ink2);vertical-align:top}}
 .kv tr:last-child td{{border-bottom:none}}
@@ -119,6 +190,7 @@ def page(name):
   <div class="note3">Birth time not on public record — the exact year, month and day pillars shown (the hour pillar is honestly omitted).</div>
 
   <section>
+    {balance_box(r, py)}
     <div class="box" style="border-top:3px solid {ac}">
       <h2>The {py} Day — {name}'s core</h2>
       <p style="font-family:var(--serif);font-style:italic;color:var(--ink2)">“{p['d']}”</p>

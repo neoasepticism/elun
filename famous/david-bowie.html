@@ -52,7 +52,8 @@
   .hidden-tbl td{padding:7px 4px;border-bottom:1px dashed var(--line);color:var(--ink2)}
   .hidden-tbl td:first-child{font-family:var(--serif);font-size:16px;width:44px;color:var(--ink)}
   .fam{display:flex;gap:8px;flex-wrap:wrap}
-  .fam span{border:1px solid var(--gold);border-radius:16px;padding:4px 13px;font-size:12.5px;color:var(--gold2);background:#c9a2270d}
+  .fam span,.fam a{border:1px solid var(--gold);border-radius:16px;padding:4px 13px;font-size:12.5px;color:var(--gold2);background:#c9a2270d;text-decoration:none}
+  .fam a:hover{background:#c9a22726}
   .pn{display:flex;justify-content:space-between;gap:10px;padding:30px 0 8px;font-size:13.5px}
   .pn a{border:1px solid var(--line2);border-radius:20px;padding:7px 16px;color:var(--ink2)}
   .pn a:hover{border-color:var(--gold);color:var(--gold2)}
@@ -78,6 +79,15 @@
 .note3{text-align:center;font-size:12px;color:var(--green);margin:6px 0 0}
 .oc{display:inline-block;border:1px solid var(--line2);border-radius:16px;padding:4px 13px;font-size:12.5px;color:var(--ink2);margin:3px 4px;text-decoration:none}
 .oc:hover{border-color:var(--gold);color:var(--gold2)}
+.ebars{margin-top:6px}
+.ebrow{display:flex;align-items:center;gap:10px;margin:7px 0}
+.ebl{width:132px;font-size:12.5px;color:var(--ink2);flex:none}
+.ebl b{font-family:var(--serif);font-weight:400;color:var(--sub)}
+.ebl em{display:block;font-style:normal;font-size:10px;color:var(--faint);letter-spacing:.5px}
+.ebt{flex:1;height:10px;background:#12100c;border-radius:5px;overflow:hidden;border:1px solid var(--line)}
+.ebt i{display:block;height:100%;border-radius:5px}
+.ebp{width:38px;text-align:right;font-size:12px;color:var(--sub);flex:none}
+.tgc{display:inline-block;border:1px solid var(--line2);border-radius:14px;padding:3px 11px;font-size:12px;color:var(--gold2);margin:4px 4px 0 0;background:#c9a2270d}
 .kv{width:100%;border-collapse:collapse;font-size:13.5px}
 .kv td{padding:9px 10px;border-bottom:1px solid var(--line);color:var(--ink2);vertical-align:top}
 .kv tr:last-child td{border-bottom:none}
@@ -103,6 +113,17 @@
   <div class="note3">Birth time not on public record — the exact year, month and day pillars shown (the hour pillar is honestly omitted).</div>
 
   <section>
+    <div class="box">
+      <h2>The Balance — what makes this chart its own</h2>
+      <p style="font-size:13.5px">Every Ding Hai day shares the same core — but the year and month around it never repeat.
+      This is the mix this particular chart was dealt (three pillars, hour excluded):</p>
+      <div class="ebars"><div class="ebrow"><span class="ebl">Wood <b>木</b><em>Resource</em></span><span class="ebt"><i style="width:2%;background:var(--wood)"></i></span><span class="ebp">0%</span></div><div class="ebrow"><span class="ebl">Fire <b>火</b><em>Peers</em></span><span class="ebt"><i style="width:33%;background:var(--fire)"></i></span><span class="ebp">33%</span></div><div class="ebrow"><span class="ebl">Earth <b>土</b><em>Output</em></span><span class="ebt"><i style="width:33%;background:var(--earth)"></i></span><span class="ebp">33%</span></div><div class="ebrow"><span class="ebl">Metal <b>金</b><em>Wealth</em></span><span class="ebt"><i style="width:17%;background:var(--metal)"></i></span><span class="ebp">17%</span></div><div class="ebrow"><span class="ebl">Water <b>水</b><em>Officer</em></span><span class="ebt"><i style="width:17%;background:var(--water)"></i></span><span class="ebp">17%</span></div></div>
+      <table class="kv" style="margin-top:14px">
+        <tr><td>Strength</td><td>Weak Self (身弱) — a chart that runs on support — its story turns on what feeds the Day Master</td></tr>
+        <tr><td>Useful Element 用神</td><td>Wood (Resource) first · Fire (Peers) second</td></tr>
+      </table>
+      <div style="margin-top:12px"><span style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--faint)">Archetypes in the chart</span><br><span class="tgc">The Rival</span><span class="tgc">The Creator</span><span class="tgc">The Maverick</span><span class="tgc">The Entrepreneur</span><span class="tgc">The Governor</span></div>
+    </div>
     <div class="box" style="border-top:3px solid var(--fire)">
       <h2>The Ding Hai Day — David Bowie's core</h2>
       <p style="font-family:var(--serif);font-style:italic;color:var(--ink2)">“The lamp over night water — intuitive and romantic; sees in the dark.”</p>
