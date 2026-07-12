@@ -19,6 +19,12 @@ spec.loader.exec_module(bp)
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(ROOT, 'famous')
+
+# Destiny Audit deep links: slug -> audit number (page must exist at audits/<slug>.html + -ko)
+AUDITS = {
+    'masayoshi-son': 'No.001',
+    'steve-jobs': 'No.002',
+}
 CELEBS = json.load(open(os.path.join(ROOT, 'celebs.json'), encoding='utf-8'))
 P60 = {p['gj']: p for p in json.load(open(os.path.expanduser('~/elun-engine/pillar60.json'), encoding='utf-8'))['pillars']}
 
@@ -126,6 +132,17 @@ def page(name):
     gi = bp.gz_index(gj)
     ny_hj, ny_en, ny_gloss = bp.NAYIN[gi // 2]
     struct = GOD_EN.get(r.get('geokguk', {}).get('bongi_god'), '')
+    audit_html = ''
+    if slugify(name) in AUDITS:
+        _slug, _no = slugify(name), AUDITS[slugify(name)]
+        audit_html = f'''
+  <div class="box" style="border-color:var(--gold);background:#c9a2270d;text-align:center">
+    <h2 style="margin-bottom:8px">Elun Destiny Audit · {_no}</h2>
+    <p style="margin:0 0 14px">This chart was audited decade by decade against {name}'s fully documented life — hits, partials, and misses all graded on the record.</p>
+    <a class="btn ghost" href="../audits/{_slug}.html">Read the full audit →</a>
+    <div style="font-size:12px;color:var(--faint);margin-top:10px"><a href="../audits/{_slug}-ko.html" style="color:var(--sub)">한국어판 →</a></div>
+  </div>
+'''
     return f'''<!doctype html>
 <html lang="en">
 <head>
@@ -212,7 +229,7 @@ def page(name):
       <p style="font-size:12px;color:var(--faint);margin-top:12px">All day pillars computed from public birth records (noon local time; the day pillar is stable except within an hour of midnight).</p>
     </div>
   </section>
-
+{audit_html}
   <div class="cta" style="text-align:center;padding:36px 0 60px">
     <p style="color:var(--sub);max-width:460px;margin:0 auto 18px">Share a day pillar with {name}? There's one way to find out — and it takes a birth date, not a birth time.</p>
     <a class="btn" href="../start.html">Calculate my chart — free</a>
