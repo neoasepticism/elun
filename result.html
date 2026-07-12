@@ -554,11 +554,10 @@ else{
           sc.onload=res; sc.onerror=rej; document.head.appendChild(sc);});
       }
       const canvas=await html2canvas(document.getElementById('charsheet'),{backgroundColor:'#100d0a',scale:2,useCORS:true});
-      canvas.toBlob(async blob=>{
-        const file=new File([blob],'elun-character-sheet.png',{type:'image/png'});
-        if(navigator.canShare&&navigator.canShare({files:[file]})){
-          try{ await navigator.share({files:[file],title:'My chart as a character sheet — elun.me'}); }catch(_){}
-        } else dl(blob);
+      canvas.toBlob(blob=>{
+        const a=document.createElement('a');
+        a.href=URL.createObjectURL(blob); a.download='elun-character-sheet.png';
+        document.body.appendChild(a); a.click(); a.remove();
       },'image/png');
     }));
   }
