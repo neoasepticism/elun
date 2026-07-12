@@ -112,6 +112,31 @@
   .kv td{padding:8px 4px;border-bottom:1px dashed var(--line);color:var(--ink2)}
   .kv td:first-child{color:var(--sub);width:42%}
 
+  /* character sheet */
+  .cs{border:2px solid var(--gold);border-radius:18px;overflow:hidden;background:linear-gradient(170deg,#161109,#100d0a);margin:18px 0;position:relative}
+  .cs .cshead{display:flex;justify-content:space-between;align-items:baseline;padding:16px 22px 0}
+  .cs .cst{font-family:var(--serif);letter-spacing:4px;font-size:11px;color:var(--gold);text-transform:uppercase}
+  .cs .cslv{font-family:var(--serif);font-size:13px;color:var(--gold2)}
+  .cs .csclass{display:flex;gap:16px;align-items:center;padding:14px 22px 4px}
+  .cs .csart{width:86px;height:86px;border-radius:12px;background-size:cover;background-position:center;flex:none;
+    border:1.5px solid var(--csac,var(--gold));box-shadow:0 0 24px -8px var(--csac,var(--gold))}
+  .cs .csnm{font-family:var(--serif);font-size:22px;font-weight:700}
+  .cs .cscl{font-size:12.5px;color:var(--csac,var(--gold2));letter-spacing:1px}
+  .cs .cssub{font-size:11px;color:var(--sub);font-style:italic;margin-top:3px}
+  .cs .csbody{display:grid;grid-template-columns:1.1fr 1fr;gap:6px 26px;padding:12px 22px 18px}
+  @media(max-width:600px){.cs .csbody{grid-template-columns:1fr}}
+  .cs h4{font-family:var(--serif);font-size:10.5px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin:10px 0 7px}
+  .cs .stat{display:flex;align-items:center;gap:8px;margin:5px 0;font-size:11.5px}
+  .cs .stat .sn{width:86px;color:var(--ink2);letter-spacing:1px}
+  .cs .stat .sb{flex:1;height:9px;background:#0a0806;border-radius:5px;overflow:hidden}
+  .cs .stat .sf{display:block;height:100%;border-radius:5px}
+  .cs .stat .sv{width:26px;text-align:right;font-family:var(--serif);color:var(--ink)}
+  .cs .skill{display:flex;justify-content:space-between;font-size:12px;color:var(--ink2);padding:4px 0;border-bottom:1px dashed #ffffff12}
+  .cs .skill b{color:var(--gold2);font-family:var(--serif);font-weight:600}
+  .cs .perk{font-size:11.5px;color:var(--ink2);padding:3px 0}
+  .cs .perk b{color:var(--ink)}
+  .cs .csfoot{padding:10px 22px 16px;border-top:1px solid #ffffff14;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;font-size:11px;color:var(--sub)}
+  .cs .csfoot b{color:var(--gold2);font-family:var(--serif)}
   .cta{border:1.5px solid var(--gold);border-radius:16px;background:linear-gradient(160deg,#241c0e,#1a140b);padding:28px;margin:26px 0;text-align:center}
   .cta h3{font-family:var(--serif);font-size:22px;margin:0 0 8px}
   .cta p{color:var(--ink2);font-size:14px;max-width:520px;margin:0 auto 18px}
@@ -182,6 +207,13 @@
   <div class="box">
     <h2>Structure &amp; Strength</h2>
     <table class="kv" id="struct"></table>
+  </div>
+
+  <div class="box" style="padding:0;border:none;background:none">
+    <div class="cs" id="charsheet"></div>
+    <div style="text-align:center;margin-top:10px">
+      <button class="btn ghost" id="savecs" style="font-size:13px;padding:9px 18px">🎮 Save character sheet</button>
+    </div>
   </div>
 
   <div class="cta">
@@ -456,6 +488,79 @@ else{
           setTimeout(()=>e2.target.textContent='Copy link',1400); }catch(_){}
       });
     } else { document.getElementById('socialrow').style.display='none'; }
+  }
+
+  // ── RPG character sheet ──
+  {
+    const ELCOLOR={wood:'var(--wood)',fire:'var(--fire)',earth:'var(--earth)',metal:'var(--metal)',water:'var(--water)'};
+    const STATNM={wood:'VITALITY',fire:'CHARISMA',earth:'ENDURANCE',metal:'PRECISION',water:'WISDOM'};
+    const CLASSNM={'갑':'Sky-Oak Vanguard','을':'Vine-Blade Duelist','병':'Solar Herald','정':'Lantern Sage',
+      '무':'Mountain Warden','기':'Field Alchemist','경':'Forge Knight','신':'Jewel Assassin','임':'Tide Caller','계':'Mist Oracle'};
+    const SKILLNM={'비견':'Rally Allies','겁재':'Rival\u2019s Drive','식신':'Creative Flow','상관':'Rule Breaker',
+      '정재':'Steady Coffers','편재':'Windfall Gambit','정관':'Authority Aura','편관':'Iron Will','정인':'Mentor\u2019s Shield','편인':'Sixth Sense'};
+    const PERKNM={'RARE · KUI GANG':'All-or-Nothing — crits hit twice as hard, both ways',
+      'RARE · PURE PILLAR':'Unshakeable Identity — immune to charm effects',
+      'LUCKY · NOBLEMAN':'Guardian\u2019s Favor — help arrives at lowest HP',
+      'INTENSE · THE BLADE':'Critical Edge — decisive strikes, needs a worthy arena'};
+    const BRPERK={'子':'Night Instinct','午':'Magnetic Presence','卯':'Magnetic Presence','酉':'Magnetic Presence',
+      '寅':'Wanderer\u2019s Pace','申':'Wanderer\u2019s Pace','巳':'Wanderer\u2019s Pace','亥':'Wanderer\u2019s Pace',
+      '辰':'Inner Sanctum','戌':'Inner Sanctum','丑':'Inner Sanctum','未':'Inner Sanctum'};
+    const ITEMNM={wood:'Verdant Charm',fire:'Ember Lantern',earth:'Terracotta Ward',metal:'Gilded Edge',water:'Spring Flask'};
+    const CYCLE=['wood','fire','earth','metal','water'];
+    // 스탯 (6/8자 카운트 재사용)
+    const statRows=Object.entries(cnt).map(([el,c])=>{
+      const pc=Math.round(c/nchars*100);
+      return `<div class="stat"><span class="sn">${STATNM[el]}</span><span class="sb"><span class="sf" style="width:${pc}%;background:${ELCOLOR[el]}"></span></span><span class="sv">${pc}</span></div>`;
+    }).join('');
+    // 스킬
+    const skillRows=Object.entries(tg).sort((a,b)=>b[1]-a[1]).map(([k,v])=>
+      `<div class="skill"><span>${SKILLNM[k]||GODK[k]||k}</span><b>Lv.${v}</b></div>`).join('');
+    // 퍽
+    let perks='';
+    if(rare&&PERKNM[rare]) perks+=`<div class="perk"><b>◆ ${rare.split(' · ')[1]}</b> — ${PERKNM[rare].split(' — ')[1]}</div>`;
+    const brp=BRPERK[gjH[1]];
+    if(brp) perks+=`<div class="perk"><b>✦ ${brp}</b> — passive from your day branch (${gjH[1]})</div>`;
+    if(!perks) perks='<div class="perk">—</div>';
+    // 용신 장비
+    const dmIdx=CYCLE.indexOf(dm.el);
+    const isWeak=/약|중화/.test(D.strength?.label||'');
+    const usefulEl=isWeak?CYCLE[(dmIdx+4)%5]:CYCLE[(dmIdx+1)%5];
+    // 레벨·퀘스트
+    const lvl=(new Date().getFullYear())-D.input.year;
+    const seg=(D.dawun?.segments||[]).find(x=>{const[lo,hi]=x.age.split('~').map(Number);return lvl>=lo&&lvl<=hi;});
+    const quest=seg?`Chapter ${seg.age} · ${seg.ganji_hanja}`:'—';
+    const nm=(meta.name||'Adventurer');
+    document.getElementById('charsheet').innerHTML=`
+      <div style="position:absolute;inset:0;background-image:url(pillars/art/${SSLUG[dmk]}.jpg);background-size:cover;background-position:center;opacity:.14;pointer-events:none"></div>
+      <div class="cshead" style="position:relative"><span class="cst">⚔ Character Sheet · Elun</span><span class="cslv">Lv.${lvl}</span></div>
+      <div class="csclass" style="position:relative;--csac:${ELCOLOR[dm.el]}">
+        <div class="csart" style="background-image:url(pillars/art/${SSLUG[dmk]}.jpg)"></div>
+        <div><div class="csnm">${nm}</div>
+          <div class="cscl">${dm.han} ${dm.py} · ${CLASSNM[dmk]||dm.arch}</div>
+          <div class="cssub">\u201C${dm.arch}\u201D class · ${dm.en}</div></div>
+      </div>
+      <div class="csbody" style="position:relative">
+        <div><h4>Stats</h4>${statRows}</div>
+        <div><h4>Skills</h4>${skillRows}<h4 style="margin-top:14px">Traits</h4>${perks}</div>
+      </div>
+      <div class="csfoot" style="position:relative">
+        <span>🧪 Recovery item: <b>${ITEMNM[usefulEl]}</b> (${usefulEl})</span>
+        <span>🗺 Current quest: <b>${quest}</b></span>
+      </div>`;
+    document.getElementById('savecs').addEventListener('click', e=>withBtn(e.target, async()=>{
+      if(!window.html2canvas){
+        await new Promise((res,rej)=>{const sc=document.createElement('script');
+          sc.src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+          sc.onload=res; sc.onerror=rej; document.head.appendChild(sc);});
+      }
+      const canvas=await html2canvas(document.getElementById('charsheet'),{backgroundColor:'#100d0a',scale:2,useCORS:true});
+      canvas.toBlob(async blob=>{
+        const file=new File([blob],'elun-character-sheet.png',{type:'image/png'});
+        if(navigator.canShare&&navigator.canShare({files:[file]})){
+          try{ await navigator.share({files:[file],title:'My chart as a character sheet — elun.me'}); }catch(_){}
+        } else dl(blob);
+      },'image/png');
+    }));
   }
 
   // share
