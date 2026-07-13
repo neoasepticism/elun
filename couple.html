@@ -55,6 +55,7 @@
   @keyframes spin{to{transform:rotate(360deg)}}
   #status p{color:var(--ink2);font-size:13.5px;margin:0}
   #err{display:none;color:var(--red);font-size:13.5px;text-align:center;margin-top:14px}
+  .hint{font-size:11.5px;color:var(--faint);margin-top:8px}
   footer{border-top:1px solid var(--line);padding:26px 0;text-align:center;color:var(--faint);font-size:12px}
 </style>
 </head>
@@ -90,6 +91,7 @@
           <select id="a_gender"><option value="F">Female</option><option value="M">Male</option></select></div>
         <div><label>Birth city</label><select id="a_city"></select></div>
       </div>
+      <div class="hint">City not listed? Pick the nearest listed city in the same time zone — within ~150 km it almost never shifts a pillar.</div>
     </fieldset>
 
     <fieldset>
@@ -106,6 +108,7 @@
           <select id="b_gender"><option value="M">Male</option><option value="F">Female</option></select></div>
         <div><label>Birth city</label><select id="b_city"></select></div>
       </div>
+      <div class="hint">City not listed? Pick the nearest listed city in the same time zone — within ~150 km it almost never shifts a pillar.</div>
     </fieldset>
 
     <label>Report language</label>
@@ -122,34 +125,11 @@
 
 <footer>© 2026 Elun · problems? <a href="mailto:hello@elun.me">hello@elun.me</a></footer>
 
+<script src="cities.js"></script>
 <script>
 const API_BASE = (location.hostname==='localhost'||location.hostname==='127.0.0.1'||location.protocol==='file:')
   ? 'http://127.0.0.1:8500' : 'https://api.elun.me';
-// start.html·report.html과 동일한 도시 DB — [name, country, lon, IANA tz]
-const CITIES = [
-  ["Seoul","South Korea",126.98,"Asia/Seoul"],["Busan","South Korea",129.08,"Asia/Seoul"],
-  ["Incheon","South Korea",126.71,"Asia/Seoul"],["Daegu","South Korea",128.60,"Asia/Seoul"],
-  ["Tokyo","Japan",139.69,"Asia/Tokyo"],["Osaka","Japan",135.50,"Asia/Tokyo"],
-  ["Beijing","China",116.41,"Asia/Shanghai"],["Shanghai","China",121.47,"Asia/Shanghai"],
-  ["Hong Kong","Hong Kong",114.17,"Asia/Hong_Kong"],["Taipei","Taiwan",121.56,"Asia/Taipei"],
-  ["Singapore","Singapore",103.82,"Asia/Singapore"],["Bangkok","Thailand",100.50,"Asia/Bangkok"],
-  ["Ho Chi Minh City","Vietnam",106.63,"Asia/Ho_Chi_Minh"],["Manila","Philippines",120.98,"Asia/Manila"],
-  ["Mumbai","India",72.88,"Asia/Kolkata"],["New Delhi","India",77.21,"Asia/Kolkata"],
-  ["Dubai","UAE",55.27,"Asia/Dubai"],
-  ["New York","USA",-74.01,"America/New_York"],["Los Angeles","USA",-118.24,"America/Los_Angeles"],
-  ["Chicago","USA",-87.63,"America/Chicago"],["San Francisco","USA",-122.42,"America/Los_Angeles"],
-  ["Seattle","USA",-122.33,"America/Los_Angeles"],["Houston","USA",-95.37,"America/Chicago"],
-  ["Boston","USA",-71.06,"America/New_York"],
-  ["Toronto","Canada",-79.38,"America/Toronto"],["Vancouver","Canada",-123.12,"America/Vancouver"],
-  ["London","UK",-0.13,"Europe/London"],["Paris","France",2.35,"Europe/Paris"],
-  ["Berlin","Germany",13.40,"Europe/Berlin"],["Madrid","Spain",-3.70,"Europe/Madrid"],
-  ["Rome","Italy",12.50,"Europe/Rome"],["Amsterdam","Netherlands",4.90,"Europe/Amsterdam"],
-  ["Moscow","Russia",37.62,"Europe/Moscow"],
-  ["Sydney","Australia",151.21,"Australia/Sydney"],["Melbourne","Australia",144.96,"Australia/Melbourne"],
-  ["Auckland","New Zealand",174.76,"Pacific/Auckland"],
-  ["São Paulo","Brazil",-46.63,"America/Sao_Paulo"],["Mexico City","Mexico",-99.13,"America/Mexico_City"],
-  ["Cairo","Egypt",31.24,"Africa/Cairo"],["Johannesburg","South Africa",28.05,"Africa/Johannesburg"],
-];
+const CITIES = window.ELUN_CITIES;  // 단일 정본 cities.js
 for(const id of ['a_city','b_city']){
   document.getElementById(id).innerHTML=CITIES.map((c,i)=>`<option value="${i}">${c[0]}, ${c[1]}</option>`).join('');
 }
