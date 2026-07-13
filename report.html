@@ -35,6 +35,11 @@
   .row{display:flex;gap:10px}
   .row>div{flex:1;min-width:0}
   input[type=date],input[type=time]{min-width:0;-webkit-appearance:none;appearance:none}
+  .langopt{display:flex;gap:10px}
+  .langopt .lo{flex:1;display:flex;align-items:center;justify-content:center;gap:9px;background:#12100c;
+    border:1px solid var(--line2);border-radius:10px;padding:11px 10px;cursor:pointer;font-size:14.5px;color:var(--ink)}
+  .langopt input[type=radio]{width:15px;height:15px;margin:0;cursor:pointer;accent-color:var(--gold)}
+  .langopt .lo:has(input:checked){border-color:var(--gold);background:#1a150c;box-shadow:0 0 0 2px #c9a22726}
   @media(max-width:520px){.row.dt{flex-direction:column;gap:0}}
   .btn{width:100%;background:linear-gradient(180deg,var(--gold2),var(--gold));color:#1a1206;font-weight:700;
     padding:13px;border-radius:24px;font-size:15px;border:none;cursor:pointer;font-family:var(--sans);margin-top:22px}
@@ -85,7 +90,10 @@
         <select id="bcity"></select></div>
     </div>
     <label>Report language</label>
-    <select id="blang"><option value="en">English</option><option value="ko">한국어 (Korean)</option></select>
+    <div class="langopt">
+      <label class="lo"><input type="radio" name="blang" value="en" checked><span>English</span></label>
+      <label class="lo"><input type="radio" name="blang" value="ko"><span>한국어 (Korean)</span></label>
+    </div>
     <div class="hint">Near midnight or a time-zone boundary? Double-check the time — it can change your day pillar.</div>
 
     <button class="btn" id="go" type="submit">Generate my report</button>
@@ -160,7 +168,7 @@ document.getElementById('claim').addEventListener('submit', async e=>{
     name:document.getElementById('rname').value.trim(),
     year:y,month:mo,day:d,hour:h,minute:mi2||0,
     gender:document.getElementById('bgender').value,
-    longitude:lon,timezone:tz,lang:document.getElementById('blang').value};
+    longitude:lon,timezone:tz,lang:document.querySelector('input[name=blang]:checked').value};
   const go=document.getElementById('go'), st=document.getElementById('status');
   go.disabled=true; st.style.display='block'; mi=0;
   document.getElementById('stxt').textContent=msgs[0];
