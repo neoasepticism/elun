@@ -5,7 +5,7 @@
 <link rel="canonical" href="https://elun.me/"/>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Elun — Destiny, engineered.</title>
-<meta name="description" content="Elun — destiny, engineered. Your BaZi chart, calculated with true solar time, not guessed. Five elements. Ten gods. One you." />
+<meta name="description" content="Elun — destiny, engineered. Precision BaZi (Four Pillars of Destiny), the ancient Chinese astrology beyond sun signs — your chart calculated with true solar time, not guessed. Five elements. Ten gods. One you." />
 <style>
   :root{
     --ink:#f3ece0; --ink2:#c9bda9; --sub:#9c8f79; --faint:#6e6353;
@@ -55,19 +55,20 @@
   .band{background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:56px 0}
   .band h2{font-family:var(--serif);font-size:clamp(26px,4vw,38px);text-align:center;margin:0 0 10px;font-weight:700}
   .band .sub{text-align:center;color:var(--sub);max-width:600px;margin:0 auto 34px}
-  .compare{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:760px;margin:0 auto}
-  @media(max-width:620px){.compare{grid-template-columns:1fr}}
-  .cc{border:1px solid var(--line);border-radius:14px;padding:22px 24px;background:var(--card)}
-  .cc.them{opacity:.75}
-  .cc .h{font-family:var(--serif);font-size:15px;margin-bottom:12px;letter-spacing:1px}
-  .cc.them .h{color:var(--red)}
-  .cc.us .h{color:var(--gold2)}
-  .cc ul{list-style:none;padding:0;margin:0}
-  .cc li{padding:7px 0 7px 26px;position:relative;font-size:14px;color:var(--ink2);border-bottom:1px solid var(--line)}
-  .cc li:last-child{border-bottom:none}
-  .cc.them li:before{content:"✕";position:absolute;left:0;color:var(--red);font-size:12px}
-  .cc.us li:before{content:"✓";position:absolute;left:0;color:var(--gold2);font-weight:700}
-  .cc.us{border-color:var(--gold);box-shadow:0 0 0 3px #c9a2271a}
+  .cmpwrap{max-width:860px;margin:0 auto;overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:14px;background:var(--card)}
+  table.cmp{width:100%;border-collapse:collapse;font-size:13.5px;min-width:560px}
+  table.cmp th,table.cmp td{padding:12px 16px;text-align:left;vertical-align:top;color:var(--ink2);border-top:1px solid var(--line)}
+  table.cmp tr:first-child th{border-top:none}
+  table.cmp th{font-family:var(--serif);font-size:13.5px;color:var(--ink)}
+  table.cmp td:first-child{color:var(--sub);font-size:12.5px;width:21%}
+  table.cmp th:last-child,table.cmp td:last-child{background:#c9a22712;border-left:1px solid var(--line2)}
+  table.cmp th:last-child{color:var(--gold2)}
+  table.cmp td:last-child{color:var(--ink)}
+  table.cmp .no{color:var(--red);font-size:12px;margin-right:6px}
+  table.cmp .yes{color:var(--gold2);font-weight:700;margin-right:6px}
+  .cmp-note{text-align:center;color:var(--faint);font-size:12.5px;margin:14px auto 0;max-width:760px}
+  .cmp-swipe{display:none;text-align:center;color:var(--gold2);font-size:12px;margin:10px 0 0;letter-spacing:1px}
+  @media(max-width:640px){.cmp-swipe{display:block}}
 
   /* section */
   section{padding:70px 0}
@@ -122,6 +123,17 @@
   .mock .bar .bt{flex:1;height:9px;background:#e8ddc8;border-radius:5px;overflow:hidden}
   .mock .bar .bf{height:100%;border-radius:5px}
 
+  /* proof */
+  .stats{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin:0 0 36px}
+  .stat{border:1px solid var(--line);border-radius:14px;background:var(--card);padding:16px 22px;text-align:center;min-width:150px}
+  .stat .n{font-family:var(--serif);font-size:28px;color:var(--gold2);font-weight:700;line-height:1.2}
+  .stat .l{font-size:12px;color:var(--sub);letter-spacing:.5px;margin-top:3px}
+  .badges{display:inline-flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:8px}
+  .bdg{font-size:9.5px;letter-spacing:1px;font-weight:700;padding:3px 9px;border-radius:10px;border:1px solid var(--line2)}
+  .bdg.g{color:#8fbc8f;border-color:#3a5a3a}
+  .bdg.y{color:var(--gold2);border-color:#5a4a1a}
+  .bdg.r{color:var(--red);border-color:#5a3028}
+
   /* pricing */
   .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:stretch}
   @media(max-width:760px){.tiers{grid-template-columns:1fr}}
@@ -161,6 +173,7 @@
   <div class="wrap">
     <div class="logo"><span class="seal">乙</span><span><span class="m">Elun</span> <span style="color:var(--faint);font-size:13px;font-family:var(--serif)">乙</span></span></div>
     <div class="navlinks">
+      <a href="bazi-vs-astrology.html">What is BaZi?</a>
       <a href="#precision">Precision</a>
       <a href="#archetypes">Archetypes</a>
       <a href="daymasters.html">Day Masters</a>
@@ -189,27 +202,20 @@
 <div class="band" id="precision">
   <div class="wrap">
     <h2>Most BaZi tools read the clock. We read the sun.</h2>
-    <p class="sub">Korea's clock runs on Japan's meridian (135°E), but Seoul sits at 127°E — a 32-minute gap. A birth at 05:00 is really 04:25 by the sun, and that alone can change an entire pillar. General AI chatbots skip this. Elun doesn't — we don't guess your chart, we calculate it. <a href="birth-time.html">Don't know your birth time? Here's what to do →</a></p>
-    <div class="compare">
-      <div class="cc them">
-        <div class="h">Generic AI / free sites</div>
-        <ul>
-          <li>Reads clock time as-is — wrong hour &amp; day pillars</li>
-          <li>Guesses solar terms from memory (hallucination)</li>
-          <li>A disposable chat log, cluttered with ads</li>
-          <li>Anonymous, one-size-fits-all</li>
-        </ul>
-      </div>
-      <div class="cc us">
-        <div class="h">Elun</div>
-        <ul>
-          <li>True-solar-time &amp; longitude correction, always</li>
-          <li>Deterministic engine — same input, same chart</li>
-          <li>A keepsake report you save, revisit &amp; share</li>
-          <li>Physician-crafted · honest · no fear-selling</li>
-        </ul>
-      </div>
+    <p class="sub">Standard time zones sit tens of minutes away from the sun's actual position — Seoul's clock runs 32 minutes fast of its own sky, so a birth at 05:00 is really 04:25 by the sun. That alone can change an entire pillar. Elun doesn't guess your chart, it calculates it. <a href="bazi-vs-astrology.html">New to BaZi? See how it compares to Western astrology →</a></p>
+    <div class="cmpwrap">
+      <table class="cmp">
+        <tr><th></th><th>Horoscope apps</th><th>Generic AI chat</th><th>Elun</th></tr>
+        <tr><td>The chart</td><td>Sun sign — 1 of 12 templates</td><td>Recalled from memory, often hallucinated</td><td>Full eight-character BaZi chart, deterministically computed — same input, same chart</td></tr>
+        <tr><td>Birth time</td><td><span class="no">✕</span>Read as-is, or ignored</td><td><span class="no">✕</span>Clock time taken at face value</td><td><span class="yes">✓</span>True solar time &amp; longitude correction — worldwide zones, historical DST</td></tr>
+        <tr><td>Time unknown?</td><td><span class="no">✕</span>Defaults to noon, silently</td><td><span class="no">✕</span>Guesses an hour anyway</td><td><span class="yes">✓</span>Honest three-pillar reading — <a href="birth-time.html">find your time later</a>, regenerate free</td></tr>
+        <tr><td>Forecast</td><td>A daily horoscope feed</td><td>Generic, unanchored advice</td><td>Ten-year luck pillars, year by year — the year to move, the year to hold</td></tr>
+        <tr><td>Accountability</td><td><span class="no">✕</span>None</td><td><span class="no">✕</span>None</td><td><span class="yes">✓</span><a href="audits/">Public Destiny Audits</a> — the method tested on documented lives, misses graded</td></tr>
+        <tr><td>What you keep</td><td>A subscription</td><td>A chat that scrolls away</td><td>A keepsake report you save, print, revisit &amp; share — one-time purchase</td></tr>
+      </table>
     </div>
+    <p class="cmp-swipe">swipe the table to see the Elun column →</p>
+    <p class="cmp-note">Physician-crafted · honest readings · no fear-selling · no subscription traps</p>
   </div>
 </div>
 
@@ -345,7 +351,7 @@ if(p){
           <li>Your Useful Element (用神): the one that revives you</li>
         </ul>
         <p style="margin-top:20px"><a href="sample-report-EN.html" class="btn ghost">Open a real sample →</a></p>
-        <p style="margin-top:14px;font-size:13.5px;color:var(--faint)">Skeptical? Good — so are we. Read the <b style="color:var(--ink2)">Destiny Audit</b> series, where the method faces fully documented lives, misses graded and all: <a href="audits/masayoshi-son.html">Masayoshi Son</a> · <a href="audits/steve-jobs.html">Steve Jobs</a></p>
+        <p style="margin-top:14px;font-size:13.5px;color:var(--faint)">Coming from Western astrology? <a href="bazi-vs-astrology.html">Here's how the two systems compare →</a></p>
       </div>
       <div class="mock">
         <div class="mh">
@@ -367,6 +373,28 @@ if(p){
   </div>
 </section>
 
+
+<!-- PROOF -->
+<section id="proof">
+  <div class="wrap">
+    <div class="eyebrow">檢證 · Proof, Not Promises</div>
+    <h2 class="sec">We test the method in public</h2>
+    <p class="sec-sub">No testimonials written to order, no cherry-picked wins. The <b style="color:var(--ink2)">Destiny Audit</b> series runs Elun's engine on fully documented lives — decade by decade against the recorded facts — and grades every verdict, including the misses.</p>
+    <div class="stats">
+      <div class="stat"><div class="n">15</div><div class="l">figures audited</div></div>
+      <div class="stat"><div class="n">3</div><div class="l">head-to-head pairings</div></div>
+      <div class="stat"><div class="l" style="margin-top:0">every decade graded</div>
+        <div class="badges"><span class="bdg g">EXPLAINED WELL</span><span class="bdg y">PARTLY</span><span class="bdg r">NOT OBVIOUSLY</span></div>
+      </div>
+    </div>
+    <div class="rpg-cards">
+      <a class="rc exl" href="audits/ali-vs-tyson.html"><div class="ic">🥊</div><div class="h">Ali vs Tyson</div><p>Two boxers, the same Metal Day Master — and opposite chart strength. One variable, two very different fates.</p><div class="go">Read the pairing →</div></a>
+      <a class="rc exl" href="audits/obama-vs-trump.html"><div class="ic">🏛️</div><div class="h">Obama vs Trump</div><p>Both Earth Day Masters, both presidents — audited from verified birth records, hour pillars included. Strictly structural, no sides taken.</p><div class="go">Read the pairing →</div></a>
+      <a class="rc exl" href="audits/masayoshi-son.html"><div class="ic">📈</div><div class="h">Masayoshi Son</div><p>Five decades of documented boom and bust, mapped against his luck pillars — the audit that started the series.</p><div class="go">Read the audit →</div></a>
+    </div>
+    <p style="text-align:center;margin-top:26px"><a href="audits/" class="btn ghost">All 15 audits &amp; pairings →</a></p>
+  </div>
+</section>
 
 <!-- THE NAME -->
 <section id="thename" style="background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
@@ -477,7 +505,7 @@ if(p){
 <footer>
   <div class="wrap">
     <div class="disc">Elun computes your chart with a deterministic ephemeris engine using true-solar-time and longitude correction. BaZi is offered as a resource for self-reflection and life planning; it does not replace medical, legal, or financial advice. "Strength/weakness" in BaZi describes elemental balance — not your real-world strength or worth.</div>
-    <div>© 2026 Elun · elun.me · 精密四柱 Precision BaZi · <a href="daymasters.html">The Ten Day Masters</a> · <a href="cards.html">The Cards</a> · <a href="birth-time.html">Find Your Birth Time</a></div>
+    <div>© 2026 Elun · elun.me · 精密四柱 Precision BaZi · <a href="bazi-vs-astrology.html">BaZi vs Western Astrology</a> · <a href="daymasters.html">The Ten Day Masters</a> · <a href="cards.html">The Cards</a> · <a href="birth-time.html">Find Your Birth Time</a></div>
   </div>
 </footer>
 
