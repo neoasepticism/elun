@@ -71,7 +71,7 @@ GODS = {
    love="You are a responsible, presentable, marriage-minded partner — the one parents approve of. Allow some disorder into intimacy; love is not an audit.",
    work="Institutions reward you: public service, law, corporate leadership, medicine. Reputation compounds for you like interest — protect it and it will carry you."),
  'challenger': dict(nm='The Challenger', han='偏官', key='Conquest · pressure',
-   sit="You sit on raw power — the classic Seven Killings seat. Pressure lives with you like a housemate: life keeps testing you, and testing has made you formidable. Others crack where you concentrate.",
+   sit="You sit on raw power — the classic Challenger's seat. Pressure lives with you like a housemate: life keeps testing you, and testing has made you formidable. Others crack where you concentrate.",
    love="Your intensity is magnetic and unnerving in equal measure. You protect fiercely and demand much; the right partner is steady enough not to flinch and honest enough to push back.",
    work="Crisis is your element: surgery, command, enforcement, turnarounds, competition. Give you a hard problem and authority to act, and stand back."),
  'scholar': dict(nm='The Scholar', han='正印', key='Mentorship · support',
