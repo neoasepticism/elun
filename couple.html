@@ -68,7 +68,7 @@
 <div class="wrap">
   <div class="hero">
     <h1>Couple Compatibility Report</h1>
-    <p>Enter your order number, the purchase email, and both birth details. Generation takes about 2 minutes — the report file also saves to your Downloads automatically. Birth times unknown? That's fine — or <a href="birth-time.html" target="_blank">here's how to find them</a>.</p>
+    <p>Enter your order number, the purchase email, and both birth details. Generation takes about 2 minutes — save the finished report as a PDF with the 🖨 button at the bottom. Birth times unknown? That's fine — or <a href="birth-time.html" target="_blank">here's how to find them</a>.</p>
   </div>
 
   <form id="claim">
@@ -189,13 +189,7 @@ document.getElementById('claim').addEventListener('submit', async e=>{
       throw new Error(t.detail||('server '+res.status));
     }
     const html=await res.text();
-    try{
-      const nm=((body.person_a.name||'A')+'-'+(body.person_b.name||'B')).replace(/[^A-Za-z0-9._-]+/g,'-');
-      const blob=new Blob([html],{type:'text/html;charset=utf-8'});
-      const a=document.createElement('a');
-      a.href=URL.createObjectURL(blob); a.download='Elun-'+nm+'-Compatibility.html';
-      document.body.appendChild(a); a.click(); a.remove();
-    }catch(_){}
+    // 저장은 리포트 내 🖨 PDF 버튼으로 단일화 (HTML 자동 다운로드 제거)
     document.open(); document.write(html); document.close();
   }catch(ex){
     err.textContent='⚠ '+ex.message; err.style.display='block';
