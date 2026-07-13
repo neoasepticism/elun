@@ -229,6 +229,12 @@ def sitting_stage(gj):
     start, d = STAGE_START[gj[0]]
     return STAGE_INFO[(B_ORD.index(gj[1]) - B_ORD.index(start)) * d % 12]
 
+# 십이운성 → 아트 슬러그 (pillars/art/st-*.jpg, 2026-07-14 12종)
+STAGE_ART = {'長生': 'st-birth', '沐浴': 'st-bath', '冠帶': 'st-comingofage',
+             '建祿': 'st-prosperity', '帝旺': 'st-peak', '衰': 'st-decline',
+             '病': 'st-weakening', '死': 'st-stillness', '墓': 'st-storage',
+             '絶': 'st-severance', '胎': 'st-conception', '養': 'st-nurture'}
+
 NAYIN = [  # (한자, 영문명, 한 줄 의미) — 갑자부터 2주씩 30개
  ('海中金', 'Gold in the Sea', 'treasure hidden in deep water — worth that must be discovered, not displayed'),
  ('爐中火', 'Fire in the Furnace', 'contained, working fire — heat with a purpose'),
@@ -614,6 +620,7 @@ def page(p, prev_p, next_p, all_pillars):
     ny_hj, ny_en, ny_gloss = NAYIN[gi // 2]
     void1, void2 = VOID_PAIRS[gi // 10]
     st_hj, st_en, st_gloss = sitting_stage(gj)
+    st_art = STAGE_ART[st_hj]
     art_slug = STEM_SLUG[gj[0]]
     branch_slug = BRANCH_SLUG[gj[1]]
     bds = badges(gj)
@@ -723,7 +730,7 @@ def page(p, prev_p, next_p, all_pillars):
       <tr><td style="padding:8px 4px;border-bottom:1px dashed var(--line);color:var(--sub);width:36%">Nayin 納音</td>
           <td style="padding:8px 4px;border-bottom:1px dashed var(--line);color:var(--ink2)"><b style="color:var(--ink)">{ny_en}</b> ({ny_hj}) — {ny_gloss}</td></tr>
       <tr><td style="padding:8px 4px;border-bottom:1px dashed var(--line);color:var(--sub)">Sitting stage 十二運星</td>
-          <td style="padding:8px 4px;border-bottom:1px dashed var(--line);color:var(--ink2)"><b style="color:var(--ink)">{st_en}</b> ({st_hj}) — {st_gloss}</td></tr>
+          <td style="padding:8px 4px;border-bottom:1px dashed var(--line);color:var(--ink2)"><span style="display:flex;gap:11px;align-items:center"><a href="../cards.html" title="See all twelve stages" style="flex:none;width:78px;aspect-ratio:16/9;border-radius:6px;background:url(art/{st_art}.jpg) center/cover;box-shadow:inset 0 0 0 1px #ffffff1c, 0 3px 9px -4px #000c"></a><span><b style="color:var(--ink)">{st_en}</b> ({st_hj}) — {st_gloss}</span></span></td></tr>
       <tr><td style="padding:8px 4px;border-bottom:1px dashed var(--line);color:var(--sub)">Branch nature</td>
           <td style="padding:8px 4px;border-bottom:1px dashed var(--line);color:var(--ink2)"><b style="color:var(--ink)">{nt_en}</b> ({nt_hj}) — {nt_gloss}</td></tr>
       {star_rows}

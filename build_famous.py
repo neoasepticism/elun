@@ -224,7 +224,7 @@ def page(name):
       <table class="kv">
         <tr><td>Day Master</td><td>{gj[0]} {dm['nm']} — {dm['en']} · “{dm['arch']}”</td></tr>
         <tr><td>Structure</td><td>{struct} Structure</td></tr>
-        <tr><td>Sitting stage 十二運星</td><td>{st_en} ({st_hj}) — {st_gloss}</td></tr>
+        <tr><td>Sitting stage 十二運星</td><td><span style="display:flex;gap:11px;align-items:center"><a href="../cards.html" title="See all twelve stages" style="flex:none;width:78px;aspect-ratio:16/9;border-radius:6px;background:url(../pillars/art/{bp.STAGE_ART[st_hj]}.jpg) center/cover;box-shadow:inset 0 0 0 1px #ffffff1c, 0 3px 9px -4px #000c"></a><span>{st_en} ({st_hj}) — {st_gloss}</span></span></td></tr>
         <tr><td>Nayin 納音</td><td>{ny_en} ({ny_hj}) — {ny_gloss}</td></tr>
       </table>
     </div>
