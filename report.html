@@ -108,14 +108,33 @@
 const API_BASE = (location.hostname==='localhost'||location.hostname==='127.0.0.1'||location.protocol==='file:')
   ? 'http://127.0.0.1:8500' : 'https://api.elun.me';
 
-const CITIES = {
-  "Seoul":[126.98,"Asia/Seoul"],"Busan":[129.08,"Asia/Seoul"],"Tokyo":[139.69,"Asia/Tokyo"],
-  "Beijing":[116.41,"Asia/Shanghai"],"Hong Kong":[114.17,"Asia/Hong_Kong"],"Singapore":[103.82,"Asia/Singapore"],
-  "New York":[-74.01,"America/New_York"],"Los Angeles":[-118.24,"America/Los_Angeles"],
-  "Chicago":[-87.63,"America/Chicago"],"London":[-0.13,"Europe/London"],
-  "Paris":[2.35,"Europe/Paris"],"Sydney":[151.21,"Australia/Sydney"]};
+// start.html과 동일한 도시 DB — [name, country, lon, IANA tz] (목록 불일치 = 프리필 실패 원인이었음)
+const CITIES = [
+  ["Seoul","South Korea",126.98,"Asia/Seoul"],["Busan","South Korea",129.08,"Asia/Seoul"],
+  ["Incheon","South Korea",126.71,"Asia/Seoul"],["Daegu","South Korea",128.60,"Asia/Seoul"],
+  ["Tokyo","Japan",139.69,"Asia/Tokyo"],["Osaka","Japan",135.50,"Asia/Tokyo"],
+  ["Beijing","China",116.41,"Asia/Shanghai"],["Shanghai","China",121.47,"Asia/Shanghai"],
+  ["Hong Kong","Hong Kong",114.17,"Asia/Hong_Kong"],["Taipei","Taiwan",121.56,"Asia/Taipei"],
+  ["Singapore","Singapore",103.82,"Asia/Singapore"],["Bangkok","Thailand",100.50,"Asia/Bangkok"],
+  ["Ho Chi Minh City","Vietnam",106.63,"Asia/Ho_Chi_Minh"],["Manila","Philippines",120.98,"Asia/Manila"],
+  ["Mumbai","India",72.88,"Asia/Kolkata"],["New Delhi","India",77.21,"Asia/Kolkata"],
+  ["Dubai","UAE",55.27,"Asia/Dubai"],
+  ["New York","USA",-74.01,"America/New_York"],["Los Angeles","USA",-118.24,"America/Los_Angeles"],
+  ["Chicago","USA",-87.63,"America/Chicago"],["San Francisco","USA",-122.42,"America/Los_Angeles"],
+  ["Seattle","USA",-122.33,"America/Los_Angeles"],["Houston","USA",-95.37,"America/Chicago"],
+  ["Boston","USA",-71.06,"America/New_York"],
+  ["Toronto","Canada",-79.38,"America/Toronto"],["Vancouver","Canada",-123.12,"America/Vancouver"],
+  ["London","UK",-0.13,"Europe/London"],["Paris","France",2.35,"Europe/Paris"],
+  ["Berlin","Germany",13.40,"Europe/Berlin"],["Madrid","Spain",-3.70,"Europe/Madrid"],
+  ["Rome","Italy",12.50,"Europe/Rome"],["Amsterdam","Netherlands",4.90,"Europe/Amsterdam"],
+  ["Moscow","Russia",37.62,"Europe/Moscow"],
+  ["Sydney","Australia",151.21,"Australia/Sydney"],["Melbourne","Australia",144.96,"Australia/Melbourne"],
+  ["Auckland","New Zealand",174.76,"Pacific/Auckland"],
+  ["São Paulo","Brazil",-46.63,"America/Sao_Paulo"],["Mexico City","Mexico",-99.13,"America/Mexico_City"],
+  ["Cairo","Egypt",31.24,"Africa/Cairo"],["Johannesburg","South Africa",28.05,"Africa/Johannesburg"],
+];
 const sel=document.getElementById('bcity');
-sel.innerHTML=Object.keys(CITIES).map(c=>`<option>${c}</option>`).join('');
+sel.innerHTML=CITIES.map((c,i)=>`<option value="${i}">${c[0]}, ${c[1]}</option>`).join('');
 
 document.getElementById('bnotime').addEventListener('change',e=>{
   const t=document.getElementById('btime');
@@ -144,8 +163,9 @@ try{
     else document.getElementById('btime').value=`${String(i.hour).padStart(2,'0')}:${String(i.minute).padStart(2,'0')}`;
     document.getElementById('bgender').value = (i.gender==='남'||i.gender==='M')?'M':'F';
     if(M.name) document.getElementById('rname').value=M.name;
-    const city=(M.city||'').split(',')[0];
-    if(CITIES[city]) sel.value=city;
+    const cityStr=(M.city||'').trim(), cityName=cityStr.split(',')[0].trim();
+    const ci=CITIES.findIndex(c=>`${c[0]}, ${c[1]}`===cityStr || c[0]===cityName);
+    if(ci>=0) sel.value=ci;
   }
 }catch(_){}
 
@@ -161,7 +181,7 @@ document.getElementById('claim').addEventListener('submit', async e=>{
   const tval=document.getElementById('btime').value;
   if(!noTime && !tval){err.textContent='⚠ Enter your birth time — or check the box if unknown.';err.style.display='block';return;}
   const [h,mi2]=noTime?[null,0]:tval.split(':').map(Number);
-  const city=sel.value, [lon,tz]=CITIES[city];
+  const _c=CITIES[+sel.value]||CITIES[0], lon=_c[2], tz=_c[3];
   const body={
     order_number:document.getElementById('order').value.trim(),
     email:document.getElementById('email').value.trim(),
