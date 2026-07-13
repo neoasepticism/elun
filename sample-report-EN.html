@@ -210,14 +210,17 @@
     padding:10px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--sans);
     box-shadow:0 8px 20px -8px #0007}
   .elun-save button:hover{filter:brightness(1.08)}
+  @page{margin:0}
   @media print{
     .elun-save{display:none}
     *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    p,.yrow,li{orphans:3;widows:3}
+    main{padding-bottom:56px}
     body{background:#fff !important;background-image:none !important}
     .wrap{max-width:none;padding:0;margin:0}
     .doc{margin-top:0;border:none;border-radius:0;box-shadow:none}
     .toc{display:none}
-    header{padding-top:24px}
+    header{padding-top:40px}
     section{padding-left:0;padding-right:0}
     h2{break-after:avoid;page-break-after:avoid}
     h3{break-after:avoid;page-break-after:avoid}
