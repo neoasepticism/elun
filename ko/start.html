@@ -1,13 +1,13 @@
 <!doctype html>
-<html lang="en">
+<html lang="ko">
 <head>
 <meta charset="utf-8" />
-<link rel="canonical" href="https://elun.me/start.html"/>
+<link rel="canonical" href="https://elun.me/ko/start.html"/>
 <link rel="alternate" hreflang="en" href="https://elun.me/start.html"/>
 <link rel="alternate" hreflang="ko" href="https://elun.me/ko/start.html"/>
 <link rel="alternate" hreflang="x-default" href="https://elun.me/start.html"/>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Elun — Create your chart</title>
+<title>Elun — 사주 차트 만들기</title>
 <style>
   :root{
     --ink:#f3ece0; --ink2:#c9bda9; --sub:#9c8f79; --faint:#6e6353;
@@ -81,74 +81,74 @@
 
 <nav>
   <div class="wrap" style="max-width:1040px">
-    <a href="index.html" class="logo"><span class="seal">乙</span><span class="m">Elun</span></a>
-    <span style="margin-left:auto;font-size:13px"><a href="ko/start.html" class="lang-sw" title="한국어 페이지">한국어</a></span>
+    <a href="../index.html" class="logo"><span class="seal">乙</span><span class="m">Elun</span></a>
+    <a href="../start.html" style="margin-left:auto;font-size:13px;color:var(--sub)">EN</a>
   </div>
 </nav>
 
 <div class="form-wrap">
   <div class="wrap">
-    <div class="kick">Create your chart</div>
-    <h1>When &amp; where were you born?</h1>
-    <p class="sub">Your birth city sets the longitude — the key to true solar time. Historical daylight-saving is handled automatically.</p>
+    <div class="kick">사주 차트 만들기</div>
+    <h1>언제, 어디서 태어나셨나요?</h1>
+    <p class="sub">태어난 도시가 경도를 결정합니다 — 진태양시 계산의 핵심입니다. 과거의 서머타임(일광절약시간)은 자동으로 처리됩니다.</p>
 
     <div class="card">
       <form id="bform" autocomplete="off">
         <!-- name (optional) -->
         <div class="field">
-          <label for="name">Name <span style="color:var(--faint)">(optional)</span></label>
-          <input type="text" id="name" placeholder="e.g. Alex" />
+          <label for="name">이름 <span style="color:var(--faint)">(선택)</span></label>
+          <input type="text" id="name" placeholder="예: 지민" />
         </div>
 
         <!-- birth date -->
         <div class="field">
-          <label>Date of birth</label>
+          <label>생년월일</label>
           <div class="row">
-            <div><input type="number" id="year" placeholder="Year" min="1900" max="2030" /></div>
-            <div><input type="number" id="month" placeholder="Month" min="1" max="12" /></div>
-            <div><input type="number" id="day" placeholder="Day" min="1" max="31" /></div>
+            <div><input type="number" id="year" placeholder="년" min="1900" max="2030" /></div>
+            <div><input type="number" id="month" placeholder="월" min="1" max="12" /></div>
+            <div><input type="number" id="day" placeholder="일" min="1" max="31" /></div>
           </div>
         </div>
 
         <!-- birth time -->
         <div class="field">
-          <label>Time of birth</label>
+          <label>태어난 시간</label>
           <div class="row2" id="timerow">
-            <div><input type="number" id="hour" placeholder="Hour (0–23)" min="0" max="23" /></div>
-            <div><input type="number" id="minute" placeholder="Minute" min="0" max="59" /></div>
+            <div><input type="number" id="hour" placeholder="시 (0–23)" min="0" max="23" /></div>
+            <div><input type="number" id="minute" placeholder="분" min="0" max="59" /></div>
           </div>
           <label style="display:flex;align-items:center;gap:8px;margin-top:10px;font-size:13.5px;color:var(--ink2);cursor:pointer;text-transform:none;letter-spacing:0">
             <input type="checkbox" id="noTime" style="width:auto;accent-color:var(--gold)" />
-            I don't know my birth time
+            태어난 시간을 모릅니다
           </label>
-          <div class="hint" id="timehint">Don't know the exact time? Check the box above — we'll read your three known pillars (day, month, year), which is still a full personality reading. Or see <a href="birth-time.html" target="_blank">how to find your birth time</a> — it's easier than you'd think.</div>
+          <div class="hint" id="timehint">정확한 시간을 모르시나요? 위 체크박스를 선택하세요 — 확실한 세 기둥(일주·월주·연주)으로 계산하며, 이것만으로도 충분히 완성도 있는 성격 리딩이 됩니다. 또는 <a href="../birth-time.html" target="_blank">태어난 시간 찾는 법</a>을 확인해 보세요 — 생각보다 쉽습니다.</div>
         </div>
 
         <!-- birth city (autocomplete) -->
         <div class="field">
-          <label for="city">Birth city</label>
-          <input type="text" id="city" placeholder="Start typing… e.g. Seoul, New York, London" />
+          <label for="city">태어난 도시</label>
+          <input type="text" id="city" placeholder="영문 도시명 입력 — e.g. Seoul, New York" />
           <div class="ac-list" id="aclist"></div>
-          <div class="hint">City not listed? Pick the nearest listed city in the same time zone — within ~150 km the solar-time difference is a couple of minutes and almost never shifts a pillar.</div>
+          <div class="hint">목록에 도시가 없나요? 같은 시간대에서 가장 가까운 도시를 선택하세요 — 약 150km 이내라면 태양시 차이는 몇 분 수준이라 기둥이 바뀌는 일은 거의 없습니다.</div>
           <div class="precision" id="precision"></div>
         </div>
 
         <!-- gender -->
         <div class="field">
-          <label>Gender <span style="color:var(--faint)">(for luck-pillar direction)</span></label>
+          <label>성별 <span style="color:var(--faint)">(대운 방향 결정용)</span></label>
           <div class="toggle" id="gender">
-            <button type="button" data-g="M" class="on">Male</button>
-            <button type="button" data-g="F">Female</button>
+            <button type="button" data-g="M" class="on">남</button>
+            <button type="button" data-g="F">여</button>
           </div>
         </div>
 
-        <button type="submit" class="btn" id="submit">Calculate my chart →</button>
+        <button type="submit" class="btn" id="submit">내 사주 계산하기 →</button>
       </form>
     </div>
 
     <div class="foot">
-      🌞 True solar time · 📍 longitude-corrected · ⏱ auto daylight-saving · deterministic engine<br>
-      <a href="index.html">← back to Elun</a>
+      🌞 진태양시 · 📍 경도 보정 · ⏱ 서머타임 자동 처리 · 결정론적 계산 엔진<br>
+      <a href="../index.html">← Elun으로 돌아가기</a>
     </div>
   </div>
 </div>
@@ -156,15 +156,15 @@
 <!-- demo result -->
 <div class="overlay" id="overlay">
   <div class="modal">
-    <h3>Your inputs are ready 乙</h3>
-    <p>This is a preview. In the live version, this computes your precise chart and generates your report.</p>
+    <h3>입력이 준비되었습니다 乙</h3>
+    <p>미리보기입니다. 실제 버전에서는 정밀 사주를 계산하고 리포트를 생성합니다.</p>
     <div class="data" id="resultData"></div>
-    <p style="font-size:12.5px;color:var(--faint)">These values (true solar time, longitude, timezone with DST) are exactly what the engine needs.</p>
-    <button class="btn" onclick="document.getElementById('overlay').classList.remove('show')">Close</button>
+    <p style="font-size:12.5px;color:var(--faint)">이 값들(진태양시, 경도, 서머타임 포함 시간대)이 바로 엔진에 필요한 입력입니다.</p>
+    <button class="btn" onclick="document.getElementById('overlay').classList.remove('show')">닫기</button>
   </div>
 </div>
 
-<script src="cities.js"></script>
+<script src="../cities.js"></script>
 <script>
 const CITIES = window.ELUN_CITIES;  // 단일 정본 cities.js
 
@@ -194,10 +194,10 @@ function updatePrecision(){
   const [name,country,lon,tz]=selectedCity;
   // approximate longitude vs its timezone standard meridian → solar offset
   precision.innerHTML=
-    `<b>✓ ${name}</b> · precision inputs locked<div class="row3">`+
+    `<b>✓ ${name}</b> · 정밀 입력 확정<div class="row3">`+
     `<span class="chip">📍 ${lon>0?lon.toFixed(2)+'°E':(-lon).toFixed(2)+'°W'}</span>`+
     `<span class="chip">🕓 ${tz}</span>`+
-    `<span class="chip">⏱ DST auto</span></div>`;
+    `<span class="chip">⏱ 서머타임 자동</span></div>`;
   precision.classList.add('show');
 }
 cityInput.addEventListener('input',()=>{
@@ -243,15 +243,15 @@ document.getElementById('bform').addEventListener('submit',async e=>{
   const g=id=>document.getElementById(id).value;
   const noTime=document.getElementById('noTime').checked;
   const y=+g('year'),mo=+g('month'),d=+g('day'),h=g('hour'),mi=+g('minute')||0;
-  if(!y||!mo||!d){alert('Please fill in your birth date.');return;}
-  if(!noTime&&h===''&&h!=='0'){alert('Please fill in your birth time — or check "I don\'t know my birth time".');return;}
-  if(!selectedCity){alert('Please select your birth city from the list.');return;}
+  if(!y||!mo||!d){alert('생년월일을 입력해 주세요.');return;}
+  if(!noTime&&h===''&&h!=='0'){alert('태어난 시간을 입력해 주세요 — 모르시면 "태어난 시간을 모릅니다"에 체크해 주세요.');return;}
+  if(!selectedCity){alert('목록에서 태어난 도시를 선택해 주세요.');return;}
   const [name,country,lon,tz]=selectedCity;
 
   // 로딩 상태
   submitBtn.disabled=true;
   const orig=submitBtn.textContent;
-  submitBtn.textContent='Calculating your chart…';
+  submitBtn.textContent='사주 계산 중…';
 
   try{
     const res=await fetch(API_BASE+'/calculate',{
@@ -268,11 +268,11 @@ document.getElementById('bform').addEventListener('submit',async e=>{
   }catch(err){
     // API 연결 실패 시 (서버 안 떠있을 때) — 입력값만 미리보기
     document.getElementById('resultData').innerHTML=
-      `<div style="color:var(--red)">⚠ Could not reach the calculation server.</div>`+
-      `<div style="margin-top:8px"><b>Your inputs:</b></div>`+
-      `<div><b>Born:</b> ${y}-${String(mo).padStart(2,'0')}-${String(d).padStart(2,'0')} ${String(h).padStart(2,'0')}:${String(mi).padStart(2,'0')}</div>`+
-      `<div><b>City:</b> ${name}, ${country} · ${tz}</div>`+
-      `<div style="margin-top:8px;color:var(--faint);font-size:12px">(Start the local API: <code>uvicorn server:app --port 8500</code>)</div>`;
+      `<div style="color:var(--red)">⚠ 계산 서버에 연결할 수 없습니다.</div>`+
+      `<div style="margin-top:8px"><b>입력값:</b></div>`+
+      `<div><b>출생:</b> ${y}-${String(mo).padStart(2,'0')}-${String(d).padStart(2,'0')} ${String(h).padStart(2,'0')}:${String(mi).padStart(2,'0')}</div>`+
+      `<div><b>도시:</b> ${name}, ${country} · ${tz}</div>`+
+      `<div style="margin-top:8px;color:var(--faint);font-size:12px">(로컬 API 실행: <code>uvicorn server:app --port 8500</code>)</div>`;
     document.getElementById('overlay').classList.add('show');
   }finally{
     submitBtn.disabled=false;
@@ -289,7 +289,7 @@ function showResult(data,name,country){
     return;
   }catch(_){/* fall through to modal */}
   const i=data.input, fp=data.four_pillars, dm=data.day_master;
-  const order=[['year','Year'],['month','Month'],['day','Day'],['hour','Hour']];
+  const order=[['year','연주'],['month','월주'],['day','일주'],['hour','시주']];
   const pillars=order.map(([k,lab])=>
     `<div style="text-align:center;flex:1">
        <div style="font-size:10px;color:var(--faint)">${lab}</div>
@@ -297,15 +297,15 @@ function showResult(data,name,country){
      </div>`).join('');
   document.getElementById('resultData').innerHTML=
     `<div style="display:flex;gap:6px;margin-bottom:12px;padding:10px;background:var(--card);border-radius:8px">${pillars}</div>`+
-    `<div><b>Day Master:</b> ${dm.stem}${dm.element} (${dm.yin_yang})</div>`+
-    `<div><b>Structure:</b> ${data.geokguk.label} · <b>Strength:</b> ${data.strength.label}</div>`+
+    `<div><b>일간:</b> ${dm.stem}${dm.element} (${dm.yin_yang})</div>`+
+    `<div><b>격국:</b> ${data.geokguk.label} · <b>신강약:</b> ${data.strength.label}</div>`+
     `<div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--line);color:var(--green);font-size:12.5px">`+
-    `🌞 True solar time <b>${i.true_solar_time}</b> · 🕓 UTC${i.utc_offset>=0?'+':''}${i.utc_offset}${i.summer_time?' (DST)':''} · 📍 ${name}</div>`;
+    `🌞 진태양시 <b>${i.true_solar_time}</b> · 🕓 UTC${i.utc_offset>=0?'+':''}${i.utc_offset}${i.summer_time?' (서머타임)':''} · 📍 ${name}</div>`;
   // 헤더 문구도 실제 결과용으로
   const h3=document.querySelector('.modal h3');
-  if(h3) h3.textContent=`Your chart 乙`;
+  if(h3) h3.textContent=`나의 사주 乙`;
   const pdesc=document.querySelector('.modal p');
-  if(pdesc) pdesc.textContent=`Calculated with true solar time — here's your Four Pillars. Your full report is generated from this.`;
+  if(pdesc) pdesc.textContent=`진태양시로 계산했습니다 — 당신의 사주 네 기둥입니다. 정식 리포트는 여기서 생성됩니다.`;
   document.getElementById('overlay').classList.add('show');
 }
 

@@ -1,0 +1,591 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex" />
+<link rel="canonical" href="https://elun.me/ko/result.html"/>
+<link rel="alternate" hreflang="en" href="https://elun.me/result.html"/>
+<link rel="alternate" hreflang="ko" href="https://elun.me/ko/result.html"/>
+<title>나의 사주 차트 — Elun</title>
+<style>
+  :root{
+    --ink:#f3ece0; --ink2:#c9bda9; --sub:#9c8f79; --faint:#6e6353;
+    --bg:#100d0a; --card:#1c1712; --line:#332a22; --line2:#40342a;
+    --gold:#c9a227; --gold2:#e0c05a; --red:#c86a58; --green:#7ba874;
+    --wood:#5aa06a; --fire:#d0604e; --earth:#c9a227; --metal:#a8b0b8; --water:#5a9fd0;
+    --serif:'Noto Serif',ui-serif,Georgia,serif;
+    --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.65;font-size:15.5px;
+    background-image:radial-gradient(ellipse at 50% -10%,#221a10 0,transparent 55%)}
+  a{color:var(--gold2);text-decoration:none}
+  .wrap{max-width:760px;margin:0 auto;padding:0 20px}
+  nav{position:sticky;top:0;z-index:20;background:#100d0acc;backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  nav .inner{max-width:1040px;margin:0 auto;padding:0 22px;display:flex;align-items:center;justify-content:space-between;height:60px}
+  .logo{font-family:var(--serif);font-size:22px;font-weight:700;display:flex;align-items:center;gap:9px;color:var(--ink)}
+  .logo .m{color:var(--gold2)}
+  .logo .seal{width:26px;height:26px;border:1px solid var(--gold);color:var(--gold2);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:14px;font-family:var(--serif)}
+  .navlinks{font-size:13px;color:var(--sub)}
+  .btn{background:linear-gradient(180deg,var(--gold2),var(--gold));color:#1a1206;font-weight:700;
+    padding:11px 22px;border-radius:24px;font-size:14px;border:none;cursor:pointer;font-family:var(--sans);display:inline-block}
+  .btn:hover{filter:brightness(1.08)}
+  .btn.ghost{background:transparent;border:1px solid var(--line2);color:var(--ink)}
+
+  /* your hand — 풀아트 (셰어컷과 동일 디자인, 반응형) */
+  .fa{flex:1;max-width:225px;aspect-ratio:16/25;border-radius:16px;position:relative;overflow:hidden;
+    border:2px solid var(--fedge,#40342a);background:#0e0b08;
+    box-shadow:0 14px 36px -14px #000, 0 0 30px -16px var(--fac,#c9a227)}
+  .fa .bg{position:absolute;inset:0;background-size:cover;background-position:22% center}
+  .fa .scrim{position:absolute;inset:0;background:linear-gradient(180deg,#0e0b0899 0%,transparent 17%,transparent 70%,#0e0b08cc 88%,#0e0b08ee 100%)}
+  .fa .fr{position:absolute;inset:6px;border:1px solid #ffffff1c;border-radius:11px}
+  .fa .top2{position:absolute;top:10px;left:12px;right:12px;display:flex;justify-content:space-between;align-items:flex-start}
+  .fa .han2{font-family:var(--serif);font-size:clamp(18px,3.4vw,26px);font-weight:700;line-height:1;color:var(--fac);text-shadow:0 2px 10px #000}
+  .fa .pill{font-family:var(--serif);font-size:clamp(8px,1.5vw,10.5px);color:#e8e0d0;border:1px solid #ffffff33;border-radius:10px;padding:2px 8px;white-space:nowrap;background:#0e0b0880}
+  .fa .rare2{position:absolute;top:44px;left:0;right:0;text-align:center}
+  .fa .rare2 span{border:1px solid var(--gold);color:var(--gold2);border-radius:10px;padding:2px 8px;font-size:clamp(7px,1.3vw,9px);letter-spacing:2px;background:#0e0b08cc}
+  .fa .bot{position:absolute;bottom:12px;left:0;right:0;text-align:center}
+  .fa .nm2{font-family:var(--serif);font-size:clamp(13px,2.6vw,19px);font-weight:700;color:var(--fac);text-shadow:0 2px 10px #000}
+  .fa .tp2{font-size:clamp(7px,1.4vw,9.5px);letter-spacing:1.8px;text-transform:uppercase;color:#c9bda9;margin-top:3px}
+
+  .hand{display:flex;gap:14px;justify-content:center;margin:26px 0 6px}
+  .hcard{flex:1;max-width:200px;border:1.5px solid var(--hc,var(--line2));border-radius:16px;
+    background:linear-gradient(165deg,#1e1a13,#151109);padding:18px 14px 14px;text-align:center;position:relative;
+    box-shadow:0 14px 34px -18px #000;overflow:hidden}
+  .hcard .art{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.5;pointer-events:none}
+  .hcard .shade{position:absolute;inset:0;background:linear-gradient(180deg,#15110966 0%,#151109cc 62%,#151109f0 100%);pointer-events:none}
+  .hcard>*{position:relative}
+  .hcard .art,.hcard .shade{position:absolute}
+  .hcard .role{font-size:9.5px;letter-spacing:2.5px;text-transform:uppercase;color:var(--faint);margin-bottom:10px}
+  .hcard .big{font-family:var(--serif);font-size:44px;line-height:1.1;color:var(--hc,var(--gold2));
+    text-shadow:0 0 26px color-mix(in srgb,var(--hc,var(--gold2)) 45%,transparent)}
+  .hcard .glyph{font-size:34px;line-height:1.4}
+  .hcard .nm{font-family:var(--serif);font-size:15px;font-weight:700;margin-top:8px}
+  .hcard .sub{font-size:10.5px;color:var(--sub);margin-top:3px;line-height:1.5;min-height:30px}
+  .hcard .rare{position:absolute;top:-9px;left:50%;transform:translateX(-50%);background:#241c0e;border:1px solid var(--gold);
+    color:var(--gold2);border-radius:12px;padding:2px 10px;font-size:9px;letter-spacing:2px;white-space:nowrap}
+  .handcap{text-align:center;font-size:11.5px;color:var(--faint);margin-bottom:8px}
+  .handactions{text-align:center;margin:12px 0 4px}
+  @media(max-width:560px){.hand{flex-direction:row;flex-wrap:wrap}.hcard{min-width:44%}}
+  .hero{text-align:center;padding:44px 0 10px}
+  .hero .kick{font-family:var(--serif);letter-spacing:5px;color:var(--gold);font-size:11px;text-transform:uppercase;margin-bottom:12px}
+  .hero h1{font-family:var(--serif);font-size:clamp(26px,5vw,38px);margin:0 0 6px;font-weight:700}
+  .hero .sub{color:var(--sub);font-size:13.5px}
+
+  .pillars{display:flex;gap:10px;margin:28px 0 8px}
+  .pil{flex:1;border:1px solid var(--line);border-radius:14px;background:var(--card);padding:14px 8px;text-align:center}
+  .pil.day{border-color:var(--gold);box-shadow:0 0 0 3px #c9a2271f;background:#221b10}
+  .pil .lab{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--faint)}
+  .pil.day .lab{color:var(--gold2)}
+  .pil .gj{font-family:var(--serif);font-size:clamp(22px,5vw,32px);margin:6px 0 4px;line-height:1.15}
+  .pil .gods{font-size:10.5px;color:var(--sub);line-height:1.5}
+  .tst{text-align:center;font-size:12.5px;color:var(--green);margin:10px 0 0}
+
+  .box{border:1px solid var(--line);border-radius:16px;background:var(--card);padding:24px 26px;margin:18px 0}
+  h2{font-family:var(--serif);font-size:13px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin:0 0 14px;font-weight:600}
+
+  .dmrow{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+  .dmrow .han{font-family:var(--serif);font-size:56px;line-height:1;color:var(--ac,var(--gold2));text-shadow:0 0 30px color-mix(in srgb,var(--ac,var(--gold2)) 40%,transparent)}
+  .dmrow .t .nm{font-family:var(--serif);font-size:21px;font-weight:700}
+  .dmrow .t .meta{font-size:12px;color:var(--sub);letter-spacing:1.5px;text-transform:uppercase;margin-top:2px}
+  .dmrow .arch{margin-left:auto;font-family:var(--serif);font-style:italic;font-size:14px;color:var(--gold2);border:1px solid var(--line2);border-radius:20px;padding:5px 14px}
+  .dmrow + p{color:var(--ink2);font-size:14px;margin:14px 0 0}
+
+  .dpcard{border:1.5px solid var(--gold);border-radius:14px;background:#221b10;padding:18px 20px;margin-top:14px}
+  .dpcard .top{display:flex;gap:14px;align-items:center}
+  .dpcard .gj{font-family:var(--serif);font-size:34px;color:var(--gold2);white-space:nowrap;line-height:1.1}
+  .dpcard .py{font-weight:700}
+  .dpcard .an{font-size:11px;color:var(--sub);letter-spacing:1px;text-transform:uppercase}
+  .dpcard .pd{font-style:italic;font-family:var(--serif);color:var(--ink2);font-size:13.5px;margin:10px 0 0}
+  .dpcard .cb{font-size:12px;color:var(--gold2);margin-top:9px}
+  .dpcard .cb:before{content:"★ ";font-size:10px}
+  .dpcard .go{display:inline-block;margin-top:12px;font-size:13px}
+
+  .ebars .row{display:flex;align-items:center;gap:10px;margin:7px 0;font-size:12.5px}
+  .ebars .en{width:52px;color:var(--ink2);font-family:var(--serif)}
+  .ebars .tr{flex:1;height:14px;background:#0d0b08;border-radius:7px;overflow:hidden}
+  .ebars .fl{display:block;height:100%;border-radius:7px}
+  .ebars .pc{width:38px;text-align:right;color:var(--sub)}
+
+  .tg{display:flex;gap:8px;flex-wrap:wrap}
+  .tg span{border:1px solid var(--line2);border-radius:16px;padding:5px 13px;font-size:12.5px;color:var(--ink)}
+  .tg span b{color:var(--gold2);font-weight:700}
+  .kv{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:4px}
+  .kv td{padding:8px 4px;border-bottom:1px dashed var(--line);color:var(--ink2)}
+  .kv td:first-child{color:var(--sub);width:42%}
+
+  /* character sheet */
+  .cs{border:2px solid var(--gold);border-radius:18px;overflow:hidden;background:linear-gradient(170deg,#161109,#100d0a);margin:18px 0;position:relative}
+  .cs .cshead{display:flex;justify-content:space-between;align-items:baseline;padding:16px 22px 0}
+  .cs .cst{font-family:var(--serif);letter-spacing:4px;font-size:11px;color:var(--gold);text-transform:uppercase}
+  .cs .cslv{font-family:var(--serif);font-size:13px;color:var(--gold2)}
+  .cs .csclass{display:flex;gap:16px;align-items:center;padding:14px 22px 4px}
+  .cs .csart{width:86px;height:86px;border-radius:12px;background-size:cover;background-position:center;flex:none;
+    border:1.5px solid var(--csac,var(--gold));box-shadow:0 0 24px -8px var(--csac,var(--gold))}
+  .cs .csnm{font-family:var(--serif);font-size:22px;font-weight:700}
+  .cs .cscl{font-size:12.5px;color:var(--csac,var(--gold2));letter-spacing:1px}
+  .cs .cssub{font-size:11px;color:var(--sub);font-style:italic;margin-top:3px}
+  .cs .csbody{display:grid;grid-template-columns:1.1fr 1fr;gap:6px 26px;padding:12px 22px 18px}
+  @media(max-width:600px){.cs .csbody{grid-template-columns:1fr}}
+  .cs h4{font-family:var(--serif);font-size:10.5px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin:10px 0 7px}
+  .cs .stat{display:flex;align-items:center;gap:8px;margin:5px 0;font-size:11.5px}
+  .cs .stat .sn{width:86px;color:var(--ink2);letter-spacing:1px}
+  .cs .stat .sb{flex:1;height:9px;background:#0a0806;border-radius:5px;overflow:hidden}
+  .cs .stat .sf{display:block;height:100%;border-radius:5px}
+  .cs .stat .sv{width:26px;text-align:right;font-family:var(--serif);color:var(--ink)}
+  .cs .skill{display:flex;justify-content:space-between;font-size:12px;color:var(--ink2);padding:4px 0;border-bottom:1px dashed #ffffff12}
+  .cs .skill b{color:var(--gold2);font-family:var(--serif);font-weight:600}
+  .cs .perk{font-size:11.5px;color:var(--ink2);padding:3px 0}
+  .cs .perk b{color:var(--ink)}
+  .cs .csfoot{padding:10px 22px 16px;border-top:1px solid #ffffff14;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;font-size:11px;color:var(--sub)}
+  .cs .csfoot b{color:var(--gold2);font-family:var(--serif)}
+  .cta{border:1.5px solid var(--gold);border-radius:16px;background:linear-gradient(160deg,#241c0e,#1a140b);padding:28px;margin:26px 0;text-align:center}
+  .cta h3{font-family:var(--serif);font-size:22px;margin:0 0 8px}
+  .cta p{color:var(--ink2);font-size:14px;max-width:520px;margin:0 auto 18px}
+  .cta .row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .cta .note{font-size:11.5px;color:var(--faint);margin-top:12px}
+
+  .actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;padding:6px 0 50px}
+  footer{border-top:1px solid var(--line);padding:28px 0;text-align:center;color:var(--faint);font-size:12px}
+  #empty{text-align:center;padding:90px 20px;display:none}
+</style>
+</head>
+<body>
+<nav><div class="inner">
+  <a href="../index.html" class="logo"><span class="seal">乙</span><span class="m">Elun</span></a>
+  <span class="navlinks"><a href="../daymasters.html">일간 유형</a> · <a href="../cards.html">카드 도감</a> · <a href="start.html">새 차트</a> · <a href="../result.html">EN</a></span>
+</div></nav>
+
+<div id="empty" class="wrap">
+  <p style="color:var(--ink2)">차트 데이터가 없습니다 — 먼저 사주를 계산해 주세요.</p>
+  <a class="btn" href="start.html">사주 계산하기</a>
+</div>
+
+<div id="main" class="wrap" style="display:none">
+  <div class="hero">
+    <div class="kick">四柱 · 나의 사주</div>
+    <h1 id="title">나의 사주 차트</h1>
+    <div class="sub" id="born"></div>
+  </div>
+
+  <div id="handwrap">
+    <div class="hand" id="hand"></div>
+    <div class="handcap" id="handrare" style="margin-top:10px"></div>
+    <div class="handcap">나의 핸드 — 이 사주의 핵심을 이루는 카드 세 장</div>
+    <div class="handactions">
+      <button class="btn" id="sharehand" style="font-size:13px;padding:9px 20px">🔗 내 카드 공유</button>
+      <button class="btn ghost" id="savehand" style="font-size:13px;padding:9px 18px;margin-left:8px">⬇ 이미지 저장</button>
+    </div>
+    <div id="socialrow" style="text-align:center;margin-top:10px;font-size:12.5px;color:var(--faint)">
+      또는 일주 페이지를 공유하세요:
+      <a id="shx" target="_blank" rel="noopener" style="margin:0 5px">𝕏</a>·
+      <a id="shf" target="_blank" rel="noopener" style="margin:0 5px">Facebook</a>·
+      <a id="shw" target="_blank" rel="noopener" style="margin:0 5px">WhatsApp</a>·
+      <a id="shc" href="#" style="margin:0 5px">링크 복사</a>
+    </div>
+  </div>
+
+  <div class="pillars" id="pillars"></div>
+  <div class="tst" id="tst"></div>
+
+  <div class="box" id="dmbox">
+    <h2>일간(日干) — 사주의 중심</h2>
+    <div class="dmrow" id="dmrow"></div>
+    <p id="dmdesc"></p>
+    <div class="dpcard" id="dpcard"></div>
+  </div>
+
+  <div class="box">
+    <h2>오행(五行) — 타고난 구성</h2>
+    <div class="ebars" id="ebars"></div>
+    <p style="font-size:11.5px;color:var(--faint);margin:10px 0 0" id="ecap">사주에 드러난 여덟 글자를 기준으로 집계했습니다. 정식 리포트에서는 지장간과 계절 가중치까지 반영합니다.</p>
+  </div>
+
+  <div class="box">
+    <h2>사주에 나타난 십성(十星)</h2>
+    <div class="tg" id="tgods"></div>
+  </div>
+
+  <div class="box">
+    <h2>격국(格局)과 신강약(身強弱)</h2>
+    <table class="kv" id="struct"></table>
+  </div>
+
+  <div class="box" style="padding:0;border:none;background:none">
+    <div class="cs" id="charsheet"></div>
+    <div style="text-align:center;margin-top:10px">
+      <button class="btn ghost" id="savecs" style="font-size:13px;padding:9px 18px">🎮 캐릭터 시트 저장</button>
+    </div>
+  </div>
+
+  <div class="cta">
+    <h3>여기까지는 뼈대입니다. 리포트가 이야기입니다.</h3>
+    <p>정식 정밀 리포트는 이 모든 것을 하나로 엮어 읽어냅니다 — 성격, 관계, 재물, 건강, 그리고 앞으로 10년의 연도별 지도까지. 당신의 정확한 사주에서 쓰인 12개의 장으로 구성됩니다.</p>
+    <div class="row" id="ctarow">
+      <a class="btn" id="buybtn" href="#" style="display:none">정밀 리포트 — $29</a>
+      <a class="btn" id="buydecadebtn" href="#" style="display:none">리포트 + 대운 10년 — $49</a>
+      <a class="btn" id="samplebtn" href="../sample-report-KO.html">실제 샘플 리포트 읽기</a>
+      <a class="btn ghost" id="sharebtn" href="#">내 사주 공유</a>
+    </div>
+    <div class="note" id="ctanote">프리미엄 리포트는 곧 출시됩니다 — 샘플에서 받게 될 깊이를 그대로 확인할 수 있습니다.</div>
+    <script>
+    // Lemon Squeezy 체크아웃 URL — 상품 생성 후 여기에 붙여넣으면 구매 버튼이 켜집니다.
+    const CHECKOUT_URL = "https://elun.lemonsqueezy.com/checkout/buy/a89d47ac-7832-48cf-8d45-3fac9ab7c747";
+    const DECADE_CHECKOUT_URL = "https://elun.lemonsqueezy.com/checkout/buy/0e38106a-5015-43d0-80d4-bcd800dd0b67";
+    if(CHECKOUT_URL){
+      const b=document.getElementById('buybtn');
+      b.href=CHECKOUT_URL; b.style.display='inline-block';
+      document.getElementById('samplebtn').classList.add('ghost');
+      document.getElementById('samplebtn').textContent='샘플 먼저 보기';
+      if(DECADE_CHECKOUT_URL){
+        const db=document.getElementById('buydecadebtn');
+        db.href=DECADE_CHECKOUT_URL; db.style.display='inline-block';
+      }
+      document.getElementById('ctanote').innerHTML='1회 결제 · 결제 후 <a href="report.html">elun.me/ko/report.html</a>에서 주문번호로 리포트를 받으세요.';
+    }
+    </script>
+  </div>
+
+  <div class="actions">
+    <a class="btn ghost" href="start.html">다른 사주 계산하기</a>
+  </div>
+</div>
+
+<div id="sharecut" style="position:absolute;left:-12000px;top:0;width:1080px;height:1080px;overflow:hidden;
+  background:#0e0b08;background-image:radial-gradient(ellipse at 50% -15%,#241a0e 0,transparent 60%),radial-gradient(circle at 85% 110%,#141c24 0,transparent 45%);
+  font-family:var(--sans);color:#f3ece0">
+  <div style="text-align:center;padding-top:64px">
+    <div style="font-family:var(--serif);letter-spacing:8px;color:#c9a227;font-size:19px;text-transform:uppercase" id="sc-kick">四柱 · 사주팔자</div>
+    <div style="font-family:var(--serif);font-size:58px;font-weight:700;margin-top:14px" id="sc-title">나의 사주</div>
+    <div style="font-family:var(--serif);font-size:25px;color:#9c8f79;letter-spacing:10px;margin-top:12px" id="sc-pillars"></div>
+    <div id="sc-badge" style="margin-top:16px"></div>
+  </div>
+  <div id="sc-cards" style="position:absolute;left:0;right:0;top:270px;height:640px;display:flex;justify-content:center;align-items:center"></div>
+  <div style="position:absolute;bottom:44px;left:0;right:0;text-align:center">
+    <span style="font-family:var(--serif);font-size:22px;color:#c9a227;letter-spacing:2px">나도 계산해 보기 — elun.me</span>
+  </div>
+</div>
+
+<footer>© 2026 Elun · elun.me · 결과는 자기 성찰과 엔터테인먼트를 위한 참고용입니다</footer>
+
+<script>
+const P60 = {"甲子":{"py":"Jia Zi","an":"Rat","d":"깊은 물 위의 나무 — 명석하되 뿌리가 쉬지 못하니, 생각은 결심보다 빠르게 흐릅니다.","c":["Rory McIlroy","Olivia Rodrigo","Salma Hayek"]},"甲寅":{"py":"Jia Yin","an":"Tiger","d":"제 숲에 선 나무 — 순수하고 우뚝한 의지, 허락을 구하지 않는 리더십.","c":["Keanu Reeves","Britney Spears","Jin (BTS)"]},"甲辰":{"py":"Jia Chen","an":"Dragon","d":"옥토에 뿌리내린 나무 — 자원을 갖춘 야망, 제국을 천천히 짓습니다.","c":["Lionel Messi","James Cameron","Jane Goodall"]},"甲午":{"py":"Jia Wu","an":"Horse","d":"타오르는 태양 아래 나무 — 표현력 넘치고 아낌없이 그늘을 내어줍니다.","c":["Jisoo (BLACKPINK)","Son Ye-jin","Sophia Loren"]},"甲申":{"py":"Jia Shen","an":"Monkey","d":"쇠 바위 위의 나무 — 일찍 단련되어 강인하니, 압박 속에서 벼려진 천재성.","c":["Elon Musk","Elvis Presley","Whitney Houston"]},"甲戌":{"py":"Jia Xu","an":"Dog","d":"메마른 고원의 나무 — 원칙 있는 고독, 지키는 것을 위해 서 있습니다.","c":["Bruce Lee","Martin Scorsese","Kevin Hart"]},"乙丑":{"py":"Yi Chou","an":"Ox","d":"겨울 흙 속의 난초 — 조용히 견디다 늦게, 그러나 확실하게 핍니다.","c":["Madonna","Julia Roberts","Emma Stone"]},"乙卯":{"py":"Yi Mao","an":"Rabbit","d":"봄 들판의 풀 — 순수한 매력과 유연함, 모두를 휘게 하되 스스로는 꺾이지 않습니다.","c":["Prince","Nicole Kidman","Billie Eilish","Masayoshi Son"]},"乙巳":{"py":"Yi Si","an":"Snake","d":"불꽃 곁의 덩굴 — 예술적 표현력과 예민한 맥박을 지닌 광채.","c":["Rihanna","G-Dragon","Andres Iniesta"]},"乙未":{"py":"Yi Wei","an":"Goat","d":"마른 땅의 꽃 — 부드러운 겉모습, 철사 같은 뿌리. 끝났어야 할 것을 살아냅니다.","c":["Princess Diana","Brad Pitt"]},"乙酉":{"py":"Yi You","an":"Rooster","d":"칼날 위의 꽃 — 압박 속의 아름다움. 광택과 기품, 그 안의 숨은 강철.","c":["Beyoncé","Oprah Winfrey","John Lennon"]},"乙亥":{"py":"Yi Hai","an":"Pig","d":"물 위의 수련 — 물결에 실려 어디서든 피어나는 우아함.","c":["Cristiano Ronaldo","Prince William","Sting"]},"丙子":{"py":"Bing Zi","an":"Rat","d":"한밤 물 위의 태양 — 공적인 광채와 사적인 깊이, 매혹적인 역설.","c":["Sandra Bullock","Greta Thunberg","Ken Watanabe"]},"丙寅":{"py":"Bing Yin","an":"Tiger","d":"숲 위로 떠오르는 아침 해 — 신념을 연료 삼는 천생의 횃불잡이.","c":["Nelson Mandela","Steven Spielberg","Eddie Murphy"]},"丙辰":{"py":"Bing Chen","an":"Dragon","d":"봄 들판 위의 햇살 — 만물을 자라게 하는 따뜻함, 비전 있는 관대함.","c":["Steve Jobs","Leonardo DiCaprio"]},"丙午":{"py":"Bing Wu","an":"Horse","d":"정오의 태양 — 육십갑자 중 가장 뜨거운 빛. 절대적이고 전부를 겁니다.","c":["Bob Marley","Lewis Hamilton","Jungkook (BTS)"]},"丙申":{"py":"Bing Shen","an":"Monkey","d":"금속 도시 위의 태양 — 쉼 없는 발명가의 정신에 연결된 카리스마.","c":["Albert Einstein","Kanye West"]},"丙戌":{"py":"Bing Xu","an":"Dog","d":"언덕 너머의 노을 — 품위 있는 불, 선택한 이들에게만 비춥니다.","c":["Vladimir Putin","Justin Bieber","J.K. Rowling"]},"丁丑":{"py":"Ding Chou","an":"Ox","d":"외양간의 등불 — 긴 겨울을 견디는 작은 불꽃, 가장 오래가는 헌신.","c":["Frank Sinatra","Joe Biden","Tom Hanks"]},"丁卯":{"py":"Ding Mao","an":"Rabbit","d":"꽃밭의 촛불 — 육십갑자 중 가장 온화한 불. 태우기보다 비추기를 택합니다.","c":["Harrison Ford","Stanley Kubrick","Kim Kardashian"]},"丁巳":{"py":"Ding Si","an":"Snake","d":"스스로를 지피는 횃불 — 조용한 강렬함, 세계를 짓는 상상력.","c":["Walt Disney","Kobe Bryant","Johnny Cash"]},"丁未":{"py":"Ding Wei","an":"Goat","d":"집 한가운데의 화롯불 — 모두가 모여드는 온기, 방 안의 모든 것을 느낍니다.","c":["Taylor Swift","Serena Williams"]},"丁酉":{"py":"Ding You","an":"Rooster","d":"금 위의 불꽃 — 정밀한 광휘. 안목과 타이밍, 완벽주의자의 빛.","c":["Xi Jinping","Usain Bolt","Kendrick Lamar"]},"丁亥":{"py":"Ding Hai","an":"Pig","d":"밤바다 위의 등불 — 어둠 속을 보는 직관, 낭만가의 믿음.","c":["David Bowie","Volodymyr Zelensky","Akira Kurosawa"]},"戊子":{"py":"Wu Zi","an":"Rat","d":"샘을 품은 산 — 무뚝뚝한 겉과 베푸는 속, 은밀한 부드러움.","c":["Robert Downey Jr.","Yao Ming"]},"戊寅":{"py":"Wu Yin","an":"Tiger","d":"호랑이를 품은 산 — 고요한 표면 아래 대담한 심장. 드물게, 그러나 결정적으로 움직입니다.","c":["Michael Jackson","Ariana Grande","Snoop Dogg"]},"戊辰":{"py":"Wu Chen","an":"Dragon","d":"산맥 그 자체 — 팀과 회사와 가문을 짊어지는 광대한 그릇.","c":["Stephen Curry","Lisa (BLACKPINK)","Margot Robbie"]},"戊午":{"py":"Wu Wu","an":"Horse","d":"화산 — 불의 심장을 가진 땅. 대체로 고요하나, 그 아래를 기억하십시오.","c":["Roger Federer","Ed Sheeran"]},"戊申":{"py":"Wu Shen","an":"Monkey","d":"광석의 산 — 돌 속에 박힌 실용적 천재성, 조용한 시스템의 건축가.","c":["Mark Zuckerberg","David Beckham"]},"戊戌":{"py":"Wu Xu","an":"Dog","d":"요새 — 육십갑자 중 가장 굳건한 자리. 사람과 원칙과 성문을 지킵니다.","c":["LeBron James","Will Smith","Al Pacino"]},"己丑":{"py":"Ji Chou","an":"Ox","d":"눈 덮인 밭 — 인내 그 자체. 천천히 쌓은 것은 떠나지 않습니다.","c":["Suga (BTS)","Sergey Brin","Ryan Gosling"]},"己卯":{"py":"Ji Mao","an":"Rabbit","d":"만개한 정원 — 사람을 힘들이지 않고 길러내는 흙, 매력 있는 보살핌.","c":["Jack Nicholson","Chow Yun-fat","Bjork"]},"己巳":{"py":"Ji Si","an":"Snake","d":"햇살 든 밭 — 따뜻한 지성. 곁에 있는 모든 것이 익어갑니다.","c":["Barack Obama","Quentin Tarantino","Bae Suzy"]},"己未":{"py":"Ji Wei","an":"Goat","d":"한여름 마른 밭 — 고집 있는 흙. 농부와 논쟁해서 이기는 밭.","c":["Donald Trump","Morgan Freeman","Gong Li"]},"己酉":{"py":"Ji You","an":"Rooster","d":"추수 끝난 들판 — 정갈한 베풂, 품격 있는 봉사.","c":["Audrey Hepburn","Justin Timberlake","Usher"]},"己亥":{"py":"Ji Hai","an":"Pig","d":"강가의 밭 — 비옥하고 유연하니, 흐르는 것마다 한 몫이 남습니다.","c":["Pele","Celine Dion","Gal Gadot"]},"庚子":{"py":"Geng Zi","an":"Rat","d":"겨울 시내의 검 — 날카로운 지성, 서늘한 언변. 목소리를 높이지 않고 이깁니다.","c":["Jennifer Lopez","Michael Phelps","Denis Villeneuve"]},"庚寅":{"py":"Geng Yin","an":"Tiger","d":"봄 숲의 도끼 — 숙고보다 행동. 두려움 없이, 언제나 전진.","c":["Shakira","John von Neumann","Gianluigi Buffon"]},"庚辰":{"py":"Geng Chen","an":"Dragon","d":"용의 산속 원석 — 제련을 기다리는 힘. 늦게 피는 대기만성.","c":["Queen Elizabeth II","Bruno Mars","Andrew Garfield"]},"庚午":{"py":"Geng Wu","an":"Horse","d":"불 속의 칼 — 매일 담금질되는 열정, 스스로 전장을 고른 무사의 금속.","c":["Muhammad Ali","Alan Turing","Ray Dalio"]},"庚申":{"py":"Geng Shen","an":"Monkey","d":"순수한 강철 — 육십갑자 중 가장 결단력 있는 자리. 타고난 승부사.","c":["Jeff Bezos","Scarlett Johansson","Adele"]},"庚戌":{"py":"Geng Xu","an":"Dog","d":"제단 위의 검 — 원칙을 위한 싸움꾼. 칼끝은 오직 마땅한 곳만 향합니다.","c":["Emma Watson","Tiger Woods","Arnold Schwarzenegger"]},"辛丑":{"py":"Xin Chou","an":"Ox","d":"광산 속의 보석 — 일찍 저평가되고 나중에 값을 매길 수 없게 됩니다.","c":["Mariah Carey","Drake","Kylian Mbappe"]},"辛卯":{"py":"Xin Mao","an":"Rabbit","d":"꽃 사이의 바늘 — 부드러운 배경, 날카로운 끝. 벨 수 있는 매력.","c":["Michael Jordan","Diego Maradona","Naomi Osaka"]},"辛巳":{"py":"Xin Si","an":"Snake","d":"불꽃 속의 보석 — 열기 아래 벼려진 아름다움, 기질 있는 화려함.","c":["Angelina Jolie","Clint Eastwood","Eminem"]},"辛未":{"py":"Xin Wei","an":"Goat","d":"따뜻한 흙 속의 금 — 진열장이 필요 없는 은은한 광채.","c":["Lady Gaga","Novak Djokovic"]},"辛酉":{"py":"Xin You","an":"Rooster","d":"완성된 보석 — 육십갑자 중 가장 순수한 완벽주의. 흠 없는 기준을 스스로에게 먼저.","c":["Marilyn Monroe","Stephen Hawking"]},"辛亥":{"py":"Xin Hai","an":"Pig","d":"맑은 물에 씻긴 보석 — 투명함이 곧 인격. 꾸밈보다 정직을 택하는 빛.","c":["Christopher Nolan","Neymar","Hyun Bin"]},"壬子":{"py":"Ren Zi","an":"Rat","d":"망망대해 — 온 세상을 향한 갈망. 잠들지 않는 해류.","c":["Warren Buffett","Jennifer Lawrence","The Weeknd"]},"壬寅":{"py":"Ren Yin","an":"Tiger","d":"봄 숲을 가로지르는 강 — 지나는 모든 것을 적시는 대담한 탐험가.","c":["Tom Cruise","Paul McCartney"]},"壬辰":{"py":"Ren Chen","an":"Dragon","d":"저수지 — 안으로 품은 광대함. 고요한 물속의 용이 날씨를 도모합니다.","c":["Tom Brady","Shohei Ohtani","Anthony Hopkins"]},"壬午":{"py":"Ren Wu","an":"Horse","d":"불 위의 물, 증기기관 — 모순을 장관으로 바꾸는 에너지.","c":["Freddie Mercury","Monica Bellucci"]},"壬申":{"py":"Ren Shen","an":"Monkey","d":"수원지의 샘 — 마르지 않는 지혜, 바위가 직접 먹이는 물.","c":["Bob Dylan","Benedict Cumberbatch"]},"壬戌":{"py":"Ren Xu","an":"Dog","d":"절벽에 부딪치는 바다 — 시험할 벽을 얻은 야망. 절벽은 닳아도 바다는 남습니다.","c":["Bill Gates","Jack Ma"]},"癸丑":{"py":"Gui Chou","an":"Ox","d":"밭 위의 서리 — 가장 은밀한 인내. 견디고, 기억하고, 끝내 남습니다.","c":["Jay-Z","Hayao Miyazaki","Larry Ellison"]},"癸卯":{"py":"Gui Mao","an":"Rabbit","d":"꽃잎 위의 이슬 — 장식으로 오해받는 자양분. 아침처럼 정확한 친절.","c":["King Charles III","Elton John","Dr. Dre"]},"癸巳":{"py":"Gui Si","an":"Snake","d":"불로 떨어지는 비 — 감정과 불의 만남. 극적인 재능, 무심함은 불가능.","c":["Jackie Chan","Dwayne Johnson","Tim Cook"]},"癸未":{"py":"Gui Wei","an":"Goat","d":"마른 땅의 단비 — 가는 곳마다 필요한 존재. 깊이 스며드는 공감.","c":["Meryl Streep","Johnny Depp"]},"癸酉":{"py":"Gui You","an":"Rooster","d":"바위에서 걸러진 샘 — 정제된 직관. 불안할 만큼 자주 옳은 본능.","c":["Pope Francis","Kim Yuna","Ryu Hyun-jin"]},"癸亥":{"py":"Gui Hai","an":"Pig","d":"밤의 대양 — 육십갑자 중 가장 깊은 내면. 잠수를 허락받은 이는 잊지 못합니다.","c":["Mother Teresa","Andy Lau","Anthony Bourdain"]}};
+const CELEBKO = {"Rory McIlroy":"로리 매킬로이","Olivia Rodrigo":"올리비아 로드리고","Salma Hayek":"셀마 헤이엑","Keanu Reeves":"키아누 리브스","Britney Spears":"브리트니 스피어스","Jin (BTS)":"진(BTS)","Lionel Messi":"리오넬 메시","James Cameron":"제임스 캐머런","Jane Goodall":"제인 구달","Jisoo (BLACKPINK)":"지수(블랙핑크)","Son Ye-jin":"손예진","Sophia Loren":"소피아 로렌","Elon Musk":"일론 머스크","Elvis Presley":"엘비스 프레슬리","Whitney Houston":"휘트니 휴스턴","Bruce Lee":"이소룡","Martin Scorsese":"마틴 스코세이지","Kevin Hart":"케빈 하트","Madonna":"마돈나","Julia Roberts":"줄리아 로버츠","Emma Stone":"엠마 스톤","Prince":"프린스","Nicole Kidman":"니콜 키드먼","Billie Eilish":"빌리 아일리시","Masayoshi Son":"손정의","Rihanna":"리아나","G-Dragon":"지드래곤","Andres Iniesta":"안드레스 이니에스타","Princess Diana":"다이애나 왕세자비","Brad Pitt":"브래드 피트","Beyoncé":"비욘세","Oprah Winfrey":"오프라 윈프리","John Lennon":"존 레넌","Cristiano Ronaldo":"크리스티아누 호날두","Prince William":"윌리엄 왕세자","Sting":"스팅","Sandra Bullock":"샌드라 불럭","Greta Thunberg":"그레타 툰베리","Ken Watanabe":"와타나베 켄","Nelson Mandela":"넬슨 만델라","Steven Spielberg":"스티븐 스필버그","Eddie Murphy":"에디 머피","Steve Jobs":"스티브 잡스","Leonardo DiCaprio":"레오나르도 디카프리오","Bob Marley":"밥 말리","Lewis Hamilton":"루이스 해밀턴","Jungkook (BTS)":"정국(BTS)","Albert Einstein":"알베르트 아인슈타인","Kanye West":"카니예 웨스트","Vladimir Putin":"블라디미르 푸틴","Justin Bieber":"저스틴 비버","J.K. Rowling":"J.K. 롤링","Frank Sinatra":"프랭크 시나트라","Joe Biden":"조 바이든","Tom Hanks":"톰 행크스","Harrison Ford":"해리슨 포드","Stanley Kubrick":"스탠리 큐브릭","Kim Kardashian":"킴 카다시안","Walt Disney":"월트 디즈니","Kobe Bryant":"코비 브라이언트","Johnny Cash":"조니 캐시","Taylor Swift":"테일러 스위프트","Serena Williams":"세리나 윌리엄스","Xi Jinping":"시진핑","Usain Bolt":"우사인 볼트","Kendrick Lamar":"켄드릭 라마","David Bowie":"데이비드 보위","Volodymyr Zelensky":"볼로디미르 젤렌스키","Akira Kurosawa":"구로사와 아키라","Robert Downey Jr.":"로버트 다우니 주니어","Yao Ming":"야오밍","Michael Jackson":"마이클 잭슨","Ariana Grande":"아리아나 그란데","Snoop Dogg":"스눕 독","Stephen Curry":"스테픈 커리","Lisa (BLACKPINK)":"리사(블랙핑크)","Margot Robbie":"마고 로비","Roger Federer":"로저 페더러","Ed Sheeran":"에드 시런","Mark Zuckerberg":"마크 저커버그","David Beckham":"데이비드 베컴","LeBron James":"르브론 제임스","Will Smith":"윌 스미스","Al Pacino":"알 파치노","Suga (BTS)":"슈가(BTS)","Sergey Brin":"세르게이 브린","Ryan Gosling":"라이언 고슬링","Jack Nicholson":"잭 니콜슨","Chow Yun-fat":"주윤발","Bjork":"비요크","Barack Obama":"버락 오바마","Quentin Tarantino":"쿠엔틴 타란티노","Bae Suzy":"수지","Donald Trump":"도널드 트럼프","Morgan Freeman":"모건 프리먼","Gong Li":"공리","Audrey Hepburn":"오드리 헵번","Justin Timberlake":"저스틴 팀버레이크","Usher":"어셔","Pele":"펠레","Celine Dion":"셀린 디옹","Gal Gadot":"갤 가돗","Jennifer Lopez":"제니퍼 로페즈","Michael Phelps":"마이클 펠프스","Denis Villeneuve":"드니 빌뇌브","Shakira":"샤키라","John von Neumann":"존 폰 노이만","Gianluigi Buffon":"잔루이지 부폰","Queen Elizabeth II":"엘리자베스 2세","Bruno Mars":"브루노 마스","Andrew Garfield":"앤드루 가필드","Muhammad Ali":"무하마드 알리","Alan Turing":"앨런 튜링","Ray Dalio":"레이 달리오","Jeff Bezos":"제프 베이조스","Scarlett Johansson":"스칼렛 요한슨","Adele":"아델","Emma Watson":"엠마 왓슨","Tiger Woods":"타이거 우즈","Arnold Schwarzenegger":"아널드 슈워제네거","Mariah Carey":"머라이어 캐리","Drake":"드레이크","Kylian Mbappe":"킬리안 음바페","Michael Jordan":"마이클 조던","Diego Maradona":"디에고 마라도나","Naomi Osaka":"오사카 나오미","Angelina Jolie":"앤젤리나 졸리","Clint Eastwood":"클린트 이스트우드","Eminem":"에미넴","Lady Gaga":"레이디 가가","Novak Djokovic":"노바크 조코비치","Marilyn Monroe":"마릴린 먼로","Stephen Hawking":"스티븐 호킹","Christopher Nolan":"크리스토퍼 놀런","Neymar":"네이마르","Hyun Bin":"현빈","Warren Buffett":"워런 버핏","Jennifer Lawrence":"제니퍼 로런스","The Weeknd":"위켄드","Tom Cruise":"톰 크루즈","Paul McCartney":"폴 매카트니","Tom Brady":"톰 브레이디","Shohei Ohtani":"오타니 쇼헤이","Anthony Hopkins":"앤서니 홉킨스","Freddie Mercury":"프레디 머큐리","Monica Bellucci":"모니카 벨루치","Bob Dylan":"밥 딜런","Benedict Cumberbatch":"베네딕트 컴버배치","Bill Gates":"빌 게이츠","Jack Ma":"마윈","Jay-Z":"제이지","Hayao Miyazaki":"미야자키 하야오","Larry Ellison":"래리 엘리슨","King Charles III":"찰스 3세","Elton John":"엘턴 존","Dr. Dre":"닥터 드레","Jackie Chan":"성룡","Dwayne Johnson":"드웨인 존슨","Tim Cook":"팀 쿡","Meryl Streep":"메릴 스트립","Johnny Depp":"조니 뎁","Pope Francis":"프란치스코 교황","Kim Yuna":"김연아","Ryu Hyun-jin":"류현진","Mother Teresa":"마더 테레사","Andy Lau":"유덕화","Anthony Bourdain":"앤서니 보데인"};
+const ANKO = {'Rat':'쥐','Ox':'소','Tiger':'호랑이','Rabbit':'토끼','Dragon':'용','Snake':'뱀','Horse':'말','Goat':'양','Monkey':'원숭이','Rooster':'닭','Dog':'개','Pig':'돼지'};
+const HSK = {'甲':'갑','乙':'을','丙':'병','丁':'정','戊':'무','己':'기','庚':'경','辛':'신','壬':'임','癸':'계'};
+const HBK = {'子':'자','丑':'축','寅':'인','卯':'묘','辰':'진','巳':'사','午':'오','未':'미','申':'신','酉':'유','戌':'술','亥':'해'};
+const STEM = {
+  '갑':{han:'甲',py:'갑목(甲木)',en:'양의 목(木)',el:'wood',a:'jia',arch:'우뚝 선 거목',img:'하늘로 곧게 뻗는 거목',d:'갑목(甲木)은 오직 위로, 한 방향으로 자랍니다. 뚜렷한 원칙, 겉으로 드러나는 정직함, 그리고 건축가의 인내를 지녔습니다.'},
+  '을':{han:'乙',py:'을목(乙木)',en:'음의 목(木)',el:'wood',a:'yi',arch:'굽이도는 덩굴과 꽃',img:'덩굴과 꽃',d:'을목(乙木)은 돌아가는 길을 찾아내며 자랍니다. 유연하고 설득력 있으며, 보기보다 훨씬 강인합니다.'},
+  '병':{han:'丙',py:'병화(丙火)',en:'양의 화(火)',el:'fire',a:'bing',arch:'만물을 비추는 태양',img:'이글거리는 태양',d:'병화(丙火)는 계산 없이 모두를 비춥니다. 따뜻함, 존재감, 큰 그림을 보는 낙관을 지녔습니다.'},
+  '정':{han:'丁',py:'정화(丁火)',en:'음의 화(火)',el:'fire',a:'ding',arch:'어둠을 밝히는 등불',img:'촛불',d:'정화(丁火)는 초점을 맞춘 불입니다. 집중한 것을 끝까지 밝혀내고, 한 사람씩 차례로 따뜻하게 데웁니다.'},
+  '무':{han:'戊',py:'무토(戊土)',en:'양의 토(土)',el:'earth',a:'wu',arch:'움직이지 않는 산',img:'산',d:'무토(戊土)는 거대하고 믿음직하며 비바람에도 흔들리지 않습니다. 어느 집단에서든 하중을 받치는 벽이 됩니다.'},
+  '기':{han:'己',py:'기토(己土)',en:'음의 토(土)',el:'earth',a:'ji',arch:'만물을 기르는 옥토',img:'기름진 밭',d:'기토(己土)는 먹여 살리는 흙입니다. 곁에 있으면 사람도 일도 눈에 띄게 잘 자랍니다.'},
+  '경':{han:'庚',py:'경금(庚金)',en:'양의 금(金)',el:'metal',a:'geng',arch:'벼려진 칼날',img:'벼려진 칼',d:'경금(庚金)은 단련될수록 강해지는 원석의 금속입니다. 직선적이고 공정하며, 역경에서 오히려 힘을 얻습니다.'},
+  '신':{han:'辛',py:'신금(辛金)',en:'음의 금(金)',el:'metal',a:'xin',arch:'다듬어진 보석',img:'세공된 보석',d:'신금(辛金)은 완성된 금속입니다. 정교한 기준, 힘들이지 않은 듯한 세련미, 조용한 자부심을 지녔습니다.'},
+  '임':{han:'壬',py:'임수(壬水)',en:'양의 수(水)',el:'water',a:'ren',arch:'가없는 바다',img:'드넓은 바다',d:'임수(壬水)는 광활하게, 쉼 없이 해안과 해안을 잇습니다. 시스템과 지평선 단위로 사고합니다.'},
+  '계':{han:'癸',py:'계수(癸水)',en:'음의 수(水)',el:'water',a:'gui',arch:'만물을 적시는 비',img:'보슬비',d:'계수(癸水)는 물의 가장 섬세한 형태입니다. 남들이 놓치는 것을 감지하고, 마음먹은 곳 어디든 스며듭니다.'}
+};
+const ELK = {'목':'wood','화':'fire','토':'earth','금':'metal','수':'water'};
+const ELN = {wood:'목(木)',fire:'화(火)',earth:'토(土)',metal:'금(金)',water:'수(水)'};
+const GODK = {'비견':'The Ally','겁재':'The Rival','식신':'The Creator','상관':'The Maverick',
+  '정재':'The Steward','편재':'The Entrepreneur','정관':'The Governor','편관':'The Challenger','칠살':'The Challenger',
+  '정인':'The Scholar','편인':'The Mystic','일간':'Day Master'};
+const GODT = {'비견':'비견(比肩)','겁재':'겁재(劫財)','식신':'식신(食神)','상관':'상관(傷官)',
+  '정재':'정재(正財)','편재':'편재(偏財)','정관':'정관(正官)','편관':'편관(偏官)','칠살':'편관(偏官)',
+  '정인':'정인(正印)','편인':'편인(偏印)','일간':'일간(日干)'};
+const GKO = {'The Ally':'비견(比肩)','The Rival':'겁재(劫財)','The Creator':'식신(食神)','The Maverick':'상관(傷官)',
+  'The Steward':'정재(正財)','The Entrepreneur':'편재(偏財)','The Governor':'정관(正官)','The Challenger':'편관(偏官)',
+  'The Scholar':'정인(正印)','The Mystic':'편인(偏印)'};
+const STR = {'신약':'다소 신약(身弱) — 인성과 비겁의 지원에서 힘을 얻는 구조입니다',
+  '신강':'기운이 넘치는 신강(身強) — 표현과 발산에서 힘을 얻는 구조입니다',
+  '중화':'균형 잡힌 중화(中和) — 드물고 귀한 구조입니다',
+  '태왕':'매우 강한 기운','태약':'매우 약한 기운'};
+
+const GGLYPH={'The Ally':'🤝','The Rival':'⚡','The Creator':'🎨','The Maverick':'🎭','The Steward':'💎',
+ 'The Entrepreneur':'🎲','The Governor':'👑','The Challenger':'🗡️','The Scholar':'📖','The Mystic':'🔮'};
+const SGLYPH={'갑':'🌳','을':'🌿','병':'☀️','정':'🕯️','무':'⛰️','기':'🌾','경':'⚔️','신':'💍','임':'🌊','계':'🌧️'};
+const SSLUG={'갑':'jia','을':'yi','병':'bing','정':'ding','무':'wu','기':'ji','경':'geng','신':'xin','임':'ren','계':'gui'};
+const BSLUG={'子':'b-rat','丑':'b-ox','寅':'b-tiger','卯':'b-rabbit','辰':'b-dragon','巳':'b-snake','午':'b-horse','未':'b-goat','申':'b-monkey','酉':'b-rooster','戌':'b-dog','亥':'b-pig'};
+const GSLUG={'The Ally':'g-ally','The Rival':'g-rival','The Creator':'g-creator','The Maverick':'g-maverick','The Steward':'g-steward','The Entrepreneur':'g-entrepreneur','The Governor':'g-governor','The Challenger':'g-challenger','The Scholar':'g-scholar','The Mystic':'g-mystic'};
+const RAREP={'庚辰':'희귀 · 괴강(魁罡)','庚戌':'희귀 · 괴강(魁罡)','壬辰':'희귀 · 괴강(魁罡)','壬戌':'희귀 · 괴강(魁罡)',
+ '甲寅':'희귀 · 간여지동(干與支同)','乙卯':'희귀 · 간여지동(干與支同)','丙午':'희귀 · 간여지동(干與支同)','丁巳':'희귀 · 간여지동(干與支同)',
+ '戊戌':'희귀 · 간여지동(干與支同)','戊辰':'희귀 · 간여지동(干與支同)','己丑':'희귀 · 간여지동(干與支同)','己未':'희귀 · 간여지동(干與支同)',
+ '庚申':'희귀 · 간여지동(干與支同)','辛酉':'희귀 · 간여지동(干與支同)','壬子':'희귀 · 간여지동(干與支同)','癸亥':'희귀 · 간여지동(干與支同)',
+ '丁酉':'길성 · 천을귀인(天乙貴人)','丁亥':'길성 · 천을귀인(天乙貴人)','癸巳':'길성 · 천을귀인(天乙貴人)','癸卯':'길성 · 천을귀인(天乙貴人)'};
+const DECK={"stems":{"甲":{"han":"甲","cost":"양 · 목(木)","art":"jia.jpg","name":"갑목(甲木)","typ":"거목","desc":"개척자 — 곧고 굽히지 않으며, 이끌고 감싸는 큰 나무.","ac":"#5aa06a","edge":"#2e5a38","c1":"#15201a","c2":"#0c120e"},"乙":{"han":"乙","cost":"음 · 목(木)","art":"yi.jpg","name":"을목(乙木)","typ":"덩굴과 꽃","desc":"유연한 생존자 — 꺾이지 않고 휘어지며, 한 줄기 빛에서도 피어납니다.","ac":"#5aa06a","edge":"#2e5a38","c1":"#15201a","c2":"#0c120e"},"丙":{"han":"丙","cost":"양 · 화(火)","art":"bing.jpg","name":"병화(丙火)","typ":"이글거리는 태양","desc":"빛나고 아낌없는 — 모두를 위한 온기, 숨길 수 없는 빛.","ac":"#d0604e","edge":"#5e2e26","c1":"#20140f","c2":"#120b09"},"丁":{"han":"丁","cost":"음 · 화(火)","art":"ding.jpg","name":"정화(丁火)","typ":"촛불","desc":"가깝고 집중된 빛 — 어둠 속에서 길을 밝히는 조용한 온기.","ac":"#d0604e","edge":"#5e2e26","c1":"#20140f","c2":"#120b09"},"戊":{"han":"戊","cost":"양 · 토(土)","art":"wu.jpg","name":"무토(戊土)","typ":"산","desc":"흔들림 없는 굳건함 — 지켜주고 견뎌내는 벽.","ac":"#c9a227","edge":"#5a4a1e","c1":"#1f1a0e","c2":"#120f09"},"己":{"han":"己","cost":"음 · 토(土)","art":"ji.jpg","name":"기토(己土)","typ":"기름진 밭","desc":"길러내는 흙 — 겸손하게 가꾸며, 조용히 만물을 자라게 합니다.","ac":"#c9a227","edge":"#5a4a1e","c1":"#1f1a0e","c2":"#120f09"},"庚":{"han":"庚","cost":"양 · 금(金)","art":"geng.jpg","name":"경금(庚金)","typ":"벼려진 칼","desc":"의로운 힘 — 결단력 있고 날카롭게, 본질까지 베어 들어갑니다.","ac":"#a8b0b8","edge":"#465059","c1":"#161a1e","c2":"#0d0f12"},"辛":{"han":"辛","cost":"음 · 금(金)","art":"xin.jpg","name":"신금(辛金)","typ":"세공된 보석","desc":"정제된 정밀함 — 압력 속의 아름다움, 날이 선 우아함.","ac":"#a8b0b8","edge":"#465059","c1":"#161a1e","c2":"#0d0f12"},"壬":{"han":"壬","cost":"양 · 수(水)","art":"ren.jpg","name":"임수(壬水)","typ":"드넓은 바다","desc":"가없는 깊이 — 힘찬 해류, 나라를 움직이는 포부.","ac":"#5a9fd0","edge":"#264a5e","c1":"#101c24","c2":"#0a1016"},"癸":{"han":"癸","cost":"음 · 수(水)","art":"gui.jpg","name":"계수(癸水)","typ":"보슬비","desc":"고요한 지혜 — 보이지 않게 적시는 안개와 이슬.","ac":"#5a9fd0","edge":"#264a5e","c1":"#101c24","c2":"#0a1016"}},"branches":{"子":{"han":"子","cost":"23–01","art":"b-rat.jpg","name":"자(子) · 쥐","typ":"수(水) 양 🌙","desc":"한밤의 물 — 영리하고 재간 많으며, 새 순환의 씨앗.","ac":"#5a9fd0","edge":"#264a5e","c1":"#101c24","c2":"#0a1016"},"丑":{"han":"丑","cost":"01–03","art":"b-ox.jpg","name":"축(丑) · 소","typ":"토(土) 음 ❄️","desc":"얼어붙은 들판 — 참을성 있고 굳건하게, 봄을 위한 힘을 저장합니다.","ac":"#c9a227","edge":"#5a4a1e","c1":"#1f1a0e","c2":"#120f09"},"寅":{"han":"寅","cost":"03–05","art":"b-tiger.jpg","name":"인(寅) · 호랑이","typ":"목(木) 양 🌅","desc":"새벽의 나무 — 담대한 새 성장, 지평선을 여는 용기.","ac":"#5aa06a","edge":"#2e5a38","c1":"#15201a","c2":"#0c120e"},"卯":{"han":"卯","cost":"05–07","art":"b-rabbit.jpg","name":"묘(卯) · 토끼","typ":"목(木) 음 🌸","desc":"아침의 개화 — 부드러운 생기, 고요한 움직임 속의 우아함.","ac":"#5aa06a","edge":"#2e5a38","c1":"#15201a","c2":"#0c120e"},"辰":{"han":"辰","cost":"07–09","art":"b-dragon.jpg","name":"진(辰) · 용","typ":"토(土) 양 🌫️","desc":"물의 창고 — 신비로운 힘, 기운이 만나는 자리.","ac":"#c9a227","edge":"#5a4a1e","c1":"#1f1a0e","c2":"#120f09"},"巳":{"han":"巳","cost":"09–11","art":"b-snake.jpg","name":"사(巳) · 뱀","typ":"화(火) 음 🌤️","desc":"불씨 — 섬세한 지성, 웅크린 채 준비된 변신.","ac":"#d0604e","edge":"#5e2e26","c1":"#20140f","c2":"#120b09"},"午":{"han":"午","cost":"11–13","art":"b-horse.jpg","name":"오(午) · 말","typ":"화(火) 양 ☀️","desc":"한낮의 불 — 절정의 생명력, 가장 밝게 타오르는 열정.","ac":"#d0604e","edge":"#5e2e26","c1":"#20140f","c2":"#120b09"},"未":{"han":"未","cost":"13–15","art":"b-goat.jpg","name":"미(未) · 양","typ":"토(土) 음 🌾","desc":"따뜻하고 마른 흙 — 온화하고 예술적인, 목(木)의 창고.","ac":"#c9a227","edge":"#5a4a1e","c1":"#1f1a0e","c2":"#120f09"},"申":{"han":"申","cost":"15–17","art":"b-monkey.jpg","name":"신(申) · 원숭이","typ":"금(金) 양 🍂","desc":"가을의 금 — 영리하고 분주하게, 수확으로 향하는 길목.","ac":"#a8b0b8","edge":"#465059","c1":"#161a1e","c2":"#0d0f12"},"酉":{"han":"酉","cost":"17–19","art":"b-rooster.jpg","name":"유(酉) · 닭","typ":"금(金) 음 🌇","desc":"정제된 금 — 정밀하고 자부심 강한, 노을의 다듬어진 날.","ac":"#a8b0b8","edge":"#465059","c1":"#161a1e","c2":"#0d0f12"},"戌":{"han":"戌","cost":"19–21","art":"b-dog.jpg","name":"술(戌) · 개","typ":"토(土) 양 🌆","desc":"수호의 흙 — 충직하고 깨어 있는, 화(火)의 창고.","ac":"#c9a227","edge":"#5a4a1e","c1":"#1f1a0e","c2":"#120f09"},"亥":{"han":"亥","cost":"21–23","art":"b-pig.jpg","name":"해(亥) · 돼지","typ":"수(水) 음 🌌","desc":"깊은 밤의 물 — 정직하고 너그러운, 순환을 마무리하는 바다.","ac":"#5a9fd0","edge":"#264a5e","c1":"#101c24","c2":"#0a1016"}},"gods":{"The Ally":{"han":"比肩","cost":"同 · 아신","art":"g-ally.jpg","name":"비견(比肩)","typ":"동류 · 같은 오행","desc":"독립심과 자립 — 내 곁에 나란히 서는 대등한 동료들.","ac":"#5aa06a","edge":"#2e5a38","c1":"#15201a","c2":"#0c120e"},"The Rival":{"han":"劫財","cost":"同 · 아신","art":"g-rival.jpg","name":"겁재(劫財)","typ":"경쟁 · 추진력","desc":"경쟁의 불꽃, 대담함, 야망 — 자극이자 위협인 파트너.","ac":"#5aa06a","edge":"#2e5a38","c1":"#15201a","c2":"#0c120e"},"The Creator":{"han":"食神","cost":"洩 · 표출","art":"g-creator.jpg","name":"식신(食神)","typ":"표현 · 흐름","desc":"부드러운 표현, 솜씨, 즐김 — 수월하게 흘러나오는 재능.","ac":"#d0604e","edge":"#5e2e26","c1":"#20140f","c2":"#120b09"},"The Maverick":{"han":"傷官","cost":"洩 · 표출","art":"g-maverick.jpg","name":"상관(傷官)","typ":"반골 · 천재성","desc":"대담하게 규칙을 깨는 광채 — 판 자체를 다시 짜는 재능.","ac":"#d0604e","edge":"#5e2e26","c1":"#20140f","c2":"#120b09"},"The Steward":{"han":"正財","cost":"財 · 재물","art":"g-steward.jpg","name":"정재(正財)","typ":"근면한 재물 · 안정","desc":"성실하고 체계적인 번영 — 천천히 쌓아 신중히 지키는 부.","ac":"#c9a227","edge":"#5a4a1e","c1":"#1f1a0e","c2":"#120f09"},"The Entrepreneur":{"han":"偏財","cost":"財 · 재물","art":"g-entrepreneur.jpg","name":"편재(偏財)","typ":"기회 · 큰 승부","desc":"기회, 과감한 수, 역동적인 재운 — 거래를 알아보는 승부사의 눈.","ac":"#c9a227","edge":"#5a4a1e","c1":"#1f1a0e","c2":"#120f09"},"The Governor":{"han":"正官","cost":"官 · 관성","art":"g-governor.jpg","name":"정관(正官)","typ":"권위 · 질서","desc":"책임, 명예, 정당한 권력 — 규범을 지켜 신뢰받는 사람.","ac":"#a8b0b8","edge":"#465059","c1":"#161a1e","c2":"#0d0f12"},"The Challenger":{"han":"偏官","cost":"殺 · 관성","art":"g-challenger.jpg","name":"편관(偏官)","typ":"돌파 · 기세","desc":"압박 속의 강렬한 추진력 — 결단, 용기, 뚫고 나가는 의지.","ac":"#a8b0b8","edge":"#465059","c1":"#161a1e","c2":"#0d0f12"},"The Scholar":{"han":"正印","cost":"印 · 인성","art":"g-scholar.jpg","name":"정인(正印)","typ":"가르침 · 보살핌","desc":"배움, 보호, 지원 — 나를 키우고 감싸는 스승의 선물.","ac":"#5a9fd0","edge":"#264a5e","c1":"#101c24","c2":"#0a1016"},"The Mystic":{"han":"偏印","cost":"印 · 인성","art":"g-mystic.jpg","name":"편인(偏印)","typ":"직관 · 통찰","desc":"직관, 남다른 지혜, 고독한 깊이 — 듣지 않고도 아는 사람.","ac":"#5a9fd0","edge":"#264a5e","c1":"#101c24","c2":"#0a1016"}}};
+const raw = sessionStorage.getItem('elun_result');
+if(!raw){ document.getElementById('empty').style.display='block'; }
+else{
+  const D = JSON.parse(raw);
+  const meta = JSON.parse(sessionStorage.getItem('elun_meta')||'{}');
+  const fp = D.four_pillars, dmk = D.day_master.stem, dm = STEM[dmk];
+  document.getElementById('main').style.display='block';
+
+  // header
+  if(meta.name) document.getElementById('title').textContent = meta.name + ' 님의 사주';
+  const i = D.input;
+  const hourUnknown = !!i.hour_unknown || !fp.hour;
+  document.getElementById('born').textContent =
+    `출생 ${i.year}-${String(i.month).padStart(2,'0')}-${String(i.day).padStart(2,'0')} ${hourUnknown?'(시간 미상)':String(i.hour).padStart(2,'0')+':'+String(i.minute).padStart(2,'0')}${meta.city? ' · '+meta.city : ''}`;
+
+  // your hand — 셰어컷과 동일한 풀아트 카드 3장 (일지·일간·격국)
+  const gjH = fp.day.ganji_hanja, p60H = P60[gjH];
+  const handGod = GODK[D.geokguk?.bongi_god] || D.geokguk?.bongi_god || '';
+  const structArch = handGod && handGod !== 'Day Master' ? handGod : null;
+  const rare = RAREP[gjH];
+  const KOSTEM={'갑':'甲','을':'乙','병':'丙','정':'丁','무':'戊','기':'己','경':'庚','신':'辛','임':'壬','계':'癸'};
+  function faCard(d, roleLabel, showRare){
+    return `<div class="fa" style="--fac:${d.ac};--fedge:${d.edge}">
+      <span class="bg" style="background-image:url(../pillars/art/${d.art})"></span>
+      <span class="scrim"></span><span class="fr"></span>
+      <div class="top2"><span class="han2">${d.han}</span><span class="pill">${roleLabel}</span></div>
+
+      <div class="bot"><div class="nm2">${d.name}</div><div class="tp2">${d.typ}</div></div>
+    </div>`;
+  }
+  {
+    const bd=DECK.branches[gjH[1]], sd=DECK.stems[KOSTEM[dmk]], gd=DECK.gods[structArch];
+    let hh='';
+    if(bd) hh+=faCard(bd,'일지(日支)');
+    if(sd) hh+=faCard(sd,'일간(日干)');
+    if(gd) hh+=faCard(gd,'격국(格局)');
+    document.getElementById('hand').innerHTML=hh;
+    if(rare) document.getElementById('handrare').innerHTML=`<span style="border:1px solid var(--gold);color:var(--gold2);border-radius:12px;padding:3px 12px;font-size:10.5px;letter-spacing:2px;background:#0e0b08cc">◆ ${rare} — ${gjH}</span>`;
+  }
+
+  function deckCard(d, roleLabel, badge){
+    return `<div style="width:320px;height:500px;border-radius:22px;position:relative;flex:none;overflow:hidden;margin:0 12px;
+      border:2px solid ${d.edge};background:#0e0b08;box-shadow:0 20px 50px -18px #000, 0 0 40px -20px ${d.ac}">
+      <div style="position:absolute;inset:0;background-image:url(../pillars/art/${d.art});background-size:cover;background-position:22% center"></div>
+      <div style="position:absolute;inset:0;background:linear-gradient(180deg,#0e0b0899 0%,transparent 17%,transparent 70%,#0e0b08cc 88%,#0e0b08ee 100%)"></div>
+      <div style="position:absolute;inset:9px;border:1px solid #ffffff1c;border-radius:15px"></div>
+      <div style="position:absolute;top:20px;left:22px;right:22px;display:flex;justify-content:space-between;align-items:flex-start">
+        <span style="font-family:var(--serif);font-size:44px;font-weight:700;line-height:1;color:${d.ac};text-shadow:0 2px 14px #000">${d.han}</span>
+        <span style="font-family:var(--serif);font-size:15px;color:#e8e0d0;border:1px solid #ffffff33;border-radius:14px;padding:3px 12px;white-space:nowrap;background:#0e0b0880">${roleLabel}</span>
+      </div>
+      ${badge||''}
+      <div style="position:absolute;bottom:22px;left:0;right:0;text-align:center">
+        <div style="font-family:var(--serif);font-size:30px;font-weight:700;color:${d.ac};text-shadow:0 2px 14px #000">${d.name}</div>
+        <div style="font-size:14px;letter-spacing:2.5px;text-transform:uppercase;color:#c9bda9;margin-top:5px">${d.typ}</div>
+      </div>
+    </div>`;
+  }
+  function buildShareCut(){
+    const nm=(meta.name||'').trim();
+    document.getElementById('sc-title').textContent = nm ? nm+' 님의 사주' : '나의 사주';
+    const pk=['year','month','day','hour'].map(k=>fp[k]?fp[k].ganji_hanja:'?時');
+    document.getElementById('sc-pillars').textContent = pk.join(' · ');
+    document.getElementById('sc-badge').innerHTML = rare
+      ? `<span style="border:1.5px solid #c9a227;color:#e0c05a;border-radius:14px;padding:4px 16px;font-size:15px;letter-spacing:3px;background:#0e0b08cc">◆ ${rare} — ${gjH}</span>` : '';
+    let html='';
+    const bd=DECK.branches[gjH[1]], sd=DECK.stems[KOSTEM[dmk]], gd=DECK.gods[structArch];
+    if(bd) html+=deckCard(bd,'일지(日支)');
+    if(sd) html+=deckCard(sd,'일간(日干)');
+    if(gd) html+=deckCard(gd,'격국(格局)');
+    document.getElementById('sc-cards').innerHTML=html;
+  }
+
+  // 공용: 셰어컷 → PNG blob
+  async function renderCutBlob(){
+    if(!window.html2canvas){
+      await new Promise((res,rej)=>{const sc=document.createElement('script');
+        sc.src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+        sc.onload=res; sc.onerror=rej; document.head.appendChild(sc);});
+    }
+    buildShareCut();
+    const canvas=await html2canvas(document.getElementById('sharecut'),
+      {backgroundColor:'#0e0b08',scale:1.5,width:1080,height:1080,windowWidth:1400,useCORS:true});
+    return new Promise(res=>canvas.toBlob(res,'image/png'));
+  }
+  function dl(blob){
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(blob); a.download='elun-my-cards.png';
+    document.body.appendChild(a); a.click(); a.remove();
+  }
+  async function withBtn(btn, fn){
+    const t=btn.textContent; btn.disabled=true; btn.textContent='이미지 생성 중…';
+    try{ await fn(); }catch(_){}
+    btn.disabled=false; btn.textContent=t;
+  }
+  document.getElementById('sharehand').addEventListener('click', e=>withBtn(e.target, async()=>{
+    const blob=await renderCutBlob();
+    const file=new File([blob],'elun-my-cards.png',{type:'image/png'});
+    if(navigator.canShare && navigator.canShare({files:[file]})){
+      try{ await navigator.share({files:[file],title:'나의 사주 — elun.me',text:'내 사주 카드 · elun.me 에서 계산해 보세요'}); }
+      catch(_){/* 사용자가 시트 닫음 */}
+    } else { dl(blob); }
+  }));
+  document.getElementById('savehand').addEventListener('click', e=>withBtn(e.target, async()=>{
+    dl(await renderCutBlob());
+  }));
+
+  // pillars
+  const order=[['year','연주'],['month','월주'],['day','일주 ★'],['hour','시주']];
+  document.getElementById('pillars').innerHTML = order.map(([k,lab])=>{
+    const p=fp[k];
+    if(!p) return `<div class="pil" style="opacity:.5"><div class="lab">${lab}</div><div class="gj">?</div><div class="gods">시간<br>미상</div></div>`;
+    const gods = k==='day' ? `일간(日干)<br>${GODT[p.branch_god]||p.branch_god}` : `${GODT[p.stem_god]||p.stem_god}<br>${GODT[p.branch_god]||p.branch_god}`;
+    return `<div class="pil${k==='day'?' day':''}"><div class="lab">${lab}</div><div class="gj">${p.ganji_hanja}</div><div class="gods">${gods}</div></div>`;
+  }).join('');
+  document.getElementById('tst').innerHTML = hourUnknown
+    ? `⏱ 출생 시간 미상 — <b>삼주(三柱)</b> 리딩입니다. 일주·월주·연주는 정확하며, 시주만 생략됩니다.`
+    : `🌞 진태양시 <b>${i.true_solar_time}</b> · UTC${i.utc_offset>=0?'+':''}${i.utc_offset}${i.summer_time?' (서머타임)':''} — 이 정밀 보정 덕분에 기둥이 정확합니다.`;
+
+  // day master
+  document.getElementById('dmbox').style.setProperty('--ac', `var(--${dm.el})`);
+  document.getElementById('dmrow').innerHTML =
+    `<div class="han">${dm.han}</div>
+     <div class="t"><div class="nm">${dm.py} — ${dm.en}</div><div class="meta">${dm.img}</div></div>
+     <div class="arch">“${dm.arch}”</div>`;
+  document.getElementById('dmdesc').innerHTML =
+    `${dm.d} <a href="../daymasters.html#${dm.a}">${dm.py} 전체 프로필 읽기 →</a>`;
+
+  // day pillar card
+  const gj = fp.day.ganji_hanja, p60 = P60[gj];
+  if(p60){
+    const slug = p60.py.toLowerCase().replace(' ','-');
+    const reading = (HSK[gj[0]]||'')+(HBK[gj[1]]||'');
+    document.getElementById('dpcard').innerHTML =
+      `<div class="top"><span class="gj">${gj}</span>
+        <span><span class="py">${reading}(${gj}) 일주</span><br><span class="an">육십갑자의 하나 · ${ANKO[p60.an]||p60.an}의 날</span></span></div>
+      <div class="pd">“${p60.d}”</div>
+      ${p60.c && p60.c.length ? `<div class="cb">이 날에 태어난 유명인: ${p60.c.map(n=>`<a href="../famous/${n.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')}.html" target="_blank" style="color:var(--gold2)">${CELEBKO[n]||n}</a>`).join(' · ')}</div>` : ''}
+      <a class="go" href="../pillars/${slug}.html">${reading} 일주 전체 프로필 읽기 →</a>`;
+  } else { document.getElementById('dpcard').style.display='none'; }
+
+  // five elements (8 visible chars)
+  const cnt={wood:0,fire:0,earth:0,metal:0,water:0};
+  let nchars=0;
+  for(const k of ['year','month','day','hour']){
+    if(!fp[k]) continue;
+    cnt[ELK[fp[k].stem_element]]++; cnt[ELK[fp[k].branch_element]]++; nchars+=2;
+  }
+  if(hourUnknown){
+    document.getElementById('ecap').textContent='세 기둥에 드러난 여섯 글자를 기준으로 집계했습니다. 정식 리포트에서는 지장간과 계절 가중치까지 반영합니다.';
+    document.querySelector('.hero .kick').textContent='三柱 · 나의 삼주';
+  }
+  document.getElementById('ebars').innerHTML = Object.entries(cnt).map(([el,c])=>{
+    const pc = Math.round(c/nchars*100);
+    return `<div class="row"><span class="en">${ELN[el]}</span>
+      <span class="tr"><span class="fl" style="width:${pc}%;background:var(--${el})"></span></span>
+      <span class="pc">${pc}%</span></div>`;
+  }).join('');
+
+  // ten gods
+  const tg = D.ten_gods_count || {};
+  document.getElementById('tgods').innerHTML = Object.entries(tg)
+    .sort((a,b)=>b[1]-a[1])
+    .map(([k,v])=>`<span>${GODT[k]||k} <b>×${v}</b></span>`).join('') || '<span>—</span>';
+
+  // structure
+  const g = D.geokguk||{}, st = D.strength||{};
+  const gGod = GODT[g.bongi_god] || g.bongi_god || '—';
+  document.getElementById('struct').innerHTML =
+    `<tr><td>격국(格局)</td><td>${gGod} 격 · ${g.label||''}</td></tr>
+     <tr><td>신강약(身強弱)</td><td>${STR[st.label]||st.label||'—'}</td></tr>
+     <tr><td>대운(大運)</td><td>${D.dawun ? `${D.dawun.start_age_years}세 시작 · ${D.dawun.direction==='순행'?'순행(順行)':'역행(逆行)'}` : '—'}</td></tr>`;
+
+  // 소셜 링크 공유 (일주 페이지 — OG 카드가 미리보기로 뜸)
+  {
+    const slugP = p60H ? p60H.py.toLowerCase().replace(' ','-') : null;
+    if(slugP){
+      const url='https://elun.me/pillars/'+slugP+'.html';
+      const readingP=(HSK[gjH[0]]||'')+(HBK[gjH[1]]||'');
+      const txt=`내 사주 일주는 ${gjH}(${readingP}) 입니다. 당신의 일주도 찾아보세요:`;
+      document.getElementById('shx').href='https://x.com/intent/post?text='+encodeURIComponent(txt)+'&url='+encodeURIComponent(url);
+      document.getElementById('shf').href='https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(url);
+      document.getElementById('shw').href='https://wa.me/?text='+encodeURIComponent(txt+' '+url);
+      document.getElementById('shc').addEventListener('click', async e2=>{
+        e2.preventDefault();
+        try{ await navigator.clipboard.writeText(url); e2.target.textContent='복사됨!';
+          setTimeout(()=>e2.target.textContent='링크 복사',1400); }catch(_){}
+      });
+    } else { document.getElementById('socialrow').style.display='none'; }
+  }
+
+  // ── RPG character sheet ──
+  {
+    const ELCOLOR={wood:'var(--wood)',fire:'var(--fire)',earth:'var(--earth)',metal:'var(--metal)',water:'var(--water)'};
+    const STATNM={wood:'활력',fire:'카리스마',earth:'지구력',metal:'정밀',water:'지혜'};
+    const CLASSNM={'갑':'거목의 선봉장','을':'덩굴검의 결투가','병':'태양의 전령','정':'등불의 현자',
+      '무':'산의 수호자','기':'들녘의 연금술사','경':'대장간의 기사','신':'보석 세공사','임':'조수를 부르는 자','계':'안개의 예언자'};
+    const SKILLNM={'비견':'비견 · 아군 결집','겁재':'겁재 · 승부 본능','식신':'식신 · 창작의 흐름','상관':'상관 · 틀 깨기',
+      '정재':'정재 · 착실한 금고','편재':'편재 · 대박 승부수','정관':'정관 · 권위의 아우라','편관':'편관 · 강철 의지','정인':'정인 · 스승의 방패','편인':'편인 · 육감'};
+    const PERKNM={'희귀 · 괴강(魁罡)':'모 아니면 도 — 치명타가 양방향으로 두 배',
+      '희귀 · 간여지동(干與支同)':'흔들리지 않는 정체성 — 매혹 효과 면역',
+      '길성 · 천을귀인(天乙貴人)':'귀인의 가호 — 가장 위태로운 순간 도움이 도착합니다',
+      '강렬 · 양인(羊刃)':'결정적 일격 — 승부처가 필요한 강한 칼끝'};
+    const BRPERK={'子':'밤의 직감','午':'사람을 끄는 존재감','卯':'사람을 끄는 존재감','酉':'사람을 끄는 존재감',
+      '寅':'역마의 발걸음','申':'역마의 발걸음','巳':'역마의 발걸음','亥':'역마의 발걸음',
+      '辰':'내면의 창고','戌':'내면의 창고','丑':'내면의 창고','未':'내면의 창고'};
+    const ITEMNM={wood:'푸른 숲의 부적',fire:'잉걸불 등롱',earth:'대지의 호부',metal:'금빛 칼날',water:'옹달샘 물병'};
+    const CYCLE=['wood','fire','earth','metal','water'];
+    // 스탯 (6/8자 카운트 재사용)
+    const statRows=Object.entries(cnt).map(([el,c])=>{
+      const pc=Math.round(c/nchars*100);
+      return `<div class="stat"><span class="sn">${STATNM[el]}</span><span class="sb"><span class="sf" style="width:${pc}%;background:${ELCOLOR[el]}"></span></span><span class="sv">${pc}</span></div>`;
+    }).join('');
+    // 스킬
+    const skillRows=Object.entries(tg).sort((a,b)=>b[1]-a[1]).map(([k,v])=>
+      `<div class="skill"><span>${SKILLNM[k]||GODT[k]||k}</span><b>Lv.${v}</b></div>`).join('');
+    // 퍽
+    let perks='';
+    if(rare&&PERKNM[rare]) perks+=`<div class="perk"><b>◆ ${rare.split(' · ')[1]}</b> — ${PERKNM[rare].split(' — ')[1]}</div>`;
+    const brp=BRPERK[gjH[1]];
+    if(brp) perks+=`<div class="perk"><b>✦ ${brp}</b> — 일지(${gjH[1]}) 패시브</div>`;
+    if(!perks) perks='<div class="perk">—</div>';
+    // 용신 장비
+    const dmIdx=CYCLE.indexOf(dm.el);
+    const isWeak=/약|중화/.test(D.strength?.label||'');
+    const usefulEl=isWeak?CYCLE[(dmIdx+4)%5]:CYCLE[(dmIdx+1)%5];
+    // 레벨·퀘스트
+    const lvl=(new Date().getFullYear())-D.input.year;
+    const seg=(D.dawun?.segments||[]).find(x=>{const[lo,hi]=x.age.split('~').map(Number);return lvl>=lo&&lvl<=hi;});
+    const quest=seg?`${seg.age}세 대운 · ${seg.ganji_hanja}`:'—';
+    const nm=(meta.name||'모험가');
+    document.getElementById('charsheet').innerHTML=`
+      <div style="position:absolute;inset:0;background-image:url(../pillars/art/${SSLUG[dmk]}.jpg);background-size:cover;background-position:center;opacity:.14;pointer-events:none"></div>
+      <div class="cshead" style="position:relative"><span class="cst">⚔ 캐릭터 시트 · Elun</span><span class="cslv">Lv.${lvl}</span></div>
+      <div class="csclass" style="position:relative;--csac:${ELCOLOR[dm.el]}">
+        <div class="csart" style="background-image:url(../pillars/art/${SSLUG[dmk]}.jpg)"></div>
+        <div><div class="csnm">${nm}</div>
+          <div class="cscl">${dm.han} ${dm.py} · ${CLASSNM[dmk]||dm.arch}</div>
+          <div class="cssub">칭호: “${dm.arch}” · ${dm.en}</div>
+          ${structArch?`<div class="cssub" style="color:var(--gold2);font-style:normal;margin-top:4px">⚜ ${GKO[structArch]||structArch}의 길</div>`:''}</div>
+      </div>
+      <div class="csbody" style="position:relative">
+        <div><h4>능력치</h4>${statRows}</div>
+        <div><h4>스킬</h4>${skillRows}<h4 style="margin-top:14px">특성</h4>${perks}</div>
+      </div>
+      <div class="csfoot" style="position:relative">
+        <span>🧪 회복 아이템: <b>${ITEMNM[usefulEl]}</b> (${ELN[usefulEl]})</span>
+        <span>🗺 현재 퀘스트: <b>${quest}</b></span>
+      </div>`;
+    document.getElementById('savecs').addEventListener('click', e=>withBtn(e.target, async()=>{
+      if(!window.html2canvas){
+        await new Promise((res,rej)=>{const sc=document.createElement('script');
+          sc.src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+          sc.onload=res; sc.onerror=rej; document.head.appendChild(sc);});
+      }
+      const canvas=await html2canvas(document.getElementById('charsheet'),{backgroundColor:'#100d0a',scale:2,useCORS:true});
+      canvas.toBlob(blob=>{
+        const a=document.createElement('a');
+        a.href=URL.createObjectURL(blob); a.download='elun-character-sheet.png';
+        document.body.appendChild(a); a.click(); a.remove();
+      },'image/png');
+    }));
+  }
+
+  // share
+  document.getElementById('sharebtn').addEventListener('click', async e=>{
+    e.preventDefault();
+    const txt = `내 사주: ${fp.year.ganji_hanja} ${fp.month.ganji_hanja} ${fp.day.ganji_hanja} ${fp.hour.ganji_hanja} — 일간 ${dm.py}, “${dm.arch}”. 진태양시로 계산한 사주 — elun.me`;
+    if(navigator.share){ try{ await navigator.share({text:txt, url:'https://elun.me'}); }catch(_){} }
+    else{ await navigator.clipboard.writeText(txt); e.target.textContent='복사됨!'; setTimeout(()=>e.target.textContent='내 사주 공유',1500); }
+  });
+}
+</script>
+</body>
+</html>

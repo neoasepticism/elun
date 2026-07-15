@@ -1,10 +1,13 @@
 <!doctype html>
-<html lang="en">
+<html lang="ko">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="robots" content="noindex" />
-<title>Get Your Report — Elun</title>
+<link rel="canonical" href="https://elun.me/ko/report.html"/>
+<link rel="alternate" hreflang="en" href="https://elun.me/report.html"/>
+<link rel="alternate" hreflang="ko" href="https://elun.me/ko/report.html"/>
+<title>정밀 리포트 받기 — Elun</title>
 <style>
   :root{
     --ink:#f3ece0; --ink2:#c9bda9; --sub:#9c8f79; --faint:#6e6353;
@@ -56,56 +59,56 @@
 </head>
 <body>
 <nav><div class="inner">
-  <a href="index.html" class="logo"><span class="seal">乙</span><span class="m">Elun</span></a>
-  <span style="font-size:13px;color:var(--sub)"><a href="start.html">Calculate a chart</a> · <a href="ko/report.html" class="lang-sw" title="한국어 페이지">한국어</a></span>
+  <a href="../index.html" class="logo"><span class="seal">乙</span><span class="m">Elun</span></a>
+  <span style="font-size:13px;color:var(--sub)"><a href="../start.html">사주 계산하기</a> · <a href="../report.html">EN</a></span>
 </div></nav>
 
 <div class="wrap">
   <div class="hero">
-    <h1>Claim your Precision Report</h1>
-    <p>Enter the order number from your purchase receipt and the email you bought with — plus the birth details for the report. Generation takes 2–4 minutes. Your report comes with a <b style="color:var(--gold2)">permanent link</b> — bookmark it to reopen anytime, on any device — and you can save it as a PDF with the 🖨 button.</p>
+    <h1>정밀 리포트 받기</h1>
+    <p>구매 영수증에 있는 주문번호와 구매 시 사용한 이메일, 그리고 리포트에 쓸 출생 정보를 입력해 주세요. 생성에는 2–4분이 걸립니다. 리포트에는 <b style="color:var(--gold2)">영구 링크</b>가 함께 제공되어 언제든, 어떤 기기에서든 다시 열 수 있으니 북마크해 두세요. 🖨 버튼으로 PDF로 저장할 수도 있습니다.</p>
   </div>
 
   <form id="claim">
-    <label>Order number</label>
-    <input id="order" placeholder="from your receipt — auto-filled if you came from checkout" required />
-    <label>Purchase email</label>
+    <label>주문번호</label>
+    <input id="order" placeholder="영수증에 적힌 번호 — 결제 후 이동해 오셨다면 자동 입력됩니다" required />
+    <label>구매 이메일</label>
     <input id="email" type="email" placeholder="you@example.com" required />
 
-    <label>Name on the report (optional)</label>
-    <input id="rname" placeholder="e.g. Alex" />
+    <label>리포트에 표시할 이름 (선택)</label>
+    <input id="rname" placeholder="예: 지민" />
 
     <div class="row dt">
-      <div><label>Birth date</label><input id="bdate" type="date" required /></div>
-      <div><label>Time</label><input id="btime" type="time" /></div>
+      <div><label>생년월일</label><input id="bdate" type="date" required /></div>
+      <div><label>시간</label><input id="btime" type="time" /></div>
     </div>
     <label style="display:flex;align-items:center;gap:8px;margin-top:10px;font-size:13px;color:var(--ink2);cursor:pointer;text-transform:none;letter-spacing:0">
       <input type="checkbox" id="bnotime" style="width:auto;accent-color:var(--gold)" />
-      I don't know my birth time (3-pillar reading)
+      태어난 시간을 모릅니다 (삼주(三柱) 리딩)
     </label>
     <div class="row">
-      <div><label>Gender</label>
-        <select id="bgender"><option value="M">Male</option><option value="F">Female</option></select></div>
-      <div><label>Birth city</label>
+      <div><label>성별</label>
+        <select id="bgender"><option value="M">남성</option><option value="F">여성</option></select></div>
+      <div><label>출생 도시</label>
         <select id="bcity"></select></div>
     </div>
-    <div class="hint">City not listed? Pick the nearest listed city in the same time zone — within ~150 km the solar-time difference is a couple of minutes and almost never shifts a pillar.</div>
-    <label>Report language</label>
+    <div class="hint">목록에 없는 도시라면 같은 시간대의 가장 가까운 도시를 선택하세요 — 150km 이내면 태양시 차이는 몇 분 수준이라 기둥이 바뀌는 일은 거의 없습니다.</div>
+    <label>리포트 언어</label>
     <div class="langopt">
-      <label class="lo"><input type="radio" name="blang" value="en" checked><span>English</span></label>
-      <label class="lo"><input type="radio" name="blang" value="ko"><span>한국어 (Korean)</span></label>
+      <label class="lo"><input type="radio" name="blang" value="ko" checked><span>한국어</span></label>
+      <label class="lo"><input type="radio" name="blang" value="en"><span>English</span></label>
     </div>
-    <div class="hint">Near midnight or a time-zone boundary? Double-check the time — it can change your day pillar.</div>
+    <div class="hint">자정 무렵이나 시간대 경계 부근에 태어나셨나요? 시간을 한 번 더 확인해 주세요 — 일주가 바뀔 수 있습니다.</div>
 
-    <button class="btn" id="go" type="submit">Generate my report</button>
-    <div id="status"><div class="sp"></div><p id="stxt">Reading your chart…</p></div>
+    <button class="btn" id="go" type="submit">리포트 생성하기</button>
+    <div id="status"><div class="sp"></div><p id="stxt">사주를 읽는 중…</p></div>
     <div id="err"></div>
   </form>
 </div>
 
-<footer>© 2026 Elun · problems? <a href="mailto:hello@elun.me">hello@elun.me</a></footer>
+<footer>© 2026 Elun · 문제가 있으신가요? <a href="mailto:hello@elun.me">hello@elun.me</a></footer>
 
-<script src="cities.js"></script>
+<script src="../cities.js"></script>
 <script>
 const API_BASE = (location.hostname==='localhost'||location.hostname==='127.0.0.1'||location.protocol==='file:')
   ? 'http://127.0.0.1:8500' : 'https://api.elun.me';
@@ -147,8 +150,8 @@ try{
   }
 }catch(_){}
 
-const msgs=['Reading your chart…','Weighing the five elements…','Tracing your luck pillars…',
-  'Writing your twelve chapters…','Typesetting — almost there…'];
+const msgs=['사주를 읽는 중…','오행의 균형을 재는 중…','대운을 짚어가는 중…',
+  '열두 장(章)을 쓰는 중…','조판하는 중 — 거의 다 됐습니다…'];
 let mi=0, mt;
 
 document.getElementById('claim').addEventListener('submit', async e=>{
@@ -157,7 +160,7 @@ document.getElementById('claim').addEventListener('submit', async e=>{
   const noTime=document.getElementById('bnotime').checked;
   const [y,mo,d]=document.getElementById('bdate').value.split('-').map(Number);
   const tval=document.getElementById('btime').value;
-  if(!noTime && !tval){err.textContent='⚠ Enter your birth time — or check the box if unknown.';err.style.display='block';return;}
+  if(!noTime && !tval){err.textContent='⚠ 태어난 시간을 입력해 주세요 — 모르시면 체크박스를 선택하세요.';err.style.display='block';return;}
   const [h,mi2]=noTime?[null,0]:tval.split(':').map(Number);
   const _c=CITIES[+sel.value]||CITIES[0], lon=_c[2], tz=_c[3];
   const body={
@@ -175,8 +178,8 @@ document.getElementById('claim').addEventListener('submit', async e=>{
     const res=await fetch(API_BASE+'/report/generate',{
       method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
     if(!res.ok){
-      const t=await res.json().catch(()=>({detail:'server '+res.status}));
-      throw new Error(t.detail||('server '+res.status));
+      const t=await res.json().catch(()=>({detail:'서버 오류 '+res.status}));
+      throw new Error(t.detail||('서버 오류 '+res.status));
     }
     const html=await res.text();
     // 저장은 리포트 내 🖨 PDF 버튼으로 단일화 (HTML 자동 다운로드 제거 — 모바일에서 못 여는 파일이었음)

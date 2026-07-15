@@ -19,6 +19,13 @@ CORE = [  # (path, priority, changefreq)
     ('pillars/index.html','0.8', 'monthly'),
     ('birth-time.html',   '0.7', 'yearly'),
     ('bazi-vs-astrology.html', '0.8', 'monthly'),
+    # 한국어 미러 (noindex인 result/report/couple 제외)
+    ('ko/index.html',     '0.9', 'weekly'),
+    ('ko/start.html',     '0.8', 'monthly'),
+    ('ko/daymasters.html','0.7', 'monthly'),
+    ('ko/cards.html',     '0.7', 'monthly'),
+    ('ko/birth-time.html','0.6', 'yearly'),
+    ('ko/bazi-vs-astrology.html', '0.6', 'monthly'),
 ]
 
 def lastmod(path):
@@ -51,7 +58,7 @@ def scan(subdir, prio, freq, index_prio=None):
         out.append(url(f'{subdir}/{f}', prio, freq))
     return out
 
-entries = [url(p, pr, f) for p, pr, f in CORE]
+entries = [url(p, pr, f) for p, pr, f in CORE if os.path.exists(os.path.join(ROOT, p))]
 entries += scan('pillars', '0.6', 'yearly', index_prio=None)   # index는 CORE에 이미 있음
 entries += scan('famous',  '0.5', 'monthly', index_prio='0.7')
 entries += scan('audits',  '0.6', 'monthly', index_prio='0.7')
