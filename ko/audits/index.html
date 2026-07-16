@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="canonical" href="https://elun.me/ko/audits/"/>
+<link rel="alternate" hreflang="en" href="https://elun.me/audits/"/>
+<link rel="alternate" hreflang="ko" href="https://elun.me/ko/audits/"/>
+<link rel="alternate" hreflang="x-default" href="https://elun.me/audits/"/>
+<title>Elun Destiny Audit — 사주를 실제 삶에 대조하다</title>
+<meta name="description" content="Elun Destiny Audit 시리즈: 공개 출생 기록으로 차트를 계산하고, 기록으로 남은 삶에 10년 단위로 대조해 감정합니다. 유리한 것만 고르지 않으며, 시주는 정직하게 생략합니다." />
+<style>
+  :root{--ink:#f3ece0;--ink2:#c9bda9;--sub:#9c8f79;--faint:#6e6353;--bg:#100d0a;--card:#1c1712;
+    --line:#332a22;--line2:#40342a;--gold:#c9a227;--gold2:#e0c05a;--green:#7ba874;
+    --serif:'Noto Serif',ui-serif,Georgia,serif;--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.7;font-size:16px;
+    background-image:radial-gradient(ellipse at 50% -10%,#221a10 0,transparent 55%)}
+  a{color:var(--gold2);text-decoration:none}
+  .wrap{max-width:780px;margin:0 auto;padding:0 22px}
+  nav{position:sticky;top:0;z-index:20;background:#100d0acc;backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  nav .inner{max-width:1040px;margin:0 auto;padding:0 22px;display:flex;align-items:center;justify-content:space-between;height:60px}
+  .logo{font-family:var(--serif);font-size:22px;font-weight:700;display:flex;align-items:center;gap:9px;color:var(--ink)}
+  .logo .m{color:var(--gold2)}
+  .logo .seal{width:26px;height:26px;border:1px solid var(--gold);color:var(--gold2);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:14px;font-family:var(--serif)}
+  .navlinks{font-size:13px;color:var(--sub)}
+  .hero{text-align:center;padding:60px 0 26px}
+  .hero .kick{font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+  .hero h1{font-family:var(--serif);font-size:clamp(30px,5vw,44px);margin:0 0 14px;font-weight:700}
+  .hero p{color:var(--ink2);max-width:600px;margin:0 auto;font-size:15.5px}
+  .meth{border-left:3px solid var(--green);border-radius:0 12px 12px 0;background:#14201a;
+    padding:16px 20px;margin:30px auto;max-width:640px;font-size:13.5px;color:var(--ink2);text-align:left}
+  .cards{display:grid;gap:18px;margin:36px 0 10px}
+  .ac{position:relative;display:block;border:1px solid var(--line);border-radius:16px;background:var(--card);padding:26px 28px;transition:border-color .15s}
+  .ac:hover{border-color:var(--gold)}
+  .ac .go a::after{content:"";position:absolute;inset:0}
+  .ac .no{font-size:11.5px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+  .ac .nm{font-family:var(--serif);font-size:24px;color:var(--ink);font-weight:700;margin-bottom:4px}
+  .ac .born{font-size:12.5px;color:var(--faint);margin-bottom:12px}
+  .ac .hl{font-family:var(--serif);font-style:italic;font-size:15px;color:var(--ink2)}
+  .ac .go{margin-top:14px;font-size:13.5px;color:var(--gold2)}
+  .cta{text-align:center;padding:40px 0 64px}
+  .cta p{color:var(--sub);font-size:14px;max-width:480px;margin:0 auto 18px}
+  .cta .btn{background:linear-gradient(180deg,var(--gold2),var(--gold));color:#1a1206;font-weight:700;padding:11px 24px;border-radius:24px;font-size:14px;display:inline-block}
+  footer{border-top:1px solid var(--line);padding:30px 0;text-align:center;color:var(--faint);font-size:12px}
+  footer a{color:var(--gold2)}
+</style></head><body>
+<nav><div class="inner"><a href="../index.html" class="logo"><span class="seal">乙</span><span class="m">Elun</span></a>
+<span class="navlinks"><a href="../famous/">유명인 차트</a> · <a href="../daymasters.html">일간</a> · <a href="../start.html">내 사주</a> · <a href="../../audits/" class="lang-sw" title="English page">EN</a></span></div></nav>
+
+<header class="hero wrap">
+  <div class="kick">Elun Destiny Audit</div>
+  <h1>방법론을, 실제 삶에 대조하다.</h1>
+  <p>차트는 누구나 사후에 읽을 수 있습니다. 감정(Audit)은 더 엄격합니다: 공개 출생 기록으로 결정론적 엔진이 차트를 계산하고, 그 작동 원리를 먼저 밝힌 뒤, 기록으로 남은 삶을 10년 단위로 짚으며 판정에 등급을 매깁니다 — 적중도, 부분도, 빗나감도 똑같이.</p>
+  <div class="meth"><b style="color:var(--green)">규칙.</b> 진태양시로 보정한 차트. 출생 시각이 공개 기록에 없으면 → 시주는 추측하지 않고 정직하게 생략합니다. 모든 판정은 공개 기록의 사건에 대조해 등급을 매깁니다 — 들어맞지 않는 것까지 포함해서.</div>
+</header>
+
+<div class="wrap">
+  <div class="cards">
+    <div class="ac">
+      <div class="no">감정 No.001</div>
+      <div class="nm">손정의</div>
+      <div class="born">1957-08-11 출생 · 일본 도스</div>
+      <div class="hl">“얇은 흙을 움켜쥔 신약 을목(乙木) 뿌리: 지배가 아니라 생존을 위해 지어진 사주가 어떻게 기술 역사상 가장 레버리지 큰 베팅들을 낳았는가.”</div>
+      <div class="go"><a href="../../audits/masayoshi-son-ko.html">감정 읽어보기 →</a></div>
+    </div>
+    <div class="ac">
+      <div class="no">감정 No.002</div>
+      <div class="nm">스티브 잡스</div>
+      <div class="born">1955-02-24 출생 · 미국 샌프란시스코</div>
+      <div class="hl">“약간 신약한 양화(陽火) 사주 — 목(木)이 불을 먹일지 수(水)가 꺼뜨릴지에 온 생애가 달렸고, 계속 타오르는 데 무엇을 치렀는가.”</div>
+      <div class="go"><a href="../../audits/steve-jobs-ko.html">감정 읽어보기 →</a></div>
+    </div>
+    <div class="ac">
+      <div class="no">감정 No.003</div>
+      <div class="nm">나폴레옹 보나파르트</div>
+      <div class="born">1769-08-15 출생 · 코르시카 아작시오</div>
+      <div class="hl">“잘못된 흙에 태어난 양목(陽木) 거인: 수(水)와 비겁이 필요했던 사주가, 자신을 삼킬 바로 그 기운들 위에 제국을 세웠다.”</div>
+      <div class="go"><a href="../../audits/napoleon-bonaparte-ko.html">감정 읽어보기 →</a></div>
+    </div>
+    <div class="ac">
+      <div class="no">감정 No.004</div>
+      <div class="nm">무하마드 알리</div>
+      <div class="born">1942-01-17 출생 · 미국 켄터키 루이빌</div>
+      <div class="hl">“제 기운에 강한 양금(陽金) 도끼: 그의 최고의 승리는 가장 세게 휘두를 때가 아니라, 매를 견디며 구조가 일하게 둘 때 왔다.”</div>
+      <div class="go"><a href="../../audits/muhammad-ali-ko.html">감정 읽어보기 →</a></div>
+    </div>
+    <div class="ac">
+      <div class="no">감정 No.005</div>
+      <div class="nm">마이크 타이슨</div>
+      <div class="born">1966-06-30 출생 · 미국 뉴욕 브루클린</div>
+      <div class="hl">“용광로에 태어난 양금(陽金) 칼날: 신약(身弱) 사주가 어떻게 그 무시무시한 부상, 화려한 자멸, 그리고 있을 법하지 않은 2막을 설명하는가.”</div>
+      <div class="go"><a href="../../audits/mike-tyson-ko.html">감정 읽어보기 →</a></div>
+    </div>
+    <div class="ac">
+      <div class="no">감정 No.006</div>
+      <div class="nm">테일러 스위프트</div>
+      <div class="born">1989-12-13 출생 · 미국 펜실베이니아 웨스트리딩</div>
+      <div class="hl">“수(水)의 달에 놓인 신약한 음화(陰火) 촛불 — 타오르기 위해서가 아니라 바람을 견디도록, 그리고 그 바람을 이름 붙이도록 지어졌다.”</div>
+      <div class="go"><a href="../../audits/taylor-swift-ko.html">감정 읽어보기 →</a></div>
+    </div>
+    <div class="ac">
+      <div class="no">감정 No.007</div>
+      <div class="nm">비욘세</div>
+      <div class="born">1981-09-04 출생 · 미국 텍사스 휴스턴</div>
+      <div class="hl">“칼의 숲에 선 음목(陰木) 넝쿨 — 부러지지 않고 휘어 살아남는 자아에 가해진 순수한 관성(官星)의 압박.”</div>
+      <div class="go"><a href="../../audits/beyonce-ko.html">감정 읽어보기 →</a></div>
+    </div>
+    <div class="ac">
+      <div class="no">감정 No.008</div>
+      <div class="nm">크리스티아누 호날두</div>
+      <div class="born">1985-02-05 출생 · 마데이라 푼샬</div>
+      <div class="hl">“겨울 흙에 태어난 음목(陰木) 넝쿨, 쉬기엔 너무 강한 자아 — 태생에 지니지 못한 불(火)을 찾아 헤맨 한 커리어.”</div>
+      <div class="go"><a href="../../audits/cristiano-ronaldo-ko.html">감정 읽어보기 →</a></div>
+    </div>
+    <div class="ac">
+      <div class="no">감정 No.009</div>
+      <div class="nm">리오넬 메시</div>
+      <div class="born">1987-06-24 출생 · 아르헨티나 로사리오</div>
+      <div class="hl">“한여름 불 속의 신약한 양목(陽木) — 남을 위해 빛나도록 지어졌다, 마침내 물(水)이 와 뿌리를 구하기 전까지.”</div>
+      <div class="go"><a href="../../audits/lionel-messi-ko.html">감정 읽어보기 →</a></div>
+    </div>
+    <div class="ac">
+      <div class="no">감정 No.010</div>
+      <div class="nm">일론 머스크</div>
+      <div class="born">1971-06-28 출생 · 남아공 프리토리아</div>
+      <div class="hl">“제 금(金) 관성을 향해 휘두르는 신약한 양목(陽木) 도끼 — 자신을 옭아매는 바로 그 제도를 공격하도록 구조적으로 내몰린다.”</div>
+      <div class="go"><a href="../../audits/elon-musk-ko.html">감정 읽어보기 →</a></div>
+    </div>
+    <div class="ac">
+      <div class="no">감정 No.011</div>
+      <div class="nm">키아누 리브스</div>
+      <div class="born">1964-09-02 출생 · 레바논 베이루트</div>
+      <div class="hl">“제 가지에 뿌리내린 양목(陽木) 줄기, 불(火) 산출을 지니지 못한 — 알맞은 통로를 영영 찾는 거대한 생명력.”</div>
+      <div class="go"><a href="../../audits/keanu-reeves-ko.html">감정 읽어보기 →</a></div>
+    </div>
+    <div class="ac">
+      <div class="no">감정 No.012</div>
+      <div class="nm">킴 카다시안</div>
+      <div class="born">1980-10-21 출생 · 미국 캘리포니아 로스앤젤레스</div>
+      <div class="hl">“온전히 통제할 수 없는 금(金) 재물 위에 지어진 신약한 음화(陰火) — 때맞춰 계속 도착하는 목(木)만이 지탱한다.”</div>
+      <div class="go"><a href="../../audits/kim-kardashian-ko.html">감정 읽어보기 →</a></div>
+    </div>
+    <div class="ac">
+      <div class="no">감정 No.013</div>
+      <div class="nm">켄드릭 라마</div>
+      <div class="born">1987-06-17 출생 · 미국 캘리포니아 컴턴</div>
+      <div class="hl">“3분의 2쯤의 불로 타는 촛불, 간신히 지닌 산출(食傷)과 재물로 세상을 밝히려 애쓴다 — 그리고 때때로 눈부시게 성공한다.”</div>
+      <div class="go"><a href="../../audits/kendrick-lamar-ko.html">감정 읽어보기 →</a></div>
+    </div>
+    <div class="ac">
+      <div class="no">감정 No.014</div>
+      <div class="nm">버락 오바마</div>
+      <div class="born">1961-08-04 출생 · 미국 하와이 호놀룰루</div>
+      <div class="hl">“쉽게 움직이기엔 너무 무거운 기토(己土) 자아, 스스로 생(生)해야 하는 금(金)만이 구한다 — 힘이 아니라 산출로 이루는 질서.”</div>
+      <div class="go"><a href="../../audits/barack-obama-ko.html">감정 읽어보기 →</a></div>
+    </div>
+    <div class="ac">
+      <div class="no">감정 No.015</div>
+      <div class="nm">도널드 트럼프</div>
+      <div class="born">1946-06-14 출생 · 미국 뉴욕 퀸스</div>
+      <div class="hl">“지나친 불에 먹인 음토(陰土) 밭 — 남는 힘을 결과로 바꿔줄 드문 기운을 기다리는 과잉 신강의 사주.”</div>
+      <div class="go"><a href="../../audits/donald-trump-ko.html">감정 읽어보기 →</a></div>
+    </div>
+    <div class="ac" style="border-color:var(--gold)">
+      <div class="no">비교 · 페어링</div>
+      <div class="nm">오바마 vs 트럼프 — 두 개의 토(土)</div>
+      <div class="born">같은 일간, 상반된 구조 · 중립</div>
+      <div class="hl">“같은 수(水)가 결핍된 두 신강 기토(己土) 자아, 둘 다 금(金)과 수(水)가 도착한 바로 그때 대통령에 이르렀다 — 하나는 시스템으로, 하나는 이미지로.”</div>
+      <div class="go"><a href="../../audits/obama-vs-trump-ko.html">비교 감정 읽어보기 →</a></div>
+    </div>
+    <div class="ac" style="border-color:var(--gold)">
+      <div class="no">비교 · 페어링</div>
+      <div class="nm">호날두 vs 메시 — 불과 물</div>
+      <div class="born">두 목(木) 일간, 상반된 사주</div>
+      <div class="hl">“하나는 쉬기엔 너무 강해 존재하기 위해 타오르고; 하나는 재능을 지탱하기엔 너무 약해 물을 기다린다 — 오행에 쓰인 라이벌 관계.”</div>
+      <div class="go"><a href="../../audits/ronaldo-vs-messi-ko.html">비교 감정 읽어보기 →</a></div>
+    </div>
+    <div class="ac" style="border-color:var(--gold)">
+      <div class="no">비교 · 페어링</div>
+      <div class="nm">알리 vs 타이슨 — 庚의 두 칼날</div>
+      <div class="born">두 헤비급 챔피언, 하나의 일간</div>
+      <div class="hl">“같은 칼날(庚 양금), 같은 불, 다른 그릇 — 강약 하나가 불이 벼려낸 자와 녹여버린 자를 갈랐다.”</div>
+      <div class="go"><a href="../../audits/ali-vs-tyson-ko.html">비교 감정 읽어보기 →</a></div>
+    </div>
+  </div>
+</div>
+
+<div class="cta">
+  <p>같은 엔진, 같은 원칙을 당신의 사주에 겨눕니다.</p>
+  <a class="btn" href="../start.html">내 사주 계산하기 — 무료</a>
+</div>
+
+<footer>© 2026 <a href="https://elun.me">Elun</a> · Destiny, engineered. · <a href="../famous/">167명의 유명인 차트</a></footer>
+</body></html>

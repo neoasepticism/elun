@@ -67,6 +67,7 @@ if os.path.isdir(os.path.join(ROOT, 'ko', 'pillars')):
     entries += scan('ko/pillars', '0.5', 'yearly',  index_prio='0.6')
 if os.path.isdir(os.path.join(ROOT, 'ko', 'famous')):
     entries += scan('ko/famous',  '0.4', 'monthly', index_prio='0.6')
+    entries += scan('ko/audits',  '0.5', 'monthly', index_prio='0.6')
 
 xml = ('<?xml version="1.0" encoding="UTF-8"?>\n'
        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
