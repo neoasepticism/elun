@@ -238,7 +238,7 @@ const p=P60T.find(x=>x.gj===gj);
 if(p){
   const el=document.getElementById('todayCard');
   el.style.setProperty('--tc',EL[gj[0]]);
-  el.href='../pillars/'+p.py.toLowerCase().replace(' ','-')+'.html';
+  el.href='pillars/'+p.py.toLowerCase().replace(' ','-')+'.html';
   document.getElementById('tGj').textContent=gj;
   document.getElementById('tPy').textContent=gjKo+'일';
   document.getElementById('tDate').textContent=now.toLocaleDateString('ko-KR',{month:'long',day:'numeric'});
