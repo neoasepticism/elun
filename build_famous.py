@@ -144,7 +144,6 @@ def page(name):
     <h2 style="margin-bottom:8px">Elun Destiny Audit · {_no}</h2>
     <p style="margin:0 0 14px">This chart was audited decade by decade against {name}'s fully documented life — hits, partials, and misses all graded on the record.</p>
     <a class="btn ghost" href="../audits/{_slug}.html">Read the full audit →</a>
-    <div style="font-size:12px;color:var(--faint);margin-top:10px"><a href="../audits/{_slug}-ko.html" style="color:var(--sub)">한국어판 →</a></div>
   </div>
 '''
     return f'''<!doctype html>

@@ -62,6 +62,11 @@ entries = [url(p, pr, f) for p, pr, f in CORE if os.path.exists(os.path.join(ROO
 entries += scan('pillars', '0.6', 'yearly', index_prio=None)   # index는 CORE에 이미 있음
 entries += scan('famous',  '0.5', 'monthly', index_prio='0.7')
 entries += scan('audits',  '0.6', 'monthly', index_prio='0.7')
+# 한국어 콘텐츠 라이브러리 (일주 60 · 유명인 167)
+if os.path.isdir(os.path.join(ROOT, 'ko', 'pillars')):
+    entries += scan('ko/pillars', '0.5', 'yearly',  index_prio='0.6')
+if os.path.isdir(os.path.join(ROOT, 'ko', 'famous')):
+    entries += scan('ko/famous',  '0.4', 'monthly', index_prio='0.6')
 
 xml = ('<?xml version="1.0" encoding="UTF-8"?>\n'
        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
