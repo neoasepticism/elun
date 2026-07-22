@@ -9,9 +9,9 @@ window.ELUN_PADDLE = {
   env: "production", // "sandbox" | "production"
   clientToken: "live_9b5f74b9df87c8e30fe104da711",
   prices: {
-    single:  "pri_01ky4mt0fngkhqk4h9nxea2pzw",  // Precision Report — $29
+    single:  "pri_01ky4mqjxa4fdvfs0jbwhgcggf",  // Precision Report — $29
     decade:  "pri_01ky4ms9z3vxc6ryfbdrnpgjpm",  // Report + Decade — $49
-    couple:  "pri_01ky4mqjxa4fdvfs0jbwhgcggf",  // Compatibility Report — $49
+    couple:  "pri_01ky4mt0fngkhqk4h9nxea2pzw",  // Compatibility Report — $49
     upgrade: "pri_01ky4mvxtzp99cxc37ttcctpkq",  // Decade Expansion 업그레이드 — $20
   },
 };
