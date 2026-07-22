@@ -147,6 +147,8 @@
   footer{border-top:1px solid var(--line);padding:28px 0;text-align:center;color:var(--faint);font-size:12px}
   #empty{text-align:center;padding:90px 20px;display:none}
 </style>
+<script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
+<script src="paddle-config.js"></script>
 </head>
 <body>
 <nav><div class="inner">
@@ -227,20 +229,25 @@
     </div>
     <div class="note" id="ctanote">Premium reports are launching soon — the sample shows the exact depth you'll get.</div>
     <script>
-    // Lemon Squeezy 체크아웃 URL — 상품 생성 후 여기에 붙여넣으면 구매 버튼이 켜집니다.
-    const CHECKOUT_URL = "https://elun.lemonsqueezy.com/checkout/buy/a89d47ac-7832-48cf-8d45-3fac9ab7c747";
-    const DECADE_CHECKOUT_URL = "https://elun.lemonsqueezy.com/checkout/buy/0e38106a-5015-43d0-80d4-bcd800dd0b67";
-    if(CHECKOUT_URL){
-      const b=document.getElementById('buybtn');
-      b.href=CHECKOUT_URL; b.style.display='inline-block';
-      document.getElementById('samplebtn').classList.add('ghost');
-      document.getElementById('samplebtn').textContent='See a sample first';
-      if(DECADE_CHECKOUT_URL){
-        const db=document.getElementById('buydecadebtn');
-        db.href=DECADE_CHECKOUT_URL; db.style.display='inline-block';
+    // Paddle 체크아웃 — paddle-config.js 에 client token / price ID를 채우면 버튼이 켜집니다.
+    (function(){
+      const cfg = window.ELUN_PADDLE;
+      const ready = cfg && cfg.clientToken && cfg.clientToken.indexOf('PASTE_')!==0
+                    && cfg.prices && cfg.prices.single && cfg.prices.single.indexOf('PASTE_')!==0;
+      if(ready){
+        const b=document.getElementById('buybtn');
+        b.style.display='inline-block';
+        b.onclick=function(){ elunOpenPaddleCheckout('single',{redirectTo:'report.html'}); return false; };
+        document.getElementById('samplebtn').classList.add('ghost');
+        document.getElementById('samplebtn').textContent='See a sample first';
+        if(cfg.prices.decade && cfg.prices.decade.indexOf('PASTE_')!==0){
+          const db=document.getElementById('buydecadebtn');
+          db.style.display='inline-block';
+          db.onclick=function(){ elunOpenPaddleCheckout('decade',{redirectTo:'report.html'}); return false; };
+        }
+        document.getElementById('ctanote').innerHTML='One-time purchase · after checkout, claim your report at <a href="report.html">elun.me/report.html</a> with your order number.';
       }
-      document.getElementById('ctanote').innerHTML='One-time purchase · after checkout, claim your report at <a href="report.html">elun.me/report.html</a> with your order number.';
-    }
+    })();
     </script>
   </div>
 
