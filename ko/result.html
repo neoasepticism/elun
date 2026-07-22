@@ -155,8 +155,8 @@
 </head>
 <body>
 <nav><div class="inner">
-  <a href="../index.html" class="logo"><span class="seal">乙</span><span class="m">Elun</span></a>
-  <span class="navlinks"><a href="../daymasters.html">일간 유형</a> · <a href="../cards.html">카드 도감</a> · <a href="start.html">새 차트</a> · <a href="../result.html">EN</a></span>
+  <a href="index.html" class="logo"><span class="seal">乙</span><span class="m">Elun</span></a>
+  <span class="navlinks"><a href="daymasters.html">일간 유형</a> · <a href="cards.html">카드 도감</a> · <a href="start.html">새 차트</a> · <a href="../result.html">EN</a></span>
 </div></nav>
 
 <div id="empty" class="wrap">
@@ -447,7 +447,7 @@ else{
      <div class="t"><div class="nm">${dm.py} — ${dm.en}</div><div class="meta">${dm.img}</div></div>
      <div class="arch">“${dm.arch}”</div>`;
   document.getElementById('dmdesc').innerHTML =
-    `${dm.d} <a href="../daymasters.html#${dm.a}">${dm.py} 전체 프로필 읽기 →</a>`;
+    `${dm.d} <a href="daymasters.html#${dm.a}">${dm.py} 전체 프로필 읽기 →</a>`;
 
   // day pillar card
   const gj = fp.day.ganji_hanja, p60 = P60[gj];
@@ -458,8 +458,8 @@ else{
       `<div class="top"><span class="gj">${gj}</span>
         <span><span class="py">${reading}(${gj}) 일주</span><br><span class="an">육십갑자의 하나 · ${ANKO[p60.an]||p60.an}의 날</span></span></div>
       <div class="pd">“${p60.d}”</div>
-      ${p60.c && p60.c.length ? `<div class="cb">이 날에 태어난 유명인: ${p60.c.map(n=>`<a href="../famous/${n.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')}.html" target="_blank" style="color:var(--gold2)">${CELEBKO[n]||n}</a>`).join(' · ')}</div>` : ''}
-      <a class="go" href="../pillars/${slug}.html">${reading} 일주 전체 프로필 읽기 →</a>`;
+      ${p60.c && p60.c.length ? `<div class="cb">이 날에 태어난 유명인: ${p60.c.map(n=>`<a href="famous/${n.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')}.html" target="_blank" style="color:var(--gold2)">${CELEBKO[n]||n}</a>`).join(' · ')}</div>` : ''}
+      <a class="go" href="pillars/${slug}.html">${reading} 일주 전체 프로필 읽기 →</a>`;
   } else { document.getElementById('dpcard').style.display='none'; }
 
   // five elements (8 visible chars)

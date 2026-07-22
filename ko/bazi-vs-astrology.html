@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<link rel="canonical" href="https://elun.me/ko/bazi-vs-astrology.html"/>
+<link rel="alternate" hreflang="en" href="https://elun.me/bazi-vs-astrology.html"/>
+<link rel="alternate" hreflang="ko" href="https://elun.me/ko/bazi-vs-astrology.html"/>
+<link rel="alternate" hreflang="x-default" href="https://elun.me/bazi-vs-astrology.html"/>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>사주 vs 서양 점성술: 별자리 너머 | Elun</title>
+<meta name="description" content="사주명리(四柱命理)란 무엇인가 — 사주팔자가 서양 점성술과 어떻게 다른가. 태양궁 vs 일간, 트랜짓 vs 10년 대운, 그리고 왜 출생 시각의 정밀함이 생각보다 훨씬 더 중요한가." />
+<style>
+  :root{
+    --ink:#f3ece0; --ink2:#c9bda9; --sub:#9c8f79; --faint:#6e6353;
+    --bg:#100d0a; --card:#1c1712; --line:#332a22; --line2:#40342a;
+    --gold:#c9a227; --gold2:#e0c05a; --green:#7ba874; --red:#c86a58;
+    --serif:'Noto Serif',ui-serif,Georgia,serif;
+    --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  }
+  *{box-sizing:border-box} html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.72;font-size:16px;
+    background-image:radial-gradient(ellipse at 50% -10%,#221a10 0,transparent 55%)}
+  a{color:var(--gold2);text-decoration:none}
+  .wrap{max-width:720px;margin:0 auto;padding:0 22px}
+  nav{position:sticky;top:0;z-index:20;background:#100d0acc;backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  nav .inner{max-width:1040px;margin:0 auto;padding:0 22px;display:flex;align-items:center;justify-content:space-between;height:60px}
+  .logo{font-family:var(--serif);font-size:22px;font-weight:700;display:flex;align-items:center;gap:9px;color:var(--ink)}
+  .logo .m{color:var(--gold2)}
+  .logo .seal{width:26px;height:26px;border:1px solid var(--gold);color:var(--gold2);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:14px;font-family:var(--serif)}
+  .navlinks{font-size:13px;color:var(--sub)}
+  .hero{text-align:center;padding:64px 0 36px}
+  .hero .kick{font-family:var(--serif);letter-spacing:5px;color:var(--gold);font-size:11px;text-transform:uppercase;margin-bottom:16px}
+  .hero h1{font-family:var(--serif);font-size:clamp(30px,5.5vw,44px);line-height:1.15;margin:0 0 16px;font-weight:700}
+  .hero .lede{color:var(--ink2);max-width:580px;margin:0 auto;font-size:16px}
+  h2{font-family:var(--serif);font-size:clamp(21px,3.6vw,27px);margin:44px 0 12px;font-weight:700}
+  p{color:var(--ink2);font-size:15.5px;margin:0 0 14px}
+  p b{color:var(--ink)}
+  .box{border:1px solid var(--line);border-radius:14px;background:var(--card);padding:22px 24px;margin:18px 0}
+  .box .h{font-family:var(--serif);font-size:16px;font-weight:700;color:var(--gold2);margin-bottom:8px}
+  .box p{font-size:14.5px;margin-bottom:8px}
+  .box p:last-child{margin-bottom:0}
+  .callout{border-left:3px solid var(--green);border-radius:0 12px 12px 0;background:#14201a;padding:16px 20px;margin:22px 0;font-size:14.5px;color:var(--ink2)}
+  .tblwrap{overflow-x:auto;margin:22px 0;-webkit-overflow-scrolling:touch}
+  table.vs{width:100%;border-collapse:collapse;font-size:14px;min-width:520px}
+  table.vs th,table.vs td{padding:11px 14px;border:1px solid var(--line);text-align:left;vertical-align:top;color:var(--ink2)}
+  table.vs th{font-family:var(--serif);font-size:13.5px;color:var(--ink);background:var(--card)}
+  table.vs td:first-child,table.vs th:first-child{color:var(--sub);font-size:13px;width:26%}
+  table.vs th:last-child,table.vs td:last-child{background:#c9a2270d;border-color:var(--line2)}
+  table.vs th:last-child{color:var(--gold2)}
+  .glossary dt{font-family:var(--serif);color:var(--gold2);font-size:15px;margin-top:14px}
+  .glossary dd{margin:2px 0 0;color:var(--ink2);font-size:14.5px}
+  .cta{text-align:center;padding:50px 0 70px}
+  .cta .btn{background:linear-gradient(180deg,var(--gold2),var(--gold));color:#1a1206;font-weight:700;
+    padding:13px 26px;border-radius:24px;font-size:15px;display:inline-block}
+  .cta p{max-width:480px;margin:0 auto 20px}
+  footer{border-top:1px solid var(--line);padding:30px 0;text-align:center;color:var(--faint);font-size:12px}
+</style>
+</head>
+<body>
+<nav><div class="inner">
+  <a href="index.html" class="logo"><span class="seal">乙</span><span class="m">Elun</span></a>
+  <span class="navlinks"><a href="daymasters.html">일간</a> · <a href="../audits/">감정</a> · <a href="start.html">내 사주 만들기</a> · <a href="../bazi-vs-astrology.html" class="lang-sw" title="English page">EN</a></span>
+</div></nav>
+
+<div class="hero wrap">
+  <div class="kick">四柱命理 · Chinese Astrology, Precisely</div>
+  <h1>사주 vs 서양 점성술</h1>
+  <p class="lede">당신은 자신의 태양·달·상승궁을 압니다. 여기 또 하나의 위대한 체계가 있습니다 — <b style="color:var(--ink)">사주팔자(四柱, Four Pillars of Destiny)</b>, 시간 그 자체를 읽는 동양의 오래된 명리학 — 별자리 운세는 말해주지 못하는 것을 알려줍니다.</p>
+</div>
+
+<div class="wrap">
+  <h2>두 체계, 두 개의 하늘</h2>
+  <p>서양 점성술은 당신이 태어난 순간 황도대를 배경으로 한 <b>행성들의 위치</b>를 읽습니다 — 하늘의 스냅숏이지요. 사주(八字, "여덟 글자"), 즉 <b>사주팔자</b>는 그 순간 자체를 읽습니다: 태어난 <b>연·월·일·시</b>를, 각각 동양 전통 역법의 60갑자에서 두 글자(천간·지지) 한 쌍으로 적습니다. 네 개의 기둥, 여덟 글자 — 그래서 '팔자'입니다.</p>
+  <p>별자리도 행성도 없습니다. 사주는 오히려 <b>역법의 대수학</b>에 가깝습니다: 모든 글자가 목·화·토·금·수 오행 중 하나를 담고, 그 기운들이 원국 안에서 서로 생(生)하고 극(剋)하며 균형을 이루는 방식에서 해석이 나옵니다. 자신의 띠를 들어본 적이 있다면, 이미 사주의 8분의 1을 아는 셈입니다 — 띠는 연주(年柱)의 지지 한 글자일 뿐이니까요. 진짜 해석은 나머지 일곱 글자에 담겨 있습니다.</p>
+
+  <h2>당신의 태양궁은 열둘 중 하나. 당신의 일주는 예순 중 하나.</h2>
+  <p>서양 점성술의 간판은 태양궁 — 열둘 중 하나입니다. 사주에서 <b>당신</b>을 대표하는 글자는 <b>일간(日主)</b>입니다: 태어난 날의 기운, 열 중 하나(오행의 음·양 형태). 그날의 지지와 짝을 이뤄 <b>일주(日柱)</b>를 이루니 — 예순 개의 서명 중 하나이며 — 이는 나머지 세 기둥이 그림을 더 물들이기 <i>전</i>의 이야기입니다.</p>
+  <p>다만 더 깊은 차이는 해상도가 아니라 <b>작동 원리</b>입니다. 태양궁은 묘사하고, 사주는 <i>계산</i>합니다. 화(火)가 당신의 재능인지, 압박인지, 연료인지는 전적으로 <i>당신이</i> 어떤 기운인지에 달려 있습니다. 같은 글자라도 일간마다 다른 역할을 합니다 — 그래서 같은 생일 운세를 공유하는 두 사람이 전혀 다른 날씨 속에 살아갑니다.</p>
+
+  <div class="tblwrap"><table class="vs">
+    <tr><th></th><th>서양 점성술</th><th>사주 · 사주팔자</th></tr>
+    <tr><td>읽는 것</td><td>황도대를 배경으로 한 행성의 위치</td><td>태어난 순간 자체를 역법의 글자로</td></tr>
+    <tr><td>핵심 정체성</td><td>태양궁 — 12 중 1</td><td>일주 속의 일간(10 중 1) — 60 중 1 — 여덟 글자 전체 원국 안에서</td></tr>
+    <tr><td>작동 원리</td><td>행성 간 각(aspect)과 하우스</td><td>서로 생·극하는 오행</td></tr>
+    <tr><td>시기 읽기</td><td>트랜짓·리턴·역행</td><td>10년 단위 대운과 연운 — 인생의 지도</td></tr>
+    <tr><td>필요한 것</td><td>날짜·시간·장소</td><td>날짜·시간·장소 — <b>진태양시</b>로 보정</td></tr>
+    <tr><td>대표 결과물</td><td>성격 초상, 오늘의 운세</td><td>오행의 균형, 삶의 구조, 그리고 <i>언제</i> — 한 삶의 계절들</td></tr>
+  </table></div>
+
+  <h2>번역 안내서</h2>
+  <dl class="glossary">
+    <dt>태양궁 → 일간(日主)</dt>
+    <dd><i>당신</i>을 뜻하는 글자. 열 가지가 있습니다: 우뚝 솟은 나무이거나 넝쿨 꽃, 타오르는 태양이거나 촛불, 큰 산이거나 정원의 흙, 칼의 쇠이거나 정교한 보석, 큰 바다이거나 아침 이슬. <a href="daymasters.html">열 가지 모두 만나보기 →</a></dd>
+    <dt>출생 차트 → 사주(四柱)</dt>
+    <dd>당신의 전체 출생 원국: 연·월·일·시 — 조상과 시대, 당신을 빚은 계절, 당신 자신, 그리고 가장 안쪽의 결.</dd>
+    <dt>트랜짓 → 대운(大運)</dt>
+    <dd>서양 점성술이 움직이는 행성을 추적한다면, 사주는 10년마다 새로운 기둥 하나를 건넵니다 — 그 기운이 원국과 상호작용하는 10년짜리 계절입니다. 이것이 사주의 대표적 강점, <b>시기(timing)</b>입니다. "나는 어떤 사람인가?"가 아니라 "지금 나는 어떤 계절에 있고, 언제 그 계절이 바뀌는가?"</dd>
+    <dt>상승궁 → 시주(時柱)</dt>
+    <dd>개념이 같지는 않지만 — 실무에서의 역할은 같습니다: 정확한 출생 시각을 요구하는 결이자, 허술한 계산기가 가장 먼저 틀리는 부분입니다.</dd>
+  </dl>
+
+  <h2>각 체계가 빛나는 지점</h2>
+  <div class="box">
+    <div class="h">서양 점성술이 더 강한 것…</div>
+    <p>심리적 어휘. 수백 년의 정련을 거쳐, 내면을 묘사하는 풍부한 언어가 되었습니다 — 감정 방식을 보는 달, 사고방식을 보는 수성, 사랑하는 방식을 보는 금성. 성격의 거울로서, 그 뉘앙스와 문화적 도달 범위는 견줄 데가 없습니다.</p>
+  </div>
+  <div class="box">
+    <div class="h">사주가 더 강한 것…</div>
+    <p><b>시기와 처방.</b> 대운 체계는 모든 삶에 10년짜리 날씨 지도를 줍니다 — 어느 10년에 바람이 등을 밀어주었고, 어느 10년이 당신을 시험했으며, 다음 계절은 언제 바뀌는지. 그리고 체계 전체가 오행의 균형 위에서 돌아가기에, 묘사에 그치지 않습니다: <i>당신의</i> 원국을 회복시키는 기운 — 용신(用神) — 과 그것을 살리는 것이 무엇인지 짚어냅니다.</p>
+  </div>
+  <p>둘은 같은 일을 두고 경쟁하지 않습니다. 많은 사람이 둘 다 읽습니다 — 하나는 거울로, 하나는 지도로. 점성술을 사랑한다면, 사주는 무엇도 잊으라 하지 않습니다; 두 번째 악기를 손에 쥐여줄 뿐입니다.</p>
+
+  <h2>한 가지 정직한 경고: 여기선 정밀함이 더 중요합니다</h2>
+  <p>사주는 순수한 역법 계산이기에, 작은 입력 오류는 해석을 흐리는 게 아니라 <b>뒤집습니다</b>. 일주는 자정에 바뀝니다. 시주는 두 시간마다 바뀝니다. 그리고 출생신고서의 시계는 태양의 시계가 아닙니다: 표준시는 출생지의 진태양시와 수십 분씩 벌어질 수 있고, 그 차이만으로 기둥 하나가 통째로 바뀝니다.</p>
+  <div class="callout">
+    <b>바로 이 지점에서 대부분의 무료 사이트와 AI 챗봇이 실패합니다.</b> 시계 시각을 그대로 읽거나, 더 나쁘게는 역법 변환을 기억으로 추측합니다. Elun은 모든 차트를 결정론적 천문 엔진으로 계산합니다 — 진태양시, 경도 보정, 전 세계 역사적 시간대와 서머타임까지. 같은 입력이면 언제나 같은 차트. <a href="birth-time.html">출생 시각을 모르시나요? 어떻게 하면 되는지 →</a>
+  </div>
+
+  <h2>체계의 말을 그냥 믿지 마세요</h2>
+  <p>어떤 명리학이든 추상적으로는 그럴듯하게 들립니다. 우리는 증거를 택합니다: <b>Destiny Audit(운명 감정)</b> 시리즈는 Elun의 엔진을 완전히 기록으로 남은 실제 삶에 돌립니다 — 무함마드 알리, 스티브 잡스, 나폴레옹 — 기록된 사실에 10년 단위로 대조하며, 빗나간 판정까지 포함해 모든 결과에 등급을 매깁니다. <a href="../audits/">감정 읽기 →</a></p>
+
+  <div class="cta">
+    <p>태양궁이 당신을 여기까지 데려왔습니다. 여덟 글자와 10년 지도가 그 그림에 무엇을 더하는지 확인해 보세요 — 무료 차트는 30초면 됩니다.</p>
+    <a class="btn" href="start.html">내 사주 계산하기 — 무료</a>
+  </div>
+</div>
+
+<footer>© 2026 Elun · <a href="index.html">홈</a> · <a href="daymasters.html">열 개의 일간</a> · <a href="../audits/">Destiny Audit</a></footer>
+</body>
+</html>

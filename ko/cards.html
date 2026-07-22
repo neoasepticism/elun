@@ -1,0 +1,582 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<link rel="canonical" href="https://elun.me/ko/cards.html"/>
+<link rel="alternate" hreflang="en" href="https://elun.me/cards.html"/>
+<link rel="alternate" hreflang="ko" href="https://elun.me/ko/cards.html"/>
+<link rel="alternate" hreflang="x-default" href="https://elun.me/cards.html"/>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Elun — 운명의 카드덱</title>
+<style>
+  :root{
+    --ink:#f3ece0; --ink2:#c9bda9; --sub:#9c8f79; --faint:#6e6353;
+    --bg:#0d0b08; --bg2:#141009; --card:#1c1712; --line:#332a22; --line2:#40342a;
+    --gold:#c9a227; --gold2:#e0c05a; --red:#c86a58;
+    --wood:#4fae63; --fire:#e0604a; --earth:#d3a52e; --metal:#b4bcc6; --water:#4f9fe0;
+    --serif:'Noto Serif',ui-serif,Georgia,serif;
+    --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;
+    background-image:radial-gradient(ellipse at 50% -5%,#2a1f10 0,transparent 55%),radial-gradient(circle at 85% 95%,#12202a 0,transparent 40%);}
+  a{color:var(--gold2);text-decoration:none}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 22px}
+  nav{border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;height:60px;gap:10px}
+  .logo{font-family:var(--serif);font-size:21px;font-weight:700;display:flex;align-items:center;gap:9px}
+  .logo .m{color:var(--gold2)}
+  .logo .seal{width:26px;height:26px;border:1px solid var(--gold);color:var(--gold2);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:14px;font-family:var(--serif)}
+  header{text-align:center;padding:58px 0 30px}
+  header .kick{font-family:var(--serif);letter-spacing:6px;color:var(--gold);font-size:11px;text-transform:uppercase;margin-bottom:14px}
+  header h1{font-family:var(--serif);font-size:clamp(30px,5.5vw,46px);margin:0 0 12px;font-weight:700}
+  header .lede{color:var(--ink2);max-width:560px;margin:0 auto;font-size:16px}
+  .sec-title{text-align:center;margin:56px 0 8px}
+  .sec-title .cn{font-family:var(--serif);color:var(--gold);letter-spacing:4px;font-size:12px;text-transform:uppercase}
+  .sec-title h2{font-family:var(--serif);font-size:26px;margin:6px 0 4px}
+  .sec-title p{color:var(--sub);font-size:14px;margin:0 auto 8px;max-width:520px}
+
+  /* ===== card grid ===== */
+  .grid{display:grid;gap:16px;justify-items:center}
+  .grid.five{grid-template-columns:repeat(5,1fr)}
+  .grid.gods{grid-template-columns:repeat(5,1fr)}
+  @media(max-width:900px){.grid.five,.grid.gods{grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:600px){.grid.five,.grid.gods{grid-template-columns:repeat(2,1fr)}}
+
+  /* ===== the card ===== */
+  .card{width:100%;max-width:196px;aspect-ratio:5/7;border-radius:14px;position:relative;
+    padding:12px;display:flex;flex-direction:column;cursor:default;overflow:hidden;
+    border:1.5px solid var(--edge,#5a4a2e);
+    background:linear-gradient(160deg,var(--c1,#1c1712),var(--c2,#0f0c08));
+    box-shadow:0 10px 26px -12px #000, inset 0 1px 0 #ffffff12;
+    transition:transform .18s, box-shadow .18s;}
+  .card:hover{transform:translateY(-6px) rotate(-.6deg);box-shadow:0 20px 40px -14px #000, 0 0 0 1px var(--edge)}
+  .card .frame{position:absolute;inset:5px;border:1px solid #ffffff14;border-radius:10px;pointer-events:none}
+  .card .top{display:flex;justify-content:space-between;align-items:flex-start;position:relative;z-index:2}
+  .card .han{font-family:var(--serif);font-size:26px;font-weight:700;line-height:1;color:var(--accent,#fff);text-shadow:0 1px 6px #0008}
+  .card .cost{font-family:var(--serif);font-size:11px;color:var(--ink2);border:1px solid #ffffff26;border-radius:10px;padding:1px 7px;white-space:nowrap}
+  .card .art{flex:1;display:flex;align-items:center;justify-content:center;position:relative;z-index:2}
+  .card .art .glyph{font-size:52px;filter:drop-shadow(0 4px 12px #0009)}
+  .card .art .glyph-svg{width:92px;height:92px;filter:drop-shadow(0 6px 14px #000b)}
+  .card .artimg{flex:1;min-height:118px;border-radius:9px;background-size:cover;background-position:center;
+    box-shadow:inset 0 0 0 1px #ffffff14, 0 6px 18px -8px #000c}
+  .card .name{font-family:var(--serif);font-size:15px;font-weight:700;text-align:center;color:var(--accent,#fff);position:relative;z-index:2;letter-spacing:.3px}
+  .card .type{text-align:center;font-size:9.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--sub);margin-top:1px;position:relative;z-index:2}
+  .card .desc{font-size:10.5px;line-height:1.42;color:var(--ink2);text-align:center;margin-top:7px;position:relative;z-index:2;
+    border-top:1px solid #ffffff14;padding-top:7px;min-height:44px}
+  .card .rel{font-size:9px;color:var(--faint);text-align:center;margin-top:5px;position:relative;z-index:2;line-height:1.5}
+  .card .rel b{color:var(--accent)}
+  /* holo sheen */
+  .card::after{content:"";position:absolute;inset:0;border-radius:14px;pointer-events:none;
+    background:linear-gradient(115deg,transparent 40%,#ffffff10 48%,transparent 56%);opacity:0;transition:opacity .3s}
+  .card:hover::after{opacity:1}
+
+  /* element accents */
+  .card.wood{--accent:var(--wood);--edge:#2e5a38;--c1:#15201a;--c2:#0c120e}
+  .card.fire{--accent:var(--fire);--edge:#5e2e26;--c1:#20140f;--c2:#120b09}
+  .card.earth{--accent:var(--earth);--edge:#5a4a1e;--c1:#1f1a0e;--c2:#120f09}
+  .card.metal{--accent:var(--metal);--edge:#465059;--c1:#161a1e;--c2:#0d0f12}
+  .card.water{--accent:var(--water);--edge:#264a5e;--c1:#101c24;--c2:#0a1016}
+  /* god cards colored by their element polarity group */
+  .card.self{--accent:var(--wood);--edge:#2e5a38;--c1:#15201a;--c2:#0c120e}
+  .card.output{--accent:var(--fire);--edge:#5e2e26;--c1:#20140f;--c2:#120b09}
+  .card.wealth{--accent:var(--earth);--edge:#5a4a1e;--c1:#1f1a0e;--c2:#120f09}
+  .card.officer{--accent:var(--metal);--edge:#465059;--c1:#161a1e;--c2:#0d0f12}
+  .card.resource{--accent:var(--water);--edge:#264a5e;--c1:#101c24;--c2:#0a1016}
+  .card.stage{--accent:#e0c05a;--edge:#5a4a1e;--c1:#1e180d;--c2:#110e08}
+
+  .foot{text-align:center;color:var(--faint);font-size:12px;margin:60px 0 40px}
+  .foot a{color:var(--sub)}
+  .legend{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin:14px 0 0;font-size:11.5px;color:var(--sub)}
+  .legend .k{display:inline-flex;align-items:center;gap:5px}
+  .legend .dot{width:10px;height:10px;border-radius:50%}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a href="index.html" class="logo"><span class="seal">乙</span><span class="m">Elun</span></a>
+  <span style="margin-left:auto;font-size:13px;color:var(--sub)"><a href="index.html">홈</a> · <a href="start.html">내 사주 만들기</a> · <a href="../cards.html" class="lang-sw" title="English page">EN</a></span>
+</div></nav>
+
+<header class="wrap">
+  <div class="kick">五行 · 十神 · 운명의 카드덱</div>
+  <h1>당신의 사주는 한 벌의 카드덱입니다.</h1>
+  <p class="lede">사주에서 다섯 기운은 당신의 스탯이 되고, 열 가지 원형은 등장인물이 됩니다 — 각자가 다음을 생(生)하고 극(剋)하며, 살아 있는 게임 시스템처럼 맞물립니다. 여기 카드덱 전부가 있습니다.</p>
+</header>
+
+<!-- ===== FIVE ELEMENTS ===== -->
+<div class="sec-title">
+  <div class="cn">五行 · 다섯 기운</div>
+  <h2>오행 — 당신의 스탯</h2>
+  <p>각 기운은 순환하며 다음을 생(生)하고, 하나 건너의 기운을 극(剋)합니다. 균형이 전부입니다.</p>
+</div>
+
+<div class="wrap"><div class="grid five">
+
+  <div class="card wood">
+    <div class="frame"></div>
+    <div class="top"><span class="han">木</span><span class="cost">生 → 화</span></div>
+    <div class="art artimg" style="background-image:url(../pillars/art/el-wood.jpg)"></div>
+    <div class="name">목(木)</div>
+    <div class="type">성장 · 생명력</div>
+    <div class="desc">생명력, 야망, 인(仁), 위로 뻗는 힘. 빛을 향해 나아가는 살아 있는 기운.</div>
+    <div class="rel"><b>화</b>를 생함 · <b>금</b>에게 극당함</div>
+  </div>
+
+  <div class="card fire">
+    <div class="frame"></div>
+    <div class="top"><span class="han">火</span><span class="cost">生 → 토</span></div>
+    <div class="art artimg" style="background-image:url(../pillars/art/el-fire.jpg)"></div>
+    <div class="name">화(火)</div>
+    <div class="type">표현 · 열정</div>
+    <div class="desc">온기, 존재감, 카리스마, 표현. 눈부시지만 다스리지 않으면 태워버린다.</div>
+    <div class="rel"><b>토</b>를 생함 · <b>수</b>에게 극당함</div>
+  </div>
+
+  <div class="card earth">
+    <div class="frame"></div>
+    <div class="top"><span class="han">土</span><span class="cost">生 → 금</span></div>
+    <div class="art artimg" style="background-image:url(../pillars/art/el-earth.jpg)"></div>
+    <div class="name">토(土)</div>
+    <div class="type">안정 · 신뢰</div>
+    <div class="desc">신뢰, 인내, 자양, 떠받치는 땅. 믿음직하지만 때로 요지부동.</div>
+    <div class="rel"><b>금</b>을 생함 · <b>목</b>에게 극당함</div>
+  </div>
+
+  <div class="card metal">
+    <div class="frame"></div>
+    <div class="top"><span class="han">金</span><span class="cost">生 → 수</span></div>
+    <div class="art artimg" style="background-image:url(../pillars/art/el-metal.jpg)"></div>
+    <div class="name">금(金)</div>
+    <div class="type">구조 · 정밀함</div>
+    <div class="desc">절제, 정밀함, 결단, 깔끔히 베는 칼날. 의롭지만 뻣뻣하다.</div>
+    <div class="rel"><b>수</b>를 생함 · <b>화</b>에게 극당함</div>
+  </div>
+
+  <div class="card water">
+    <div class="frame"></div>
+    <div class="top"><span class="han">水</span><span class="cost">生 → 목</span></div>
+    <div class="art artimg" style="background-image:url(../pillars/art/el-water.jpg)"></div>
+    <div class="name">수(水)</div>
+    <div class="type">지혜 · 흐름</div>
+    <div class="desc">지성, 적응력, 깊이, 모든 길을 찾는 물결. 지혜롭지만 붙잡기 어렵다.</div>
+    <div class="rel"><b>목</b>을 생함 · <b>토</b>에게 극당함</div>
+  </div>
+
+</div>
+<div class="legend">
+  <span class="k"><span class="dot" style="background:var(--wood)"></span>목</span>
+  <span class="k"><span class="dot" style="background:var(--fire)"></span>화</span>
+  <span class="k"><span class="dot" style="background:var(--earth)"></span>토</span>
+  <span class="k"><span class="dot" style="background:var(--metal)"></span>금</span>
+  <span class="k"><span class="dot" style="background:var(--water)"></span>수</span>
+  <span class="k">生 생함 → · 剋 극함 ✕</span>
+</div>
+</div>
+
+<!-- ===== TEN GODS ===== -->
+<div class="sec-title">
+  <div class="cn">十神 · 열 가지 원형</div>
+  <h2>십성(十神) — 당신의 직업 클래스</h2>
+  <p>열 가지 힘이 모든 기운과 당신 일간의 관계를 그려냅니다 — 다섯 쌍의 극성으로 나뉜 캐릭터 클래스입니다. 다섯 계열 — 비겁·식상·재성·관성·인성 — 은 모두 <i>당신의</i> 일간을 기준으로 정의됩니다.</p>
+</div>
+
+<div class="wrap"><div class="grid gods">
+
+  <div class="card self"><div class="frame"></div>
+    <div class="top"><span class="han">比肩</span><span class="cost">同 · 비겁</span></div>
+    <div class="art artimg" style="background-image:url(../pillars/art/g-ally.jpg)"></div>
+    <div class="name">비견</div><div class="type">동료 · 같은 오행</div>
+    <div class="desc">독립, 자립, 곁에 나란히 서는 동등한 동반자.</div>
+    <div class="rel">짝: <b>겁재</b></div>
+  </div>
+
+  <div class="card self"><div class="frame"></div>
+    <div class="top"><span class="han">劫財</span><span class="cost">同 · 비겁</span></div>
+    <div class="art artimg" style="background-image:url(../pillars/art/g-rival.jpg)"></div>
+    <div class="name">겁재</div><div class="type">경쟁 · 추진력</div>
+    <div class="desc">경쟁의 불, 대담함, 야망 — 자극이자 위협이 되는 동반자.</div>
+    <div class="rel">짝: <b>비견</b></div>
+  </div>
+
+  <div class="card output"><div class="frame"></div>
+    <div class="top"><span class="han">食神</span><span class="cost">洩 · 식상</span></div>
+    <div class="art artimg" style="background-image:url(../pillars/art/g-creator.jpg)"></div>
+    <div class="name">식신</div><div class="type">표현 · 흐름</div>
+    <div class="desc">부드러운 표현, 솜씨, 즐김 — 힘들이지 않고 흘러나오는 재능.</div>
+    <div class="rel">짝: <b>상관</b></div>
+  </div>
+
+  <div class="card output"><div class="frame"></div>
+    <div class="top"><span class="han">傷官</span><span class="cost">洩 · 식상</span></div>
+    <div class="art artimg" style="background-image:url(../pillars/art/g-maverick.jpg)"></div>
+    <div class="name">상관</div><div class="type">저항 · 천재성</div>
+    <div class="desc">대담하게 규칙을 깨는 광채 — 틀을 새로 짜는 반항의 재능.</div>
+    <div class="rel">짝: <b>식신</b></div>
+  </div>
+
+  <div class="card wealth"><div class="frame"></div>
+    <div class="top"><span class="han">正財</span><span class="cost">財 · 재성</span></div>
+    <div class="art artimg" style="background-image:url(../pillars/art/g-steward.jpg)"></div>
+    <div class="name">정재</div><div class="type">노력의 재물 · 꾸준함</div>
+    <div class="desc">성실하고 체계적인 풍요 — 천천히 쌓아 조심히 지키는 재물.</div>
+    <div class="rel">짝: <b>편재</b></div>
+  </div>
+
+  <div class="card wealth"><div class="frame"></div>
+    <div class="top"><span class="han">偏財</span><span class="cost">財 · 재성</span></div>
+    <div class="art artimg" style="background-image:url(../pillars/art/g-entrepreneur.jpg)"></div>
+    <div class="name">편재</div><div class="type">횡재 · 대담함</div>
+    <div class="desc">기회, 큰 승부, 역동적인 재물 — 거래를 보는 승부사의 눈.</div>
+    <div class="rel">짝: <b>정재</b></div>
+  </div>
+
+  <div class="card officer"><div class="frame"></div>
+    <div class="top"><span class="han">正官</span><span class="cost">官 · 관성</span></div>
+    <div class="art artimg" style="background-image:url(../pillars/art/g-governor.jpg)"></div>
+    <div class="name">정관</div><div class="type">권위 · 질서</div>
+    <div class="desc">책임, 명예, 정당한 권력 — 규범을 지키고 그로써 신뢰받는 자.</div>
+    <div class="rel">짝: <b>편관</b></div>
+  </div>
+
+  <div class="card officer"><div class="frame"></div>
+    <div class="top"><span class="han">偏官</span><span class="cost">殺 · 관성</span></div>
+    <div class="art artimg" style="background-image:url(../pillars/art/g-challenger.jpg)"></div>
+    <div class="name">편관</div><div class="type">정복 · 힘</div>
+    <div class="desc">압박 아래의 강렬한 추진력 — 결단, 용기, 뚫고 나아가는 의지.</div>
+    <div class="rel">짝: <b>정관</b></div>
+  </div>
+
+  <div class="card resource"><div class="frame"></div>
+    <div class="top"><span class="han">正印</span><span class="cost">印 · 인성</span></div>
+    <div class="art artimg" style="background-image:url(../pillars/art/g-scholar.jpg)"></div>
+    <div class="name">정인</div><div class="type">가르침 · 보살핌</div>
+    <div class="desc">배움, 보호, 지원 — 당신을 키우고 감싸는 스승의 선물.</div>
+    <div class="rel">짝: <b>편인</b></div>
+  </div>
+
+  <div class="card resource"><div class="frame"></div>
+    <div class="top"><span class="han">偏印</span><span class="cost">印 · 인성</span></div>
+    <div class="art artimg" style="background-image:url(../pillars/art/g-mystic.jpg)"></div>
+    <div class="name">편인</div><div class="type">직관 · 통찰</div>
+    <div class="desc">직관, 관습을 벗어난 지혜, 홀로 깊어지는 힘 — 듣지 않고도 아는 통찰자.</div>
+    <div class="rel">짝: <b>정인</b></div>
+  </div>
+
+</div></div>
+
+
+<!-- ===== HEAVENLY STEMS ===== -->
+<div class="sec-title">
+  <div class="cn">天干 · 열 개의 천간</div>
+  <h2>천간 — 하늘의 열 얼굴</h2>
+  <p>각 기운의 두 형태 — 양과 음 — 이 자연의 힘으로 드러납니다. 이 중 하나가 당신의 일간입니다.</p>
+</div>
+<div class="wrap"><div class="grid five">
+  <div class="card wood"><div class="frame"></div>
+    <div class="top"><span class="han">甲</span><span class="cost">양 · 목</span></div>
+    <div class="art artimg" style="background-image:url(../pillars/art/jia.jpg)"></div>
+    <div class="name">갑(甲)</div>
+    <div class="type">거대한 나무</div>
+    <div class="desc">개척자, 곧고 굽히지 않는 — 이끌고 감싸는 큰 나무.</div>
+    <div class="rel">천간 · 양목</div>
+  </div>
+  <div class="card wood"><div class="frame"></div>
+    <div class="top"><span class="han">乙</span><span class="cost">음 · 목</span></div>
+    <div class="art artimg" style="background-image:url(../pillars/art/yi.jpg)"></div>
+    <div class="name">을(乙)</div>
+    <div class="type">넝쿨과 꽃</div>
+    <div class="desc">유연한 생존자 — 부러지지 않고 휘며, 빛 드는 틈이면 어디서든 번성한다.</div>
+    <div class="rel">천간 · 음목</div>
+  </div>
+  <div class="card fire"><div class="frame"></div>
+    <div class="top"><span class="han">丙</span><span class="cost">양 · 화</span></div>
+    <div class="art artimg" style="background-image:url(../pillars/art/bing.jpg)"></div>
+    <div class="name">병(丙)</div>
+    <div class="type">타오르는 태양</div>
+    <div class="desc">빛나고 관대한 — 모두를 위한 온기, 감출 수 없는 존재.</div>
+    <div class="rel">천간 · 양화</div>
+  </div>
+  <div class="card fire"><div class="frame"></div>
+    <div class="top"><span class="han">丁</span><span class="cost">음 · 화</span></div>
+    <div class="art artimg" style="background-image:url(../pillars/art/ding.jpg)"></div>
+    <div class="name">정(丁)</div>
+    <div class="type">촛불</div>
+    <div class="desc">가깝고 집중된 빛 — 어둠 속에서 길잡이가 되는 조용한 온기.</div>
+    <div class="rel">천간 · 음화</div>
+  </div>
+  <div class="card earth"><div class="frame"></div>
+    <div class="top"><span class="han">戊</span><span class="cost">양 · 토</span></div>
+    <div class="art artimg" style="background-image:url(../pillars/art/wu.jpg)"></div>
+    <div class="name">무(戊)</div>
+    <div class="type">산</div>
+    <div class="desc">움직이지 않고 굳건한 — 감싸고 견디는 벽.</div>
+    <div class="rel">천간 · 양토</div>
+  </div>
+  <div class="card earth"><div class="frame"></div>
+    <div class="top"><span class="han">己</span><span class="cost">음 · 토</span></div>
+    <div class="art artimg" style="background-image:url(../pillars/art/ji.jpg)"></div>
+    <div class="name">기(己)</div>
+    <div class="type">기름진 밭</div>
+    <div class="desc">길러주는 흙 — 겸손하게 가꾸며 조용히 자라나게 한다.</div>
+    <div class="rel">천간 · 음토</div>
+  </div>
+  <div class="card metal"><div class="frame"></div>
+    <div class="top"><span class="han">庚</span><span class="cost">양 · 금</span></div>
+    <div class="art artimg" style="background-image:url(../pillars/art/geng.jpg)"></div>
+    <div class="name">경(庚)</div>
+    <div class="type">벼려진 칼</div>
+    <div class="desc">의로운 힘 — 결단력 있고 날카롭게, 핵심을 베어낸다.</div>
+    <div class="rel">천간 · 양금</div>
+  </div>
+  <div class="card metal"><div class="frame"></div>
+    <div class="top"><span class="han">辛</span><span class="cost">음 · 금</span></div>
+    <div class="art artimg" style="background-image:url(../pillars/art/xin.jpg)"></div>
+    <div class="name">신(辛)</div>
+    <div class="type">정교한 보석</div>
+    <div class="desc">정련되고 정밀한 — 압박 속의 아름다움, 날을 품은 우아함.</div>
+    <div class="rel">천간 · 음금</div>
+  </div>
+  <div class="card water"><div class="frame"></div>
+    <div class="top"><span class="han">壬</span><span class="cost">양 · 수</span></div>
+    <div class="art artimg" style="background-image:url(../pillars/art/ren.jpg)"></div>
+    <div class="name">임(壬)</div>
+    <div class="type">드넓은 바다</div>
+    <div class="desc">가없는 깊이 — 강한 물결, 나라를 움직이는 야망.</div>
+    <div class="rel">천간 · 양수</div>
+  </div>
+  <div class="card water"><div class="frame"></div>
+    <div class="top"><span class="han">癸</span><span class="cost">음 · 수</span></div>
+    <div class="art artimg" style="background-image:url(../pillars/art/gui.jpg)"></div>
+    <div class="name">계(癸)</div>
+    <div class="type">부드러운 비</div>
+    <div class="desc">조용한 지혜 — 보이지 않게 적시는 안개와 이슬.</div>
+    <div class="rel">천간 · 음수</div>
+  </div>
+</div></div>
+
+<!-- ===== EARTHLY BRANCHES ===== -->
+<div class="sec-title">
+  <div class="cn">地支 · 열두 지지</div>
+  <h2>지지 — 땅의 열두 동물</h2>
+  <p>열두 띠 동물, 각각 하루의 두 시간짜리 문이자 한 해의 계절 — 당신의 사주가 딛고 선 땅입니다.</p>
+</div>
+<div class="wrap"><div class="grid gods">
+  <div class="card water"><div class="frame"></div>
+    <div class="top"><span class="han">子</span><span class="cost">23–01</span></div>
+    <div class="art artimg" style="background-image:url(../pillars/art/b-rat.jpg)"></div>
+    <div class="name">쥐 <span style="font-size:11px;color:var(--sub)">자</span></div>
+    <div class="type">양수 🌙</div>
+    <div class="desc">한밤의 물 — 영리하고 재간 있는, 새 순환의 씨앗.</div>
+    <div class="rel">지지 · 23–01시</div>
+  </div>
+  <div class="card earth"><div class="frame"></div>
+    <div class="top"><span class="han">丑</span><span class="cost">01–03</span></div>
+    <div class="art artimg" style="background-image:url(../pillars/art/b-ox.jpg)"></div>
+    <div class="name">소 <span style="font-size:11px;color:var(--sub)">축</span></div>
+    <div class="type">음토 ❄️</div>
+    <div class="desc">얼어붙은 밭 — 참을성 있고 굳건히, 봄을 위해 힘을 저장한다.</div>
+    <div class="rel">지지 · 01–03시</div>
+  </div>
+  <div class="card wood"><div class="frame"></div>
+    <div class="top"><span class="han">寅</span><span class="cost">03–05</span></div>
+    <div class="art artimg" style="background-image:url(../pillars/art/b-tiger.jpg)"></div>
+    <div class="name">호랑이 <span style="font-size:11px;color:var(--sub)">인</span></div>
+    <div class="type">양목 🌅</div>
+    <div class="desc">새벽의 나무 — 대담한 새 성장, 지평을 여는 용기.</div>
+    <div class="rel">지지 · 03–05시</div>
+  </div>
+  <div class="card wood"><div class="frame"></div>
+    <div class="top"><span class="han">卯</span><span class="cost">05–07</span></div>
+    <div class="art artimg" style="background-image:url(../pillars/art/b-rabbit.jpg)"></div>
+    <div class="name">토끼 <span style="font-size:11px;color:var(--sub)">묘</span></div>
+    <div class="type">음목 🌸</div>
+    <div class="desc">아침의 개화 — 부드러운 생명력, 조용한 움직임 속의 우아함.</div>
+    <div class="rel">지지 · 05–07시</div>
+  </div>
+  <div class="card earth"><div class="frame"></div>
+    <div class="top"><span class="han">辰</span><span class="cost">07–09</span></div>
+    <div class="art artimg" style="background-image:url(../pillars/art/b-dragon.jpg)"></div>
+    <div class="name">용 <span style="font-size:11px;color:var(--sub)">진</span></div>
+    <div class="type">양토 🌫️</div>
+    <div class="desc">물의 창고 — 신비로운 힘, 기운들이 만나는 자리.</div>
+    <div class="rel">지지 · 07–09시</div>
+  </div>
+  <div class="card fire"><div class="frame"></div>
+    <div class="top"><span class="han">巳</span><span class="cost">09–11</span></div>
+    <div class="art artimg" style="background-image:url(../pillars/art/b-snake.jpg)"></div>
+    <div class="name">뱀 <span style="font-size:11px;color:var(--sub)">사</span></div>
+    <div class="type">음화 🌤️</div>
+    <div class="desc">불씨의 불 — 은근한 지성, 감아 두고 준비된 변화.</div>
+    <div class="rel">지지 · 09–11시</div>
+  </div>
+  <div class="card fire"><div class="frame"></div>
+    <div class="top"><span class="han">午</span><span class="cost">11–13</span></div>
+    <div class="art artimg" style="background-image:url(../pillars/art/b-horse.jpg)"></div>
+    <div class="name">말 <span style="font-size:11px;color:var(--sub)">오</span></div>
+    <div class="type">양화 ☀️</div>
+    <div class="desc">정오의 불 — 최고조의 생명력, 가장 밝은 열정.</div>
+    <div class="rel">지지 · 11–13시</div>
+  </div>
+  <div class="card earth"><div class="frame"></div>
+    <div class="top"><span class="han">未</span><span class="cost">13–15</span></div>
+    <div class="art artimg" style="background-image:url(../pillars/art/b-goat.jpg)"></div>
+    <div class="name">양 <span style="font-size:11px;color:var(--sub)">미</span></div>
+    <div class="type">음토 🌾</div>
+    <div class="desc">따뜻하고 메마른 땅 — 온화하고 예술적인, 나무의 창고.</div>
+    <div class="rel">지지 · 13–15시</div>
+  </div>
+  <div class="card metal"><div class="frame"></div>
+    <div class="top"><span class="han">申</span><span class="cost">15–17</span></div>
+    <div class="art artimg" style="background-image:url(../pillars/art/b-monkey.jpg)"></div>
+    <div class="name">원숭이 <span style="font-size:11px;color:var(--sub)">신</span></div>
+    <div class="type">양금 🍂</div>
+    <div class="desc">가을의 금속 — 영리하고 쉼 없는, 수확을 향한 전환.</div>
+    <div class="rel">지지 · 15–17시</div>
+  </div>
+  <div class="card metal"><div class="frame"></div>
+    <div class="top"><span class="han">酉</span><span class="cost">17–19</span></div>
+    <div class="art artimg" style="background-image:url(../pillars/art/b-rooster.jpg)"></div>
+    <div class="name">닭 <span style="font-size:11px;color:var(--sub)">유</span></div>
+    <div class="type">음금 🌇</div>
+    <div class="desc">정련된 금속 — 정밀하고 자부심 있는, 다듬어진 황혼의 날.</div>
+    <div class="rel">지지 · 17–19시</div>
+  </div>
+  <div class="card earth"><div class="frame"></div>
+    <div class="top"><span class="han">戌</span><span class="cost">19–21</span></div>
+    <div class="art artimg" style="background-image:url(../pillars/art/b-dog.jpg)"></div>
+    <div class="name">개 <span style="font-size:11px;color:var(--sub)">술</span></div>
+    <div class="type">양토 🌆</div>
+    <div class="desc">지키는 땅 — 충직하고 경계하는, 불의 창고.</div>
+    <div class="rel">지지 · 19–21시</div>
+  </div>
+  <div class="card water"><div class="frame"></div>
+    <div class="top"><span class="han">亥</span><span class="cost">21–23</span></div>
+    <div class="art artimg" style="background-image:url(../pillars/art/b-pig.jpg)"></div>
+    <div class="name">돼지 <span style="font-size:11px;color:var(--sub)">해</span></div>
+    <div class="type">음수 🌌</div>
+    <div class="desc">깊은 밤의 물 — 정직하고 관대한, 순환을 닫는 바다.</div>
+    <div class="rel">지지 · 21–23시</div>
+  </div>
+</div></div>
+
+<!-- ===== TWELVE STAGES ===== -->
+<div class="sec-title">
+  <div class="cn">十二運星 · 열두 성장 단계</div>
+  <h2>십이운성 — 인생의 순환 국면</h2>
+  <p>모든 일간은 열두 지지를 만나며 열두 국면을 지납니다 — 탄생에서 저장으로, 다시 잉태로 돌아오는 완전한 생애 순환. 길흉이 아니라 계절입니다: 당신 사주의 각 기둥과 각 대운은 이 수레바퀴 어딘가에 놓입니다.</p>
+</div>
+
+<div class="wrap"><div class="grid gods">
+
+  <div class="card stage"><div class="frame"></div>
+    <div class="top"><span class="han">長生</span><span class="cost">1 · → 沐浴</span></div>
+    <div class="art artimg" style="background-image:url(../pillars/art/st-birth.jpg)"></div>
+    <div class="name">장생 <span style="display:block;font-size:11px;color:var(--sub);font-weight:400;margin-top:1px">탄생</span></div>
+    <div class="type">씨앗이 열린다 🌱</div>
+    <div class="desc">싱그러운 생명력 — 초심자의 열린 마음으로 시작한다.</div>
+    <div class="rel">성장 단계 · 1 / 12</div>
+  </div>
+  <div class="card stage"><div class="frame"></div>
+    <div class="top"><span class="han">沐浴</span><span class="cost">2 · → 冠帶</span></div>
+    <div class="art artimg" style="background-image:url(../pillars/art/st-bath.jpg)"></div>
+    <div class="name">목욕 <span style="display:block;font-size:11px;color:var(--sub);font-weight:400;margin-top:1px">씻김</span></div>
+    <div class="type">갓 씻긴</div>
+    <div class="desc">막 드러난 — 매력, 예민함, 변덕스러운 물결.</div>
+    <div class="rel">성장 단계 · 2 / 12</div>
+  </div>
+  <div class="card stage"><div class="frame"></div>
+    <div class="top"><span class="han">冠帶</span><span class="cost">3 · → 建祿</span></div>
+    <div class="art artimg" style="background-image:url(../pillars/art/st-comingofage.jpg)"></div>
+    <div class="name">관대 <span style="display:block;font-size:11px;color:var(--sub);font-weight:400;margin-top:1px">성년</span></div>
+    <div class="type">세상을 향해 차려입다</div>
+    <div class="desc">예복을 갖춰 입는 — 세상을 향해 단장하는 야망.</div>
+    <div class="rel">성장 단계 · 3 / 12</div>
+  </div>
+  <div class="card stage"><div class="frame"></div>
+    <div class="top"><span class="han">建祿</span><span class="cost">4 · → 帝旺</span></div>
+    <div class="art artimg" style="background-image:url(../pillars/art/st-prosperity.jpg)"></div>
+    <div class="name">건록 <span style="display:block;font-size:11px;color:var(--sub);font-weight:400;margin-top:1px">번영</span></div>
+    <div class="type">제 땅 위에</div>
+    <div class="desc">제 땅 위에 선 — 힘차게 나아가는 자수성가의 힘.</div>
+    <div class="rel">성장 단계 · 4 / 12</div>
+  </div>
+  <div class="card stage"><div class="frame"></div>
+    <div class="top"><span class="han">帝旺</span><span class="cost">5 · → 衰</span></div>
+    <div class="art artimg" style="background-image:url(../pillars/art/st-peak.jpg)"></div>
+    <div class="name">제왕 <span style="display:block;font-size:11px;color:var(--sub);font-weight:400;margin-top:1px">절정</span></div>
+    <div class="type">정점 👑</div>
+    <div class="desc">정점 — 최대의 힘, 그리고 뒤따르는 전환.</div>
+    <div class="rel">성장 단계 · 5 / 12</div>
+  </div>
+  <div class="card stage"><div class="frame"></div>
+    <div class="top"><span class="han">衰</span><span class="cost">6 · → 病</span></div>
+    <div class="art artimg" style="background-image:url(../pillars/art/st-decline.jpg)"></div>
+    <div class="name">쇠 <span style="display:block;font-size:11px;color:var(--sub);font-weight:400;margin-top:1px">기욺</span></div>
+    <div class="type">정상을 지나</div>
+    <div class="desc">정상을 지나 — 힘을 아끼는 노련한 기운.</div>
+    <div class="rel">성장 단계 · 6 / 12</div>
+  </div>
+  <div class="card stage"><div class="frame"></div>
+    <div class="top"><span class="han">病</span><span class="cost">7 · → 死</span></div>
+    <div class="art artimg" style="background-image:url(../pillars/art/st-weakening.jpg)"></div>
+    <div class="name">병 <span style="display:block;font-size:11px;color:var(--sub);font-weight:400;margin-top:1px">안으로</span></div>
+    <div class="type">안으로 향한</div>
+    <div class="desc">안으로 향한 기운 — 공감과 성찰.</div>
+    <div class="rel">성장 단계 · 7 / 12</div>
+  </div>
+  <div class="card stage"><div class="frame"></div>
+    <div class="top"><span class="han">死</span><span class="cost">8 · → 墓</span></div>
+    <div class="art artimg" style="background-image:url(../pillars/art/st-stillness.jpg)"></div>
+    <div class="name">사 <span style="display:block;font-size:11px;color:var(--sub);font-weight:400;margin-top:1px">정지</span></div>
+    <div class="type">멈춘 움직임</div>
+    <div class="desc">멈춘 움직임 — 깊이, 집중, 초연함.</div>
+    <div class="rel">성장 단계 · 8 / 12</div>
+  </div>
+  <div class="card stage"><div class="frame"></div>
+    <div class="top"><span class="han">墓</span><span class="cost">9 · → 絶</span></div>
+    <div class="art artimg" style="background-image:url(../pillars/art/st-storage.jpg)"></div>
+    <div class="name">묘 <span style="display:block;font-size:11px;color:var(--sub);font-weight:400;margin-top:1px">저장</span></div>
+    <div class="type">곳간</div>
+    <div class="desc">곳간에 거둔 — 자원을 갈무리하고 마음을 간직한다.</div>
+    <div class="rel">성장 단계 · 9 / 12</div>
+  </div>
+  <div class="card stage"><div class="frame"></div>
+    <div class="top"><span class="han">絶</span><span class="cost">10 · → 胎</span></div>
+    <div class="art artimg" style="background-image:url(../pillars/art/st-severance.jpg)"></div>
+    <div class="name">절 <span style="display:block;font-size:11px;color:var(--sub);font-weight:400;margin-top:1px">끊김</span></div>
+    <div class="type">끊긴 실</div>
+    <div class="desc">끊긴 실 — 가장 위태롭고, 가장 크게 변할 수 있는.</div>
+    <div class="rel">성장 단계 · 10 / 12</div>
+  </div>
+  <div class="card stage"><div class="frame"></div>
+    <div class="top"><span class="han">胎</span><span class="cost">11 · → 養</span></div>
+    <div class="art artimg" style="background-image:url(../pillars/art/st-conception.jpg)"></div>
+    <div class="name">태 <span style="display:block;font-size:11px;color:var(--sub);font-weight:400;margin-top:1px">잉태</span></div>
+    <div class="type">보이지 않게 형성되는</div>
+    <div class="desc">보이지 않게 형성되는 가능성 — 잉태되는 상상력.</div>
+    <div class="rel">성장 단계 · 11 / 12</div>
+  </div>
+  <div class="card stage"><div class="frame"></div>
+    <div class="top"><span class="han">養</span><span class="cost">12 · → 長生</span></div>
+    <div class="art artimg" style="background-image:url(../pillars/art/st-nurture.jpg)"></div>
+    <div class="name">양 <span style="display:block;font-size:11px;color:var(--sub);font-weight:400;margin-top:1px">기름</span></div>
+    <div class="type">조용히 먹여지는</div>
+    <div class="desc">조용히 먹여지고 보호받는 — 세상에 나오기 전의 성장.</div>
+    <div class="rel">성장 단계 · 12 / 12</div>
+  </div>
+
+</div>
+<div class="legend">
+  <span class="k">사다리가 아니라 순환입니다 — 死·墓·絶은 불운이 아니라 깊이·저장·재생의 국면입니다.</span>
+</div>
+</div>
+
+<div class="foot wrap">
+  모든 사주는 이 카드들을 저마다 다른 패로 나눕니다 — 그 패가 바로 당신입니다.<br>
+  <a href="start.html">내 카드덱 펼쳐보기 →</a> &nbsp;·&nbsp; <a href="index.html">Elun</a>
+</div>
+
+</body>
+</html>
