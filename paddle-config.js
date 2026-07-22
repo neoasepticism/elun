@@ -12,7 +12,7 @@ window.ELUN_PADDLE = {
     single:  "pri_01ky4mqjxa4fdvfs0jbwhgcggf",  // Precision Report — $29
     decade:  "pri_01ky4ms9z3vxc6ryfbdrnpgjpm",  // Report + Decade — $49
     couple:  "pri_01ky4mt0fngkhqk4h9nxea2pzw",  // Compatibility Report — $49
-    upgrade: "pri_01ky4mvxtzp99cxc37ttcctpkq",  // Decade Expansion 업그레이드 — $20
+    upgrade: "pri_01ky4mvxtzp99cxc37ttcctpkq",  // Decade Expansion 업그레이드 — $25
   },
 };
 
