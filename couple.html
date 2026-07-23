@@ -145,10 +145,11 @@ for(const p of ['a','b']){
 try{
   const q=new URLSearchParams(location.search);
   const clean=v=>(v&&!v.includes('{')&&!v.includes('['))?v:'';
-  // Digistore24 는 order_id, 레거시(Paddle)는 order 파라미터로 넘어옴
+  // Digistore24 는 order_id·buyer_email, 레거시(Paddle)는 order·email 파라미터로 넘어옴
   const qo2=clean(q.get('order')||q.get('order_id'));
   if(qo2) document.getElementById('order').value=qo2;
-  if(clean(q.get('email'))) document.getElementById('email').value=q.get('email');
+  const qe2=clean(q.get('email')||q.get('buyer_email'));
+  if(qe2) document.getElementById('email').value=qe2;
 }catch(_){}
 
 const msgs=['Casting both charts…','Reading the day masters…','Weighing mutual useful elements…',

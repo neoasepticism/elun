@@ -125,10 +125,11 @@ document.getElementById('bnotime').addEventListener('change',e=>{
 try{
   const q=new URLSearchParams(location.search);
   const clean=v=>(v&&!v.includes('{')&&!v.includes('['))?v:'';
-  // Digistore24 는 order_id 로, 레거시(Paddle)는 order 로 넘어옴. upgrade=1 이면 업그레이드 결제의
-  // 새 주문번호를 프리필하지 않음 — 원래 Precision Report 주문번호로 재클레임해야 적용됨.
-  const qo=clean(q.get('order')||q.get('order_id')), qe=clean(q.get('email')), qn=clean(q.get('name'));
-  const isUpgrade=q.get('upgrade')==='1';
+  // Digistore24 는 order_id·buyer_email·product_id 로, 레거시(Paddle)는 order·email 로 넘어옴.
+  // 업그레이드 상품(714432) 구매면 새 주문번호를 프리필하지 않음 — 원래 Precision Report
+  // 주문번호로 재클레임해야 적용됨(email만 프리필).
+  const qo=clean(q.get('order')||q.get('order_id')), qe=clean(q.get('email')||q.get('buyer_email')), qn=clean(q.get('name'));
+  const isUpgrade=q.get('upgrade')==='1'||q.get('product_id')==='714432';
   if(qo && !isUpgrade) document.getElementById('order').value=qo;
   if(qe) document.getElementById('email').value=qe;
   if(qn) document.getElementById('rname').value=qn;
