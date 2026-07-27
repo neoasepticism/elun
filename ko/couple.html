@@ -130,7 +130,10 @@
 <div style="margin-top:7px">일런 · 대표 양준상 · 사업자등록번호 869-26-02111 · 통신판매업신고 제2026-서울강남-05664호 · 서울특별시 강남구 영동대로138길 12 · 전화 070-4419-3742</div></footer>
 
 <script src="../cities.js"></script>
+<script src="../dateseg.js"></script>
 <script>
+elunDateSeg('a_date',{y:'연도',m:'월',d:'일',next:'a_time'});
+elunDateSeg('b_date',{y:'연도',m:'월',d:'일',next:'b_time'});
 const API_BASE = (location.hostname==='localhost'||location.hostname==='127.0.0.1'||location.protocol==='file:')
   ? 'http://127.0.0.1:8500' : 'https://api.elun.me';
 const CITIES = window.ELUN_CITIES;  // 단일 정본 cities.js
