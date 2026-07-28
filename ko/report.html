@@ -106,10 +106,13 @@
   </form>
 </div>
 
-<footer>© 2026 Elun · 문제가 있으신가요? <a href="mailto:hello@elun.me">hello@elun.me</a> · <a href="terms.html">이용약관</a> · <a href="privacy.html">개인정보처리방침</a> · <a href="refund.html">환불정책</a></footer>
+<footer>© 2026 Elun · 문제가 있으신가요? <a href="mailto:hello@elun.me">hello@elun.me</a> · <a href="terms.html">이용약관</a> · <a href="privacy.html">개인정보처리방침</a> · <a href="refund.html">환불정책</a>
+<div style="margin-top:7px">일런 · 대표 양준상 · 사업자등록번호 869-26-02111 · 통신판매업신고 제2026-서울강남-05664호 · 서울특별시 강남구 영동대로138길 12 · 전화 070-4419-3742</div></footer>
 
 <script src="../cities.js"></script>
+<script src="../dateseg.js"></script>
 <script>
+elunDateSeg('bdate',{y:'연도',m:'월',d:'일',next:'btime'});
 const API_BASE = (location.hostname==='localhost'||location.hostname==='127.0.0.1'||location.protocol==='file:')
   ? 'http://127.0.0.1:8500' : 'https://api.elun.me';
 

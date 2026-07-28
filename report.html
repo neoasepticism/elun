@@ -107,7 +107,9 @@
 <footer>© 2026 Elun · problems? <a href="mailto:hello@elun.me">hello@elun.me</a> · <a href="terms.html">Terms</a> · <a href="privacy.html">Privacy</a> · <a href="refund.html">Refunds</a></footer>
 
 <script src="cities.js"></script>
+<script src="dateseg.js"></script>
 <script>
+elunDateSeg('bdate',{y:'YYYY',m:'MM',d:'DD',next:'btime'});
 const API_BASE = (location.hostname==='localhost'||location.hostname==='127.0.0.1'||location.protocol==='file:')
   ? 'http://127.0.0.1:8500' : 'https://api.elun.me';
 
@@ -193,7 +195,6 @@ document.getElementById('claim').addEventListener('submit', async e=>{
 });
 </script>
 <!-- Begin of Digistore24 Trusted Badge Code -->
-<script type="text/javascript" src="https://www.digistore24.com/trusted-badge/46926/CD0jTgEhUxuWVj7/thankyoupage"></script>
 <!-- End of Digistore24 Trusted Badge Code -->
 </body>
 </html>
