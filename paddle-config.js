@@ -166,8 +166,14 @@ async function elunOpenPortOneCheckout(priceKey, opts) {
 
 // priceKey: "single" | "decade" | "couple" | "upgrade"
 function elunOpenPaddleCheckout(priceKey, opts) {
-  if (elunIsKoPage() && elunKoReady()) {
-    elunOpenPortOneCheckout(priceKey, opts);
+  if (elunIsKoPage()) {
+    if (elunKoReady()) {
+      elunOpenPortOneCheckout(priceKey, opts);
+    } else {
+      // 국내 결제 준비 중 게이트 — KRW 표시가와 DS24($) 청구액 불일치 방지.
+      // 포트원 실채널 키가 채워지면(elunKoReady) 이 분기는 자동으로 사라진다.
+      alert("국내 결제(카드·간편결제) 오픈 준비 중입니다 — 며칠 안에 열립니다.\n급하시면 hello@elun.me 로 연락 주세요.");
+    }
     return;
   }
   const cfg = window.ELUN_CHECKOUT;
@@ -179,21 +185,34 @@ function elunOpenPaddleCheckout(priceKey, opts) {
   location.href = "https://www.digistore24.com/product/" + pid;
 }
 
-// ── 한국어 페이지 가격 라벨: 포트원 활성 시 KRW 로 교체 ──
+// ── 한국어 페이지 가격 라벨: 포트원 활성 시 KRW 교체, 준비 전엔 "결제 준비 중" 표시 ──
 // (버튼 id 규약: buybtn=single, buydecadebtn=decade, buycouplebtn=couple)
 (function () {
   function won(n) { return n.toLocaleString("ko-KR") + "원"; }
   function apply() {
-    if (!(elunIsKoPage() && elunKoReady())) return;
-    const a = window.ELUN_CHECKOUT_KO.amounts;
-    const map = {
-      buybtn: "정밀 리포트 — " + won(a.single),
-      buydecadebtn: "리포트 + 대운 10년 — " + won(a.decade),
-      buycouplebtn: "두 사람 — " + won(a.couple),
-    };
-    for (const id in map) {
-      const el = document.getElementById(id);
-      if (el) el.textContent = map[id];
+    if (!elunIsKoPage()) return;
+    const ids = ["buybtn", "buydecadebtn", "buycouplebtn"];
+    if (elunKoReady()) {
+      const a = window.ELUN_CHECKOUT_KO.amounts;
+      const map = {
+        buybtn: "정밀 리포트 — " + won(a.single),
+        buydecadebtn: "리포트 + 대운 10년 — " + won(a.decade),
+        buycouplebtn: "두 사람 — " + won(a.couple),
+      };
+      for (const id in map) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = map[id];
+      }
+    } else {
+      // 준비 전: 라벨 뒤에 안내를 붙이고 반투명 처리 (클릭은 위 게이트가 안내 alert)
+      for (const id of ids) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+        el.textContent = el.textContent.replace(/\s*—.*$/, "") + " — 결제 준비 중";
+        el.style.opacity = "0.55";
+        el.setAttribute("aria-disabled", "true");
+        el.title = "국내 결제 오픈 준비 중입니다";
+      }
     }
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", apply);
