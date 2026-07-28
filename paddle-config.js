@@ -95,6 +95,11 @@ function elunAskEmail() {
       '<div style="font-size:13px;color:#b8ab97;line-height:1.5;margin-bottom:14px">결제 확인과 리포트 재열람에 사용됩니다. 결제 후 이 이메일과 주문번호로 리포트를 여실 수 있어요.</div>' +
       '<input id="elun-email-input" type="email" placeholder="you@example.com" style="width:100%;box-sizing:border-box;background:#0e0b08;border:1px solid #3a3226;border-radius:10px;color:#f3ece0;padding:12px;font-size:15px;outline:none" />' +
       '<div id="elun-email-err" style="font-size:12px;color:#d9807a;margin-top:6px;display:none">이메일 형식을 확인해주세요.</div>' +
+      '<label style="display:flex;gap:8px;align-items:flex-start;margin-top:15px;font-size:12.5px;color:#b8ab97;line-height:1.5;cursor:pointer">' +
+      '<input id="elun-agree" type="checkbox" style="margin-top:2px;flex:none" />' +
+      '<span>[필수] 본 상품은 즉시 제공되는 디지털콘텐츠이며, 리포트 생성·열람 후에는 「전자상거래법」 제17조에 따라 청약철회가 제한됨에 동의합니다.</span>' +
+      '</label>' +
+      '<div id="elun-agree-err" style="font-size:12px;color:#d9807a;margin-top:6px;display:none">청약철회 제한 사항에 동의해주세요.</div>' +
       '<div style="display:flex;gap:10px;margin-top:16px">' +
       '<button id="elun-email-cancel" style="flex:1;background:transparent;border:1px solid #3a3226;border-radius:24px;color:#b8ab97;padding:11px;font-size:14px;cursor:pointer">취소</button>' +
       '<button id="elun-email-ok" style="flex:2;background:#c9a227;border:none;border-radius:24px;color:#14100b;font-weight:700;padding:11px;font-size:14px;cursor:pointer">결제 계속하기</button>' +
@@ -103,9 +108,13 @@ function elunAskEmail() {
     const input = wrap.querySelector("#elun-email-input");
     const err = wrap.querySelector("#elun-email-err");
     function done(v) { wrap.remove(); resolve(v); }
+    const agree = wrap.querySelector("#elun-agree");
+    const agreeErr = wrap.querySelector("#elun-agree-err");
+    agree.addEventListener("change", function () { if (agree.checked) agreeErr.style.display = "none"; });
     function submit() {
       const v = (input.value || "").trim();
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) { err.style.display = "block"; input.focus(); return; }
+      if (!agree.checked) { agreeErr.style.display = "block"; agree.focus(); return; }  // 전자상거래법 청약철회 제한 동의 필수
       done(v);
     }
     wrap.querySelector("#elun-email-ok").onclick = submit;
