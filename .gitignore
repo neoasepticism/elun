@@ -1,2 +1,5 @@
 preview-*.html
 art/grok-*.jpg
+portone-test.html
+.DS_Store
+__pycache__/
