@@ -29,8 +29,9 @@ window.ELUN_CHECKOUT = {
 //   클레임 주문번호 = paymentId. 웹훅 목적지: https://api.elun.me/webhook/portone
 window.ELUN_CHECKOUT_KO = {
   provider: "portone",
-  storeId: "PASTE_STORE_ID",
-  channelKey: "PASTE_CHANNEL_KEY",
+  // ⚠️ 임시(카카오페이 심사 캡처용) — 토스페이먼츠 **테스트** 채널. KCP 승인 시 실채널 키로 교체.
+  storeId: "store-666ad159-659b-41cd-b3b7-8a7f8c1f5a68",
+  channelKey: "channel-key-7da408b3-ab2b-411a-8c84-bfead893e56f",
   payMethod: "CARD",            // 채널에 따라 "EASY_PAY" 등으로 변경 가능
   amounts: {                    // KRW — Railway PORTONE_AMOUNT_* 와 반드시 일치
     single:  29000,
