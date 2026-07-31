@@ -411,18 +411,48 @@ else{
     a.href=URL.createObjectURL(blob); a.download='elun-my-cards.png';
     document.body.appendChild(a); a.click(); a.remove();
   }
+  // html2canvas 프리로드 — 클릭 시 CDN 대기 없이 바로 렌더 (iOS 제스처 만료 예방)
+  setTimeout(function(){
+    if(window.html2canvas) return;
+    const sc=document.createElement('script');
+    sc.src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+    document.head.appendChild(sc);
+  }, 1200);
+  // 공유 모달: 이미지를 먼저 보여주고, "공유" 버튼의 새 클릭 제스처 안에서 navigator.share 호출.
+  // (생성에 수 초 걸리면 iOS 가 원래 클릭의 제스처를 만료시켜 share 가 조용히 거부되던 문제의 해법)
+  function showShareModal(blob){
+    const old=document.getElementById('elun-share-modal'); if(old) old.remove();
+    const url=URL.createObjectURL(blob);
+    const file=new File([blob],'elun-my-cards.png',{type:'image/png'});
+    const canShare=!!(navigator.canShare && navigator.canShare({files:[file]}));
+    const wrap=document.createElement('div');
+    wrap.id='elun-share-modal';
+    wrap.style.cssText='position:fixed;inset:0;z-index:99999;background:rgba(8,6,4,.9);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px';
+    wrap.innerHTML=
+      '<img src="'+url+'" style="max-width:min(420px,92vw);max-height:60vh;border-radius:14px;border:1px solid #3a3226" alt="내 사주 카드">'+
+      '<div style="margin-top:8px;font-size:12px;color:#9c8f79">이미지를 길게 눌러 저장할 수도 있어요</div>'+
+      '<div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;justify-content:center">'+
+      (canShare?'<button id="esm-share" style="background:#c9a227;border:none;border-radius:24px;color:#14100b;font-weight:700;padding:12px 28px;font-size:14px;cursor:pointer">📤 공유하기</button>':'')+
+      '<button id="esm-save" style="background:transparent;border:1px solid #c9a227;border-radius:24px;color:#e0c05a;padding:12px 24px;font-size:14px;cursor:pointer">⬇ 저장</button>'+
+      '<button id="esm-close" style="background:transparent;border:1px solid #3a3226;border-radius:24px;color:#b8ab97;padding:12px 22px;font-size:14px;cursor:pointer">닫기</button>'+
+      '</div>';
+    document.body.appendChild(wrap);
+    const shareBtn=wrap.querySelector('#esm-share');
+    if(shareBtn) shareBtn.onclick=async function(){
+      try{ await navigator.share({files:[file],title:'나의 사주 — elun.me',text:'내 사주 카드 · elun.me 에서 계산해 보세요'}); }
+      catch(err){ if(err && err.name!=='AbortError'){ dl(blob); } }  // 거부되면 저장으로 폴백 (시트 닫음은 무시)
+    };
+    wrap.querySelector('#esm-save').onclick=function(){ dl(blob); };
+    wrap.querySelector('#esm-close').onclick=function(){ wrap.remove(); URL.revokeObjectURL(url); };
+  }
   async function withBtn(btn, fn){
     const t=btn.textContent; btn.disabled=true; btn.textContent='이미지 생성 중…';
-    try{ await fn(); }catch(_){}
+    try{ await fn(); }
+    catch(_){ alert('이미지 생성에 실패했습니다. 잠시 후 다시 시도해주세요.'); }
     btn.disabled=false; btn.textContent=t;
   }
   document.getElementById('sharehand').addEventListener('click', e=>withBtn(e.target, async()=>{
-    const blob=await renderCutBlob();
-    const file=new File([blob],'elun-my-cards.png',{type:'image/png'});
-    if(navigator.canShare && navigator.canShare({files:[file]})){
-      try{ await navigator.share({files:[file],title:'나의 사주 — elun.me',text:'내 사주 카드 · elun.me 에서 계산해 보세요'}); }
-      catch(_){/* 사용자가 시트 닫음 */}
-    } else { dl(blob); }
+    showShareModal(await renderCutBlob());
   }));
   document.getElementById('savehand').addEventListener('click', e=>withBtn(e.target, async()=>{
     dl(await renderCutBlob());
@@ -494,13 +524,21 @@ else{
      <tr><td>신강약(身強弱)</td><td>${STR[st.label]||st.label||'—'}</td></tr>
      <tr><td>대운(大運)</td><td>${D.dawun ? `${D.dawun.start_age_years}세 시작 · ${D.dawun.direction==='순행'?'순행(順行)':'역행(逆行)'}` : '—'}</td></tr>`;
 
-  // 소셜 링크 공유 (일주 페이지 — OG 카드가 미리보기로 뜸)
+  // 소셜 링크 공유 — 격국까지 알면 3카드(일지·일간·격국) 공유 스텁, 아니면 일주 페이지
   {
     const slugP = p60H ? p60H.py.toLowerCase().replace(' ','-') : null;
     if(slugP){
-      const url='https://elun.me/pillars/'+slugP+'.html';
+      const GODSLUG={'The Ally':'ally','The Rival':'rival','The Creator':'creator','The Maverick':'maverick',
+        'The Steward':'steward','The Entrepreneur':'entrepreneur','The Governor':'governor',
+        'The Challenger':'challenger','The Scholar':'scholar','The Mystic':'mystic'};
+      const gslug = structArch ? GODSLUG[structArch] : null;
+      const url = gslug
+        ? 'https://elun.me/pillars/s/'+slugP+'-'+gslug+'.html'   // OG = 3카드 이미지
+        : 'https://elun.me/pillars/'+slugP+'.html';
       const readingP=(HSK[gjH[0]]||'')+(HBK[gjH[1]]||'');
-      const txt=`내 사주 일주는 ${gjH}(${readingP}) 입니다. 당신의 일주도 찾아보세요:`;
+      const txt = gslug
+        ? `내 사주 카드 — 일주 ${gjH}(${readingP}) · ${(DECK.gods[structArch]||{}).name||''} 격. 당신의 카드도 확인해 보세요:`
+        : `내 사주 일주는 ${gjH}(${readingP}) 입니다. 당신의 일주도 찾아보세요:`;
       document.getElementById('shx').href='https://x.com/intent/post?text='+encodeURIComponent(txt)+'&url='+encodeURIComponent(url);
       document.getElementById('shf').href='https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(url);
       document.getElementById('shw').href='https://wa.me/?text='+encodeURIComponent(txt+' '+url);
