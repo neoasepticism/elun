@@ -176,10 +176,13 @@
       <button class="btn ghost" id="savehand" style="font-size:13px;padding:9px 18px;margin-left:8px">⬇ Save image</button>
     </div>
     <div id="socialrow" style="text-align:center;margin-top:10px;font-size:12.5px;color:var(--faint)">
-      or share your pillar page:
-      <a id="shx" target="_blank" rel="noopener" style="margin:0 5px">𝕏</a>·
-      <a id="shf" target="_blank" rel="noopener" style="margin:0 5px">Facebook</a>·
-      <a id="shw" target="_blank" rel="noopener" style="margin:0 5px">WhatsApp</a>·
+      or share your card link:
+      <span id="shdesk">
+        <a id="shx" target="_blank" rel="noopener" style="margin:0 5px">𝕏</a>·
+        <a id="shf" target="_blank" rel="noopener" style="margin:0 5px">Facebook</a>·
+        <a id="shw" target="_blank" rel="noopener" style="margin:0 5px">WhatsApp</a>·
+      </span>
+      <a id="shn" href="#" style="margin:0 5px;display:none">📤 Share</a>
       <a id="shc" href="#" style="margin:0 5px">Copy link</a>
     </div>
   </div>
@@ -523,9 +526,21 @@ else{
       const txt = gslug
         ? `My BaZi hand — ${gjH} (${p60H.py}) day, ${structArch} structure. See your own cards:`
         : `My BaZi day pillar is ${gjH} — the ${p60H.py} day. Find yours:`;
-      document.getElementById('shx').href='https://x.com/intent/post?text='+encodeURIComponent(txt)+'&url='+encodeURIComponent(url);
-      document.getElementById('shf').href='https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(url);
-      document.getElementById('shw').href='https://wa.me/?text='+encodeURIComponent(txt+' '+url);
+      // Mobile = native share sheet (web intent links break on phones: not logged in on web / app hijacks the link)
+      const mob = typeof elunIsMobile==='function' && elunIsMobile() && !!navigator.share;
+      if(mob){
+        document.getElementById('shdesk').style.display='none';
+        const shn=document.getElementById('shn');
+        shn.style.display='';
+        shn.addEventListener('click', async e2=>{
+          e2.preventDefault();
+          try{ await navigator.share({title:'My BaZi cards — elun.me', text:txt, url:url}); }catch(_){/* sheet dismissed */}
+        });
+      } else {
+        document.getElementById('shx').href='https://x.com/intent/post?text='+encodeURIComponent(txt)+'&url='+encodeURIComponent(url);
+        document.getElementById('shf').href='https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(url);
+        document.getElementById('shw').href='https://wa.me/?text='+encodeURIComponent(txt+' '+url);
+      }
       document.getElementById('shc').addEventListener('click', async e2=>{
         e2.preventDefault();
         try{ await navigator.clipboard.writeText(url); e2.target.textContent='Copied!';
