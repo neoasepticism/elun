@@ -140,6 +140,58 @@ function elunAskEmail() {
   });
 }
 
+// ── 모바일 기기 감지 (KCP PC 결제창은 모바일 미지원 → 모바일 표준결제로 분기) ──
+function elunIsMobile() {
+  const ua = navigator.userAgent || "";
+  if (/Android|iPhone|iPod|Windows Phone/i.test(ua)) return true;
+  // iPadOS 13+ 는 데스크톱 UA(Macintosh)를 쓰므로 터치 지점으로 판별
+  if (/iPad/i.test(ua) || (/Macintosh/i.test(ua) && navigator.maxTouchPoints > 1)) return true;
+  return false;
+}
+
+// ── NHN KCP 모바일 표준결제 (거래등록 + 전체 페이지 redirect) ──
+// 흐름: 서버 /payment/kcp/mobile/register 로 거래등록(PayUrl·approval_key 수령)
+//   → PayUrl 기반 encodingFilter.jsp 로 form POST(페이지 이동) → KCP 모바일 결제창
+//   → 인증 후 KCP가 서버 Ret_URL 로 결과 POST → 서버가 승인 → 리포트로 redirect.
+//   실패 시 서버가 /ko/?payerr=사유 로 되돌려줌 (아래 payerr 배너가 표시).
+async function elunOpenKcpMobileCheckout(priceKey, email, opts) {
+  let reg;
+  try {
+    const r = await fetch(window.ELUN_API_BASE + "/payment/kcp/mobile/register", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ product: priceKey, email: email,
+                             redirect_to: opts.redirectTo || "report.html" }),
+    });
+    if (!r.ok) throw new Error((await r.json().catch(function(){return {};})).detail || "register failed");
+    reg = await r.json();
+  } catch (e) {
+    alert("결제 준비에 실패했습니다. 잠시 후 다시 시도해주세요.\n(" + (e.message || e) + ")");
+    return;
+  }
+  const P = {
+    site_cd: reg.site_cd, pay_method: "CARD", currency: "410",   // 모바일은 KRW=410 (PC의 "WON" 넣으면 M015)
+    shop_name: window.ELUN_CHECKOUT_KO.siteName || "Elun",
+    ordr_idxx: reg.ordr_idxx, good_name: reg.good_name, good_mny: reg.good_mny,
+    Ret_URL: reg.Ret_URL, approval_key: reg.approval_key, PayUrl: reg.PayUrl,
+    buyr_mail: email,
+  };
+  const old = document.getElementById("elun-kcp-mform");
+  if (old) old.remove();
+  const form = document.createElement("form");
+  form.id = "elun-kcp-mform"; form.name = "order_info"; form.method = "post";
+  form.acceptCharset = "UTF-8";
+  form.style.display = "none";
+  Object.keys(P).forEach(function (k) {
+    const i = document.createElement("input");
+    i.type = "hidden"; i.name = k; i.value = P[k];
+    form.appendChild(i);
+  });
+  // KCP 관례: PayUrl 디렉터리의 encodingFilter.jsp 를 거쳐 mobileGW 로 진입
+  form.action = reg.PayUrl.substring(0, reg.PayUrl.lastIndexOf("/")) + "/jsp/encodingFilter/encodingFilter.jsp";
+  document.body.appendChild(form);
+  form.submit();   // 전체 페이지 이동 — 결제 후 서버 Ret_URL 이 리포트로 복귀시킴
+}
+
 // ── NHN KCP 결제 실행 (PC 표준결제창) ──
 // 흐름: 이메일 수집 → order_info 폼 생성 → KCP 결제창 → 인증완료 시 KCP가 m_Completepayment 호출
 //   → enc_data/enc_info/tran_cd 를 서버 /payment/kcp/approve 로 승인요청 → 성공 시 report 이동.
@@ -153,6 +205,8 @@ async function elunOpenKcpCheckout(priceKey, opts) {
 
   const email = await elunAskEmail();
   if (!email) return;
+
+  if (elunIsMobile()) { elunOpenKcpMobileCheckout(priceKey, email, opts); return; }
 
   try { await elunLoadKcp(cfg.env); }
   catch (e) { alert("결제 모듈을 불러오지 못했습니다. 잠시 후 다시 시도해주세요."); return; }
@@ -273,4 +327,33 @@ function elunOpenPaddleCheckout(priceKey, opts) {
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", apply);
   else apply();
+})();
+
+// ── 모바일 결제 실패 복귀 배너 (?payerr=사유) ──
+// 서버 Ret_URL 처리기가 실패 시 /ko/?payerr=... 로 되돌려보낸다.
+(function () {
+  function show() {
+    let msg;
+    try { msg = new URLSearchParams(location.search).get("payerr"); } catch (e) { return; }
+    if (!msg) return;
+    const bar = document.createElement("div");
+    bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:99998;background:#3a1512;" +
+      "border-bottom:1px solid #d9807a55;color:#f3d9d6;font-size:13.5px;line-height:1.5;" +
+      "padding:12px 44px 12px 16px;text-align:center";
+    bar.textContent = msg + " — 문제가 계속되면 hello@elun.me 로 알려주세요.";
+    const x = document.createElement("button");
+    x.textContent = "✕";
+    x.style.cssText = "position:absolute;right:10px;top:8px;background:none;border:none;" +
+      "color:#f3d9d6;font-size:16px;cursor:pointer;padding:4px";
+    x.onclick = function () { bar.remove(); };
+    bar.appendChild(x);
+    document.body.appendChild(bar);
+    // 주소창에서 payerr 제거 (새로고침 시 배너 재출현 방지)
+    try {
+      const u = new URL(location.href); u.searchParams.delete("payerr");
+      history.replaceState(null, "", u.toString());
+    } catch (e) {}
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", show);
+  else show();
 })();
