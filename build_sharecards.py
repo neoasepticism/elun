@@ -41,17 +41,31 @@ P60 = _extract('P60')
 GODS = DECK['gods']          # arch key → card
 GOD_SLUG = {k: v['art'][2:-4] for k, v in GODS.items()}   # "The Governor" → "governor"
 
+# 결과 페이지 "나의 핸드" deckCard 디자인 이식 — 풀아트 + 한자/역할배지 + 하단 이름
 CARD_TPL = '''
-<div style="width:292px;border:2px solid {edge};border-radius:18px;overflow:hidden;
-  background:linear-gradient(160deg,{c1},{c2});box-shadow:0 14px 40px #000a">
-  <div style="height:150px;background:url('{art}') center/cover no-repeat"></div>
-  <div style="padding:16px 18px 18px;text-align:center">
-    <div style="font-size:11.5px;letter-spacing:3px;color:{ac};text-transform:uppercase">{role}</div>
-    <div style="font-family:serif;font-size:42px;font-weight:700;color:#f3ece0;line-height:1.15;margin-top:6px">{han}</div>
-    <div style="font-size:16.5px;color:#f3ece0;margin-top:5px;font-weight:600">{name}</div>
-    <div style="font-size:12.5px;color:#9c8f79;margin-top:4px">{typ}</div>
+<div style="width:280px;height:420px;border-radius:20px;position:relative;flex:none;overflow:hidden;
+  border:2px solid {edge};background:#0e0b08;box-shadow:0 20px 50px -18px #000, 0 0 40px -20px {ac}">
+  <div style="position:absolute;inset:0;background-image:url('{art}');background-size:cover;background-position:22% center"></div>
+  <div style="position:absolute;inset:0;background:linear-gradient(180deg,#0e0b0899 0%,transparent 17%,transparent 68%,#0e0b08cc 86%,#0e0b08ee 100%)"></div>
+  <div style="position:absolute;inset:8px;border:1px solid #ffffff1c;border-radius:14px"></div>
+  <div style="position:absolute;top:16px;left:18px;right:18px;display:flex;justify-content:space-between;align-items:flex-start">
+    <span style="font-family:serif;font-size:38px;font-weight:700;line-height:1;color:{ac};text-shadow:0 2px 14px #000">{han}</span>
+    <span style="font-family:serif;font-size:13px;color:#e8e0d0;border:1px solid #ffffff33;border-radius:13px;padding:3px 11px;white-space:nowrap;background:#0e0b0880">{role}</span>
+  </div>
+  <div style="position:absolute;bottom:18px;left:0;right:0;text-align:center">
+    <div style="font-family:serif;font-size:26px;font-weight:700;color:{ac};text-shadow:0 2px 14px #000">{name}</div>
+    <div style="font-size:12px;letter-spacing:2.5px;color:#c9bda9;margin-top:4px">{typ}</div>
   </div>
 </div>'''
+
+# 결과 페이지 RAREP 배지 (일주 결정 — result.html 정본과 동일하게 유지)
+RAREP = {'庚辰': '희귀 · 괴강(魁罡)', '庚戌': '희귀 · 괴강(魁罡)', '壬辰': '희귀 · 괴강(魁罡)', '壬戌': '희귀 · 괴강(魁罡)',
+         '甲寅': '희귀 · 간여지동(干與支同)', '乙卯': '희귀 · 간여지동(干與支同)', '丙午': '희귀 · 간여지동(干與支同)',
+         '丁巳': '희귀 · 간여지동(干與支同)', '戊戌': '희귀 · 간여지동(干與支同)', '戊辰': '희귀 · 간여지동(干與支同)',
+         '己丑': '희귀 · 간여지동(干與支同)', '己未': '희귀 · 간여지동(干與支同)', '庚申': '희귀 · 간여지동(干與支同)',
+         '辛酉': '희귀 · 간여지동(干與支同)', '壬子': '희귀 · 간여지동(干與支同)', '癸亥': '희귀 · 간여지동(干與支同)',
+         '丁酉': '길성 · 천을귀인(天乙貴人)', '丁亥': '길성 · 천을귀인(天乙貴人)', '癸巳': '길성 · 천을귀인(天乙貴人)',
+         '癸卯': '길성 · 천을귀인(天乙貴人)'}
 
 PAGE_TPL = '''<!doctype html><html lang="ko"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -83,15 +97,20 @@ body{{width:1200px;height:630px;overflow:hidden;font-family:'Apple SD Gothic Neo
 background:#0e0b08;background-image:radial-gradient(ellipse at 50% -15%,#241a0e 0,transparent 60%),
 radial-gradient(circle at 85% 110%,#141c24 0,transparent 45%);color:#f3ece0}}
 </style></head><body>
-<div style="text-align:center;padding-top:30px">
-  <div style="font-family:serif;letter-spacing:7px;color:#c9a227;font-size:15px">四柱 · 나의 사주 카드</div>
-  <div style="font-family:serif;font-size:34px;font-weight:700;margin-top:6px">{gj} <span style="color:#9c8f79;font-size:22px">{reading}</span>
-  <span style="color:#c9a227;font-size:24px;margin-left:10px">· {god_short}</span></div>
+<div style="text-align:center;padding-top:18px">
+  <div style="font-family:serif;letter-spacing:8px;color:#c9a227;font-size:14px">四 柱 · 나 의 사 주</div>
+  <div style="font-family:serif;font-size:31px;font-weight:700;margin-top:5px">{gj} <span style="color:#9c8f79;font-size:20px">{reading}</span>
+  <span style="color:#c9a227;font-size:22px;margin-left:8px">· {god_short}</span></div>
 </div>
-<div style="display:flex;justify-content:center;gap:26px;margin-top:22px">{cards}</div>
-<div style="position:absolute;bottom:16px;left:0;right:0;text-align:center">
-  <span style="font-family:serif;font-size:17px;color:#c9a227;letter-spacing:1.5px">나도 계산해 보기 — elun.me</span></div>
+<div style="display:flex;justify-content:center;gap:24px;margin-top:14px">{cards}</div>
+<div style="position:absolute;bottom:14px;left:0;right:0;text-align:center">
+  {badge}
+  <span style="font-family:serif;font-size:15px;color:#c9a227;letter-spacing:1.5px">나도 계산해 보기 — elun.me</span></div>
 </body></html>'''
+
+BADGE_TPL = ('<span style="display:inline-block;border:1.5px solid #c9a227;color:#e0c05a;border-radius:15px;'
+             'padding:3px 16px;font-size:14px;letter-spacing:2px;background:#0e0b08cc;font-family:serif;'
+             'margin-right:14px;vertical-align:1px">◆ {rare} — {gj}</span>')
 
 HSK = {'甲': '갑', '乙': '을', '丙': '병', '丁': '정', '戊': '무', '己': '기', '庚': '경', '辛': '신', '壬': '임', '癸': '계'}
 HBK = {'子': '자', '丑': '축', '寅': '인', '卯': '묘', '辰': '진', '巳': '사', '午': '오', '未': '미',
@@ -127,10 +146,11 @@ def main():
             n_page += 1
             if not do_og:
                 continue
-            cards = (card_html(bd, '일지 日支 · DAY BRANCH')
-                     + card_html(sd, '일간 日干 · DAY MASTER')
-                     + card_html(gd, '격국 格局 · STRUCTURE'))
-            html = OG_TPL.format(gj=gj, reading=reading, god_short=god_short, cards=cards)
+            cards = (card_html(bd, '일지(日支)')
+                     + card_html(sd, '일간(日干)')
+                     + card_html(gd, '격국(格局)'))
+            badge = BADGE_TPL.format(rare=RAREP[gj], gj=gj) if gj in RAREP else ''
+            html = OG_TPL.format(gj=gj, reading=reading, god_short=god_short, cards=cards, badge=badge)
             with tempfile.NamedTemporaryFile('w', suffix='.html', delete=False, encoding='utf-8') as f:
                 f.write(html)
                 tmp = f.name
