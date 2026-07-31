@@ -1,6 +1,6 @@
 // Elun · 체크아웃 단일 정본
 //   해외(영문): Digistore24 (2026-07-23 Paddle이 astrology 카테고리 거절 → 전환)
-//   국내(/ko/): PortOne V2 → 국내 PG (2026-07-27 통신판매업 신고 완료로 착수)
+//   국내(/ko/): NHN KCP 표준결제 직접 연동 (2026-07-31 포트원 경유 → KCP 단독 전환)
 // 이 파일 하나만 고치면 모든 페이지(index/ko/index, result/ko/result, 리포트 내 업그레이드 CTA)에 반영됩니다.
 //
 // ⚠️ 파일명(paddle-config.js)과 함수명(elunOpenPaddleCheckout)은 레거시입니다.
@@ -19,20 +19,20 @@ window.ELUN_CHECKOUT = {
   },
 };
 
-// ── 국내 결제 (PortOne V2) ─────────────────────────────────────────────
-// 채우는 법 (포트원 콘솔 https://admin.portone.io):
-//   1) 결제 연동 → 연동 정보 → Store ID (store-...) → storeId
-//   2) 결제 연동 → 채널 관리 → 계약된 PG 채널의 채널 키 (channel-key-...) → channelKey
-//   3) 금액을 바꾸면 Railway 의 PORTONE_AMOUNT_* 도 같이 바꿔야 합니다 (서버가 금액 대조로 위변조 차단).
-// 서버 연동 규약 (elun-engine server.py — 이미 배포됨):
-//   customData = {"product":"single|decade|couple|upgrade"}, customer.email 필수,
-//   클레임 주문번호 = paymentId. 웹훅 목적지: https://api.elun.me/webhook/portone
+// ── 국내 결제 (NHN KCP 표준결제 — 직접 연동) ────────────────────────────
+// 2026-07-31 실서비스 전환: 실 사이트코드 IP9HY · env=production.
+//   Railway env 반영 완료: KCP_SITE_CD=IP9HY · KCP_ENV=production · KCP_CERT_INFO(PG-API 인증서 직렬화) · KCP_AMOUNT_*
+//   KCP 서버IP 화이트리스트(취소용)에 Railway outbound 162.220.232.76 등록 완료.
+//   ⚠️ 실제 카드 승인은 통신판매업 신고번호 → KCP 카드사 등록심사 통과 후 가능(심사 전 결제 시 카드사 미등록 에러).
+//   금액 변경 시 Railway KCP_AMOUNT_* 도 같이 (서버가 승인금액 대조로 위변조 차단).
+// 서버 규약 (elun-engine — 배포됨): POST https://api.elun.me/payment/kcp/approve
+//   { enc_data, enc_info, tran_cd, ordr_no, ordr_mony, email, product }
 window.ELUN_CHECKOUT_KO = {
-  provider: "portone",
-  storeId: "PASTE_STORE_ID",
-  channelKey: "PASTE_CHANNEL_KEY",
-  payMethod: "CARD",            // 채널에 따라 "EASY_PAY" 등으로 변경 가능
-  amounts: {                    // KRW — Railway PORTONE_AMOUNT_* 와 반드시 일치
+  provider: "kcp",
+  env:      "production",       // "test" | "production"
+  siteCd:   "IP9HY",            // NHN KCP 실 사이트코드
+  siteName: "Elun",             // 영문 상점명(PC 결제창 표기)
+  amounts:  {                   // KRW — Railway KCP_AMOUNT_* 와 반드시 일치
     single:  29000,
     decade:  49000,
     couple:  49000,
@@ -45,6 +45,9 @@ window.ELUN_CHECKOUT_KO = {
     upgrade: "Elun 대운 10년 업그레이드",
   },
 };
+
+// 리포트 클레임/승인을 호출할 API 베이스 (엔진).
+window.ELUN_API_BASE = window.ELUN_API_BASE || "https://api.elun.me";
 
 // 레거시 호환 shim — result.html 등이 window.ELUN_PADDLE.prices.* 로 "결제 설정됨" 여부를 검사함.
 // 값은 실제로 사용되지 않고, PASTE_ 로 시작하지 않는 문자열이기만 하면 버튼이 켜집니다.
@@ -61,22 +64,35 @@ window.ELUN_PADDLE = {
 
 function elunKoReady() {
   const k = window.ELUN_CHECKOUT_KO;
-  return !!(k && k.storeId && k.storeId.indexOf("PASTE_") !== 0
-            && k.channelKey && k.channelKey.indexOf("PASTE_") !== 0);
+  return !!(k && k.siteCd && k.siteCd.indexOf("PASTE_") !== 0);
 }
 
 function elunIsKoPage() {
   return (document.documentElement.getAttribute("lang") || "").toLowerCase().indexOf("ko") === 0;
 }
 
-// ── 포트원 브라우저 SDK 지연 로드 ──
-function elunLoadPortOne() {
+// ── NHN KCP 표준결제 스크립트 지연 로드 (PC 결제창) ──
+// kcp_spay_hub.js 는 onload 직후가 아니라 약간 뒤에 KCP_Pay_Execute_Web 을 정의하므로 폴링 대기.
+function elunLoadKcp(env) {
   return new Promise(function (resolve, reject) {
-    if (window.PortOne) return resolve(window.PortOne);
+    function waitFn() {
+      let tries = 0;
+      (function poll() {
+        if (window.KCP_Pay_Execute_Web) return resolve();
+        if (++tries > 80) return reject(new Error("KCP function not ready"));
+        setTimeout(poll, 50);
+      })();
+    }
+    if (window.KCP_Pay_Execute_Web) return resolve();
+    const existing = document.getElementById("elun-kcp-sdk");
+    if (existing) return waitFn();
     const s = document.createElement("script");
-    s.src = "https://cdn.portone.io/v2/browser-sdk.js";
-    s.onload = function () { window.PortOne ? resolve(window.PortOne) : reject(new Error("PortOne SDK load failed")); };
-    s.onerror = function () { reject(new Error("PortOne SDK load failed")); };
+    s.id = "elun-kcp-sdk";
+    s.src = (env === "production"
+             ? "https://spay.kcp.co.kr/plugin/kcp_spay_hub.js"
+             : "https://testspay.kcp.co.kr/plugin/kcp_spay_hub.js");
+    s.onload = waitFn;
+    s.onerror = function () { reject(new Error("KCP script load failed")); };
     document.head.appendChild(s);
   });
 }
@@ -124,10 +140,11 @@ function elunAskEmail() {
   });
 }
 
-// ── 포트원 결제 실행 ──
-// opts: { redirectTo: 성공 후 이동(기본 "report.html"), includeOrder: 리다이렉트에 주문번호 포함 여부(기본 true).
-//         "upgrade" 는 false — 사용자가 "원래" 주문번호로 재클레임해야 하므로 email 만 프리필. }
-async function elunOpenPortOneCheckout(priceKey, opts) {
+// ── NHN KCP 결제 실행 (PC 표준결제창) ──
+// 흐름: 이메일 수집 → order_info 폼 생성 → KCP 결제창 → 인증완료 시 KCP가 m_Completepayment 호출
+//   → enc_data/enc_info/tran_cd 를 서버 /payment/kcp/approve 로 승인요청 → 성공 시 report 이동.
+// opts: { redirectTo: 성공 후 이동(기본 "report.html"), includeOrder: 리다이렉트에 주문번호 포함(기본 true) }
+async function elunOpenKcpCheckout(priceKey, opts) {
   opts = opts || {};
   const cfg = window.ELUN_CHECKOUT_KO;
   const amount = cfg.amounts[priceKey];
@@ -137,51 +154,81 @@ async function elunOpenPortOneCheckout(priceKey, opts) {
   const email = await elunAskEmail();
   if (!email) return;
 
-  // 클레임 주문번호 = paymentId (서버 규약). 미리 생성해 리다이렉트 URL 에도 굽는다.
-  const paymentId = "elun-" + priceKey + "-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 6);
-  const dest = new URL(opts.redirectTo || "report.html", location.href);
-  if (opts.includeOrder !== false) dest.searchParams.set("order", paymentId);
-  dest.searchParams.set("email", email);
-  const destUrl = dest.toString();
-
-  let PortOne;
-  try { PortOne = await elunLoadPortOne(); }
+  try { await elunLoadKcp(cfg.env); }
   catch (e) { alert("결제 모듈을 불러오지 못했습니다. 잠시 후 다시 시도해주세요."); return; }
 
-  let rsp;
-  try {
-    rsp = await PortOne.requestPayment({
-      storeId: cfg.storeId,
-      channelKey: cfg.channelKey,
-      paymentId: paymentId,
-      orderName: orderName,
-      totalAmount: amount,
-      currency: "CURRENCY_KRW",
-      payMethod: cfg.payMethod || "CARD",
-      customer: { email: email },
-      customData: { product: priceKey },   // 서버가 이걸로 상품 판별 (SDK 가 JSON 직렬화)
-      redirectUrl: destUrl,                // 모바일 리다이렉트 방식 — 실패 시 PG 가 code 파라미터를 덧붙임
-    });
-  } catch (e) {
-    alert("결제가 진행되지 않았습니다. 다시 시도해주세요.");
-    return;
-  }
-  if (rsp && rsp.code != null) {           // PC(iframe) 방식 실패
-    if (rsp.code !== "FAILURE_TYPE_PG_CANCEL") alert(rsp.message || "결제에 실패했습니다.");
-    return;
-  }
-  location.href = destUrl;                  // PC 방식 성공 — 웹훅이 원장 기록, 클레임은 API 재조회 폴백도 있음
+  const ordrNo = "elun" + priceKey + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+
+  // KCP PC 결제창은 폼(order_info)의 hidden 필드를 읽고, 인증 후 그 폼에 결과(res_cd/enc_data/…)를 채운다.
+  const P = {
+    site_cd: cfg.siteCd, site_name: cfg.siteName || "Elun",
+    pay_method: "100000000000",            // PC 신용카드
+    currency: "WON",
+    ordr_idxx: ordrNo, good_name: orderName, good_mny: String(amount),
+    buyr_mail: email,
+    // 인증 결과가 채워질 자리 (KCP가 값 세팅)
+    res_cd: "", res_msg: "", enc_data: "", enc_info: "", tran_cd: "", ordr_mony: "",
+  };
+  const old = document.getElementById("elun-kcp-form");
+  if (old) old.remove();
+  const form = document.createElement("form");
+  form.id = "elun-kcp-form"; form.name = "order_info"; form.method = "post";
+  form.style.display = "none";
+  Object.keys(P).forEach(function (k) {
+    const i = document.createElement("input");
+    i.type = "hidden"; i.name = k; i.value = P[k];
+    form.appendChild(i);
+  });
+  document.body.appendChild(form);
+
+  // KCP가 인증 완료 후 호출하는 전역 콜백. 결과는 form 필드에서 읽는다.
+  window.m_Completepayment = function (_formOrData, closeEvt) {
+    try {
+      const f = document.getElementById("elun-kcp-form");
+      const get = function (n) { const el = f.querySelector('[name="' + n + '"]'); return el ? el.value : ""; };
+      if (get("res_cd") !== "0000") {
+        if (typeof closeEvt === "function") closeEvt();
+        if (get("res_cd")) alert("결제 인증 실패: " + (get("res_msg") || get("res_cd")));
+        return;
+      }
+      // 서버 승인 요청 (실제 결제 확정 + 위변조 검증은 서버가 KCP 승인 API로)
+      fetch(window.ELUN_API_BASE + "/payment/kcp/approve", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          enc_data: get("enc_data"), enc_info: get("enc_info"), tran_cd: get("tran_cd"),
+          ordr_no: ordrNo, ordr_mony: String(amount), email: email, product: priceKey,
+        }),
+      }).then(function (r) {
+        return r.ok ? r.json() : r.json().then(function (j) { throw new Error(j.detail || "승인 실패"); });
+      }).then(function () {
+        if (typeof closeEvt === "function") closeEvt();
+        const dest = new URL(opts.redirectTo || "report.html", location.href);
+        if (opts.includeOrder !== false) dest.searchParams.set("order", ordrNo);
+        dest.searchParams.set("email", email);
+        location.href = dest.toString();
+      }).catch(function (err) {
+        if (typeof closeEvt === "function") closeEvt();
+        alert("결제 승인 처리 중 문제가 발생했습니다. 결제가 되었다면 hello@elun.me 로 주문번호(" + ordrNo + ")와 함께 문의해주세요.\n(" + (err.message || err) + ")");
+      });
+    } catch (e) {
+      if (typeof closeEvt === "function") closeEvt();
+      alert("결제 처리 오류 — hello@elun.me 로 문의해주세요.");
+    }
+  };
+
+  try { window.KCP_Pay_Execute_Web(form); }
+  catch (e) { /* 정상 종료 시 throw 로 스크립트 종료됨 (KCP 관례) */ }
 }
 
 // priceKey: "single" | "decade" | "couple" | "upgrade"
 function elunOpenPaddleCheckout(priceKey, opts) {
   if (elunIsKoPage()) {
     if (elunKoReady()) {
-      elunOpenPortOneCheckout(priceKey, opts);
+      elunOpenKcpCheckout(priceKey, opts);
     } else {
       // 국내 결제 준비 중 게이트 — KRW 표시가와 DS24($) 청구액 불일치 방지.
-      // 포트원 실채널 키가 채워지면(elunKoReady) 이 분기는 자동으로 사라진다.
-      alert("국내 결제(카드·간편결제) 오픈 준비 중입니다 — 며칠 안에 열립니다.\n급하시면 hello@elun.me 로 연락 주세요.");
+      // KCP siteCd 가 채워지면(elunKoReady) 이 분기는 자동으로 사라진다.
+      alert("국내 결제(카드) 오픈 준비 중입니다 — 며칠 안에 열립니다.\n급하시면 hello@elun.me 로 연락 주세요.");
     }
     return;
   }
