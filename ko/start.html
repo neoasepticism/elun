@@ -124,14 +124,19 @@
           <div class="hint" id="timehint">정확한 시간을 모르시나요? 위 체크박스를 선택하세요 — 확실한 세 기둥(일주·월주·연주)으로 계산하며, 이것만으로도 충분히 완성도 있는 성격 리딩이 됩니다. 또는 <a href="birth-time.html" target="_blank">태어난 시간 찾는 법</a>을 확인해 보세요 — 생각보다 쉽습니다.</div>
         </div>
 
-        <!-- birth city (autocomplete) -->
+        <!-- birth city: 국내 시·도 드롭다운 + 해외는 영문 검색 폴백 -->
         <div class="field">
-          <label for="city">태어난 도시</label>
-          <input type="text" id="city" placeholder="영문 도시명 입력 — e.g. Seoul, New York" />
+          <label for="krsel">태어난 지역</label>
+          <select id="krsel" style="width:100%;box-sizing:border-box"></select>
+          <div class="hint">도 단위 선택이면 충분합니다 — 도 안의 태양시 차이는 몇 분 수준이라 기둥이 바뀌는 일은 거의 없습니다.</div>
+        </div>
+        <div class="field" id="cityField" style="display:none">
+          <label for="city">해외 출생 도시</label>
+          <input type="text" id="city" placeholder="영문 도시명 입력 — e.g. New York, Tokyo" />
           <div class="ac-list" id="aclist"></div>
           <div class="hint">목록에 도시가 없나요? 같은 시간대에서 가장 가까운 도시를 선택하세요 — 약 150km 이내라면 태양시 차이는 몇 분 수준이라 기둥이 바뀌는 일은 거의 없습니다.</div>
-          <div class="precision" id="precision"></div>
         </div>
+        <div class="field"><div class="precision" id="precision"></div></div>
 
         <!-- gender -->
         <div class="field">
@@ -166,12 +171,32 @@
 
 <script src="../cities.js"></script>
 <script>
-const CITIES = window.ELUN_CITIES;  // 단일 정본 cities.js
+const CITIES = window.ELUN_CITIES;      // 단일 정본 cities.js
+const KRR = window.ELUN_KR_REGIONS;     // 한국 17개 시·도 (cities.js)
 
 const cityInput=document.getElementById('city');
 const acList=document.getElementById('aclist');
 const precision=document.getElementById('precision');
 let selectedCity=null, activeIdx=-1;
+
+// ── 국내 시·도 드롭다운 (기본 서울) · "해외 출생" 선택 시 영문 검색 노출 ──
+const krSel=document.getElementById('krsel');
+krSel.innerHTML = KRR.map((r,i)=>`<option value="${i}">${r[0]}</option>`).join('')
+  + '<option value="abroad">🌍 해외에서 태어났어요 — 도시 검색</option>';
+function pickKr(i){
+  const r=KRR[i];
+  selectedCity=[r[0],'대한민국',r[1],'Asia/Seoul'];
+  document.getElementById('cityField').style.display='none';
+  updatePrecision();
+}
+krSel.addEventListener('change',()=>{
+  if(krSel.value==='abroad'){
+    selectedCity=null; precision.classList.remove('show');
+    document.getElementById('cityField').style.display='';
+    cityInput.value=''; setTimeout(()=>cityInput.focus(),50);
+  } else { pickKr(+krSel.value); }
+});
+pickKr(0);  // 기본값 서울 — 대부분은 그대로 진행하면 됨
 
 function renderAC(items){
   if(!items.length){acList.classList.remove('show');return;}

@@ -116,9 +116,21 @@ elunDateSeg('bdate',{y:'연도',m:'월',d:'일',next:'btime'});
 const API_BASE = (location.hostname==='localhost'||location.hostname==='127.0.0.1'||location.protocol==='file:')
   ? 'http://127.0.0.1:8500' : 'https://api.elun.me';
 
-const CITIES = window.ELUN_CITIES;  // 단일 정본 cities.js
+const CITIES = window.ELUN_CITIES;      // 단일 정본 cities.js
+const KRR = window.ELUN_KR_REGIONS;     // 한국 17개 시·도 (cities.js)
 const sel=document.getElementById('bcity');
-sel.innerHTML=CITIES.map((c,i)=>`<option value="${i}">${c[0]}, ${c[1]}</option>`).join('');
+sel.innerHTML=
+  '<optgroup label="국내 — 시·도 선택">'
+  + KRR.map((r,i)=>`<option value="k${i}">${r[0]}</option>`).join('')
+  + '</optgroup><optgroup label="해외 도시 (영문)">'
+  + CITIES.map((c,i)=>`<option value="${i}">${c[0]}, ${c[1]}</option>`).join('')
+  + '</optgroup>';
+// 선택값 → [이름, 국가, 경도, tz] (국내 k{i} / 해외 {i})
+function cityOf(v){
+  if(String(v).charAt(0)==='k'){const r=KRR[+String(v).slice(1)]||KRR[0];return [r[0],'대한민국',r[1],'Asia/Seoul'];}
+  return CITIES[+v]||CITIES[0];
+}
+sel.value='k0';  // 기본 서울
 
 document.getElementById('bnotime').addEventListener('change',e=>{
   const t=document.getElementById('btime');
@@ -148,8 +160,12 @@ try{
     document.getElementById('bgender').value = (i.gender==='남'||i.gender==='M')?'M':'F';
     if(M.name) document.getElementById('rname').value=M.name;
     const cityStr=(M.city||'').trim(), cityName=cityStr.split(',')[0].trim();
-    const ci=CITIES.findIndex(c=>`${c[0]}, ${c[1]}`===cityStr || c[0]===cityName);
-    if(ci>=0) sel.value=ci;
+    const ki=KRR.findIndex(r=>r[0]===cityName);           // 국내 시·도 (start 드롭다운에서 온 경우)
+    if(ki>=0){ sel.value='k'+ki; }
+    else{
+      const ci=CITIES.findIndex(c=>`${c[0]}, ${c[1]}`===cityStr || c[0]===cityName);
+      if(ci>=0) sel.value=ci;
+    }
   }
 }catch(_){}
 
@@ -165,7 +181,7 @@ document.getElementById('claim').addEventListener('submit', async e=>{
   const tval=document.getElementById('btime').value;
   if(!noTime && !tval){err.textContent='⚠ 태어난 시간을 입력해 주세요 — 모르시면 체크박스를 선택하세요.';err.style.display='block';return;}
   const [h,mi2]=noTime?[null,0]:tval.split(':').map(Number);
-  const _c=CITIES[+sel.value]||CITIES[0], lon=_c[2], tz=_c[3];
+  const _c=cityOf(sel.value), lon=_c[2], tz=_c[3];
   const body={
     order_number:document.getElementById('order').value.trim(),
     email:document.getElementById('email').value.trim(),

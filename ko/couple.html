@@ -136,9 +136,21 @@ elunDateSeg('a_date',{y:'연도',m:'월',d:'일',next:'a_time'});
 elunDateSeg('b_date',{y:'연도',m:'월',d:'일',next:'b_time'});
 const API_BASE = (location.hostname==='localhost'||location.hostname==='127.0.0.1'||location.protocol==='file:')
   ? 'http://127.0.0.1:8500' : 'https://api.elun.me';
-const CITIES = window.ELUN_CITIES;  // 단일 정본 cities.js
+const CITIES = window.ELUN_CITIES;      // 단일 정본 cities.js
+const KRR = window.ELUN_KR_REGIONS;     // 한국 17개 시·도 (cities.js)
 for(const id of ['a_city','b_city']){
-  document.getElementById(id).innerHTML=CITIES.map((c,i)=>`<option value="${i}">${c[0]}, ${c[1]}</option>`).join('');
+  document.getElementById(id).innerHTML=
+    '<optgroup label="국내 — 시·도 선택">'
+    + KRR.map((r,i)=>`<option value="k${i}">${r[0]}</option>`).join('')
+    + '</optgroup><optgroup label="해외 도시 (영문)">'
+    + CITIES.map((c,i)=>`<option value="${i}">${c[0]}, ${c[1]}</option>`).join('')
+    + '</optgroup>';
+  document.getElementById(id).value='k0';  // 기본 서울
+}
+// 선택값 → [이름, 국가, 경도, tz] (국내 k{i} / 해외 {i})
+function cityOf(v){
+  if(String(v).charAt(0)==='k'){const r=KRR[+String(v).slice(1)]||KRR[0];return [r[0],'대한민국',r[1],'Asia/Seoul'];}
+  return CITIES[+v]||CITIES[0];
 }
 for(const p of ['a','b']){
   document.getElementById(p+'_notime').addEventListener('change',e=>{
@@ -167,7 +179,7 @@ function person(p){
   if(!noTime && !tv) throw new Error('태어난 시간을 각각 입력해 주세요 — 모르시면 "태어난 시간을 모릅니다"를 체크하세요.');
   const [y,m,d]=dv.split('-').map(Number);
   const [h,mi2]=noTime?[null,0]:tv.split(':').map(Number);
-  const _c=CITIES[+document.getElementById(p+'_city').value]||CITIES[0], lon=_c[2], tz=_c[3];
+  const _c=cityOf(document.getElementById(p+'_city').value), lon=_c[2], tz=_c[3];
   return {name:document.getElementById(p+'_name').value.trim(),
           year:y,month:m,day:d,hour:h,minute:mi2||0,
           gender:document.getElementById(p+'_gender').value,
