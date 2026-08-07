@@ -7,7 +7,7 @@
 //    이미 배포된 리포트 HTML(elun-engine)이 이 파일을 이 이름으로 로드하고 이 함수를 호출하므로,
 //    엔진 재배포 없이 결제사를 갈아끼우기 위해 이름을 유지합니다.
 //
-// 분기 규칙: <html lang="ko"> 이고 ELUN_CHECKOUT_KO 가 설정 완료(PASTE_ 없음)면 포트원,
+// 분기 규칙: <html lang="ko"> 이고 ELUN_CHECKOUT_KO 가 설정 완료(PASTE_ 없음)면 NHN KCP,
 //            아니면 기존 Digistore24. → 채널키 발급 전까지 한국어 페이지도 DS24 로 폴백.
 window.ELUN_CHECKOUT = {
   provider: "digistore24",
@@ -295,7 +295,7 @@ function elunOpenPaddleCheckout(priceKey, opts) {
   location.href = "https://www.digistore24.com/product/" + pid;
 }
 
-// ── 한국어 페이지 가격 라벨: 포트원 활성 시 KRW 교체, 준비 전엔 "결제 준비 중" 표시 ──
+// ── 한국어 페이지 가격 라벨: KCP 활성 시 KRW 교체, 준비 전엔 "결제 준비 중" 표시 ──
 // (버튼 id 규약: buybtn=single, buydecadebtn=decade, buycouplebtn=couple)
 (function () {
   function won(n) { return n.toLocaleString("ko-KR") + "원"; }
