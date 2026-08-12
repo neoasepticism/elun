@@ -3,3 +3,7 @@ art/grok-*.jpg
 portone-test.html
 .DS_Store
 __pycache__/
+
+# 개인 출생정보 포함 작업파일 — 공개 저장소이므로 커밋 금지 (2026-08-12 보안점검)
+CLAUDE-*.html
+sample-19780821-*.html
