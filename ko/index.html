@@ -28,7 +28,7 @@
   /* nav */
   nav{position:sticky;top:0;z-index:20;background:#100d0acc;backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
   nav .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
-  .logo{font-family:var(--serif);font-size:22px;font-weight:700;letter-spacing:1px;display:flex;align-items:center;gap:9px}
+  .logo{text-decoration:none;cursor:pointer;font-family:var(--serif);font-size:22px;font-weight:700;letter-spacing:1px;display:flex;align-items:center;gap:9px}
   .logo .m{color:var(--gold2)}
   .logo .seal{width:26px;height:26px;border:1px solid var(--gold);color:var(--gold2);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:14px;font-family:var(--serif)}
   .navlinks{display:flex;gap:24px;font-size:14px;color:var(--ink2)}
@@ -175,7 +175,7 @@
 
 <nav>
   <div class="wrap">
-    <div class="logo"><span class="seal">乙</span><span><span class="m">Elun</span> <span style="color:var(--faint);font-size:13px;font-family:var(--serif)">乙</span></span></div>
+    <a class="logo" href="#" data-totop aria-label="맨 위로"><span class="seal">乙</span><span><span class="m">Elun</span> <span style="color:var(--faint);font-size:13px;font-family:var(--serif)">乙</span></span></a>
     <div class="navlinks">
       <a href="#archetypes">십성</a>
       <a href="daymasters.html">일간</a>
@@ -495,5 +495,31 @@ if(p){
 
 <!-- Begin of Digistore24 Trusted Badge Code -->
 <!-- End of Digistore24 Trusted Badge Code -->
+
+<script>
+/* 워드마크 클릭 → 맨 위로. 앵커(#top) 대신 명시적 scrollTo 사용:
+   sticky nav 가 있으면 프래그먼트 점프가 어긋나는 경우가 있어서. */
+(function(){
+  var logo = document.querySelector('a.logo[data-totop]');
+  if(!logo) return;
+  logo.addEventListener('click', function(e){
+    e.preventDefault();
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(location.hash && history.replaceState){
+      history.replaceState(null, '', location.pathname + location.search);
+    }
+    window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+    /* 폴백 — 부드러운 스크롤이 동작하지 않는 환경에서도 확실히 맨 위로 */
+    setTimeout(function(){
+      if (window.scrollY > 0) {
+        var el = document.documentElement, prev = el.style.scrollBehavior;
+        el.style.scrollBehavior = 'auto';
+        el.scrollTop = 0;
+        el.style.scrollBehavior = prev;
+      }
+    }, 700);
+  });
+})();
+</script>
 </body>
 </html>
