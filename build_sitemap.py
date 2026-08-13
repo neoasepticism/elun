@@ -12,7 +12,11 @@ BASE = 'https://elun.me'
 ROOT = os.path.dirname(os.path.abspath(__file__))
 
 CORE = [  # (path, priority, changefreq)
-    ('index.html',        '1.0', 'weekly'),
+    # 루트 index.html 는 /ko/ 로 리다이렉트하는 페이지이므로 sitemap 제외
+    # 한국어 = 메인 (2026-08: 미국 결제 승인 지연으로 한글 우선 전환)
+    ('ko/index.html',     '1.0', 'weekly'),
+    # 영어 랜딩 (루트에서 /en/ 로 이동)
+    ('en/index.html',     '0.9', 'weekly'),
     ('start.html',        '0.9', 'monthly'),
     ('daymasters.html',   '0.9', 'monthly'),
     ('cards.html',        '0.8', 'monthly'),
@@ -20,7 +24,6 @@ CORE = [  # (path, priority, changefreq)
     ('birth-time.html',   '0.7', 'yearly'),
     ('bazi-vs-astrology.html', '0.8', 'monthly'),
     # 한국어 미러 (noindex인 result/report/couple 제외)
-    ('ko/index.html',     '0.9', 'weekly'),
     ('ko/start.html',     '0.8', 'monthly'),
     ('ko/daymasters.html','0.7', 'monthly'),
     ('ko/cards.html',     '0.7', 'monthly'),
