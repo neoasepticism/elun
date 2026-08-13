@@ -1,0 +1,19 @@
+{
+  "name": "Elun — 정밀 사주",
+  "short_name": "Elun",
+  "description": "진태양시로 계산하는 정밀 사주(四柱命理) 분석 — 오행·십성·일주·10년 대운.",
+  "lang": "ko",
+  "dir": "ltr",
+  "start_url": "/ko/?utm_source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#100d0a",
+  "theme_color": "#100d0a",
+  "categories": ["lifestyle", "entertainment"],
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

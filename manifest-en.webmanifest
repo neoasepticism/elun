@@ -1,0 +1,19 @@
+{
+  "name": "Elun — BaZi, engineered",
+  "short_name": "Elun",
+  "description": "Precision BaZi (Four Pillars) computed with true solar time — five elements, ten gods, your day pillar and next ten years.",
+  "lang": "en",
+  "dir": "ltr",
+  "start_url": "/en/?utm_source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#100d0a",
+  "theme_color": "#100d0a",
+  "categories": ["lifestyle", "entertainment"],
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
