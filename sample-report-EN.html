@@ -74,6 +74,27 @@
   .hb-cards>div{transform:scale(.62);transform-origin:center;margin:-88px -58px !important}
   .hb-cap{font-size:11.5px;color:#9c8f79;letter-spacing:1.5px;margin-top:10px}
   @media(max-width:640px){.hb-cards>div{transform:scale(.5);margin:-118px -76px !important}}
+  /* keep the 3 cards on one row on mobile.
+     Cards are width:320px + flex:none, so 3*320=960px never fit and each wrapped to its own
+     line. Drop the fixed width / transform scaling for a fluid 3-col grid (cannot wrap). */
+  @media(max-width:560px){
+    .hb-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;justify-content:initial}
+    .hb-cards>div{transform:none;width:auto!important;height:auto!important;aspect-ratio:16/25;
+      margin:0!important;min-width:0;border-radius:12px!important}
+    .hb-cards>div>div:nth-child(3){inset:4px!important;border-radius:9px!important}
+    .hb-cards>div>div:nth-child(4){top:7px!important;left:7px!important;right:7px!important}
+    .hb-cards>div>div:nth-child(4)>span:first-child{font-size:17px!important}
+    .hb-cards>div>div:nth-child(4)>span:last-child{font-size:7.5px!important;padding:1px 5px!important;border-radius:8px!important}
+    .hb-cards>div>div:nth-child(5){bottom:8px!important}
+    .hb-cards>div>div:nth-child(5)>div:first-child{font-size:11px!important;line-height:1.25!important}
+    .hb-cards>div>div:nth-child(5)>div:last-child{font-size:6.5px!important;letter-spacing:1px!important;margin-top:2px!important}
+  }
+  @media(max-width:360px){
+    .hb-cards{gap:4px}
+    .hb-cards>div>div:nth-child(4)>span:first-child{font-size:15px!important}
+    .hb-cards>div>div:nth-child(4)>span:last-child{font-size:7px!important;padding:1px 4px!important}
+    .hb-cards>div>div:nth-child(5)>div:first-child{font-size:10px!important}
+  }
   @media print{.handband{display:none}}
   .dpart{position:relative;width:100%;aspect-ratio:21/9;border-radius:10px;overflow:hidden;border:2px solid #c9a227;margin-bottom:14px;background:#0e0b08}
   .dpart .dpabg{position:absolute;inset:0;background-size:cover;background-position:center}
