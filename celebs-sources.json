@@ -1,0 +1,500 @@
+{
+ "Oprah Winfrey": {
+  "rodden": "A",
+  "time": "04:30",
+  "src": "https://www.astro.com/astro-databank/Winfrey,_Oprah",
+  "place": "Kosciusko, Mississippi, USA"
+ },
+ "Bill Gates": {
+  "rodden": "A",
+  "time": "22:00",
+  "src": "https://www.astro.com/astro-databank/Gates,_Bill",
+  "place": "Seattle, Washington, USA"
+ },
+ "Michael Jordan": {
+  "rodden": "AA",
+  "time": "13:40",
+  "src": "https://www.astro.com/astro-databank/Jordan,_Michael",
+  "place": "Brooklyn, New York, USA"
+ },
+ "Bruce Lee": {
+  "rodden": "AA",
+  "time": "07:12",
+  "src": "https://www.astro.com/astro-databank/Lee,_Bruce",
+  "place": "San Francisco, California, USA"
+ },
+ "Marilyn Monroe": {
+  "rodden": "AA",
+  "time": "09:30",
+  "src": "https://www.astro.com/astro-databank/Monroe,_Marilyn",
+  "place": "Los Angeles, California, USA"
+ },
+ "Princess Diana": {
+  "rodden": "A",
+  "time": "19:45",
+  "src": "https://www.astro.com/astro-databank/Diana,_Princess_of_Wales",
+  "place": "Sandringham, England, UK"
+ },
+ "Leonardo DiCaprio": {
+  "rodden": "AA",
+  "time": "02:47",
+  "src": "https://www.astro.com/astro-databank/DiCaprio,_Leonardo",
+  "place": "Los Angeles, California, USA"
+ },
+ "Warren Buffett": {
+  "rodden": "A",
+  "time": "15:00",
+  "src": "https://www.astro.com/astro-databank/Buffett,_Warren",
+  "place": "Omaha, Nebraska, USA"
+ },
+ "Madonna": {
+  "rodden": "AA",
+  "time": "07:05",
+  "src": "https://www.astro.com/astro-databank/Madonna",
+  "place": "Bay City, Michigan, USA"
+ },
+ "Emma Watson": {
+  "rodden": "AA",
+  "time": "18:00",
+  "src": "https://www.astro.com/astro-databank/Watson,_Emma",
+  "place": "Paris, France"
+ },
+ "Angelina Jolie": {
+  "rodden": "AA",
+  "time": "09:09",
+  "src": "https://www.astro.com/astro-databank/Jolie,_Angelina",
+  "place": "Los Angeles, California, USA"
+ },
+ "Albert Einstein": {
+  "rodden": "AA",
+  "time": "11:30",
+  "src": "https://www.astro.com/astro-databank/Einstein,_Albert",
+  "place": "Ulm, Germany"
+ },
+ "Audrey Hepburn": {
+  "rodden": "AA",
+  "time": "03:00",
+  "src": "https://www.astro.com/astro-databank/Hepburn,_Audrey",
+  "place": "Ixelles (Brussels), Belgium"
+ },
+ "Serena Williams": {
+  "rodden": "AA",
+  "time": "20:28",
+  "src": "https://www.astro.com/astro-databank/Williams,_Serena",
+  "place": "Saginaw, Michigan, USA"
+ },
+ "Johnny Depp": {
+  "rodden": "AA",
+  "time": "08:44",
+  "src": "https://www.astro.com/astro-databank/Depp,_Johnny",
+  "place": "Owensboro, Kentucky, USA"
+ },
+ "Brad Pitt": {
+  "rodden": "A",
+  "time": "06:31",
+  "src": "https://www.astro.com/astro-databank/Pitt,_Brad",
+  "place": "Shawnee, Oklahoma, USA"
+ },
+ "Roger Federer": {
+  "rodden": "A",
+  "time": "08:40",
+  "src": "https://www.astro.com/astro-databank/Federer,_Roger",
+  "place": "Basel, Switzerland"
+ },
+ "Novak Djokovic": {
+  "rodden": "AA",
+  "time": "23:25",
+  "src": "https://www.astro.com/astro-databank/Djokovic,_Novak",
+  "place": "Belgrade, Serbia"
+ },
+ "Meryl Streep": {
+  "rodden": "AA",
+  "time": "08:05",
+  "src": "https://www.astro.com/astro-databank/Streep,_Meryl",
+  "place": "Summit, New Jersey, USA"
+ },
+ "Paul McCartney": {
+  "rodden": "A",
+  "time": "14:00",
+  "src": "https://www.astro.com/astro-databank/McCartney,_Paul",
+  "place": "Liverpool, England"
+ },
+ "Walt Disney": {
+  "rodden": "A",
+  "time": "00:35",
+  "src": "https://www.astro.com/astro-databank/Disney,_Walt",
+  "place": "Chicago, Illinois, USA"
+ },
+ "Prince": {
+  "rodden": "AA",
+  "time": "18:17",
+  "src": "https://www.astro.com/astro-databank/Prince_(musician)",
+  "place": "Minneapolis, Minnesota, USA"
+ },
+ "Nicole Kidman": {
+  "rodden": "A",
+  "time": "15:15",
+  "src": "https://www.astro.com/astro-databank/Kidman,_Nicole",
+  "place": "Honolulu, Hawaii, USA"
+ },
+ "Billie Eilish": {
+  "rodden": "AA",
+  "time": "12:17",
+  "src": "https://www.astro.com/astro-databank/Eilish,_Billie",
+  "place": "Los Angeles, California, USA"
+ },
+ "Olivia Rodrigo": {
+  "rodden": "A",
+  "time": "03:00",
+  "src": "https://www.astro.com/astro-databank/Rodrigo,_Olivia",
+  "place": "Murrieta, California, USA"
+ },
+ "Salma Hayek": {
+  "rodden": "AA",
+  "time": "06:40",
+  "src": "https://www.astro.com/astro-databank/Hayek,_Salma",
+  "place": "Coatzacoalcos, Mexico"
+ },
+ "Britney Spears": {
+  "rodden": "A",
+  "time": "01:30",
+  "src": "https://www.astro.com/astro-databank/Spears,_Britney",
+  "place": "McComb, Mississippi, USA"
+ },
+ "Sophia Loren": {
+  "rodden": "AA",
+  "time": "14:10",
+  "src": "https://www.astro.com/astro-databank/Loren,_Sophia",
+  "place": "Rome, Italy"
+ },
+ "Elvis Presley": {
+  "rodden": "AA",
+  "time": "04:35",
+  "src": "https://www.astro.com/astro-databank/Presley,_Elvis",
+  "place": "Tupelo, Mississippi, USA"
+ },
+ "Whitney Houston": {
+  "rodden": "AA",
+  "time": "20:55",
+  "src": "https://www.astro.com/astro-databank/Houston,_Whitney",
+  "place": "Newark, New Jersey, USA"
+ },
+ "Martin Scorsese": {
+  "rodden": "A",
+  "time": "00:24",
+  "src": "https://www.astro.com/astro-databank/Scorsese,_Martin",
+  "place": "Flushing (Queens), New York, USA"
+ },
+ "Kevin Hart": {
+  "rodden": "AA",
+  "time": "10:13",
+  "src": "https://www.astro.com/astro-databank/Hart,_Kevin",
+  "place": "Philadelphia, Pennsylvania, USA"
+ },
+ "Julia Roberts": {
+  "rodden": "AA",
+  "time": "00:16",
+  "src": "https://www.astro.com/astro-databank/Roberts,_Julia",
+  "place": "Atlanta, Georgia, USA"
+ },
+ "Emma Stone": {
+  "rodden": "A",
+  "time": "09:32",
+  "src": "https://www.astro.com/astro-databank/Stone,_Emma",
+  "place": "Scottsdale, Arizona, USA"
+ },
+ "Andres Iniesta": {
+  "rodden": "AA",
+  "time": "15:00",
+  "src": "https://www.astro.com/astro-databank/Iniesta,_Andr%C3%A9s",
+  "place": "Fuentealbilla, Spain"
+ },
+ "Prince William": {
+  "rodden": "AA",
+  "time": "21:03",
+  "src": "https://www.astro.com/astro-databank/William,_Prince_of_Wales",
+  "place": "Paddington, London, England, UK"
+ },
+ "Sting": {
+  "rodden": "A",
+  "time": "01:30",
+  "src": "https://www.astro.com/astro-databank/Sting",
+  "place": "Wallsend, England, UK"
+ },
+ "Steven Spielberg": {
+  "rodden": "AA",
+  "time": "18:16",
+  "src": "https://www.astro.com/astro-databank/Spielberg,_Steven",
+  "place": "Cincinnati, Ohio, USA"
+ },
+ "Jungkook (BTS)": {
+  "rodden": "A",
+  "time": "15:25",
+  "src": "https://www.astro.com/astro-databank/Jungkook",
+  "place": "Busan, South Korea"
+ },
+ "Frank Sinatra": {
+  "rodden": "A",
+  "time": "03:00",
+  "src": "https://www.astro.com/astro-databank/Sinatra,_Frank",
+  "place": "Hoboken, New Jersey, USA"
+ },
+ "Joe Biden": {
+  "rodden": "A",
+  "time": "08:30",
+  "src": "https://www.astro.com/astro-databank/Biden,_Joe",
+  "place": "Scranton, Pennsylvania, USA"
+ },
+ "Tom Hanks": {
+  "rodden": "AA",
+  "time": "11:17",
+  "src": "https://www.astro.com/astro-databank/Hanks,_Tom",
+  "place": "Concord, California, USA"
+ },
+ "Harrison Ford": {
+  "rodden": "AA",
+  "time": "11:41",
+  "src": "https://www.astro.com/astro-databank/Ford,_Harrison",
+  "place": "Chicago, Illinois, USA"
+ },
+ "Kim Kardashian": {
+  "rodden": "AA",
+  "time": "10:46",
+  "src": "https://www.astro.com/astro-databank/Kardashian,_Kim",
+  "place": "Los Angeles, California, USA"
+ },
+ "Johnny Cash": {
+  "rodden": "A",
+  "time": "07:30",
+  "src": "https://www.astro.com/astro-databank/Cash,_Johnny",
+  "place": "Kingsland, Arkansas, USA"
+ },
+ "David Bowie": {
+  "rodden": "A",
+  "time": "09:00",
+  "src": "https://www.astro.com/astro-databank/Bowie,_David",
+  "place": "Brixton (London), England, UK"
+ },
+ "Volodymyr Zelensky": {
+  "rodden": "A",
+  "time": "14:00",
+  "src": "https://www.astro.com/astro-databank/Zelenskyy,_Volodymyr",
+  "place": "Kryvyi Rih, Ukraine"
+ },
+ "Robert Downey Jr.": {
+  "rodden": "A",
+  "time": "13:10",
+  "src": "https://www.astro.com/astro-databank/Downey,_Robert_Jr.",
+  "place": "Manhattan, New York, USA"
+ },
+ "Michael Jackson": {
+  "rodden": "A",
+  "time": "19:33",
+  "src": "https://www.astro.com/astro-databank/Jackson,_Michael_(1958)",
+  "place": "Gary, Indiana, USA"
+ },
+ "Ariana Grande": {
+  "rodden": "A",
+  "time": "21:16",
+  "src": "https://www.astro.com/astro-databank/Grande,_Ariana",
+  "place": "Boca Raton, Florida, USA"
+ },
+ "Snoop Dogg": {
+  "rodden": "AA",
+  "time": "18:20",
+  "src": "https://www.astro.com/astro-databank/Snoop_Dogg",
+  "place": "Long Beach, California, USA"
+ },
+ "Stephen Curry": {
+  "rodden": "AA",
+  "time": "13:51",
+  "src": "https://www.astro.com/astro-databank/Curry,_Stephen",
+  "place": "Akron, Ohio, USA"
+ },
+ "Margot Robbie": {
+  "rodden": "A",
+  "time": "07:45",
+  "src": "https://www.astro.com/astro-databank/Robbie,_Margot",
+  "place": "Gold Coast, Australia"
+ },
+ "LeBron James": {
+  "rodden": "AA",
+  "time": "16:04",
+  "src": "https://www.astro.com/astro-databank/James,_LeBron",
+  "place": "Akron, Ohio, USA"
+ },
+ "Will Smith": {
+  "rodden": "A",
+  "time": "21:47",
+  "src": "https://www.astro.com/astro-databank/Smith,_Will",
+  "place": "Philadelphia, Pennsylvania, USA"
+ },
+ "Al Pacino": {
+  "rodden": "AA",
+  "time": "11:02",
+  "src": "https://www.astro.com/astro-databank/Pacino,_Al",
+  "place": "Manhattan, New York, USA"
+ },
+ "Jack Nicholson": {
+  "rodden": "A",
+  "time": "11:00",
+  "src": "https://www.astro.com/astro-databank/Nicholson,_Jack",
+  "place": "Neptune, New Jersey, USA"
+ },
+ "Bjork": {
+  "rodden": "AA",
+  "time": "08:10",
+  "src": "https://www.astro.com/astro-databank/Björk",
+  "place": "Reykjavik, Iceland"
+ },
+ "Morgan Freeman": {
+  "rodden": "A",
+  "time": "02:00",
+  "src": "https://www.astro.com/astro-databank/Freeman,_Morgan",
+  "place": "Memphis, Tennessee, USA"
+ },
+ "Justin Timberlake": {
+  "rodden": "AA",
+  "time": "18:30",
+  "src": "https://www.astro.com/astro-databank/Timberlake,_Justin",
+  "place": "Memphis, Tennessee, USA"
+ },
+ "Celine Dion": {
+  "rodden": "A",
+  "time": "12:15",
+  "src": "https://www.astro.com/astro-databank/Dion,_Celine",
+  "place": "Charlemagne, Quebec, Canada"
+ },
+ "Gianluigi Buffon": {
+  "rodden": "AA",
+  "time": "08:30",
+  "src": "https://www.astro.com/astro-databank/Buffon,_Gianluigi",
+  "place": "Carrara, Italy"
+ },
+ "Queen Elizabeth II": {
+  "rodden": "AA",
+  "time": "02:40",
+  "src": "https://www.astro.com/astro-databank/Elizabeth_II,_Queen_of_England",
+  "place": "Mayfair, London, England"
+ },
+ "Andrew Garfield": {
+  "rodden": "AA",
+  "time": "20:40",
+  "src": "https://www.astro.com/astro-databank/Garfield,_Andrew",
+  "place": "Los Angeles, California, USA"
+ },
+ "Alan Turing": {
+  "rodden": "A",
+  "time": "02:15",
+  "src": "https://www.astro.com/astro-databank/Turing,_Alan",
+  "place": "London, England"
+ },
+ "Tiger Woods": {
+  "rodden": "AA",
+  "time": "22:50",
+  "src": "https://www.astro.com/astro-databank/Woods,_Tiger",
+  "place": "Long Beach, California, USA"
+ },
+ "Arnold Schwarzenegger": {
+  "rodden": "A",
+  "time": "04:10",
+  "src": "https://www.astro.com/astro-databank/Schwarzenegger,_Arnold",
+  "place": "Graz, Austria"
+ },
+ "Drake": {
+  "rodden": "AA",
+  "time": "02:31",
+  "src": "https://www.astro.com/astro-databank/Drake",
+  "place": "Toronto, Ontario, Canada"
+ },
+ "Kylian Mbappe": {
+  "rodden": "AA",
+  "time": "01:47",
+  "src": "https://www.astro.com/astro-databank/Mbapp%C3%A9,_Kylian",
+  "place": "Paris, France"
+ },
+ "Diego Maradona": {
+  "rodden": "AA",
+  "time": "07:05",
+  "src": "https://www.astro.com/astro-databank/Maradona,_Diego",
+  "place": "Lanus, Buenos Aires, Argentina"
+ },
+ "Clint Eastwood": {
+  "rodden": "AA",
+  "time": "17:35",
+  "src": "https://www.astro.com/astro-databank/Eastwood,_Clint",
+  "place": "San Francisco, California, USA"
+ },
+ "Neymar": {
+  "rodden": "AA",
+  "time": "02:15",
+  "src": "https://www.astro.com/astro-databank/Neymar",
+  "place": "Mogi das Cruzes (São Paulo), Brazil"
+ },
+ "Jennifer Lawrence": {
+  "rodden": "AA",
+  "time": "15:20",
+  "src": "https://www.astro.com/astro-databank/Lawrence,_Jennifer",
+  "place": "Louisville, Kentucky, USA"
+ },
+ "The Weeknd": {
+  "rodden": "A",
+  "time": "14:45",
+  "src": "https://www.astro.com/astro-databank/The_Weeknd",
+  "place": "Toronto, Ontario, Canada"
+ },
+ "Tom Brady": {
+  "rodden": "AA",
+  "time": "11:48",
+  "src": "https://www.astro.com/astro-databank/Brady,_Tom",
+  "place": "San Mateo, California, USA"
+ },
+ "Anthony Hopkins": {
+  "rodden": "A",
+  "time": "09:15",
+  "src": "https://www.astro.com/astro-databank/Hopkins,_Anthony",
+  "place": "Port Talbot, Wales, UK"
+ },
+ "Monica Bellucci": {
+  "rodden": "AA",
+  "time": "14:30",
+  "src": "https://www.astro.com/astro-databank/Bellucci,_Monica",
+  "place": "Città di Castello, Italy"
+ },
+ "Bob Dylan": {
+  "rodden": "AA",
+  "time": "21:05",
+  "src": "https://www.astro.com/astro-databank/Dylan,_Bob",
+  "place": "Duluth, Minnesota, USA"
+ },
+ "King Charles III": {
+  "rodden": "A",
+  "time": "21:14",
+  "src": "https://www.astro.com/astro-databank/Charles_III,_King_of_the_United_Kingdom",
+  "place": "London, England, UK"
+ },
+ "Dr. Dre": {
+  "rodden": "AA",
+  "time": "10:56",
+  "src": "https://www.astro.com/astro-databank/Dr._Dre",
+  "place": "Los Angeles, California, USA"
+ },
+ "Dwayne Johnson": {
+  "rodden": "AA",
+  "time": "18:02",
+  "src": "https://www.astro.com/astro-databank/Johnson,_Dwayne",
+  "place": "San Leandro, California, USA"
+ },
+ "Pope Francis": {
+  "rodden": "AA",
+  "time": "21:00",
+  "src": "https://www.astro.com/astro-databank/Pope_Francis",
+  "place": "Buenos Aires, Argentina"
+ },
+ "Anthony Bourdain": {
+  "rodden": "A",
+  "time": "08:35",
+  "src": "https://www.astro.com/astro-databank/Bourdain,_Anthony",
+  "place": "New York, New York, USA"
+ }
+}

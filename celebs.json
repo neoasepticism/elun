@@ -30,7 +30,10 @@
   1954,
   1,
   29,
-  "America/Chicago"
+  "America/Chicago",
+  4,
+  30,
+  -89.58
  ],
  "Steve Jobs": [
   1955,
@@ -45,7 +48,10 @@
   1955,
   10,
   28,
-  "America/Los_Angeles"
+  "America/Los_Angeles",
+  22,
+  0,
+  -122.33
  ],
  "Taylor Swift": [
   1989,
@@ -66,25 +72,37 @@
   1963,
   2,
   17,
-  "America/New_York"
+  "America/New_York",
+  13,
+  40,
+  -73.93
  ],
  "Bruce Lee": [
   1940,
   11,
   27,
-  "America/Los_Angeles"
+  "America/Los_Angeles",
+  7,
+  12,
+  -122.42
  ],
  "Marilyn Monroe": [
   1926,
   6,
   1,
-  "America/Los_Angeles"
+  "America/Los_Angeles",
+  9,
+  30,
+  -118.25
  ],
  "Princess Diana": [
   1961,
   7,
   1,
-  "Europe/London"
+  "Europe/London",
+  19,
+  45,
+  0.5
  ],
  "Keanu Reeves": [
   1964,
@@ -96,7 +114,10 @@
   1974,
   11,
   11,
-  "America/Los_Angeles"
+  "America/Los_Angeles",
+  2,
+  47,
+  -118.25
  ],
  "Jeff Bezos": [
   1964,
@@ -114,13 +135,19 @@
   1930,
   8,
   30,
-  "America/Chicago"
+  "America/Chicago",
+  15,
+  0,
+  -95.93
  ],
  "Madonna": [
   1958,
   8,
   16,
-  "America/Detroit"
+  "America/Detroit",
+  7,
+  5,
+  -83.88
  ],
  "Cristiano Ronaldo": [
   1985,
@@ -141,13 +168,19 @@
   1990,
   4,
   15,
-  "Europe/Paris"
+  "Europe/Paris",
+  18,
+  0,
+  2.33
  ],
  "Angelina Jolie": [
   1975,
   6,
   4,
-  "America/Los_Angeles"
+  "America/Los_Angeles",
+  9,
+  9,
+  -118.29
  ],
  "Kanye West": [
   1977,
@@ -159,13 +192,19 @@
   1879,
   3,
   14,
-  "Europe/Berlin"
+  "Europe/Berlin",
+  11,
+  30,
+  10.0
  ],
  "Audrey Hepburn": [
   1929,
   5,
   4,
-  "Europe/Brussels"
+  "Europe/Brussels",
+  3,
+  0,
+  4.37
  ],
  "Freddie Mercury": [
   1946,
@@ -177,7 +216,10 @@
   1981,
   9,
   26,
-  "America/Detroit"
+  "America/Detroit",
+  20,
+  28,
+  -83.95
  ],
  "Stephen Hawking": [
   1942,
@@ -195,13 +237,19 @@
   1963,
   6,
   9,
-  "America/Kentucky/Louisville"
+  "America/Chicago",
+  8,
+  44,
+  -87.12
  ],
  "Brad Pitt": [
   1963,
   12,
   18,
-  "America/Chicago"
+  "America/Chicago",
+  6,
+  31,
+  -96.93
  ],
  "Lady Gaga": [
   1986,
@@ -237,7 +285,10 @@
   1981,
   8,
   8,
-  "Europe/Zurich"
+  "Europe/Zurich",
+  8,
+  40,
+  7.58
  ],
  "Adele": [
   1988,
@@ -261,19 +312,28 @@
   1987,
   5,
   22,
-  "Europe/Belgrade"
+  "Europe/Belgrade",
+  23,
+  25,
+  20.5
  ],
  "Meryl Streep": [
   1949,
   6,
   22,
-  "America/New_York"
+  "America/New_York",
+  8,
+  5,
+  -74.37
  ],
  "Paul McCartney": [
   1942,
   6,
   18,
-  "Europe/London"
+  "Europe/London",
+  14,
+  0,
+  -2.92
  ],
  "John Lennon": [
   1940,
@@ -291,7 +351,10 @@
   1901,
   12,
   5,
-  "America/Chicago"
+  "America/Chicago",
+  0,
+  35,
+  -87.65
  ],
  "Masayoshi Son": [
   1957,
@@ -303,19 +366,28 @@
   1958,
   6,
   7,
-  "America/Chicago"
+  "America/Chicago",
+  18,
+  17,
+  -93.27
  ],
  "Nicole Kidman": [
   1967,
   6,
   20,
-  "Pacific/Honolulu"
+  "Pacific/Honolulu",
+  15,
+  15,
+  -157.87
  ],
  "Billie Eilish": [
   2001,
   12,
   18,
-  "America/Los_Angeles"
+  "America/Los_Angeles",
+  12,
+  17,
+  -118.25
  ],
  "Rory McIlroy": [
   1989,
@@ -327,19 +399,28 @@
   2003,
   2,
   20,
-  "America/Los_Angeles"
+  "America/Los_Angeles",
+  3,
+  0,
+  -117.22
  ],
  "Salma Hayek": [
   1966,
   9,
   2,
-  "America/Mexico_City"
+  "America/Mexico_City",
+  6,
+  40,
+  -94.42
  ],
  "Britney Spears": [
   1981,
   12,
   2,
-  "America/Chicago"
+  "America/Chicago",
+  1,
+  30,
+  -90.45
  ],
  "Jin (BTS)": [
   1992,
@@ -375,43 +456,64 @@
   1934,
   9,
   20,
-  "Europe/Rome"
+  "Europe/Rome",
+  14,
+  10,
+  12.48
  ],
  "Elvis Presley": [
   1935,
   1,
   8,
-  "America/Chicago"
+  "America/Chicago",
+  4,
+  35,
+  -88.7
  ],
  "Whitney Houston": [
   1963,
   8,
   9,
-  "America/New_York"
+  "America/New_York",
+  20,
+  55,
+  -74.17
  ],
  "Martin Scorsese": [
   1942,
   11,
   17,
-  "America/New_York"
+  "America/New_York",
+  0,
+  24,
+  -73.82
  ],
  "Kevin Hart": [
   1979,
   7,
   6,
-  "America/New_York"
+  "America/New_York",
+  10,
+  13,
+  -75.17
  ],
  "Julia Roberts": [
   1967,
   10,
   28,
-  "America/Chicago"
+  "America/New_York",
+  0,
+  16,
+  -84.38
  ],
  "Emma Stone": [
   1988,
   11,
   6,
-  "America/Phoenix"
+  "America/Phoenix",
+  9,
+  32,
+  -111.9
  ],
  "G-Dragon": [
   1988,
@@ -423,19 +525,28 @@
   1984,
   5,
   11,
-  "Europe/Madrid"
+  "Europe/Madrid",
+  15,
+  0,
+  -1.55
  ],
  "Prince William": [
   1982,
   6,
   21,
-  "Europe/London"
+  "Europe/London",
+  21,
+  3,
+  -0.2
  ],
  "Sting": [
   1951,
   10,
   2,
-  "Europe/London"
+  "Europe/London",
+  1,
+  30,
+  -1.52
  ],
  "Sandra Bullock": [
   1964,
@@ -459,7 +570,10 @@
   1946,
   12,
   18,
-  "America/New_York"
+  "America/New_York",
+  18,
+  16,
+  -84.45
  ],
  "Eddie Murphy": [
   1961,
@@ -483,7 +597,10 @@
   1997,
   9,
   1,
-  "Asia/Seoul"
+  "Asia/Seoul",
+  15,
+  25,
+  129.05
  ],
  "Vladimir Putin": [
   1952,
@@ -507,25 +624,37 @@
   1915,
   12,
   12,
-  "America/New_York"
+  "America/New_York",
+  3,
+  0,
+  -74.03
  ],
  "Joe Biden": [
   1942,
   11,
   20,
-  "America/New_York"
+  "America/New_York",
+  8,
+  30,
+  -75.67
  ],
  "Tom Hanks": [
   1956,
   7,
   9,
-  "America/Los_Angeles"
+  "America/Los_Angeles",
+  11,
+  17,
+  -122.03
  ],
  "Harrison Ford": [
   1942,
   7,
   13,
-  "America/Chicago"
+  "America/Chicago",
+  11,
+  41,
+  -87.65
  ],
  "Stanley Kubrick": [
   1928,
@@ -537,7 +666,10 @@
   1980,
   10,
   21,
-  "America/Los_Angeles"
+  "America/Los_Angeles",
+  10,
+  46,
+  -118.25
  ],
  "Kobe Bryant": [
   1978,
@@ -549,7 +681,10 @@
   1932,
   2,
   26,
-  "America/Chicago"
+  "America/Chicago",
+  7,
+  30,
+  -92.3
  ],
  "Xi Jinping": [
   1953,
@@ -576,13 +711,19 @@
   1947,
   1,
   8,
-  "Europe/London"
+  "Europe/London",
+  9,
+  0,
+  -0.1
  ],
  "Volodymyr Zelensky": [
   1978,
   1,
   25,
-  "Europe/Kyiv"
+  "Europe/Kyiv",
+  14,
+  0,
+  33.35
  ],
  "Akira Kurosawa": [
   1910,
@@ -594,7 +735,10 @@
   1965,
   4,
   4,
-  "America/New_York"
+  "America/New_York",
+  13,
+  10,
+  -73.98
  ],
  "Yao Ming": [
   1980,
@@ -606,25 +750,37 @@
   1958,
   8,
   29,
-  "America/Chicago"
+  "America/Chicago",
+  19,
+  33,
+  -87.35
  ],
  "Ariana Grande": [
   1993,
   6,
   26,
-  "America/New_York"
+  "America/New_York",
+  21,
+  16,
+  -80.08
  ],
  "Snoop Dogg": [
   1971,
   10,
   20,
-  "America/Los_Angeles"
+  "America/Los_Angeles",
+  18,
+  20,
+  -118.18
  ],
  "Stephen Curry": [
   1988,
   3,
   14,
-  "America/New_York"
+  "America/New_York",
+  13,
+  51,
+  -81.52
  ],
  "Lisa (BLACKPINK)": [
   1997,
@@ -636,25 +792,37 @@
   1990,
   7,
   2,
-  "Australia/Brisbane"
+  "Australia/Brisbane",
+  7,
+  45,
+  153.42
  ],
  "LeBron James": [
   1984,
   12,
   30,
-  "America/New_York"
+  "America/New_York",
+  16,
+  4,
+  -81.52
  ],
  "Will Smith": [
   1968,
   9,
   25,
-  "America/New_York"
+  "America/New_York",
+  21,
+  47,
+  -75.17
  ],
  "Al Pacino": [
   1940,
   4,
   25,
-  "America/New_York"
+  "America/New_York",
+  11,
+  2,
+  -73.98
  ],
  "Suga (BTS)": [
   1993,
@@ -678,7 +846,10 @@
   1937,
   4,
   22,
-  "America/New_York"
+  "America/New_York",
+  11,
+  0,
+  -74.03
  ],
  "Chow Yun-fat": [
   1955,
@@ -690,7 +861,10 @@
   1965,
   11,
   21,
-  "Atlantic/Reykjavik"
+  "Atlantic/Reykjavik",
+  8,
+  10,
+  -21.85
  ],
  "Quentin Tarantino": [
   1963,
@@ -708,7 +882,10 @@
   1937,
   6,
   1,
-  "America/Chicago"
+  "America/Chicago",
+  2,
+  0,
+  -90.05
  ],
  "Gong Li": [
   1965,
@@ -720,7 +897,10 @@
   1981,
   1,
   31,
-  "America/Chicago"
+  "America/Chicago",
+  18,
+  30,
+  -90.05
  ],
  "Usher": [
   1978,
@@ -738,7 +918,10 @@
   1968,
   3,
   30,
-  "America/Toronto"
+  "America/Toronto",
+  12,
+  15,
+  -73.48
  ],
  "Gal Gadot": [
   1985,
@@ -780,13 +963,19 @@
   1978,
   1,
   28,
-  "Europe/Rome"
+  "Europe/Rome",
+  8,
+  30,
+  10.1
  ],
  "Queen Elizabeth II": [
   1926,
   4,
   21,
-  "Europe/London"
+  "Europe/London",
+  2,
+  40,
+  -0.15
  ],
  "Bruno Mars": [
   1985,
@@ -798,7 +987,10 @@
   1983,
   8,
   20,
-  "America/Los_Angeles"
+  "America/Los_Angeles",
+  20,
+  40,
+  -118.38
  ],
  "Muhammad Ali": [
   1942,
@@ -813,7 +1005,10 @@
   1912,
   6,
   23,
-  "Europe/London"
+  "Europe/London",
+  2,
+  15,
+  -0.17
  ],
  "Ray Dalio": [
   1949,
@@ -825,13 +1020,19 @@
   1975,
   12,
   30,
-  "America/Los_Angeles"
+  "America/Los_Angeles",
+  22,
+  50,
+  -118.18
  ],
  "Arnold Schwarzenegger": [
   1947,
   7,
   30,
-  "Europe/Vienna"
+  "Europe/Vienna",
+  4,
+  10,
+  15.45
  ],
  "Mariah Carey": [
   1969,
@@ -843,19 +1044,28 @@
   1986,
   10,
   24,
-  "America/Toronto"
+  "America/Toronto",
+  2,
+  31,
+  -79.38
  ],
  "Kylian Mbappe": [
   1998,
   12,
   20,
-  "Europe/Paris"
+  "Europe/Paris",
+  1,
+  47,
+  2.38
  ],
  "Diego Maradona": [
   1960,
   10,
   30,
-  "America/Argentina/Buenos_Aires"
+  "America/Argentina/Buenos_Aires",
+  7,
+  5,
+  -58.4
  ],
  "Naomi Osaka": [
   1997,
@@ -867,7 +1077,10 @@
   1930,
   5,
   31,
-  "America/Los_Angeles"
+  "America/Los_Angeles",
+  17,
+  35,
+  -122.42
  ],
  "Eminem": [
   1972,
@@ -885,7 +1098,10 @@
   1992,
   2,
   5,
-  "America/Sao_Paulo"
+  "America/Sao_Paulo",
+  2,
+  15,
+  -46.18
  ],
  "Hyun Bin": [
   1982,
@@ -897,19 +1113,28 @@
   1990,
   8,
   15,
-  "America/Kentucky/Louisville"
+  "America/Kentucky/Louisville",
+  15,
+  20,
+  -85.77
  ],
  "The Weeknd": [
   1990,
   2,
   16,
-  "America/Toronto"
+  "America/Toronto",
+  14,
+  45,
+  -79.38
  ],
  "Tom Brady": [
   1977,
   8,
   3,
-  "America/Los_Angeles"
+  "America/Los_Angeles",
+  11,
+  48,
+  -122.32
  ],
  "Shohei Ohtani": [
   1994,
@@ -921,19 +1146,28 @@
   1937,
   12,
   31,
-  "Europe/London"
+  "Europe/London",
+  9,
+  15,
+  -3.78
  ],
  "Monica Bellucci": [
   1964,
   9,
   30,
-  "Europe/Rome"
+  "Europe/Rome",
+  14,
+  30,
+  12.23
  ],
  "Bob Dylan": [
   1941,
   5,
   24,
-  "America/Chicago"
+  "America/Chicago",
+  21,
+  5,
+  -92.1
  ],
  "Benedict Cumberbatch": [
   1976,
@@ -963,7 +1197,10 @@
   1948,
   11,
   14,
-  "Europe/London"
+  "Europe/London",
+  21,
+  14,
+  -0.17
  ],
  "Elton John": [
   1947,
@@ -975,13 +1212,19 @@
   1965,
   2,
   18,
-  "America/Los_Angeles"
+  "America/Los_Angeles",
+  10,
+  56,
+  -118.25
  ],
  "Dwayne Johnson": [
   1972,
   5,
   2,
-  "America/Los_Angeles"
+  "America/Los_Angeles",
+  18,
+  2,
+  -122.15
  ],
  "Tim Cook": [
   1960,
@@ -993,7 +1236,10 @@
   1936,
   12,
   17,
-  "America/Argentina/Buenos_Aires"
+  "America/Argentina/Buenos_Aires",
+  21,
+  0,
+  -58.45
  ],
  "Kim Yuna": [
   1990,
@@ -1023,6 +1269,9 @@
   1956,
   6,
   25,
-  "America/New_York"
+  "America/New_York",
+  8,
+  35,
+  -74.0
  ]
 }
