@@ -1,5 +1,5 @@
 /* Elun PWA service worker — 보수적 캐시 전략 (라이브 결제 사이트) */
-const VERSION = 'elun-v1';
+const VERSION = 'elun-v2';
 const CORE = [
   '/ko/', '/en/',
   '/icon-192.png', '/icon-512.png',
@@ -7,6 +7,9 @@ const CORE = [
 ];
 /* 개인 리포트·결제 결과는 캐시하지 않음 */
 const NO_CACHE = /\/(result|report|couple)\.html/;
+/* 결제 설정은 캐시 우선 금지 — 금액·사이트코드·결제사 분기가 들어 있어
+   옛 값이 쓰이면 서버 금액 대조에 걸려 결제가 실패한다. */
+const NETWORK_FIRST = /\/paddle-config\.js$/;
 
 self.addEventListener('install', (e) => {
   e.waitUntil(
@@ -35,6 +38,16 @@ self.addEventListener('fetch', (e) => {
       fetch(req)
         .then((res) => { const cp = res.clone(); caches.open(VERSION).then((c) => c.put(req, cp)); return res; })
         .catch(() => caches.match(req).then((r) => r || caches.match('/ko/')))
+    );
+    return;
+  }
+
+  // 네트워크 우선 (결제 설정) — 실패 시에만 캐시로 폴백
+  if (NETWORK_FIRST.test(url.pathname)) {
+    e.respondWith(
+      fetch(req)
+        .then((res) => { if (res && res.ok) { const cp = res.clone(); caches.open(VERSION).then((c) => c.put(req, cp)); } return res; })
+        .catch(() => caches.match(req))
     );
     return;
   }
