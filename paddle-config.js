@@ -11,6 +11,10 @@
 //            아니면 기존 Digistore24. → 채널키 발급 전까지 한국어 페이지도 DS24 로 폴백.
 window.ELUN_CHECKOUT = {
   provider: "digistore24",
+  // ⚠️ 2026-08-15: DS24 상품 승인 보류(컴플라이언스 서류 요청 미회신) → 상품 페이지가 403
+  //    "this product cannot be purchased at this time" 를 반환한다.
+  //    승인 완료 전까지 결제 버튼을 게이트한다. 승인되면 true 로만 바꾸면 즉시 열림.
+  enabled: false,
   products: {
     single:  "714429",  // Elun Precision Report — $29
     decade:  "714430",  // Elun Precision Report + Decade — $49
@@ -314,6 +318,13 @@ function elunOpenPaddleCheckout(priceKey, opts) {
   const pid = cfg && cfg.products && cfg.products[priceKey];
   if (!pid) {
     alert("Checkout isn't configured yet — please email hello@elun.me");
+    return;
+  }
+  // 승인 보류 중에는 결제사로 넘기지 않는다 — 넘기면 DS24 오류 페이지만 보게 된다.
+  if (cfg.enabled === false) {
+    alert("International checkout is being set up and will open shortly.\n\n"
+        + "Email hello@elun.me and we'll send your report as soon as it's live — "
+        + "or read the full sample in the meantime.");
     return;
   }
   location.href = "https://www.digistore24.com/product/" + pid;
