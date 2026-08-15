@@ -235,14 +235,38 @@ async function elunOpenKcpCheckout(priceKey, opts) {
   });
   document.body.appendChild(form);
 
-  // KCP가 인증 완료 후 호출하는 전역 콜백. 결과는 form 필드에서 읽는다.
-  window.m_Completepayment = function (_formOrData, closeEvt) {
+  // KCP가 인증 완료 후 호출하는 전역 콜백.
+  // ⚠️ 결과는 우리가 만든 order_info 폼이 아니라 **KCP 가 인자로 넘겨주는 자체 폼**
+  //    (<form name="KCP_Auth_Hidden">) 에 담겨 온다. 우리 폼은 입력 전용이라 비어 있다.
+  //    (2026-08-15: 이 전제를 잘못 잡아 PC 결제가 조용히 실패하던 버그 수정)
+  window.m_Completepayment = function (formOrData, closeEvt) {
     try {
-      const f = document.getElementById("elun-kcp-form");
-      const get = function (n) { const el = f.querySelector('[name="' + n + '"]'); return el ? el.value : ""; };
-      if (get("res_cd") !== "0000") {
+      const mine = document.getElementById("elun-kcp-form");
+      // 인자가 폼이면 elements 로, 평문 객체면 속성으로, 없으면 우리 폼으로 폴백.
+      const get = function (n) {
+        if (formOrData) {
+          if (formOrData.elements && formOrData.elements[n] != null) {
+            const e = formOrData.elements[n];
+            return (e && e.value != null) ? e.value : "";
+          }
+          if (typeof formOrData === "object" && formOrData[n] != null && !formOrData.elements) {
+            return String(formOrData[n]);
+          }
+        }
+        const el = mine && mine.querySelector('[name="' + n + '"]');
+        return el ? el.value : "";
+      };
+
+      const rc = get("res_cd");
+      console.log("[ELUN] KCP 콜백 res_cd:", rc, "| res_msg:", get("res_msg"));
+
+      if (rc !== "0000") {
         if (typeof closeEvt === "function") closeEvt();
-        if (get("res_cd")) alert("결제 인증 실패: " + (get("res_msg") || get("res_cd")));
+        // res_cd 가 비어 있어도 반드시 안내한다 — 조용히 사라지면 고객이 문의조차 못 한다.
+        alert(rc
+          ? ("결제 인증 실패: " + (get("res_msg") || rc))
+          : ("결제가 완료되지 않았습니다. 결제창이 정상 종료되지 않았거나 인증이 취소되었습니다.\n"
+             + "다시 시도해도 같으면 hello@elun.me 로 주문번호(" + ordrNo + ")와 함께 문의해주세요."));
         return;
       }
       // 서버 승인 요청 (실제 결제 확정 + 위변조 검증은 서버가 KCP 승인 API로)
