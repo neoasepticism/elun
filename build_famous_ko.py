@@ -39,16 +39,26 @@ def slugify(name):
     return re.sub(r'[^a-z0-9]+', '-', name.lower()).strip('-')
 
 
+def birth_of(name):
+    """(y, m, d, tz, hour, minute, lon, hour_known). 구형 4원소 항목은 시간 미상."""
+    e = CELEBS[name]
+    if len(e) >= 7:
+        return e[0], e[1], e[2], e[3], e[4], e[5], e[6], True
+    return e[0], e[1], e[2], e[3], 12, 0, 0, False
+
+
 def chart_for(name):
-    y, m, d, tz = CELEBS[name]
-    opts = {'lon_corr': False, 'dst': False, 'std_meridian': None, 'lon': 0, 'auto_tz': True, 'tz': tz}
-    return bg.build_result(y, m, d, 12, 0, 'M', opts)
+    y, m, d, tz, hh, mi, lon, known = birth_of(name)
+    # 시간 기록이 있으면 audit 과 동일하게 진태양시 보정으로 계산 (기둥 일치 보장)
+    opts = {'lon_corr': known, 'dst': False, 'std_meridian': None,
+            'lon': lon, 'auto_tz': True, 'tz': tz}
+    return bg.build_result(y, m, d, hh, mi, 'M', opts)
 
 
-def fe3(fp):
-    """3주(년월일) 기준 오행 분포 — 시주(정오 가정) 제외."""
+def fe3(fp, keys=('year', 'month', 'day')):
+    """오행 분포 — 기본 3주(시주 정오 가정 제외), 시간 기록 있으면 4주."""
     c = Counter()
-    for k in ('year', 'month', 'day'):
+    for k in keys:
         c[GAN_OH[fp[k]['stem']]] += 1
         c[JI_OH[fp[k]['branch']]] += 1
     tot = sum(c.values()) or 1
@@ -59,11 +69,12 @@ def role_ko(role_en):
     return ROLE_EN_KO.get(role_en, role_en)
 
 
-def balance_box(chart, nm_ko):
+def balance_box(chart, nm_ko, hour_known=False):
     fp = chart['four_pillars']
     dm_elem_en = rp.ELEM_KO_EN[chart['day_master']['element']]
     roles = rp._elem_roles(dm_elem_en)                     # {EnglishElem: RoleEnglish}
-    oh = fe3(fp)
+    keys = ('year', 'month', 'day', 'hour') if hour_known else ('year', 'month', 'day')
+    oh = fe3(fp, keys)
     st_label = rp._strength_three_pillar(chart)['label']   # 한국어 (예: 신강/중화/신약)
     if '약' in st_label:
         st_gloss = '지원으로 굴러가는 사주 — 무엇이 일간을 먹이는가가 이야기의 축입니다'
@@ -72,7 +83,7 @@ def balance_box(chart, nm_ko):
     else:
         st_gloss = '균형에 가까운 사주 — 운의 작은 기울기가 판 전체를 기울입니다'
     ug = rp._useful_god(dm_elem_en, st_label)
-    hp = fp.get('hour', {})
+    hp = {} if hour_known else fp.get('hour', {})
     tg = dict(chart.get('ten_gods_count', {}))
     for g in (hp.get('stem_god'), hp.get('branch_god')):
         if g in tg:
@@ -95,7 +106,7 @@ def balance_box(chart, nm_ko):
     return f'''<div class="box">
       <h2>균형 — 이 사주를 이 사주답게 만드는 것</h2>
       <p style="font-size:13.5px">모든 {nm_ko} 일주는 같은 핵심을 공유합니다 — 그러나 그것을 둘러싼 연·월은 결코 반복되지 않습니다.
-      이 사주가 실제로 받은 배합입니다(3주 기준, 시주 제외):</p>
+      이 사주가 실제로 받은 배합입니다({("4주 전체 — 출생시간 기록 있음" if hour_known else "3주 기준, 시주 제외")}):</p>
       <div class="ebars">{bars}</div>
       <table class="kv" style="margin-top:14px">
         <tr><td>강약</td><td>{st_label} — {st_gloss}</td></tr>
@@ -106,7 +117,7 @@ def balance_box(chart, nm_ko):
 
 
 def page(name):
-    y, m, d, tz = CELEBS[name]
+    y, m, d, tz, hh, mi, lon, hour_known = birth_of(name)
     r = chart_for(name)
     fp = r['four_pillars']
     gj = fp['day']['ganji_hanja']
@@ -129,7 +140,9 @@ def page(name):
         f'<div class="pil{" day" if k == "day" else ""}"><div class="lab">{lab}</div>'
         f'<div class="gj">{fp[k]["ganji_hanja"]}</div>'
         f'<div class="gods">{fp[k]["stem_god"]}<br>{fp[k]["branch_god"]}</div></div>'
-        for k, lab in (('year', '년주'), ('month', '월주'), ('day', '일주 ★')))
+        for k, lab in ((('year', '년주'), ('month', '월주'), ('day', '일주 ★'), ('hour', '시주'))
+                       if hour_known else
+                       (('year', '년주'), ('month', '월주'), ('day', '일주 ★'))))
     syn = ko.SYN_KO.get(gj, '')
     st_hj, st_ko_nm, st_gloss = (lambda s: s)(_sitting_stage_ko(gj))
     gi = bp.gz_index(gj)
@@ -212,10 +225,10 @@ def page(name):
 
 <div class="wrap" style="max-width:720px">
   <div class="pillars">{pillars_html}</div>
-  <div class="note3">출생 시각은 공개 기록에 없습니다 — 확실한 연·월·일주만 표시합니다(시주는 정직하게 생략).</div>
+  <div class="note3">{'출생 시각이 공개 기록에 있습니다 — 진태양시 보정으로 4주 전체를 표시합니다.' if hour_known else '출생 시각은 공개 기록에 없습니다 — 확실한 연·월·일주만 표시합니다(시주는 정직하게 생략).'}</div>
 
   <section>
-    {balance_box(r, nm_pil)}
+    {balance_box(r, nm_pil, hour_known)}
     <div class="box" style="border-top:3px solid {ac}">
       <h2>{nm_pil} 일주 — {disp}의 핵심</h2>
       <p style="font-family:var(--serif);font-style:italic;color:var(--ink2)">“{d_ko}”</p>

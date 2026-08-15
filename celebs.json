@@ -3,19 +3,28 @@
   1946,
   6,
   14,
-  "America/New_York"
+  "America/New_York",
+  10,
+  54,
+  -73.87
  ],
  "Elon Musk": [
   1971,
   6,
   28,
-  "Africa/Johannesburg"
+  "Africa/Johannesburg",
+  7,
+  30,
+  28.19
  ],
  "Barack Obama": [
   1961,
   8,
   4,
-  "Pacific/Honolulu"
+  "Pacific/Honolulu",
+  19,
+  24,
+  -157.86
  ],
  "Oprah Winfrey": [
   1954,
@@ -27,7 +36,10 @@
   1955,
   2,
   24,
-  "America/Los_Angeles"
+  "America/Los_Angeles",
+  19,
+  15,
+  -122.42
  ],
  "Bill Gates": [
   1955,
@@ -45,7 +57,10 @@
   1981,
   9,
   4,
-  "America/Chicago"
+  "America/Chicago",
+  21,
+  47,
+  -95.37
  ],
  "Michael Jordan": [
   1963,
@@ -117,7 +132,10 @@
   1987,
   6,
   24,
-  "America/Argentina/Buenos_Aires"
+  "America/Argentina/Cordoba",
+  20,
+  30,
+  -60.64
  ],
  "Emma Watson": [
   1990,
@@ -549,7 +567,10 @@
   1987,
   6,
   17,
-  "America/Los_Angeles"
+  "America/Los_Angeles",
+  15,
+  4,
+  -118.22
  ],
  "David Bowie": [
   1947,
@@ -783,7 +804,10 @@
   1942,
   1,
   17,
-  "America/Kentucky/Louisville"
+  "America/Kentucky/Louisville",
+  18,
+  35,
+  -85.76
  ],
  "Alan Turing": [
   1912,

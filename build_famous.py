@@ -43,32 +43,44 @@ def slugify(name):
     return re.sub(r'[^a-z0-9]+', '-', name.lower()).strip('-')
 
 
+def birth_of(name):
+    """(y, m, d, tz, hour, minute, lon, hour_known). 구형 4원소 항목은 시간 미상."""
+    e = CELEBS[name]
+    if len(e) >= 7:
+        return e[0], e[1], e[2], e[3], e[4], e[5], e[6], True
+    return e[0], e[1], e[2], e[3], 12, 0, 0, False
+
+
 def chart_for(name):
-    y, m, d, tz = CELEBS[name]
-    opts = {'lon_corr': False, 'dst': False, 'std_meridian': None, 'lon': 0, 'auto_tz': True, 'tz': tz}
-    return bg.build_result(y, m, d, 12, 0, 'M', opts)
+    y, m, d, tz, hh, mi, lon, known = birth_of(name)
+    # 시간 기록이 있으면 audit 과 동일하게 진태양시 보정으로 계산 (기둥 일치 보장)
+    opts = {'lon_corr': known, 'dst': False, 'std_meridian': None,
+            'lon': lon, 'auto_tz': True, 'tz': tz}
+    return bg.build_result(y, m, d, hh, mi, 'M', opts)
 
 
 ELEM_META = {'목': ('Wood', '木', 'wood'), '화': ('Fire', '火', 'fire'), '토': ('Earth', '土', 'earth'),
              '금': ('Metal', '金', 'metal'), '수': ('Water', '水', 'water')}
 
 
-def fe3(fp):
-    """3주(년월일) 기준 오행 분포 — 시주(정오 가정) 제외."""
+def fe3(fp, keys=('year', 'month', 'day')):
+    """오행 분포 — 기본 3주(시주 정오 가정 제외), 시간 기록 있으면 4주."""
     c = Counter()
-    for k in ('year', 'month', 'day'):
+    for k in keys:
         c[GAN_OH[fp[k]['stem']]] += 1
         c[JI_OH[fp[k]['branch']]] += 1
     tot = sum(c.values()) or 1
     return {oh: round(c[oh] / tot * 100) for oh in ('목', '화', '토', '금', '수')}
 
 
-def balance_box(chart, py):
+def balance_box(chart, py, hour_known=False):
     fp = chart['four_pillars']
     dm_elem_en = rp.ELEM_KO_EN[chart['day_master']['element']]
     roles = rp._elem_roles(dm_elem_en)
-    oh = fe3(fp)
-    st_label = rp._strength_three_pillar(chart)['label']   # 3주 기준 강약 (시간 미상)
+    keys = ('year', 'month', 'day', 'hour') if hour_known else ('year', 'month', 'day')
+    oh = fe3(fp, keys)
+    st_label = (chart.get('strength', {}).get('label', '')
+                if hour_known else rp._strength_three_pillar(chart)['label'])
     st_en = rp._strength_en(st_label)
     if 'Weak' in st_en:
         st_gloss = 'a chart that runs on support — its story turns on what feeds the Day Master'
@@ -78,13 +90,14 @@ def balance_box(chart, py):
         st_gloss = 'a chart near balance — small shifts in luck tilt the whole board'
     ug = rp._useful_god(dm_elem_en, st_label)
     # 십성 카운트 (정오 가정 시주 몫 제거 → 3주 기준)
-    hp = fp.get('hour', {})
     tg = dict(chart.get('ten_gods_count', {}))
-    for g in (hp.get('stem_god'), hp.get('branch_god')):
-        if g in tg:
-            tg[g] -= 1
-            if tg[g] <= 0:
-                del tg[g]
+    if not hour_known:                     # 정오 가정 시주 몫 제거 → 3주 기준
+        hp = fp.get('hour', {})
+        for g in (hp.get('stem_god'), hp.get('branch_god')):
+            if g in tg:
+                tg[g] -= 1
+                if tg[g] <= 0:
+                    del tg[g]
     bars = ''
     for ko in ('목', '화', '토', '금', '수'):
         en, hj, var = ELEM_META[ko]
@@ -98,7 +111,7 @@ def balance_box(chart, py):
     return f'''<div class="box">
       <h2>The Balance — what makes this chart its own</h2>
       <p style="font-size:13.5px">Every {py} day shares the same core — but the year and month around it never repeat.
-      This is the mix this particular chart was dealt (three pillars, hour excluded):</p>
+      This is the mix this particular chart was dealt ({("all four pillars — birth time on record" if hour_known else "three pillars, hour excluded")}):</p>
       <div class="ebars">{bars}</div>
       <table class="kv" style="margin-top:14px">
         <tr><td>Strength</td><td>{st_en} — {st_gloss}</td></tr>
@@ -109,7 +122,7 @@ def balance_box(chart, py):
 
 
 def page(name):
-    y, m, d, tz = CELEBS[name]
+    y, m, d, tz, hh, mi, lon, hour_known = birth_of(name)
     r = chart_for(name)
     fp = r['four_pillars']
     gj = fp['day']['ganji_hanja']
@@ -130,7 +143,9 @@ def page(name):
         f'<div class="pil{" day" if k == "day" else ""}"><div class="lab">{lab}</div>'
         f'<div class="gj">{fp[k]["ganji_hanja"]}</div>'
         f'<div class="gods">{GOD_EN.get(fp[k]["stem_god"], fp[k]["stem_god"])}<br>{GOD_EN.get(fp[k]["branch_god"], fp[k]["branch_god"])}</div></div>'
-        for k, lab in (('year', 'Year'), ('month', 'Month'), ('day', 'Day ★')))
+        for k, lab in ((('year', 'Year'), ('month', 'Month'), ('day', 'Day ★'), ('hour', 'Hour'))
+                       if hour_known else
+                       (('year', 'Year'), ('month', 'Month'), ('day', 'Day ★'))))
     syn = bp.SYN.get(gj, '')
     st_hj, st_en, st_gloss = bp.sitting_stage(gj)
     gi = bp.gz_index(gj)
@@ -208,10 +223,10 @@ def page(name):
 
 <div class="wrap" style="max-width:720px">
   <div class="pillars">{pillars_html}</div>
-  <div class="note3">Birth time not on public record — the exact year, month and day pillars shown (the hour pillar is honestly omitted).</div>
+  <div class="note3">{'Birth time on public record — all four pillars shown, computed with true solar time.' if hour_known else 'Birth time not on public record — the exact year, month and day pillars shown (the hour pillar is honestly omitted).'}</div>
 
   <section>
-    {balance_box(r, py)}
+    {balance_box(r, py, hour_known)}
     <div class="box" style="border-top:3px solid {ac}">
       <h2>The {py} Day — {name}'s core</h2>
       <p style="font-family:var(--serif);font-style:italic;color:var(--ink2)">“{p['d']}”</p>
