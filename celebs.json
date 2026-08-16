@@ -1273,5 +1273,17 @@
   8,
   35,
   -74.0
+ ],
+ "Napoleon Bonaparte": [
+  1769,
+  8,
+  15,
+  "Europe/Paris"
+ ],
+ "Mike Tyson": [
+  1966,
+  6,
+  30,
+  "America/New_York"
  ]
 }
