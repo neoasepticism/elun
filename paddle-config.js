@@ -41,12 +41,14 @@ window.ELUN_CHECKOUT_KO = {
     decade:  49000,
     couple:  49000,
     upgrade: 25000,
+    year:    100000,
   },
   orderNames: {
     single:  "Elun 정밀 사주 리포트",
     decade:  "Elun 정밀 리포트 + 대운 10년",
     couple:  "Elun 커플 궁합 리포트",
     upgrade: "Elun 대운 10년 업그레이드",
+    year:    "Elun 12개월 정밀 운세",
   },
 };
 
@@ -349,13 +351,14 @@ function elunOpenPaddleCheckout(priceKey, opts) {
   function won(n) { return n.toLocaleString("ko-KR") + "원"; }
   function apply() {
     if (!elunIsKoPage()) return;
-    const ids = ["buybtn", "buydecadebtn", "buycouplebtn"];
+    const ids = ["buybtn", "buydecadebtn", "buycouplebtn", "buyyearbtn"];
     if (elunKoReady()) {
       const a = window.ELUN_CHECKOUT_KO.amounts;
       const map = {
         buybtn: "정밀 리포트 — " + won(a.single),
         buydecadebtn: "리포트 + 대운 10년 — " + won(a.decade),
         buycouplebtn: "두 사람 — " + won(a.couple),
+        buyyearbtn: "12개월 정밀 운세 — " + won(a.year),
       };
       for (const id in map) {
         const el = document.getElementById(id);
