@@ -41,7 +41,7 @@ window.ELUN_CHECKOUT_KO = {
     decade:  49000,
     couple:  49000,
     upgrade: 25000,
-    year:    100000,
+    year:    200000,
   },
   orderNames: {
     single:  "Elun 정밀 사주 리포트",
