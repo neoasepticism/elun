@@ -66,12 +66,12 @@
 <div class="wrap">
   <div class="hero">
     <h1>12개월 정밀 운세 받기</h1>
-    <p><b>서비스 제공 기간: 결제 후 즉시 제공.</b> 구매일부터 12개 절기월(節氣月)의 흐름을 읽습니다 — 다가올 세운·대운 해석, 달마다의 정밀 운세 12장, 그리고 매일 새로 계산되는 <b style="color:var(--gold2)">오늘의 운세</b>와 일진 캘린더까지. 생성에는 2–4분이 걸리고, <b style="color:var(--gold2)">영구 링크</b>로 1년 내내 다시 열 수 있습니다.</p>
+    <p><b>서비스 제공 기간: 결제 후 즉시 제공.</b> 구매하신 날부터 <b>1년 동안의 흐름</b>을 읽어 드립니다 — 올해와 앞으로 10년의 큰 흐름, 달마다 어떤 시기인지 알려주는 <b>열두 편의 글</b>, 그리고 날짜마다 좋은 날·조심할 날을 표시한 <b>1년치 달력</b>까지. 달력을 열면 그날의 <b style="color:var(--gold2)">오늘의 운세</b>가 자동으로 뜹니다. 만드는 데 2~4분 걸리고, <b style="color:var(--gold2)">받으신 링크</b>로 1년 내내 다시 볼 수 있습니다.</p>
   </div>
 
   <div class="buybox" id="buybox">
     <div class="t">아직 구매 전이신가요?</div>
-    <p>리포트 기간은 <b>최초 생성일부터 12개 절기월</b>로 고정됩니다 — 언제 사도 그날부터 1년.</p>
+    <p>언제 구매하셔도 <b>만든 날부터 1년</b>입니다 — 1월 시작 같은 달력 기준이 아니라, 그날부터 열두 달.</p>
     <a class="bbtn" id="buyyearbtn" href="#" onclick="elunOpenPaddleCheckout('year',{redirectTo:'year.html'});return false">12개월 정밀 운세 — 999,900원</a>
     <a class="sam" href="../sample-year-KO.html" target="_blank">가상 인물로 만든 실제 샘플 열어보기 →</a>
   </div>
@@ -91,7 +91,7 @@
     </div>
     <label style="display:flex;align-items:center;gap:8px;margin-top:10px;font-size:13px;color:var(--ink2);cursor:pointer;text-transform:none;letter-spacing:0">
       <input type="checkbox" id="bnotime" style="width:auto;accent-color:var(--gold)" />
-      태어난 시간을 모릅니다 (삼주(三柱) 리딩)
+      태어난 시간을 모릅니다 (시간 없이 생년월일만으로 봅니다)
     </label>
     <div class="row">
       <div><label>성별</label>
@@ -99,7 +99,7 @@
       <div><label>출생 도시</label>
         <select id="bcity"></select></div>
     </div>
-    <div class="hint">목록에 없는 도시라면 같은 시간대의 가장 가까운 도시를 선택하세요 — 150km 이내면 태양시 차이는 몇 분 수준이라 기둥이 바뀌는 일은 거의 없습니다.</div>
+    <div class="hint">목록에 없는 도시라면 같은 시간대의 가장 가까운 도시를 선택하세요 — 150km 이내면 시간 차이가 몇 분뿐이라 결과가 달라지는 일은 거의 없습니다.</div>
     <div class="hint">⚠ 이 주문은 최초 생성에 사용한 <b>생년월일로 고정</b>됩니다(시간·도시는 이후에도 수정 가능). 자정 무렵 출생이라면 시간을 한 번 더 확인해 주세요.</div>
 
     <button class="btn" id="go" type="submit">12개월 운세 생성하기</button>
