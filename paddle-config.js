@@ -52,6 +52,17 @@ window.ELUN_CHECKOUT_KO = {
   },
 };
 
+// ── Google Play 인앱 상품 ID (안드로이드 앱 전용) ──────────────────────
+// Play 콘솔에 등록한 상품 ID. 서버 PLAY_SKU_MAP 과 반드시 일치해야 한다.
+// `year`(전시용 고가 상품)는 앱에서 팔지 않는다 — 목록에 없으면 앱에서 구매 버튼이
+// 눌려도 "판매 준비 중" 안내로 빠진다.
+window.ELUN_PLAY_SKUS = {
+  single:  "single",
+  decade:  "decade",
+  couple:  "couple",
+  upgrade: "upgrade",
+};
+
 // 리포트 클레임/승인을 호출할 API 베이스 (엔진).
 window.ELUN_API_BASE = window.ELUN_API_BASE || "https://api.elun.me";
 
@@ -318,8 +329,64 @@ async function elunOpenKcpCheckout(priceKey, opts) {
 }
 
 // priceKey: "single" | "decade" | "couple" | "upgrade"
+// ── Google Play 인앱결제 (안드로이드 앱/TWA 안에서만) ────────────────
+// 구글 정책: 앱 안의 디지털 상품은 Play 결제를 거쳐야 하고, 앱에서 외부 결제로
+// 링크하면 안 된다. 그래서 TWA 안에서는 KCP 대신 이 경로를 쓴다.
+// Digital Goods API 는 TWA 안의 Chrome 에서만 존재하므로, 그 유무가 곧 앱 판별이다.
+function elunPlayAvailable() {
+  return typeof window !== "undefined"
+      && typeof window.getDigitalGoodsService === "function"
+      && typeof window.PaymentRequest === "function";
+}
+
+async function elunOpenPlayCheckout(priceKey, opts) {
+  opts = opts || {};
+  const sku = (window.ELUN_PLAY_SKUS && window.ELUN_PLAY_SKUS[priceKey]) || priceKey;
+  let email;
+  try {
+    const svc = await window.getDigitalGoodsService("https://play.google.com/billing");
+    // 상품 존재 확인 (Play 콘솔 미등록이면 여기서 빈 배열)
+    const details = await svc.getDetails([sku]);
+    if (!details || !details.length) {
+      alert("이 상품은 앱에서 아직 판매 준비 중입니다 — hello@elun.me 로 알려주세요.");
+      return;
+    }
+    email = await elunAskEmail();
+    if (!email) return;
+
+    const pr = new PaymentRequest(
+      [{ supportedMethods: "https://play.google.com/billing", data: { sku } }],
+      { total: { label: "Total", amount: { currency: details[0].price.currency,
+                                           value: details[0].price.value } } });
+    const res = await pr.show();
+    const token = res.details && res.details.token;
+    if (!token) { await res.complete("fail"); throw new Error("no purchase token"); }
+
+    // 서버 실증 + acknowledge (미승인 구매는 3일 뒤 구글이 자동 환불한다)
+    const base = window.ELUN_API_BASE || "https://api.elun.me";
+    const vr = await fetch(base + "/payment/play/verify", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ purchase_token: token, sku: sku, email: email }),
+    });
+    if (!vr.ok) { await res.complete("fail"); throw new Error("verify failed: " + vr.status); }
+    const out = await vr.json();
+    await res.complete("success");
+
+    const dest = new URL(opts.redirectTo || "report.html", location.href);
+    if (out.order) dest.searchParams.set("order", out.order);
+    if (email) dest.searchParams.set("email", email);
+    location.href = dest.toString();
+  } catch (e) {
+    if (e && (e.name === "AbortError" || e.name === "NotAllowedError")) return;  // 사용자가 닫음
+    console.error("[play]", e);
+    alert("결제를 완료하지 못했습니다. 다시 시도해 주세요.\n계속 안 되면 hello@elun.me 로 알려주세요.");
+  }
+}
+
 function elunOpenPaddleCheckout(priceKey, opts) {
   if (elunIsKoPage()) {
+    // 앱(TWA) 안이면 Play 결제가 우선 — 외부 결제 링크는 정책 위반
+    if (elunPlayAvailable()) { elunOpenPlayCheckout(priceKey, opts); return; }
     if (elunKoReady()) {
       elunOpenKcpCheckout(priceKey, opts);
     } else {
