@@ -333,8 +333,15 @@ async function elunOpenKcpCheckout(priceKey, opts) {
 // 구글 정책: 앱 안의 디지털 상품은 Play 결제를 거쳐야 하고, 앱에서 외부 결제로
 // 링크하면 안 된다. 그래서 TWA 안에서는 KCP 대신 이 경로를 쓴다.
 // Digital Goods API 는 TWA 안의 Chrome 에서만 존재하므로, 그 유무가 곧 앱 판별이다.
+// ⚠️ 앱(TWA)이 스토어에 출시되기 전까지는 반드시 false.
+// 앱이 없는 동안 이 분기가 켜져 있으면, 웹 사용자가 잘못 걸릴 경우
+// KCP 결제로 못 가고 결제 자체가 막힌다(실제 매출 중단 위험).
+// Play 콘솔 출시 후 true 로 바꾼다.
+window.ELUN_PLAY_ENABLED = false;
+
 function elunPlayAvailable() {
-  return typeof window !== "undefined"
+  return window.ELUN_PLAY_ENABLED === true
+      && typeof window !== "undefined"
       && typeof window.getDigitalGoodsService === "function"
       && typeof window.PaymentRequest === "function";
 }
@@ -348,7 +355,8 @@ async function elunOpenPlayCheckout(priceKey, opts) {
     // 상품 존재 확인 (Play 콘솔 미등록이면 여기서 빈 배열)
     const details = await svc.getDetails([sku]);
     if (!details || !details.length) {
-      alert("이 상품은 앱에서 아직 판매 준비 중입니다 — hello@elun.me 로 알려주세요.");
+      // 앱 상품 미등록 — 막지 말고 기존 웹 결제로 넘긴다
+      elunOpenKcpCheckout(priceKey, opts);
       return;
     }
     email = await elunAskEmail();
@@ -378,8 +386,9 @@ async function elunOpenPlayCheckout(priceKey, opts) {
     location.href = dest.toString();
   } catch (e) {
     if (e && (e.name === "AbortError" || e.name === "NotAllowedError")) return;  // 사용자가 닫음
-    console.error("[play]", e);
-    alert("결제를 완료하지 못했습니다. 다시 시도해 주세요.\n계속 안 되면 hello@elun.me 로 알려주세요.");
+    console.error("[play] falling back to KCP:", e);
+    // Play 경로가 어떤 이유로든 실패하면 결제를 막지 말고 웹(KCP) 으로 폴백한다
+    elunOpenKcpCheckout(priceKey, opts);
   }
 }
 
